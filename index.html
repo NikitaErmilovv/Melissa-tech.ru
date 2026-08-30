@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Прототипы сайтов Melissa Tech — демо для клиентов">
+<title>Melissa Tech — прототипы</title>
+<style>
+  :root {
+    --accent: #DBDFFD;
+    --bg: #0a0a0b;
+    --surface: #141416;
+    --text: #f4f4f5;
+    --muted: #9ca3af;
+    --border: rgba(255, 255, 255, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  .glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% -10%, rgba(219, 223, 253, 0.12), transparent),
+      radial-gradient(ellipse 40% 30% at 100% 100%, rgba(219, 223, 253, 0.06), transparent);
+  }
+
+  .wrap {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+  }
+
+  header { margin-bottom: 48px; }
+
+  .kicker {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .intro {
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 36em;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+  }
+
+  .card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .card:hover {
+    border-color: rgba(219, 223, 253, 0.35);
+    background: #1a1a1e;
+  }
+
+  .card-info h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .card-info p {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .card-arrow {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(219, 223, 253, 0.12);
+    color: var(--accent);
+    font-size: 1.1rem;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<main class="wrap">
+  <header>
+    <p class="kicker">Melissa Tech</p>
+    <h1>Прототипы <span>сайтов</span></h1>
+    <p class="intro">Демо-версии для согласования с клиентами. Выберите проект ниже — откроется полноценный макет.</p>
+  </header>
+
+  <ul class="list">
+    <li>
+      <a class="card" href="skolov38/">
+        <div class="card-info">
+          <h2>Сколов38</h2>
+          <p>Детейлинг · Иркутск</p>
+        </div>
+        <span class="card-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+  </ul>
+
+  <footer>
+    Внутренняя витрина. Финальные сайты размещаются на инфраструктуре клиента.
+  </footer>
+</main>
+</body>
+</html>
