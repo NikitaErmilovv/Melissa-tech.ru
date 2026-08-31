@@ -472,17 +472,15 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .cards{grid-template-columns:1fr}
   .card{min-height:260px}
   .card-body{min-height:260px}
-  .process{padding:72px 5vw}
+  .process{padding:72px 5vw;overflow-x:hidden;max-width:100%}
   .process .kicker{color:#777}
+  .process h2{font-size:clamp(32px,9vw,52px)}
   .process h2 .accent{color:#111}
   .step b{color:#111}
-  .services-process{padding:110px 6vw}
-  .services-process .steps-track{margin-top:55px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-  .services-process .steps-track::-webkit-scrollbar{display:none}
-  .services-process .steps{min-width:680px;margin-top:0}
-  .services-process .step{padding:25px 22px 35px;min-height:190px}
-  .services-process .step h3{font-size:20px}
-  .services-process .step p{font-size:12px;line-height:1.55}
+  .steps{width:100%;max-width:100%;grid-template-columns:1fr;margin-top:36px}
+  .step{min-height:auto;padding:22px 18px 28px}
+  .services-process .steps-track{margin-top:0;overflow:visible}
+  .services-process .steps{margin-top:36px;min-width:0}
   .photo-strip,.price-grid,.reviews,.contact-box{grid-template-columns:1fr}
   .photo-strip{margin-top:40px}
   .photo.big{min-height:340px}
