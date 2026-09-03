@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#DBDFFD;
-  --accent-soft:rgba(219,223,253,.22);
-  --accent-hover:rgba(219,223,253,.9);
-  --accent-ink:#1a1a1a;
+  --accent:#ffffff;
+  --accent-soft:rgba(255,255,255,.18);
+  --accent-hover:rgba(255,255,255,.85);
+  --accent-ink:#0a0a0a;
 }
 
 *{box-sizing:border-box}
@@ -24,8 +24,8 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 
 .hero{min-height:760px;padding:82px 6vw 70px;display:flex;align-items:flex-end;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#343434 0,#171717 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:678px;background:linear-gradient(135deg,#222,#090909);clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.95}
-.heroimg:before{content:"";position:absolute;left:25%;top:25%;width:55%;height:35%;border-radius:50%;background:#30302d;filter:blur(35px);box-shadow:0 80px 90px #000}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:678px;background:url('img/works/1bcbcc6b-4e9f-447d-931a-93ecae448eab.jpg') center/cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
+.heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-content{position:relative;z-index:1;max-width:720px}
 .eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:25px}
 .hero h1{font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0 0 34px;font-weight:800}
@@ -108,6 +108,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .gallery .tall{grid-row:span 2}
 
 .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:50px}
+.reviews:has(.review:only-child){grid-template-columns:minmax(0,420px)}
 .review{border:1px solid rgba(255,255,255,.08);padding:30px;min-height:220px;background:#101010}
 .review .stars{letter-spacing:4px;font-size:10px;color:var(--accent)}
 .review p{font-size:15px;line-height:1.55;color:#b0b0aa}
