@@ -11,6 +11,7 @@
 | `ps-detailing/` | PS Detailing, Хабаровск — статический сайт (HTML/CSS/JS) |
 | `kgcustom/` | Kgcustom, Красноярск — автосервис и детейлинг (HTML/CSS/JS) |
 | `gorillaz-studios/` | Gorillaz Studios, Новосибирск — детейлинг (HTML/CSS/JS) |
+| `makcar/` | MakCar, Омск — кузовной ремонт и покраска (HTML/CSS/JS) |
 
 ## Локальный запуск (skolov38)
 
@@ -58,3 +59,12 @@ python server.py
 ```
 
 Открыть: http://127.0.0.1:8086/
+
+## Локальный запуск (makcar)
+
+```bash
+cd makcar
+python server.py
+```
+
+Открыть: http://127.0.0.1:8087/
