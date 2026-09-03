@@ -10,6 +10,7 @@
 | `ds7/` | Детейлинг DS7, Нижний Новгород — статический сайт (HTML/CSS/JS) |
 | `ps-detailing/` | PS Detailing, Хабаровск — статический сайт (HTML/CSS/JS) |
 | `kgcustom/` | Kgcustom, Красноярск — автосервис и детейлинг (HTML/CSS/JS) |
+| `gorillaz-studios/` | Gorillaz Studios, Новосибирск — детейлинг (HTML/CSS/JS) |
 
 ## Локальный запуск (skolov38)
 
@@ -48,3 +49,12 @@ python server.py
 ```
 
 Открыть: http://127.0.0.1:8085/
+
+## Локальный запуск (gorillaz-studios)
+
+```bash
+cd gorillaz-studios
+python server.py
+```
+
+Открыть: http://127.0.0.1:8086/
