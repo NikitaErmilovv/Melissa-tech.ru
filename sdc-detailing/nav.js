@@ -1,4 +1,8 @@
 (function () {
+  if (/\/index\.html(?:[?#]|$)/.test(location.pathname)) {
+    history.replaceState(null, '', location.pathname.replace(/index\.html$/, '') + location.search + location.hash);
+  }
+
   var burger = document.querySelector('.nav-burger');
   var panel = document.querySelector('.nav-mobile-menu');
   if (!burger || !panel) return;
