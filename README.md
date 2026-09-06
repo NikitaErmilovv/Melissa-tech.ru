@@ -13,6 +13,7 @@
 | `gorillaz-studios/` | Gorillaz Studios, Новосибирск — детейлинг (HTML/CSS/JS) |
 | `makcar/` | MakCar, Омск — кузовной ремонт и покраска (HTML/CSS/JS) |
 | `sdc-detailing/` | SDC Detailing, Южно-Сахалинск — детейлинг (HTML/CSS/JS) |
+| `dark-detailing/` | Dark Detailing, Оренбург — детейлинг (HTML/CSS/JS) |
 
 ## Локальный запуск (skolov38)
 
@@ -78,3 +79,12 @@ python server.py
 ```
 
 Открыть: http://127.0.0.1:8088/
+
+## Локальный запуск (dark-detailing)
+
+```bash
+cd dark-detailing
+python server.py
+```
+
+Открыть: http://127.0.0.1:8089/
