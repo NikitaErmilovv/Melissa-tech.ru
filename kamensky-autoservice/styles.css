@@ -235,6 +235,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .subpage-hero{padding:180px 6vw 90px;min-height:520px;background:radial-gradient(circle at 75% 50%,#30302d,transparent 35%),#0a0a0a}
 .subpage-hero .kicker{color:var(--accent)}
 .subpage-hero h1{font-size:clamp(58px,8vw,110px);line-height:.88;letter-spacing:-.07em;margin:15px 0 0;color:#f5f5f2}
+.services-hero h1{font-size:clamp(52px,7.2vw,100px)}
 .subpage-hero h1 .accent{color:var(--accent)}
 .subpage-hero p{max-width:550px;color:#888;line-height:1.7;margin-top:20px}
 
@@ -499,6 +500,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .gallery .tall{grid-row:span 1}
   .subpage-hero{padding:130px 5vw 64px;min-height:auto}
   .subpage-hero h1{font-size:clamp(40px,10vw,72px)}
+  .services-hero h1{font-size:clamp(36px,9vw,64px)}
   .service-list{margin-top:36px}
   .service-row{grid-template-columns:40px 1fr;gap:12px 16px;padding:24px 0}
   .service-row .meta,.service-row .cost{grid-column:2;text-align:left}
