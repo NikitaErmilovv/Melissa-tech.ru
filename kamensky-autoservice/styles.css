@@ -418,9 +418,16 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 @media(max-width:800px){
   .site-nav{
     position:absolute;height:auto;min-height:72px;padding:14px 5vw;
-    flex-wrap:wrap;align-items:center;
+    flex-wrap:nowrap;align-items:center;gap:8px;
   }
-  .nav-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+  .logo{
+    font-size:clamp(11px,3.4vw,18px);
+    letter-spacing:-.6px;
+    min-width:0;
+    flex:1 1 auto;
+  }
+  .logo a{display:block;white-space:nowrap}
+  .nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
   .nav-burger{
     display:flex;flex-direction:column;justify-content:center;gap:5px;
     width:44px;height:44px;padding:0 10px;
@@ -452,9 +459,8 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .nav-mobile-menu a:last-child{border-bottom:0;color:var(--accent)}
   body.nav-open{overflow:hidden}
 
-  .logo{font-size:18px}
   .links{display:none}
-  .phone{font-size:11px;padding:10px 14px}
+  .phone{font-size:clamp(9px,2.5vw,11px);padding:8px 10px;letter-spacing:-.03em}
   .hero{
     align-items:flex-start;justify-content:flex-start;
     padding:96px 5vw 48px;min-height:auto;
@@ -517,8 +523,8 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 }
 
 @media(max-width:480px){
-  .logo{font-size:16px}
-  .phone{font-size:10px;padding:8px 10px;letter-spacing:-.02em}
+  .logo{font-size:11px;letter-spacing:-.5px}
+  .phone{font-size:9px;padding:7px 8px}
   .stats{grid-template-columns:1fr}
   .stat{border-right:0;border-bottom:1px solid rgba(255,255,255,.09);padding:16px 0}
   .stat:last-child{border-bottom:0}
