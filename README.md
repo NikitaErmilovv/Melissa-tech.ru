@@ -15,6 +15,7 @@
 | `sdc-detailing/` | SDC Detailing, Южно-Сахалинск — детейлинг (HTML/CSS/JS) |
 | `dark-detailing/` | Dark Detailing, Оренбург — детейлинг (HTML/CSS/JS) |
 | `kamensky-autoservice/` | Автосервис Каменский — легковой автосервис (HTML/CSS/JS) |
+| `best-sound-voronezh/` | Best sound, Воронеж — автозвук (HTML/CSS/JS) |
 | `akvarel-surgut/` | Акварель, Сургут — кузовная мастерская и детейлинг (HTML/CSS/JS) |
 
 ## Локальный запуск (skolov38)
@@ -108,3 +109,12 @@ python server.py
 ```
 
 Открыть: http://127.0.0.1:8091/
+
+## Локальный запуск (best-sound-voronezh)
+
+```bash
+cd best-sound-voronezh
+python server.py
+```
+
+Открыть: http://127.0.0.1:8092/
