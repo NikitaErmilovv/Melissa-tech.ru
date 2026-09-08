@@ -15,6 +15,7 @@
 | `sdc-detailing/` | SDC Detailing, Южно-Сахалинск — детейлинг (HTML/CSS/JS) |
 | `dark-detailing/` | Dark Detailing, Оренбург — детейлинг (HTML/CSS/JS) |
 | `kamensky-autoservice/` | Автосервис Каменский — легковой автосервис (HTML/CSS/JS) |
+| `ddsprocus-surgut/` | DDSproCustoms, Сургут — детейлинг (HTML/CSS/JS) |
 | `best-sound-voronezh/` | Best sound, Воронеж — автозвук (HTML/CSS/JS) |
 | `akvarel-surgut/` | Акварель, Сургут — кузовная мастерская и детейлинг (HTML/CSS/JS) |
 
@@ -118,3 +119,12 @@ python server.py
 ```
 
 Открыть: http://127.0.0.1:8092/
+
+## Локальный запуск (ddsprocus-surgut)
+
+```bash
+cd ddsprocus-surgut
+python server.py
+```
+
+Открыть: http://127.0.0.1:8093/
