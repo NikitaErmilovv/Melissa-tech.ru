@@ -16,6 +16,7 @@
 | `dark-detailing/` | Dark Detailing, Оренбург — детейлинг (HTML/CSS/JS) |
 | `kamensky-autoservice/` | Автосервис Каменский — легковой автосервис (HTML/CSS/JS) |
 | `ddsprocus-surgut/` | DDSproCustoms, Сургут — детейлинг (HTML/CSS/JS) |
+| `restyle-surgut/` | Restyle, Сургут — детейлинг (HTML/CSS/JS) |
 | `best-sound-voronezh/` | Best sound, Воронеж — автозвук (HTML/CSS/JS) |
 | `akvarel-surgut/` | Акварель, Сургут — кузовная мастерская и детейлинг (HTML/CSS/JS) |
 
@@ -128,3 +129,12 @@ python server.py
 ```
 
 Открыть: http://127.0.0.1:8093/
+
+## Локальный запуск (restyle-surgut)
+
+```bash
+cd restyle-surgut
+python server.py
+```
+
+Открыть: http://127.0.0.1:8094/
