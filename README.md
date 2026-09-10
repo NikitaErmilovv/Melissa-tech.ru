@@ -16,8 +16,10 @@
 | `kamensky-autoservice/` | Автосервис Каменский — легковой автосервис (HTML/CSS/JS) |
 | `ddsprocus-surgut/` | DDSproCustoms, Сургут — детейлинг (HTML/CSS/JS) |
 | `restyle-surgut/` | Restyle, Сургут — детейлинг (HTML/CSS/JS) |
+| `krem-surgut/` | Krem, Сургут — детейлинг (HTML/CSS/JS) |
 | `best-sound-voronezh/` | Best sound, Воронеж — автозвук (HTML/CSS/JS) |
 | `akvarel-surgut/` | Акварель, Сургут — кузовная мастерская и детейлинг (HTML/CSS/JS) |
+| `krem-surgut/` | Krem, Сургут — детейлинг (HTML/CSS/JS) |
 
 ## Локальный запуск (ds7)
 
@@ -126,3 +128,21 @@ python server.py
 ```
 
 Открыть: http://127.0.0.1:8094/
+
+## Локальный запуск (krem-surgut)
+
+```bash
+cd krem-surgut
+python server.py
+```
+
+Открыть: http://127.0.0.1:8095/
+
+## Локальный запуск (krem-surgut)
+
+```bash
+cd krem-surgut
+python server.py
+```
+
+Открыть: http://127.0.0.1:8095/
