@@ -14,7 +14,7 @@ a{color:inherit;text-decoration:none}
 html{scroll-behavior:smooth}
 
 nav{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;position:absolute;width:100%;z-index:2;border-bottom:1px solid rgba(255,255,255,.09)}
-.logo{font-size:21px;font-weight:900;letter-spacing:-1px}
+.logo{font-size:21px;font-weight:900;letter-spacing:.05em}
 .logo span{color:var(--accent)}
 .links{display:flex;gap:34px;font-size:13px;color:#bdbdb7}
 .links a{transition:color .2s}
@@ -28,7 +28,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-content{position:relative;z-index:1;max-width:720px}
 .eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:25px}
-.hero h1{font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0 0 34px;font-weight:800}
+.hero h1{font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.025em;margin:0 0 34px;font-weight:800}
 .hero h1 .accent{color:var(--accent)}
 .hero p{max-width:470px;color:#aaa9a3;line-height:1.65;font-size:15px}
 .actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
