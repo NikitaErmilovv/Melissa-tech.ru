@@ -120,6 +120,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 
 .quote{margin-top:80px;padding:55px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);font-size:clamp(28px,4vw,58px);line-height:1.05;letter-spacing:-.05em;max-width:1000px}
 .quote span{color:var(--accent)}
+.quote + .photo-strip{margin-top:48px}
 
 .brand-story{padding:120px 6vw;border-top:1px solid rgba(255,255,255,.08)}
 .brand-story-inner{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
