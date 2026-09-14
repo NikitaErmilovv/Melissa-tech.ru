@@ -30,8 +30,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:25px}
 .hero h1{font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0 0 34px;font-weight:800}
 .hero h1 .accent{color:var(--accent)}
-.hero-title-inline{white-space:nowrap}
-.hero-title-inline span{color:var(--accent)}
+.hero h1 span{color:var(--accent)}
 .hero p{max-width:470px;color:#aaa9a3;line-height:1.65;font-size:15px}
 .actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
 .button{background:var(--accent);color:var(--accent-ink);padding:17px 25px;font-weight:700;font-size:12px;display:inline-block;border:0;cursor:pointer;transition:background .2s}
@@ -512,7 +511,6 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .services-process .steps{margin-top:36px;min-width:0}
   .ba-grid,.photo-strip,.price-grid,.reviews,.contact-box{grid-template-columns:1fr}
   .ba-grid{margin-top:40px}
-  .hero-title-inline{white-space:normal;font-size:clamp(40px,10vw,72px)}
   .photo-strip{margin-top:40px}
   .photo.big{min-height:340px}
   .photo{min-height:260px}
