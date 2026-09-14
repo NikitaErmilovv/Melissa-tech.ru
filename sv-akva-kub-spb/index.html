@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Св-Аква Куб 198 — сайт</title>
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
 <nav class="site-nav">
@@ -41,19 +41,25 @@
   </div>
 </section>
 
-<section class="service-lines" id="booking">
-  <div class="service-lines-inner">
-    <article class="service-line">
-      <div class="service-line-kicker">ЗАПИСЬ · АВТОМОЙКА</div>
-      <h2>МОЙКА</h2>
-      <p>Комплексная и детейлинг-мойка — можно приехать без записи в часы работы или позвонить заранее.</p>
-      <a class="service-line-phone" href="tel:+79657979979">+7 (965) 797-99-79</a>
+<section class="booking" id="booking">
+  <div class="booking-head">
+    <div><div class="kicker">ЗАПИСЬ</div><h2 class="booking-title">ВЫБЕРИТЕ<br><span class="accent">НАПРАВЛЕНИЕ.</span></h2></div>
+    <p class="intro">Автомойка и детейлинг принимают на разных линиях — звоните на нужный номер, чтобы сразу попасть к нужному специалисту.</p>
+  </div>
+  <div class="booking-grid">
+    <article class="booking-panel">
+      <div class="booking-panel-top"><span class="booking-panel-num">01 / АВТОМОЙКА</span></div>
+      <h3>ЗАПИСЬ<br>НА МОЙКУ</h3>
+      <p>Комплексная и детейлинг-мойка. Можно приехать без записи в часы работы или позвонить заранее и забронировать время.</p>
+      <div class="booking-panel-phone">+7 (965) 797-99-79</div>
+      <a class="button" href="tel:+79657979979">ПОЗВОНИТЬ · МОЙКА</a>
     </article>
-    <article class="service-line service-line--alt">
-      <div class="service-line-kicker">ЗАПИСЬ · ДЕТЕЙЛИНГ</div>
-      <h2>ДЕТЕЙЛИНГ</h2>
-      <p>Полировка, химчистка, керамика и защитные покрытия — лучше согласовать время по телефону.</p>
-      <a class="service-line-phone" href="tel:+79052540111">+7 (905) 254-01-11</a>
+    <article class="booking-panel booking-panel--alt">
+      <div class="booking-panel-top"><span class="booking-panel-num">02 / ДЕТЕЙЛИНГ</span></div>
+      <h3>ЗАПИСЬ<br>НА ДЕТЕЙЛИНГ</h3>
+      <p>Полировка, химчистка, керамика и защитные покрытия. Согласуем объём работ и удобное время до визита.</p>
+      <div class="booking-panel-phone">+7 (905) 254-01-11</div>
+      <a class="button dark" href="tel:+79052540111">ПОЗВОНИТЬ · ДЕТЕЙЛИНГ</a>
     </article>
   </div>
 </section>
@@ -90,6 +96,28 @@
   <div class="section-head">
     <div><div class="kicker">02 / РАБОТЫ</div><h2>БЛЕСК,<br><span class="accent">КОТОРЫЙ ВИДНО.</span></h2></div>
     <p class="intro">Чистый кузов, ровное отражение и ухоженный салон — результат, который заметен сразу.</p>
+  </div>
+  <div class="ba-grid">
+    <figure class="ba-item">
+      <div class="ba-slider" data-ba>
+        <img class="ba-after" src="img/works/before-after/hood-after.jpg" alt="После — полировка кузова">
+        <div class="ba-before-wrap">
+          <img class="ba-before" src="img/works/before-after/hood-before.jpg" alt="До — полировка кузова">
+        </div>
+        <div class="ba-handle" aria-hidden="true"><span></span></div>
+      </div>
+      <figcaption>Полировка кузова</figcaption>
+    </figure>
+    <figure class="ba-item">
+      <div class="ba-slider" data-ba>
+        <img class="ba-after" src="img/works/before-after/headlight-after.jpg" alt="После — восстановление фар">
+        <div class="ba-before-wrap">
+          <img class="ba-before" src="img/works/before-after/headlight-before.jpg" alt="До — восстановление фар">
+        </div>
+        <div class="ba-handle" aria-hidden="true"><span></span></div>
+      </div>
+      <figcaption>Восстановление фар</figcaption>
+    </figure>
   </div>
   <div class="photo-strip">
     <div class="photo big" style="background-image:url('img/works/work-01.jpg?v=2')"><span class="tag">МОЙКА</span></div>
@@ -217,5 +245,6 @@
 </div>
 <script src="nav.js"></script>
 <script src="stats.js"></script>
+<script src="ba-slider.js"></script>
 </body>
 </html>
