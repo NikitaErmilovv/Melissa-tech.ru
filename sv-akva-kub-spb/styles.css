@@ -21,7 +21,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .phone{border:1px solid rgba(255,255,255,.19);padding:13px 20px;border-radius:3px;font-size:12px;font-weight:600;white-space:nowrap;transition:border-color .2s,color .2s}
 .phone:hover{border-color:var(--accent-soft);color:var(--accent)}
 
-.hero{min-height:760px;padding:82px 6vw 150px;display:flex;align-items:flex-end;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#343434 0,#171717 22%,#0a0a0a 55%)}
+.hero{min-height:760px;padding:108px 6vw 72px;display:flex;align-items:flex-start;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#343434 0,#171717 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
 .heroimg{
   position:absolute;right:0;top:82px;width:65%;height:678px;
@@ -30,29 +30,41 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   opacity:1;filter:brightness(1.3);
 }
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.22) 40%,transparent 70%)}
-.hero-content{position:relative;z-index:1;max-width:720px}
-.eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:25px}
-.hero-brand{margin:0 0 34px;font-weight:900;text-transform:uppercase;line-height:.88;letter-spacing:-.04em}
+.hero-content{position:relative;z-index:1;max-width:720px;padding-top:18px}
+.eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:20px}
+.hero-brand{margin:0 0 28px;font-weight:900;text-transform:uppercase;line-height:.88;letter-spacing:-.04em}
 .hero-brand-top{display:block;font-size:clamp(52px,7.2vw,102px);letter-spacing:.06em}
 .hero-brand-bottom{display:block;margin-top:8px;font-size:clamp(36px,4.8vw,68px);letter-spacing:.22em;color:#ececea}
 .hero-brand-bottom .accent{color:var(--accent);letter-spacing:.14em}
 .hero h1 .accent{color:var(--accent)}
 
-.booking{padding:72px 6vw 80px;border-bottom:1px solid rgba(255,255,255,.09);background:#0a0a0a}
-.booking-head{display:flex;justify-content:space-between;gap:30px;margin-bottom:42px;align-items:flex-end}
+.booking{padding:80px 6vw 88px;border-bottom:1px solid rgba(255,255,255,.09);background:#0a0a0a}
+.booking-intro{max-width:640px;margin-bottom:48px}
+.booking-intro p{margin:18px 0 0;color:#8f8f89;font-size:14px;line-height:1.7;max-width:520px}
 .booking-title{font-size:clamp(34px,4.5vw,58px);line-height:.95;letter-spacing:-.06em;margin:12px 0 0;font-weight:800}
-.booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.booking-panel{
-  min-height:360px;border:1px solid rgba(255,255,255,.08);background:#0e0e0e;
-  padding:34px 32px 36px;display:flex;flex-direction:column;
+.booking-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1)}
+.booking-card{
+  min-height:340px;background:#0e0e0e;padding:0;display:flex;flex-direction:column;
+  border-top:3px solid rgba(255,255,255,.12);
 }
-.booking-panel--alt{background:linear-gradient(180deg,#101010 0%,#0c0c0c 100%)}
-.booking-panel-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:auto}
-.booking-panel-num{font-size:11px;letter-spacing:2px;color:var(--accent);opacity:.78}
-.booking-panel h3{margin:42px 0 16px;font-size:clamp(26px,3vw,38px);line-height:.95;letter-spacing:-.05em;font-weight:800}
-.booking-panel p{margin:0;color:#8f8f89;font-size:14px;line-height:1.7;max-width:460px}
-.booking-panel-phone{margin:28px 0 22px;font-size:clamp(20px,2.4vw,28px);font-weight:800;letter-spacing:-.02em;color:#fff}
-.booking-panel .button,.booking-panel .button.dark{align-self:flex-start}
+.booking-card--wash{border-top-color:#f5f5f2}
+.booking-card--detail{border-top-color:#8a8a84}
+.booking-card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:28px 32px 0;gap:16px;
+}
+.booking-card-num{font-size:11px;letter-spacing:2px;color:var(--accent);opacity:.65}
+.booking-card-tag{font-size:10px;letter-spacing:2px;color:var(--accent);padding:8px 12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03)}
+.booking-card h3{
+  margin:24px 32px 14px;font-size:clamp(24px,2.8vw,34px);line-height:1;letter-spacing:-.04em;font-weight:800;
+}
+.booking-card p{margin:0 32px;color:#8f8f89;font-size:14px;line-height:1.7;flex:1}
+.booking-card-foot{
+  margin-top:32px;padding:24px 32px 32px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.booking-card-phone{font-size:clamp(18px,2vw,24px);font-weight:800;letter-spacing:-.02em;color:#fff;transition:color .2s}
+.booking-card-phone:hover{color:var(--accent)}
 
 .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:70px}
 .ba-item{margin:0}
@@ -513,14 +525,18 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .heroimg{width:100%;opacity:.45;top:72px;height:calc(100% - 72px)}
   .hero-content{margin-top:0}
   .hero h1{font-size:clamp(40px,11vw,65px);margin-bottom:24px}
-  .hero{padding-bottom:110px}
+  .hero{padding:96px 5vw 64px}
+  .hero-content{padding-top:8px}
   .hero-brand-top{font-size:clamp(38px,10vw,58px);letter-spacing:.05em}
   .hero-brand-bottom{font-size:clamp(28px,7vw,42px);letter-spacing:.14em}
   .booking{padding:56px 5vw 64px}
-  .booking-head{display:block;margin-bottom:32px}
-  .booking-head .intro{margin-top:18px;max-width:none}
+  .booking-intro{margin-bottom:32px}
   .booking-grid{grid-template-columns:1fr}
-  .booking-panel{min-height:auto;padding:28px 22px 32px}
+  .booking-card{min-height:auto}
+  .booking-card-head,.booking-card h3,.booking-card p,.booking-card-foot{padding-left:22px;padding-right:22px}
+  .booking-card h3{margin-top:20px}
+  .booking-card-foot{flex-direction:column;align-items:flex-start;padding-bottom:28px}
+  .booking-card-foot .button,.booking-card-foot .button.dark{width:100%;text-align:center;box-sizing:border-box}
   .ba-grid,.photo-strip{grid-template-columns:1fr}
   .ba-grid{margin-top:40px}
   .hero p{font-size:14px}
