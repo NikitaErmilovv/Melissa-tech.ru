@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Carstyle — сайт</title>
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 <nav class="site-nav">
@@ -32,7 +32,7 @@
   <div class="heroimg"></div>
   <div class="hero-content">
     <div class="eyebrow">ДЕТЕЙЛИНГ · НОРИЛЬСК</div>
-    <h1>Car<br>style<br><span class="accent">Норильск</span></h1>
+    <h1 class="hero-title-inline"><span>Car</span>style <span class="accent">· Норильск</span></h1>
     <p>Детейлинг, кузовной ремонт и покраска в Норильске. Восстанавливаем внешний вид автомобиля — от полировки до полного кузовного цикла.</p>
     <div class="actions"><a class="button" href="tel:+79131640208">ЗАПИСАТЬСЯ</a><a class="button dark" href="#services">СМОТРЕТЬ УСЛУГИ</a></div>
   </div>
@@ -71,12 +71,34 @@
     <div><div class="kicker">02 / РАБОТЫ</div><h2>РЕЗУЛЬТАТ,<br><span class="accent">КОТОРЫЙ ВИДНО</span></h2></div>
     <p class="intro">Блеск кузова, ровный цвет и чистый салон — работаем так, чтобы результат говорил сам за себя.</p>
   </div>
+  <div class="ba-grid">
+    <figure class="ba-item">
+      <div class="ba-slider" data-ba>
+        <img class="ba-after" src="img/works/before-after/hood-after.jpg" alt="После — полировка кузова">
+        <div class="ba-before-wrap">
+          <img class="ba-before" src="img/works/before-after/hood-before.jpg" alt="До — полировка кузова">
+        </div>
+        <div class="ba-handle" aria-hidden="true"><span></span></div>
+      </div>
+      <figcaption>Полировка кузова</figcaption>
+    </figure>
+    <figure class="ba-item">
+      <div class="ba-slider" data-ba>
+        <img class="ba-after" src="img/works/before-after/headlight-after.jpg" alt="После — восстановление фар">
+        <div class="ba-before-wrap">
+          <img class="ba-before" src="img/works/before-after/headlight-before.jpg" alt="До — восстановление фар">
+        </div>
+        <div class="ba-handle" aria-hidden="true"><span></span></div>
+      </div>
+      <figcaption>Восстановление фар</figcaption>
+    </figure>
+  </div>
+  <div class="quote">«Хороший сервис — это когда автомобиль выглядит так, <span>будто повреждений не было.</span>»</div>
   <div class="photo-strip">
     <div class="photo big" style="background-image:url('img/works/30258560080152137_e74d.jpg')"><span class="tag">КУЗОВ</span></div>
     <div class="photo" style="background-image:url('img/works/fa4e1983-d32a-47cf-9ae1-1a03f15e63d6.jpg')"><span class="tag">ОКЛЕЙКА ПЛЁНКОЙ</span></div>
     <div class="photo" style="background-image:url('img/works/30258560151293624_5918.jpg')"><span class="tag">ПОЛИРОВКА</span></div>
   </div>
-  <div class="quote">«Хороший сервис — это когда автомобиль выглядит так, <span>будто повреждений не было.</span>»</div>
 </section>
 
 <section class="process" id="process">
@@ -193,6 +215,7 @@
 </footer>
 </div>
 <script src="nav.js"></script>
+<script src="ba-slider.js"></script>
 <script src="stats.js"></script>
 </body>
 </html>
