@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Кабинет — Alvion</title>
+<link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+<nav class="site-nav">
+  <div class="logo"><a href="./"><span>Alvion</span></a></div>
+  <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О СТУДИИ</a><a href="contact.html">КОНТАКТЫ</a></div>
+  <div class="nav-actions" data-auth-nav>
+    <div class="nav-auth-links">
+      <a class="nav-auth-link" href="login.html" data-auth-guest>Войти</a>
+      <a class="nav-auth-link nav-auth-link--accent" href="register.html" data-auth-guest>Регистрация</a>
+      <a class="nav-auth-link" href="cabinet.html" data-auth-user hidden>Кабинет</a>
+      <a class="nav-auth-link" href="admin.html" data-auth-admin hidden>Админ</a>
+      <button type="button" class="nav-auth-link nav-auth-btn" data-auth-logout hidden>Выйти</button>
+    </div>
+    <a class="phone" href="tel:+79224200238">+7 (922) 420-02-38</a>
+    <button class="nav-burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu">
+    <a href="services.html">УСЛУГИ</a>
+    <a href="gallery.html">РАБОТЫ</a>
+    <a href="about.html">О СТУДИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+    <a href="login.html" data-auth-guest>ВОЙТИ</a>
+    <a href="register.html" data-auth-guest>РЕГИСТРАЦИЯ</a>
+    <a href="cabinet.html" data-auth-user hidden>КАБИНЕТ</a>
+    <a href="admin.html" data-auth-admin hidden>АДМИН</a>
+  </div>
+</nav>
+
+<section class="subpage-hero auth-hero">
+  <div class="kicker">КАБИНЕТ</div>
+  <h1>ЗДРАВСТВУЙТЕ,<br><span class="accent" data-auth-name></span></h1>
+  <p>Отправьте заявку на услугу — мы свяжемся и подтвердим запись.</p>
+</section>
+
+<section class="section auth-section">
+  <div class="auth-grid">
+    <div class="auth-card">
+      <div class="kicker">ЗАЯВКА</div>
+      <h3>НОВАЯ<br>ЗАПИСЬ.</h3>
+      <form class="auth-form" data-application-form novalidate>
+        <p class="form-message form-message--error" hidden></p>
+        <p class="form-message form-message--success" hidden>Заявка отправлена. Мы свяжемся с вами.</p>
+        <label class="field-label">Услуга
+          <select name="service" required>
+            <option value="" disabled selected>Выберите услугу</option>
+            <option value="wash">Мойка и уход за кузовом</option>
+            <option value="polish">Полировка</option>
+            <option value="ceramic">Керамика / защита</option>
+            <option value="interior">Салон и химчистка</option>
+            <option value="complex">Комплексный детейлинг</option>
+            <option value="other">Другое / консультация</option>
+          </select>
+        </label>
+        <div class="form-row form-row--2">
+          <label class="field-label">Дата<input name="date" type="date"></label>
+          <label class="field-label">Время
+            <select name="time">
+              <option value="">Не важно</option>
+              <option value="10:00">10:00</option>
+              <option value="12:00">12:00</option>
+              <option value="14:00">14:00</option>
+              <option value="16:00">16:00</option>
+              <option value="18:00">18:00</option>
+              <option value="20:00">20:00</option>
+            </select>
+          </label>
+        </div>
+        <label class="field-label">Автомобиль<input name="car" placeholder="Марка и модель"></label>
+        <label class="field-label">Комментарий<textarea name="comment" placeholder="Пожелания или вопросы"></textarea></label>
+        <button class="button" type="submit">ОТПРАВИТЬ ЗАЯВКУ</button>
+      </form>
+    </div>
+    <div class="auth-card">
+      <div class="kicker">ИСТОРИЯ</div>
+      <h3>МОИ<br>ЗАЯВКИ.</h3>
+      <div class="auth-app-list" data-my-applications></div>
+    </div>
+  </div>
+</section>
+
+<script src="nav.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>

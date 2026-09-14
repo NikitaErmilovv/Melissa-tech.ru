@@ -6,13 +6,20 @@
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Alvion — сайт</title>
-<link rel="stylesheet" href="styles.css?v=1">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 <nav class="site-nav">
   <div class="logo"><a href="./"><span>Alvion</span></a></div>
   <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О СТУДИИ</a><a href="contact.html">КОНТАКТЫ</a></div>
-  <div class="nav-actions">
+  <div class="nav-actions" data-auth-nav>
+    <div class="nav-auth-links">
+      <a class="nav-auth-link" href="login.html" data-auth-guest>Войти</a>
+      <a class="nav-auth-link nav-auth-link--accent" href="register.html" data-auth-guest>Регистрация</a>
+      <a class="nav-auth-link" href="cabinet.html" data-auth-user hidden>Кабинет</a>
+      <a class="nav-auth-link" href="admin.html" data-auth-admin hidden>Админ</a>
+      <button type="button" class="nav-auth-link nav-auth-btn" data-auth-logout hidden>Выйти</button>
+    </div>
     <a class="phone" href="tel:+79224200238">+7 (922) 420-02-38</a>
     <button class="nav-burger" type="button" aria-label="Открыть меню" aria-expanded="false">
       <span class="nav-burger-line"></span>
@@ -25,16 +32,24 @@
     <a href="gallery.html">РАБОТЫ</a>
     <a href="about.html">О СТУДИИ</a>
     <a href="contact.html">КОНТАКТЫ</a>
+    <a href="login.html" data-auth-guest>ВОЙТИ</a>
+    <a href="register.html" data-auth-guest>РЕГИСТРАЦИЯ</a>
+    <a href="cabinet.html" data-auth-user hidden>КАБИНЕТ</a>
+    <a href="admin.html" data-auth-admin hidden>АДМИН</a>
   </div>
 </nav>
 
 <section class="hero">
-  <div class="heroimg"></div>
+  <div class="heroimg" id="hero-media">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="img/video/hero.mp4" type="video/mp4">
+    </video>
+  </div>
   <div class="hero-content">
     <div class="eyebrow">ДЕТЕЙЛИНГ · НИЖНЕВАРТОВСК</div>
     <h1>Alvion<br><span class="accent">Detail.</span></h1>
     <p>Детейлинг-студия в Нижневартовске: мойка, полировка, керамика и уход за салоном. Работаем ежедневно с 10:00 до 22:00 по предварительному звонку.</p>
-    <div class="actions"><a class="button" href="tel:+79224200238">ЗАПИСАТЬСЯ</a><a class="button dark" href="#services">СМОТРЕТЬ УСЛУГИ</a></div>
+    <div class="actions"><a class="button" href="register.html">ЗАПИСАТЬСЯ</a><a class="button dark" href="#services">СМОТРЕТЬ УСЛУГИ</a></div>
   </div>
 </section>
 
@@ -193,6 +208,20 @@
 </footer>
 </div>
 <script src="nav.js"></script>
+<script src="auth.js"></script>
 <script src="stats.js"></script>
+<script>
+(function () {
+  var box = document.getElementById('hero-media');
+  var video = box && box.querySelector('.hero-video');
+  if (!video) return;
+  function fallback() { if (box) box.classList.add('heroimg--fallback'); }
+  video.addEventListener('error', fallback);
+  if (video.readyState >= 2) return;
+  setTimeout(function () {
+    if (video.error || (video.networkState === 3 && video.readyState === 0)) fallback();
+  }, 1200);
+})();
+</script>
 </body>
 </html>

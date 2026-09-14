@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Регистрация — Alvion</title>
+<link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+<nav class="site-nav">
+  <div class="logo"><a href="./"><span>Alvion</span></a></div>
+  <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О СТУДИИ</a><a href="contact.html">КОНТАКТЫ</a></div>
+  <div class="nav-actions" data-auth-nav>
+    <div class="nav-auth-links">
+      <a class="nav-auth-link" href="login.html" data-auth-guest>Войти</a>
+      <a class="nav-auth-link nav-auth-link--accent" href="register.html" data-auth-guest>Регистрация</a>
+      <a class="nav-auth-link" href="cabinet.html" data-auth-user hidden>Кабинет</a>
+      <a class="nav-auth-link" href="admin.html" data-auth-admin hidden>Админ</a>
+      <button type="button" class="nav-auth-link nav-auth-btn" data-auth-logout hidden>Выйти</button>
+    </div>
+    <a class="phone" href="tel:+79224200238">+7 (922) 420-02-38</a>
+    <button class="nav-burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu">
+    <a href="services.html">УСЛУГИ</a>
+    <a href="gallery.html">РАБОТЫ</a>
+    <a href="about.html">О СТУДИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+    <a href="login.html" data-auth-guest>ВОЙТИ</a>
+    <a href="register.html" data-auth-guest>РЕГИСТРАЦИЯ</a>
+    <a href="cabinet.html" data-auth-user hidden>КАБИНЕТ</a>
+    <a href="admin.html" data-auth-admin hidden>АДМИН</a>
+  </div>
+</nav>
+
+<section class="subpage-hero auth-hero">
+  <div class="kicker">АККАУНТ</div>
+  <h1>РЕГИСТРАЦИЯ<br><span class="accent">КЛИЕНТА.</span></h1>
+  <p>Создайте аккаунт — после этого сможете оставлять заявки на детейлинг прямо на сайте.</p>
+</section>
+
+<section class="section auth-section">
+  <div class="auth-card">
+    <form class="auth-form" data-register-form novalidate>
+      <p class="form-message form-message--error" hidden></p>
+      <label class="field-label">Имя<input name="name" required autocomplete="name" placeholder="Как к вам обращаться"></label>
+      <label class="field-label">Телефон<input name="phone" type="tel" data-phone-mask required autocomplete="tel" placeholder="+7 900 000-00-00"></label>
+      <label class="field-label">Email<input name="email" type="email" required autocomplete="email" placeholder="you@mail.ru"></label>
+      <label class="field-label">Пароль<input name="password" type="password" required autocomplete="new-password" minlength="6" placeholder="Минимум 6 символов"></label>
+      <button class="button" type="submit">СОЗДАТЬ АККАУНТ</button>
+      <p class="auth-switch">Уже есть аккаунт? <a href="login.html">Войти</a></p>
+    </form>
+  </div>
+</section>
+
+<script src="nav.js"></script>
+<script src="auth.js"></script>
+</body>
+</html>
