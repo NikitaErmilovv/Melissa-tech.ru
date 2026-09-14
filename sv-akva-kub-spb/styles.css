@@ -38,7 +38,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .hero-brand-bottom .accent{color:var(--accent);letter-spacing:.14em}
 .hero h1 .accent{color:var(--accent)}
 
-.booking{padding:0 6vw 120px;border-top:1px solid rgba(255,255,255,.09);background:#0a0a0a}
+.booking{padding:80px 6vw 120px;border-top:1px solid rgba(255,255,255,.09);background:#0a0a0a}
 .booking-intro{max-width:640px;margin-bottom:48px}
 .booking-intro p{margin:18px 0 0;color:#8f8f89;font-size:14px;line-height:1.7;max-width:520px}
 .booking-title{font-size:clamp(34px,4.5vw,58px);line-height:.95;letter-spacing:-.06em;margin:12px 0 0;font-weight:800}
