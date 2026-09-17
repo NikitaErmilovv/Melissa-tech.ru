@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Авто Под Ключ — привоз авто из Китая, Японии и Кореи в Красноярск</title>
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
 <nav class="site-nav">
@@ -34,7 +34,7 @@
     <div class="eyebrow">ПРИВОЗ АВТО · КИТАЙ · ЯПОНИЯ · КОРЕЯ</div>
     <h1>Авто<br>Под<br><span class="accent">Ключ.</span></h1>
     <p>Привозим автомобили из Китая, Японии и Кореи в Красноярск: подбор, выкуп, таможня и доставка до вашего двора. Полную стоимость считаем до старта — в день выдачи вы доплачиваете ноль.</p>
-    <div class="actions"><a class="button" href="tel:+79029216598">РАССЧИТАТЬ СТОИМОСТЬ</a><a class="button dark" href="#process">КАК МЫ ВЕЗЁМ</a></div>
+    <div class="actions"><a class="button" href="#calc">РАССЧИТАТЬ СТОИМОСТЬ</a><a class="button dark" href="#process">КАК МЫ ВЕЗЁМ</a></div>
   </div>
 </section>
 
@@ -93,9 +93,72 @@
   </div>
 </section>
 
+<section class="section" id="calc">
+  <div class="section-head">
+    <div><div class="kicker">03 / КАЛЬКУЛЯТОР</div><h2>ЦЕНА<br><span class="accent">ПОД КЛЮЧ.</span></h2></div>
+    <p class="intro">Посчитайте сумму до рубля прямо сейчас: пошлина и утильсбор считаются по действующим ставкам, курс евро подтягивается из ЦБ.</p>
+  </div>
+  <div class="calc-grid">
+    <div class="calc-form">
+      <div class="calc-field">
+        <div class="calc-label"><span>ОТКУДА ВЕЗЁМ</span></div>
+        <div class="calc-choice" data-group="country">
+          <button type="button" data-value="china" aria-pressed="true">Китай</button>
+          <button type="button" data-value="japan" aria-pressed="false">Япония</button>
+          <button type="button" data-value="korea" aria-pressed="false">Корея</button>
+        </div>
+      </div>
+      <div class="calc-field">
+        <div class="calc-label"><span>ВОЗРАСТ АВТОМОБИЛЯ</span></div>
+        <div class="calc-choice" data-group="age">
+          <button type="button" data-value="new" aria-pressed="true">До 3 лет</button>
+          <button type="button" data-value="3-5" aria-pressed="false">3–5 лет</button>
+          <button type="button" data-value="5+" aria-pressed="false">Старше 5 лет</button>
+        </div>
+      </div>
+      <div class="calc-field">
+        <div class="calc-label"><span>ТИП ДВИГАТЕЛЯ</span></div>
+        <div class="calc-choice" data-group="fuel">
+          <button type="button" data-value="ice" aria-pressed="true">Бензин / дизель</button>
+          <button type="button" data-value="hybrid" aria-pressed="false">Гибрид</button>
+          <button type="button" data-value="ev" aria-pressed="false">Электро</button>
+        </div>
+      </div>
+      <div class="calc-field">
+        <div class="calc-label"><span>ЦЕНА АВТО НА ПЛОЩАДКЕ</span><b id="calc-price-out">2 500 000 ₽</b></div>
+        <input class="calc-range" id="calc-price" type="range" min="500000" max="15000000" step="100000" value="2500000" aria-label="Цена автомобиля на площадке">
+        <div class="calc-scale"><span>500 ТЫС ₽</span><span>15 МЛН ₽</span></div>
+      </div>
+      <div class="calc-field">
+        <div class="calc-label"><span>ОБЪЁМ ДВИГАТЕЛЯ</span><b id="calc-volume-out">2 000 см³</b></div>
+        <input class="calc-range" id="calc-volume" type="range" min="800" max="4500" step="100" value="2000" aria-label="Объём двигателя">
+        <div class="calc-scale"><span>800 СМ³</span><span>4500 СМ³</span></div>
+      </div>
+    </div>
+    <aside class="calc-result">
+      <div class="calc-total">
+        <span>ИТОГО ПОД КЛЮЧ</span>
+        <b id="calc-total">—</b>
+        <small id="calc-term">Срок под ключ — от 30 дней · Китай</small>
+      </div>
+      <ul class="calc-rows">
+        <li><span>Автомобиль</span><span id="calc-row-car">—</span></li>
+        <li><span>Логистика до России</span><span id="calc-row-freight">—</span></li>
+        <li><span>Таможенная пошлина</span><span id="calc-row-duty">—</span></li>
+        <li><span>Утильсбор и сборы</span><span id="calc-row-util">—</span></li>
+        <li><span>СБКТС и ЭПТС</span><span id="calc-row-papers">—</span></li>
+        <li><span>Доставка в Красноярск</span><span id="calc-row-delivery">—</span></li>
+        <li><span>Услуги компании</span><span id="calc-row-service">—</span></li>
+      </ul>
+      <a class="button" href="tel:+79029216598">ЗАФИКСИРОВАТЬ ЦЕНУ</a>
+      <p class="calc-note">Предварительный расчёт по ставкам для личного пользования, курс евро ЦБ — <span id="calc-rate">100 ₽</span>. Точную сумму по вашей модели менеджер называет в день обращения.</p>
+    </aside>
+  </div>
+</section>
+
 <section class="section" id="works">
   <div class="section-head">
-    <div><div class="kicker">03 / ПРИВЕЗЛИ</div><h2>АВТО,<br><span class="accent">КОТОРОЕ УЖЕ ЕДЕТ.</span></h2></div>
+    <div><div class="kicker">04 / ПРИВЕЗЛИ</div><h2>АВТО,<br><span class="accent">КОТОРОЕ УЖЕ ЕДЕТ.</span></h2></div>
     <p class="intro">Показываем не рендеры, а реальные машины клиентов: лот на площадке, погрузку на автовоз и выдачу в Красноярске.</p>
   </div>
   <div class="photo-strip">
@@ -107,7 +170,7 @@
 </section>
 
 <section class="process" id="process">
-  <div class="kicker">04 / ЭТАПЫ</div>
+  <div class="kicker">05 / ЭТАПЫ</div>
   <h2>ОТ ЗАЯВКИ<br><span class="accent">ДО НОМЕРОВ.</span></h2>
   <div class="steps">
     <div class="step"><b>01</b><h3>Расчёт</h3><p>Считаем финальную сумму: автомобиль, фрахт, пошлина, утильсбор, брокер и доставка. Цена фиксируется в договоре.</p></div>
@@ -128,7 +191,7 @@
       <div class="address-map-intro">
         <div class="address-map-kicker">
           <span class="address-map-line"></span>
-          <span class="kicker">05 / ЛОКАЦИЯ</span>
+          <span class="kicker">06 / ЛОКАЦИЯ</span>
         </div>
         <h2 class="address-map-title">ГДЕ МЫ<br><span>НАХОДИМСЯ.</span></h2>
         <p class="address-map-text">Приезжайте в офис за расчётом или позвоните — посчитаем стоимость привоза по телефону.</p>
@@ -221,5 +284,6 @@
 </div>
 <script src="nav.js"></script>
 <script src="stats.js"></script>
+<script src="calc.js"></script>
 </body>
 </html>

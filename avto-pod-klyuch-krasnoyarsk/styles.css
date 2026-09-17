@@ -24,7 +24,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 
 .hero{min-height:760px;padding:82px 6vw 70px;display:flex;align-items:flex-end;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#343434 0,#171717 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:678px;background:url('img/works/hero.jpg') center/cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:678px;background:url('img/works/bmw-x7.jpg') center/cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-content{position:relative;z-index:1;max-width:720px}
 .eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:25px}
@@ -514,6 +514,39 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .address-map-btn{width:100%;align-self:stretch}
   .address-map-pin-label{transform:translate(-50%,calc(-100% - 18px))}
   .address-map-pin-label-text{font-size:7px;padding:3px 6px 2px;white-space:nowrap}
+}
+
+.calc-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:1px;background:#252525;margin-top:55px;border:1px solid #252525}
+.calc-form{background:#0e0e0e;padding:40px}
+.calc-field{margin-bottom:30px}
+.calc-field:last-child{margin-bottom:0}
+.calc-label{display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:11px;letter-spacing:2px;color:#8a8a84;margin-bottom:14px}
+.calc-label b{font-size:16px;letter-spacing:-.02em;color:var(--accent);font-weight:700}
+.calc-choice{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
+.calc-choice button{background:transparent;border:1px solid rgba(255,255,255,.14);color:#b0b0aa;padding:14px 8px;font:inherit;font-size:12px;letter-spacing:.02em;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.calc-choice button:hover{border-color:var(--accent-soft);color:var(--accent)}
+.calc-choice button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.calc-choice button[disabled]{opacity:.35;cursor:not-allowed}
+.calc-range{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:rgba(255,255,255,.16);outline:none;cursor:pointer}
+.calc-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer}
+.calc-range::-moz-range-thumb{width:18px;height:18px;border:0;border-radius:50%;background:var(--accent);cursor:pointer}
+.calc-range[disabled]{opacity:.3;cursor:not-allowed}
+.calc-scale{display:flex;justify-content:space-between;font-size:10px;letter-spacing:1px;color:#5f5f5a;margin-top:10px}
+.calc-result{background:#101010;padding:40px;display:flex;flex-direction:column}
+.calc-total{border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:22px;margin-bottom:22px}
+.calc-total span{display:block;font-size:11px;letter-spacing:2px;color:var(--accent);opacity:.72;margin-bottom:10px}
+.calc-total b{display:block;font-size:clamp(30px,3vw,40px);letter-spacing:-.05em;line-height:1}
+.calc-total small{display:block;margin-top:10px;font-size:12px;color:#777}
+.calc-rows{list-style:none;margin:0 0 26px;padding:0}
+.calc-rows li{display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a8a84;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.calc-rows li span:last-child{color:#d8d8d2;white-space:nowrap}
+.calc-result .button{margin-top:auto;text-align:center}
+.calc-note{font-size:11px;line-height:1.6;color:#5f5f5a;margin:16px 0 0}
+
+@media(max-width:900px){
+  .calc-grid{grid-template-columns:1fr;margin-top:40px}
+  .calc-form,.calc-result{padding:28px 22px}
+  .calc-choice{grid-auto-flow:row;grid-auto-columns:auto;grid-template-columns:1fr 1fr}
 }
 
 @media(max-width:480px){
