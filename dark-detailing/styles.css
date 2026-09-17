@@ -302,11 +302,10 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .subpage-hero p{max-width:550px;color:#888;line-height:1.7;margin-top:20px}
 
 .service-list{margin-top:55px;border-top:1px solid rgba(255,255,255,.08)}
-.service-row{display:grid;grid-template-columns:80px 1fr 260px 130px;gap:20px;padding:30px 0;border-bottom:1px solid rgba(255,255,255,.08);align-items:start}
+.service-row{display:grid;grid-template-columns:80px 1fr 130px;gap:20px;padding:30px 0;border-bottom:1px solid rgba(255,255,255,.08);align-items:start}
 .service-row .idx{color:var(--accent);font-size:11px;opacity:.75}
 .service-row h3{margin:0;font-size:25px}
 .service-row p{margin:7px 0 0;color:#777;font-size:12px;line-height:1.5}
-.service-row .meta{color:#888;font-size:11px;line-height:1.6}
 .service-row .cost{text-align:right;font-size:18px;color:var(--accent)}
 
 .address-map-bg{display:none}
@@ -562,7 +561,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .subpage-hero h1{font-size:clamp(40px,10vw,72px)}
   .service-list{margin-top:36px}
   .service-row{grid-template-columns:40px 1fr;gap:12px 16px;padding:24px 0}
-  .service-row .meta,.service-row .cost{grid-column:2;text-align:left}
+  .service-row .cost{grid-column:2;text-align:left}
   .service-row .cost{margin-top:8px;font-size:16px}
   .footer-grid{grid-template-columns:1fr;gap:28px;padding:56px 0 36px}
   .footer-col--brand-hours{gap:24px}
