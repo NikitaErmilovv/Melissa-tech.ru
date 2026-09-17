@@ -3,6 +3,8 @@ header('Content-Type: application/json; charset=utf-8');
 
 const ADMIN_EMAIL = 'admin@alvion.ru';
 const ADMIN_PASSWORD = 'alvion123';
+const DEMO_CLIENT_EMAIL = 'client@alvion.ru';
+const DEMO_CLIENT_PASSWORD = 'client123';
 const SESSION_TTL = 60 * 60 * 24 * 14;
 
 $dataDir = __DIR__ . DIRECTORY_SEPARATOR . '_data';
@@ -139,6 +141,26 @@ function ensure_seed(): void {
             'email' => ADMIN_EMAIL,
             'passwordHash' => hash_password(ADMIN_PASSWORD),
             'role' => 'admin',
+            'createdAt' => gmdate('Y-m-d\TH:i:s\Z'),
+        ];
+        save_json($usersFile, $users);
+    }
+    $hasClient = false;
+    foreach ($users as $user) {
+        if (($user['email'] ?? '') === DEMO_CLIENT_EMAIL) {
+            $hasClient = true;
+            break;
+        }
+    }
+    if (!$hasClient) {
+        $users[] = [
+            'id' => uid(),
+            'name' => 'Демо-клиент',
+            'phone' => '+7 (922) 000-00-00',
+            'email' => DEMO_CLIENT_EMAIL,
+            'passwordHash' => hash_password(DEMO_CLIENT_PASSWORD),
+            'role' => 'user',
+            'car' => 'Honda Accord',
             'createdAt' => gmdate('Y-m-d\TH:i:s\Z'),
         ];
         save_json($usersFile, $users);

@@ -25,6 +25,8 @@ SESSIONS_FILE = DATA_DIR / "sessions.json"
 
 ADMIN_EMAIL = "admin@alvion.ru"
 ADMIN_PASSWORD = "alvion123"
+DEMO_CLIENT_EMAIL = "client@alvion.ru"
+DEMO_CLIENT_PASSWORD = "client123"
 SESSION_TTL = 60 * 60 * 24 * 14
 
 _cache: dict[str, object] = {"ts": 0.0}
@@ -60,6 +62,20 @@ def ensure_seed_data() -> None:
                 "email": ADMIN_EMAIL,
                 "passwordHash": hash_password(ADMIN_PASSWORD),
                 "role": "admin",
+                "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            }
+        )
+        save_json(USERS_FILE, users)
+    if not any(u.get("email") == DEMO_CLIENT_EMAIL for u in users):
+        users.append(
+            {
+                "id": str(uuid.uuid4()),
+                "name": "Демо-клиент",
+                "phone": "+7 (922) 000-00-00",
+                "email": DEMO_CLIENT_EMAIL,
+                "passwordHash": hash_password(DEMO_CLIENT_PASSWORD),
+                "role": "user",
+                "car": "Honda Accord",
                 "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             }
         )

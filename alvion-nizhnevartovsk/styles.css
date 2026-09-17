@@ -149,7 +149,8 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 
 .gallery{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:50px}
 .gallery .g{background-size:cover;background-position:center;position:relative;min-height:360px}
-.gallery .g-studio{grid-column:1 / -1;min-height:460px;background-position:center 42%}
+.gallery .g-studio{grid-column:1 / -1;min-height:0;height:auto;background:none}
+.gallery .g-studio img{display:block;width:100%;height:auto}
 .gallery .g-honda{min-height:480px;background-position:center 30%}
 .gallery .g-lcp{min-height:480px}
 .gallery .g-wash{grid-column:1 / -1;min-height:400px}
@@ -694,7 +695,8 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .quote{margin-top:48px;padding:36px 0;font-size:clamp(22px,6vw,34px)}
   .gallery{grid-template-columns:1fr}
   .gallery .g,.gallery .g-honda,.gallery .g-lcp{min-height:240px}
-  .gallery .g-studio{grid-column:auto;min-height:220px}
+  .gallery .g-studio{grid-column:auto;min-height:0}
+  .gallery .g-studio img{width:100%;height:auto}
   .gallery .g-wash{grid-column:auto;min-height:220px}
   .gallery .wide{grid-column:span 1}
   .gallery .tall{grid-row:span 1}
