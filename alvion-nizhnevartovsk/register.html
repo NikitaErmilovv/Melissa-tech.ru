@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Регистрация — Alvion</title>
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
 <nav class="site-nav">
@@ -45,16 +45,74 @@
 </section>
 
 <section class="section auth-section">
-  <div class="auth-card">
-    <form class="auth-form" data-register-form novalidate>
-      <p class="form-message form-message--error" hidden></p>
-      <label class="field-label">Имя<input name="name" required autocomplete="name" placeholder="Как к вам обращаться"></label>
-      <label class="field-label">Телефон<input name="phone" type="tel" data-phone-mask required autocomplete="tel" placeholder="+7 900 000-00-00"></label>
-      <label class="field-label">Email<input name="email" type="email" required autocomplete="email" placeholder="you@mail.ru"></label>
-      <label class="field-label">Пароль<input name="password" type="password" required autocomplete="new-password" minlength="6" placeholder="Минимум 6 символов"></label>
-      <button class="button" type="submit">СОЗДАТЬ АККАУНТ</button>
-      <p class="auth-switch">Уже есть аккаунт? <a href="login.html">Войти</a></p>
-    </form>
+  <div class="auth-layout">
+    <aside class="auth-aside">
+      <div>
+        <div class="kicker">ЗАЧЕМ АККАУНТ</div>
+        <h2>ЗАПИСЬ<br><span class="accent">БЕЗ ЗВОНКОВ.</span></h2>
+      </div>
+      <ul class="auth-benefits">
+        <li><b>Онлайн-запись</b><span>Выбираете услугу, дату и время — администратор подтверждает заявку.</span></li>
+        <li><b>История обращений</b><span>Все заявки хранятся в кабинете: что делали и когда.</span></li>
+        <li><b>Статус в реальном времени</b><span>Видите, принята заявка, в работе она или уже выполнена.</span></li>
+      </ul>
+      <div class="auth-aside-foot">
+        Остались вопросы?<br>
+        <a href="tel:+79224200238">+7 (922) 420-02-38</a> · ежедневно 10:00–22:00
+      </div>
+    </aside>
+
+    <div class="auth-card">
+      <div class="auth-card-head">
+        <div class="kicker">ШАГ 1 ИЗ 1</div>
+        <h3>СОЗДАТЬ<br>АККАУНТ.</h3>
+        <p>Заполните поля ниже. Данные нужны только для записи и связи с вами.</p>
+      </div>
+      <form class="auth-form" data-register-form novalidate>
+        <p class="form-message form-message--error" hidden></p>
+
+        <label class="field-label">Имя и фамилия
+          <input name="name" required autocomplete="name" minlength="2" placeholder="Как к вам обращаться">
+          <span class="field-error" data-error-for="name" hidden></span>
+        </label>
+
+        <label class="field-label">Телефон
+          <input name="phone" type="tel" data-phone-mask required autocomplete="tel" inputmode="tel" placeholder="+7 900 000-00-00">
+          <span class="field-error" data-error-for="phone" hidden></span>
+        </label>
+
+        <label class="field-label">Email
+          <input name="email" type="email" required autocomplete="email" placeholder="you@mail.ru">
+          <span class="field-error" data-error-for="email" hidden></span>
+        </label>
+
+        <label class="field-label">Пароль
+          <span class="field-password">
+            <input name="password" type="password" required autocomplete="new-password" minlength="6" placeholder="Минимум 6 символов">
+            <button type="button" class="password-toggle" data-password-toggle>ПОКАЗАТЬ</button>
+          </span>
+          <span class="password-meter" data-password-meter data-score="0" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="field-hint">Используйте буквы разного регистра и цифры.</span>
+          <span class="field-error" data-error-for="password" hidden></span>
+        </label>
+
+        <label class="field-label">Повторите пароль
+          <span class="field-password">
+            <input name="passwordConfirm" type="password" required autocomplete="new-password" minlength="6" placeholder="Ещё раз тот же пароль">
+            <button type="button" class="password-toggle" data-password-toggle>ПОКАЗАТЬ</button>
+          </span>
+          <span class="field-error" data-error-for="passwordConfirm" hidden></span>
+        </label>
+
+        <label class="auth-check">
+          <input type="checkbox" name="consent" required>
+          <span>Согласен на обработку персональных данных и приём сообщений о статусе заявки.</span>
+        </label>
+
+        <button class="button" type="submit">СОЗДАТЬ АККАУНТ</button>
+        <p class="auth-switch">Уже есть аккаунт? <a href="login.html">Войти</a></p>
+      </form>
+    </div>
   </div>
 </section>
 

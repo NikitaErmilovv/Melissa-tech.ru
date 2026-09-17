@@ -2,12 +2,76 @@
   var TOKEN_KEY = "alvion-token";
 
   function getToken() {
-    return localStorage.getItem(TOKEN_KEY) || "";
+    return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || "";
   }
 
-  function setToken(token) {
-    if (token) localStorage.setItem(TOKEN_KEY, token);
-    else localStorage.removeItem(TOKEN_KEY);
+  function setToken(token, remember) {
+    localStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(TOKEN_KEY);
+    if (!token) return;
+    if (remember === false) sessionStorage.setItem(TOKEN_KEY, token);
+    else localStorage.setItem(TOKEN_KEY, token);
+  }
+
+  function nextUrl(fallback) {
+    var next = new URLSearchParams(location.search).get("next") || "";
+    return /^[\w.-]+\.html$/.test(next) ? next : fallback;
+  }
+
+  function fieldError(form, name, message) {
+    var box = form.querySelector('[data-error-for="' + name + '"]');
+    var input = form.querySelector('[name="' + name + '"]');
+    if (input) input.setAttribute("aria-invalid", message ? "true" : "false");
+    if (!box) return;
+    box.textContent = message || "";
+    box.hidden = !message;
+  }
+
+  function clearErrors(form) {
+    form.querySelectorAll("[data-error-for]").forEach(function (box) {
+      box.textContent = "";
+      box.hidden = true;
+    });
+    form.querySelectorAll("[aria-invalid]").forEach(function (input) {
+      input.setAttribute("aria-invalid", "false");
+    });
+    var err = form.querySelector(".form-message--error");
+    if (err) err.hidden = true;
+  }
+
+  function showFormError(form, message) {
+    var err = form.querySelector(".form-message--error");
+    if (err) {
+      err.textContent = message;
+      err.hidden = false;
+      err.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || "").trim());
+  }
+
+  function passwordScore(value) {
+    var password = String(value || "");
+    if (password.length < 6) return password.length ? 1 : 0;
+    var score = 1;
+    if (password.length >= 10) score++;
+    if (/[a-zа-я]/.test(password) && /[A-ZА-Я]/.test(password)) score++;
+    if (/\d/.test(password) || /[^\w\s]/.test(password)) score++;
+    return Math.min(score, 4);
+  }
+
+  function submitLock(form, locked, label) {
+    var button = form.querySelector('button[type="submit"]');
+    if (!button) return;
+    if (locked) {
+      button.dataset.idleLabel = button.dataset.idleLabel || button.textContent;
+      button.textContent = label || button.textContent;
+    } else if (button.dataset.idleLabel) {
+      button.textContent = button.dataset.idleLabel;
+    }
+    button.disabled = locked;
   }
 
   function phoneDigits(value) {
@@ -117,35 +181,58 @@
 
   document.querySelectorAll("[data-phone-mask]").forEach(bindPhoneMask);
 
+  document.querySelectorAll("[data-password-toggle]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var input = button.parentNode.querySelector("input");
+      if (!input) return;
+      var hidden = input.type === "password";
+      input.type = hidden ? "text" : "password";
+      button.textContent = hidden ? "СКРЫТЬ" : "ПОКАЗАТЬ";
+    });
+  });
+
   var registerForm = document.querySelector("[data-register-form]");
   if (registerForm) {
+    var meter = registerForm.querySelector("[data-password-meter]");
+    var passwordInput = registerForm.querySelector('[name="password"]');
+    if (meter && passwordInput) {
+      passwordInput.addEventListener("input", function () {
+        meter.dataset.score = String(passwordScore(passwordInput.value));
+      });
+    }
+
     registerForm.addEventListener("submit", function (event) {
       event.preventDefault();
-      var err = registerForm.querySelector(".form-message--error");
-      var name = registerForm.querySelector('[name="name"]');
-      var phone = registerForm.querySelector('[name="phone"]');
-      var email = registerForm.querySelector('[name="email"]');
-      var password = registerForm.querySelector('[name="password"]');
-      if (err) err.hidden = true;
-      if (!isValidRuPhone(phone.value)) {
-        if (err) { err.textContent = "Введите корректный телефон."; err.hidden = false; }
-        return;
-      }
+      clearErrors(registerForm);
+
+      var name = registerForm.querySelector('[name="name"]').value.trim();
+      var phone = registerForm.querySelector('[name="phone"]').value.trim();
+      var email = registerForm.querySelector('[name="email"]').value.trim().toLowerCase();
+      var password = registerForm.querySelector('[name="password"]').value;
+      var confirm = registerForm.querySelector('[name="passwordConfirm"]').value;
+      var consent = registerForm.querySelector('[name="consent"]');
+      var valid = true;
+
+      if (name.length < 2) { fieldError(registerForm, "name", "Укажите имя — минимум 2 символа."); valid = false; }
+      if (!isValidRuPhone(phone)) { fieldError(registerForm, "phone", "Телефон в формате +7 900 000-00-00."); valid = false; }
+      if (!isValidEmail(email)) { fieldError(registerForm, "email", "Укажите корректный email."); valid = false; }
+      if (password.length < 6) { fieldError(registerForm, "password", "Пароль — минимум 6 символов."); valid = false; }
+      if (password !== confirm) { fieldError(registerForm, "passwordConfirm", "Пароли не совпадают."); valid = false; }
+      if (consent && !consent.checked) { showFormError(registerForm, "Нужно согласие на обработку персональных данных."); valid = false; }
+      if (!valid) return;
+
+      submitLock(registerForm, true, "СОЗДАЁМ…");
       api("/api/auth/register", {
         method: "POST",
-        body: {
-          name: name.value.trim(),
-          phone: phone.value.trim(),
-          email: email.value.trim().toLowerCase(),
-          password: password.value,
-        },
+        body: { name: name, phone: phone, email: email, password: password },
       })
         .then(function (data) {
-          setToken(data.token);
-          location.href = "cabinet.html";
+          setToken(data.token, true);
+          location.href = nextUrl("cabinet.html");
         })
         .catch(function (e) {
-          if (err) { err.textContent = e.message; err.hidden = false; }
+          submitLock(registerForm, false);
+          showFormError(registerForm, e.message);
         });
     });
   }
@@ -154,24 +241,29 @@
   if (loginForm) {
     loginForm.addEventListener("submit", function (event) {
       event.preventDefault();
-      var err = loginForm.querySelector(".form-message--error");
-      var email = loginForm.querySelector('[name="email"]');
-      var password = loginForm.querySelector('[name="password"]');
-      if (err) err.hidden = true;
+      clearErrors(loginForm);
+
+      var email = loginForm.querySelector('[name="email"]').value.trim().toLowerCase();
+      var password = loginForm.querySelector('[name="password"]').value;
+      var remember = loginForm.querySelector('[name="remember"]');
+      var valid = true;
+
+      if (!isValidEmail(email)) { fieldError(loginForm, "email", "Укажите корректный email."); valid = false; }
+      if (password.length < 6) { fieldError(loginForm, "password", "Пароль — минимум 6 символов."); valid = false; }
+      if (!valid) return;
+
+      submitLock(loginForm, true, "ВХОДИМ…");
       api("/api/auth/login", {
         method: "POST",
-        body: {
-          email: email.value.trim().toLowerCase(),
-          password: password.value,
-        },
+        body: { email: email, password: password },
       })
         .then(function (data) {
-          setToken(data.token);
-          if (data.user.role === "admin") location.href = "admin.html";
-          else location.href = "cabinet.html";
+          setToken(data.token, !remember || remember.checked);
+          location.href = nextUrl(data.user.role === "admin" ? "admin.html" : "cabinet.html");
         })
         .catch(function (e) {
-          if (err) { err.textContent = e.message; err.hidden = false; }
+          submitLock(loginForm, false);
+          showFormError(loginForm, e.message);
         });
     });
   }

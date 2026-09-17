@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Вход — Alvion</title>
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
 <nav class="site-nav">
@@ -45,15 +45,57 @@
 </section>
 
 <section class="section auth-section">
-  <div class="auth-card">
-    <form class="auth-form" data-login-form novalidate>
-      <p class="form-message form-message--error" hidden></p>
-      <label class="field-label">Email<input name="email" type="email" required autocomplete="email" placeholder="you@mail.ru"></label>
-      <label class="field-label">Пароль<input name="password" type="password" required autocomplete="current-password" minlength="6"></label>
-      <button class="button" type="submit">ВОЙТИ</button>
-      <p class="auth-switch">Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
-      <p class="auth-hint">Админ: <code>admin@alvion.ru</code> / <code>alvion123</code></p>
-    </form>
+  <div class="auth-layout">
+    <aside class="auth-aside">
+      <div>
+        <div class="kicker">ЛИЧНЫЙ КАБИНЕТ</div>
+        <h2>ВАШИ ЗАЯВКИ<br><span class="accent">В ОДНОМ МЕСТЕ.</span></h2>
+      </div>
+      <ul class="auth-benefits">
+        <li><b>Новая запись за минуту</b><span>Услуга, дата, время и комментарий — без звонков и переписки.</span></li>
+        <li><b>Статусы заявок</b><span>Новая, в работе, выполнена — видно прямо в кабинете.</span></li>
+        <li><b>Данные сохраняются</b><span>Телефон и автомобиль не нужно вводить заново.</span></li>
+      </ul>
+      <div class="auth-aside-foot">
+        Не получается войти?<br>
+        <a href="tel:+79224200238">+7 (922) 420-02-38</a> · ежедневно 10:00–22:00
+      </div>
+    </aside>
+
+    <div class="auth-card">
+      <div class="auth-card-head">
+        <div class="kicker">АВТОРИЗАЦИЯ</div>
+        <h3>С ВОЗВРАЩЕНИЕМ.</h3>
+        <p>Введите email и пароль, указанные при регистрации.</p>
+      </div>
+      <form class="auth-form" data-login-form novalidate>
+        <p class="form-message form-message--error" hidden></p>
+
+        <label class="field-label">Email
+          <input name="email" type="email" required autocomplete="email" placeholder="you@mail.ru">
+          <span class="field-error" data-error-for="email" hidden></span>
+        </label>
+
+        <label class="field-label">Пароль
+          <span class="field-password">
+            <input name="password" type="password" required autocomplete="current-password" minlength="6" placeholder="Ваш пароль">
+            <button type="button" class="password-toggle" data-password-toggle>ПОКАЗАТЬ</button>
+          </span>
+          <span class="field-error" data-error-for="password" hidden></span>
+        </label>
+
+        <div class="auth-form-foot">
+          <label class="auth-check">
+            <input type="checkbox" name="remember" checked>
+            <span>Запомнить меня</span>
+          </label>
+          <a class="auth-link-muted" href="contact.html">Забыли пароль?</a>
+        </div>
+
+        <button class="button" type="submit">ВОЙТИ</button>
+        <p class="auth-switch">Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
+      </form>
+    </div>
   </div>
 </section>
 

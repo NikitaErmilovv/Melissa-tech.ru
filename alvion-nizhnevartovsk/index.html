@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Alvion — сайт</title>
-<link rel="stylesheet" href="styles.css?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
 <nav class="site-nav">
@@ -86,15 +86,37 @@
     <div><div class="kicker">02 / РАБОТЫ</div><h2>БЛЕСК,<br><span class="accent">КОТОРЫЙ ВИДНО.</span></h2></div>
     <p class="intro">Показываем не обещания, а результат: отражение света, чистоту линий и фактуру покрытия.</p>
   </div>
+  <div class="ba-grid">
+    <figure class="ba-item">
+      <div class="ba-slider" data-ba>
+        <img class="ba-after" src="img/works/before-after/hood-after.jpg" alt="После — полировка кузова">
+        <div class="ba-before-wrap">
+          <img class="ba-before" src="img/works/before-after/hood-before.jpg" alt="До — полировка кузова">
+        </div>
+        <div class="ba-handle" aria-hidden="true"><span></span></div>
+      </div>
+      <figcaption>Полировка кузова</figcaption>
+    </figure>
+    <figure class="ba-item">
+      <div class="ba-slider" data-ba>
+        <img class="ba-after" src="img/works/before-after/headlight-after.jpg" alt="После — восстановление фар">
+        <div class="ba-before-wrap">
+          <img class="ba-before" src="img/works/before-after/headlight-before.jpg" alt="До — восстановление фар">
+        </div>
+        <div class="ba-handle" aria-hidden="true"><span></span></div>
+      </div>
+      <figcaption>Восстановление фар</figcaption>
+    </figure>
+  </div>
+  <div class="quote">«Хороший детейлинг — это когда автомобиль выглядит так, <span>будто его только что собрали.</span>»</div>
   <div class="photo-strip">
     <div class="photo big" style="background-image:url('img/works/work-01.jpg')"><span class="tag">ПОЛИРОВКА</span></div>
     <div class="photo" style="background-image:url('img/works/work-02.jpg')"><span class="tag">КЕРАМИКА</span></div>
     <div class="photo" style="background-image:url('img/works/work-03.jpg')"><span class="tag">САЛОН</span></div>
   </div>
-  <div class="quote">«Хороший детейлинг — это когда автомобиль выглядит так, <span>будто его только что собрали.</span>»</div>
 </section>
 
-<section class="process" id="process">
+<section class="process process--light" id="process">
   <div class="kicker">03 / ПОДХОД</div>
   <h2>ТОЧНОСТЬ<br><span class="accent">В КАЖДОМ ДВИЖЕНИИ.</span></h2>
   <div class="steps">
@@ -210,6 +232,7 @@
 <script src="nav.js"></script>
 <script src="auth.js"></script>
 <script src="stats.js"></script>
+<script src="ba-slider.js"></script>
 <script>
 (function () {
   var box = document.getElementById('hero-media');
