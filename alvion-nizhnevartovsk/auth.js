@@ -107,16 +107,35 @@
     });
   }
 
+  function siteDir() {
+    var path = location.pathname || "/";
+    if (path.charAt(path.length - 1) === "/") return path;
+    return path.replace(/[^/]+$/, "");
+  }
+
+  function isLocalHost() {
+    return location.hostname === "127.0.0.1" || location.hostname === "localhost";
+  }
+
+  function apiUrl(path) {
+    if (isLocalHost()) return path;
+    return siteDir() + "api.php?path=" + encodeURIComponent(path);
+  }
+
   function api(path, options) {
     options = options || {};
     var headers = Object.assign({ "Content-Type": "application/json" }, options.headers || {});
     var token = getToken();
     if (token) headers.Authorization = "Bearer " + token;
-    return fetch(path, {
+    return fetch(apiUrl(path), {
       method: options.method || "GET",
       headers: headers,
       body: options.body ? JSON.stringify(options.body) : undefined,
     }).then(function (res) {
+      var type = (res.headers.get("content-type") || "").toLowerCase();
+      if (type.indexOf("application/json") === -1) {
+        throw new Error("Авторизация на этом хостинге не запущена: нужен PHP или локальный server.py.");
+      }
       return res.json().catch(function () {
         return { error: "Ошибка ответа сервера" };
       }).then(function (data) {
@@ -127,20 +146,61 @@
   }
 
   function updateNav(user) {
+    var isAdmin = !!(user && user.role === "admin");
+    var isClient = !!(user && !isAdmin);
     document.querySelectorAll("[data-auth-guest]").forEach(function (el) {
       el.hidden = !!user;
     });
     document.querySelectorAll("[data-auth-user]").forEach(function (el) {
       el.hidden = !user;
     });
+    document.querySelectorAll("[data-auth-client]").forEach(function (el) {
+      el.hidden = !isClient;
+    });
     document.querySelectorAll("[data-auth-admin]").forEach(function (el) {
-      el.hidden = !(user && user.role === "admin");
+      el.hidden = !isAdmin;
     });
     document.querySelectorAll("[data-auth-logout]").forEach(function (el) {
       el.hidden = !user;
     });
     document.querySelectorAll("[data-auth-name]").forEach(function (el) {
       el.textContent = user ? user.name : "";
+    });
+  }
+
+  function fillUserFields(user) {
+    if (!user) return;
+    var email = document.querySelector("[data-user-email]");
+    var phone = document.querySelector("[data-user-phone]");
+    var car = document.querySelector("[data-user-car]");
+    if (email) email.textContent = user.email || "";
+    if (phone) phone.textContent = user.phone || "Телефон не указан";
+    if (car) car.textContent = user.car || "Автомобиль не указан";
+    var profile = document.querySelector("[data-profile-form]");
+    if (profile) {
+      profile.querySelector('[name="name"]').value = user.name || "";
+      profile.querySelector('[name="phone"]').value = user.phone || "";
+      profile.querySelector('[name="email"]').value = user.email || "";
+      profile.querySelector('[name="car"]').value = user.car || "";
+    }
+    var appCar = document.querySelector('[data-application-form] [name="car"]');
+    if (appCar && !appCar.value && user.car) appCar.value = user.car;
+  }
+
+  function initTabs(root) {
+    if (!root) return;
+    var tabs = root.querySelectorAll("[data-dash-tab]");
+    var panels = root.querySelectorAll("[data-dash-panel]");
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var id = tab.getAttribute("data-dash-tab");
+        tabs.forEach(function (item) { item.classList.toggle("is-active", item === tab); });
+        panels.forEach(function (panel) {
+          var on = panel.getAttribute("data-dash-panel") === id;
+          panel.hidden = !on;
+          panel.classList.toggle("is-active", on);
+        });
+      });
     });
   }
 
@@ -152,6 +212,7 @@
     return api("/api/auth/me")
       .then(function (data) {
         updateNav(data.user);
+        fillUserFields(data.user);
         return data.user;
       })
       .catch(function () {
@@ -270,9 +331,6 @@
 
   var appForm = document.querySelector("[data-application-form]");
   if (appForm) {
-    refreshNav().then(function (user) {
-      if (!user) location.href = "login.html?next=cabinet.html";
-    });
     appForm.addEventListener("submit", function (event) {
       event.preventDefault();
       var err = appForm.querySelector(".form-message--error");
@@ -280,6 +338,10 @@
       if (err) err.hidden = true;
       if (ok) ok.hidden = true;
       var service = appForm.querySelector('[name="service"]');
+      if (!service.value) {
+        if (err) { err.textContent = "Выберите услугу."; err.hidden = false; }
+        return;
+      }
       api("/api/applications", {
         method: "POST",
         body: {
@@ -292,12 +354,47 @@
         },
       })
         .then(function () {
+          var car = appForm.querySelector('[name="car"]').value.trim();
           appForm.reset();
+          if (car) appForm.querySelector('[name="car"]').value = car;
           if (ok) ok.hidden = false;
           loadMyApplications();
         })
         .catch(function (e) {
           if (err) { err.textContent = e.message; err.hidden = false; }
+        });
+    });
+  }
+
+  var profileForm = document.querySelector("[data-profile-form]");
+  if (profileForm) {
+    profileForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      clearErrors(profileForm);
+      var ok = profileForm.querySelector(".form-message--success");
+      if (ok) ok.hidden = true;
+      var name = profileForm.querySelector('[name="name"]').value.trim();
+      var phone = profileForm.querySelector('[name="phone"]').value.trim();
+      if (name.length < 2) { fieldError(profileForm, "name", "Укажите имя."); return; }
+      if (!isValidRuPhone(phone)) { showFormError(profileForm, "Введите корректный телефон."); return; }
+      submitLock(profileForm, true, "СОХРАНЯЕМ…");
+      api("/api/auth/profile", {
+        method: "PATCH",
+        body: {
+          name: name,
+          phone: phone,
+          car: profileForm.querySelector('[name="car"]').value.trim(),
+        },
+      })
+        .then(function (data) {
+          submitLock(profileForm, false);
+          updateNav(data.user);
+          fillUserFields(data.user);
+          if (ok) ok.hidden = false;
+        })
+        .catch(function (e) {
+          submitLock(profileForm, false);
+          showFormError(profileForm, e.message);
         });
     });
   }
@@ -308,7 +405,7 @@
     api("/api/applications/mine")
       .then(function (data) {
         if (!data.items.length) {
-          list.innerHTML = "<p class=\"auth-empty\">Заявок пока нет.</p>";
+          list.innerHTML = "<p class=\"auth-empty\">Заявок пока нет — оформите первую запись.</p>";
           return;
         }
         list.innerHTML = data.items.map(renderApplication).join("");
@@ -354,59 +451,113 @@
       .replace(/"/g, "&quot;");
   }
 
-  var adminRoot = document.querySelector("[data-admin-applications]");
-  if (adminRoot) {
-    refreshNav().then(function (user) {
-      if (!user || user.role !== "admin") location.href = "login.html?next=admin.html";
-      else loadAdminApplications();
+  function optionHtml(value, current) {
+    return "<option value=\"" + value + "\"" + (current === value ? " selected" : "") + ">" + statusLabel(value) + "</option>";
+  }
+
+  var adminApps = [];
+  var adminFilter = "all";
+
+  function renderAdminApps() {
+    var root = document.querySelector("[data-admin-applications]");
+    if (!root) return;
+    var items = adminApps.filter(function (item) {
+      return adminFilter === "all" || item.status === adminFilter;
+    });
+    if (!items.length) {
+      root.innerHTML = "<p class=\"auth-empty\">Заявок в этом статусе нет.</p>";
+      return;
+    }
+    root.innerHTML = items.map(function (item) {
+      return (
+        "<article class=\"admin-app\">" +
+        "<div><div class=\"admin-app-top\">" +
+        "<span class=\"auth-app-status auth-app-status--" + item.status + "\">" + statusLabel(item.status) + "</span>" +
+        "<time>" + formatDate(item.createdAt) + "</time></div>" +
+        "<h4>" + escapeHtml(item.serviceLabel) + "</h4>" +
+        "<p>" + escapeHtml(item.userName) + " · " + escapeHtml(item.userPhone) + "</p>" +
+        "<p>" + escapeHtml(item.car || "Авто не указано") + " · " + escapeHtml(item.date || "дата не указана") + (item.time ? " · " + escapeHtml(item.time) : "") + "</p>" +
+        (item.comment ? "<p class=\"auth-app-comment\">" + escapeHtml(item.comment) + "</p>" : "") +
+        "</div><select data-app-status data-id=\"" + item.id + "\">" +
+        optionHtml("new", item.status) + optionHtml("progress", item.status) +
+        optionHtml("done", item.status) + optionHtml("cancelled", item.status) +
+        "</select></article>"
+      );
+    }).join("");
+    root.querySelectorAll("[data-app-status]").forEach(function (select) {
+      select.addEventListener("change", function () {
+        api("/api/admin/applications/" + select.dataset.id, {
+          method: "PATCH",
+          body: { status: select.value },
+        }).then(function () {
+          loadAdminData();
+        }).catch(function (e) {
+          alert(e.message);
+        });
+      });
     });
   }
 
-  function loadAdminApplications() {
-    api("/api/admin/applications")
-      .then(function (data) {
-        var tbody = document.querySelector("[data-admin-applications]");
-        if (!tbody) return;
-        if (!data.items.length) {
-          tbody.innerHTML = "<tr><td colspan=\"7\" class=\"auth-empty\">Заявок пока нет.</td></tr>";
-          return;
-        }
-        tbody.innerHTML = data.items.map(function (item) {
-          return (
-            "<tr>" +
-            "<td>" + formatDate(item.createdAt) + "</td>" +
-            "<td>" + escapeHtml(item.userName) + "<br><span class=\"auth-table-muted\">" + escapeHtml(item.userPhone) + "</span></td>" +
-            "<td>" + escapeHtml(item.serviceLabel) + "</td>" +
-            "<td>" + escapeHtml(item.car || "—") + "</td>" +
-            "<td>" + escapeHtml(item.date || "—") + (item.time ? "<br>" + escapeHtml(item.time) : "") + "</td>" +
-            "<td>" + escapeHtml(item.comment || "—") + "</td>" +
-            "<td><select data-app-status data-id=\"" + item.id + "\">" +
-            "<option value=\"new\"" + (item.status === "new" ? " selected" : "") + ">Новая</option>" +
-            "<option value=\"progress\"" + (item.status === "progress" ? " selected" : "") + ">В работе</option>" +
-            "<option value=\"done\"" + (item.status === "done" ? " selected" : "") + ">Выполнена</option>" +
-            "<option value=\"cancelled\"" + (item.status === "cancelled" ? " selected" : "") + ">Отменена</option>" +
-            "</select></td></tr>"
-          );
-        }).join("");
-        tbody.querySelectorAll("[data-app-status]").forEach(function (select) {
-          select.addEventListener("change", function () {
-            api("/api/admin/applications/" + select.dataset.id, {
-              method: "PATCH",
-              body: { status: select.value },
-            }).catch(function (e) {
-              alert(e.message);
-            });
-          });
-        });
-      })
-      .catch(function (e) {
-        var tbody = document.querySelector("[data-admin-applications]");
-        if (tbody) tbody.innerHTML = "<tr><td colspan=\"7\" class=\"auth-empty\">" + escapeHtml(e.message) + "</td></tr>";
+  function loadAdminData() {
+    Promise.all([
+      api("/api/admin/stats"),
+      api("/api/admin/applications"),
+      api("/api/admin/users"),
+    ]).then(function (results) {
+      var stats = results[0];
+      adminApps = results[1].items || [];
+      ["new", "progress", "done", "clients"].forEach(function (key) {
+        var el = document.querySelector("[data-stat=\"" + key + "\"]");
+        if (el) el.textContent = stats[key] || 0;
       });
+      renderAdminApps();
+      var list = document.querySelector("[data-admin-users]");
+      if (!list) return;
+      if (!results[2].items.length) {
+        list.innerHTML = "<p class=\"auth-empty\">Клиентов пока нет.</p>";
+        return;
+      }
+      list.innerHTML = results[2].items.map(function (item) {
+        return (
+          "<article class=\"admin-client\"><div>" +
+          "<b>" + escapeHtml(item.name) + "</b>" +
+          "<span>" + escapeHtml(item.phone || "без телефона") + " · " + escapeHtml(item.email) + "</span>" +
+          "<span>" + escapeHtml(item.car || "авто не указано") + "</span></div>" +
+          "<span>" + item.applications + " заяв.</span></article>"
+        );
+      }).join("");
+    }).catch(function (e) {
+      var root = document.querySelector("[data-admin-applications]");
+      if (root) root.innerHTML = "<p class=\"auth-empty\">" + escapeHtml(e.message) + "</p>";
+    });
   }
 
-  if (document.querySelector("[data-my-applications]")) loadMyApplications();
-  if (document.querySelector("[data-auth-nav]")) refreshNav();
+  document.querySelectorAll("[data-admin-filters] [data-filter]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      adminFilter = btn.getAttribute("data-filter");
+      document.querySelectorAll("[data-admin-filters] [data-filter]").forEach(function (item) {
+        item.classList.toggle("is-active", item === btn);
+      });
+      renderAdminApps();
+    });
+  });
+
+  initTabs(document.querySelector(".dash"));
+
+  if (document.querySelector("[data-auth-nav]")) {
+    refreshNav().then(function (user) {
+      var onCabinet = /cabinet\.html/.test(location.pathname);
+      var onAdmin = /admin\.html/.test(location.pathname);
+      if (onCabinet) {
+        if (!user) location.href = "login.html?next=cabinet.html";
+        else if (user.role === "admin") location.href = "admin.html";
+        else loadMyApplications();
+      } else if (onAdmin) {
+        if (!user || user.role !== "admin") location.href = "login.html?next=admin.html";
+        else loadAdminData();
+      }
+    });
+  }
 
   window.AlvionAuth = {
     getToken: getToken,

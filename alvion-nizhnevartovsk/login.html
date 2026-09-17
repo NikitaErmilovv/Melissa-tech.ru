@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Вход — Alvion</title>
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 </head>
-<body>
+<body class="auth-page">
 <nav class="site-nav">
   <div class="logo"><a href="./"><span>Alvion</span></a></div>
   <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О СТУДИИ</a><a href="contact.html">КОНТАКТЫ</a></div>
@@ -15,8 +15,8 @@
     <div class="nav-auth-links">
       <a class="nav-auth-link" href="login.html" data-auth-guest>Войти</a>
       <a class="nav-auth-link nav-auth-link--accent" href="register.html" data-auth-guest>Регистрация</a>
-      <a class="nav-auth-link" href="cabinet.html" data-auth-user hidden>Кабинет</a>
-      <a class="nav-auth-link" href="admin.html" data-auth-admin hidden>Админ</a>
+      <a class="nav-auth-link" href="cabinet.html" data-auth-client hidden>Кабинет</a>
+      <a class="nav-auth-link" href="admin.html" data-auth-admin hidden>Админка</a>
       <button type="button" class="nav-auth-link nav-auth-btn" data-auth-logout hidden>Выйти</button>
     </div>
     <a class="phone" href="tel:+79224200238">+7 (922) 420-02-38</a>
@@ -33,16 +33,10 @@
     <a href="contact.html">КОНТАКТЫ</a>
     <a href="login.html" data-auth-guest>ВОЙТИ</a>
     <a href="register.html" data-auth-guest>РЕГИСТРАЦИЯ</a>
-    <a href="cabinet.html" data-auth-user hidden>КАБИНЕТ</a>
-    <a href="admin.html" data-auth-admin hidden>АДМИН</a>
+    <a href="cabinet.html" data-auth-client hidden>КАБИНЕТ</a>
+    <a href="admin.html" data-auth-admin hidden>АДМИНКА</a>
   </div>
 </nav>
-
-<section class="subpage-hero auth-hero">
-  <div class="kicker">АККАУНТ</div>
-  <h1>ВХОД<br><span class="accent">В КАБИНЕТ.</span></h1>
-  <p>После входа можно отправить заявку на услугу — администратор увидит её в панели.</p>
-</section>
 
 <section class="section auth-section">
   <div class="auth-layout">

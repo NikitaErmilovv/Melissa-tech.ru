@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Админ — Alvion</title>
-<link rel="stylesheet" href="styles.css?v=7">
+<title>Админка — Alvion</title>
+<link rel="stylesheet" href="styles.css?v=8">
 </head>
-<body>
+<body class="dash-page dash-page--admin">
 <nav class="site-nav">
   <div class="logo"><a href="./"><span>Alvion</span></a></div>
   <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О СТУДИИ</a><a href="contact.html">КОНТАКТЫ</a></div>
@@ -15,8 +15,8 @@
     <div class="nav-auth-links">
       <a class="nav-auth-link" href="login.html" data-auth-guest>Войти</a>
       <a class="nav-auth-link nav-auth-link--accent" href="register.html" data-auth-guest>Регистрация</a>
-      <a class="nav-auth-link" href="cabinet.html" data-auth-user hidden>Кабинет</a>
-      <a class="nav-auth-link" href="admin.html" data-auth-admin hidden>Админ</a>
+      <a class="nav-auth-link" href="cabinet.html" data-auth-client hidden>Кабинет</a>
+      <a class="nav-auth-link nav-auth-link--accent" href="admin.html" data-auth-admin hidden>Админка</a>
       <button type="button" class="nav-auth-link nav-auth-btn" data-auth-logout hidden>Выйти</button>
     </div>
     <a class="phone" href="tel:+79224200238">+7 (922) 420-02-38</a>
@@ -33,36 +33,46 @@
     <a href="contact.html">КОНТАКТЫ</a>
     <a href="login.html" data-auth-guest>ВОЙТИ</a>
     <a href="register.html" data-auth-guest>РЕГИСТРАЦИЯ</a>
-    <a href="cabinet.html" data-auth-user hidden>КАБИНЕТ</a>
-    <a href="admin.html" data-auth-admin hidden>АДМИН</a>
+    <a href="cabinet.html" data-auth-client hidden>КАБИНЕТ</a>
+    <a href="admin.html" data-auth-admin hidden>АДМИНКА</a>
   </div>
 </nav>
 
-<section class="subpage-hero auth-hero">
-  <div class="kicker">АДМИН</div>
-  <h1>ЗАЯВКИ<br><span class="accent">КЛИЕНТОВ.</span></h1>
-  <p>Все заявки с сайта: услуга, клиент, дата и статус обработки.</p>
+<section class="dash-hero">
+  <div class="kicker">ПАНЕЛЬ СТУДИИ</div>
+  <h1>АДМИНКА<br><span class="accent">ALVION.</span></h1>
+  <p>Заявки клиентов, статусы работ и база контактов — отдельно от клиентского кабинета.</p>
 </section>
 
-<section class="section auth-section">
-  <div class="auth-card auth-card--wide">
-    <div class="auth-table-wrap">
-      <table class="auth-table">
-        <thead>
-          <tr>
-            <th>Дата</th>
-            <th>Клиент</th>
-            <th>Услуга</th>
-            <th>Авто</th>
-            <th>Когда</th>
-            <th>Комментарий</th>
-            <th>Статус</th>
-          </tr>
-        </thead>
-        <tbody data-admin-applications>
-          <tr><td colspan="7" class="auth-empty">Загрузка…</td></tr>
-        </tbody>
-      </table>
+<section class="dash dash--admin">
+  <div class="dash-stats">
+    <div class="dash-stat"><b data-stat="new">0</b><span>Новые</span></div>
+    <div class="dash-stat"><b data-stat="progress">0</b><span>В работе</span></div>
+    <div class="dash-stat"><b data-stat="done">0</b><span>Выполнены</span></div>
+    <div class="dash-stat"><b data-stat="clients">0</b><span>Клиенты</span></div>
+  </div>
+
+  <div class="dash-tabs" role="tablist">
+    <button type="button" class="dash-tab is-active" data-dash-tab="orders">Заявки</button>
+    <button type="button" class="dash-tab" data-dash-tab="clients">Клиенты</button>
+  </div>
+
+  <div class="dash-panel is-active" data-dash-panel="orders">
+    <div class="dash-filters" data-admin-filters>
+      <button type="button" class="dash-filter is-active" data-filter="all">Все</button>
+      <button type="button" class="dash-filter" data-filter="new">Новые</button>
+      <button type="button" class="dash-filter" data-filter="progress">В работе</button>
+      <button type="button" class="dash-filter" data-filter="done">Выполнены</button>
+      <button type="button" class="dash-filter" data-filter="cancelled">Отменены</button>
+    </div>
+    <div class="admin-app-list" data-admin-applications>
+      <p class="auth-empty">Загрузка…</p>
+    </div>
+  </div>
+
+  <div class="dash-panel" data-dash-panel="clients" hidden>
+    <div class="admin-client-list" data-admin-users>
+      <p class="auth-empty">Загрузка…</p>
     </div>
   </div>
 </section>

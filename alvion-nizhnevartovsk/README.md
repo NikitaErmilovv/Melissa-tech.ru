@@ -1,4 +1,4 @@
-# Alvion — студия детейлинга (Южно-Сахалинск)
+# Alvion — студия детейлинга (Нижневартовск)
 
 Статический сайт Alvion (HTML/CSS/JS).
 
@@ -9,11 +9,11 @@
 Или в терминале:
 
 ```bash
-cd sdc-detailing
+cd alvion-nizhnevartovsk
 python -u server.py
 ```
 
-Открыть: http://127.0.0.1:8088/
+Открыть: http://127.0.0.1:8102/
 
 ## Данные
 

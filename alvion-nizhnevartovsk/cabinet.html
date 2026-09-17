@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Кабинет — Alvion</title>
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 </head>
-<body>
+<body class="dash-page">
 <nav class="site-nav">
   <div class="logo"><a href="./"><span>Alvion</span></a></div>
   <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О СТУДИИ</a><a href="contact.html">КОНТАКТЫ</a></div>
@@ -15,8 +15,8 @@
     <div class="nav-auth-links">
       <a class="nav-auth-link" href="login.html" data-auth-guest>Войти</a>
       <a class="nav-auth-link nav-auth-link--accent" href="register.html" data-auth-guest>Регистрация</a>
-      <a class="nav-auth-link" href="cabinet.html" data-auth-user hidden>Кабинет</a>
-      <a class="nav-auth-link" href="admin.html" data-auth-admin hidden>Админ</a>
+      <a class="nav-auth-link nav-auth-link--accent" href="cabinet.html" data-auth-client hidden>Кабинет</a>
+      <a class="nav-auth-link nav-auth-link--accent" href="admin.html" data-auth-admin hidden>Админка</a>
       <button type="button" class="nav-auth-link nav-auth-btn" data-auth-logout hidden>Выйти</button>
     </div>
     <a class="phone" href="tel:+79224200238">+7 (922) 420-02-38</a>
@@ -33,59 +33,111 @@
     <a href="contact.html">КОНТАКТЫ</a>
     <a href="login.html" data-auth-guest>ВОЙТИ</a>
     <a href="register.html" data-auth-guest>РЕГИСТРАЦИЯ</a>
-    <a href="cabinet.html" data-auth-user hidden>КАБИНЕТ</a>
-    <a href="admin.html" data-auth-admin hidden>АДМИН</a>
+    <a href="cabinet.html" data-auth-client hidden>КАБИНЕТ</a>
+    <a href="admin.html" data-auth-admin hidden>АДМИНКА</a>
   </div>
 </nav>
 
-<section class="subpage-hero auth-hero">
-  <div class="kicker">КАБИНЕТ</div>
+<section class="dash-hero">
+  <div class="kicker">ЛИЧНЫЙ КАБИНЕТ</div>
   <h1>ЗДРАВСТВУЙТЕ,<br><span class="accent" data-auth-name></span></h1>
-  <p>Отправьте заявку на услугу — мы свяжемся и подтвердим запись.</p>
+  <p>Запись на детейлинг, статус заявок и ваши данные — в одном месте.</p>
 </section>
 
-<section class="section auth-section">
-  <div class="auth-grid">
-    <div class="auth-card">
-      <div class="kicker">ЗАЯВКА</div>
-      <h3>НОВАЯ<br>ЗАПИСЬ.</h3>
-      <form class="auth-form" data-application-form novalidate>
-        <p class="form-message form-message--error" hidden></p>
-        <p class="form-message form-message--success" hidden>Заявка отправлена. Мы свяжемся с вами.</p>
-        <label class="field-label">Услуга
-          <select name="service" required>
-            <option value="" disabled selected>Выберите услугу</option>
-            <option value="wash">Мойка и уход за кузовом</option>
-            <option value="polish">Полировка</option>
-            <option value="ceramic">Керамика / защита</option>
-            <option value="interior">Салон и химчистка</option>
-            <option value="complex">Комплексный детейлинг</option>
-            <option value="other">Другое / консультация</option>
-          </select>
-        </label>
-        <div class="form-row form-row--2">
-          <label class="field-label">Дата<input name="date" type="date"></label>
-          <label class="field-label">Время
-            <select name="time">
-              <option value="">Не важно</option>
-              <option value="10:00">10:00</option>
-              <option value="12:00">12:00</option>
-              <option value="14:00">14:00</option>
-              <option value="16:00">16:00</option>
-              <option value="18:00">18:00</option>
-              <option value="20:00">20:00</option>
+<section class="dash">
+  <aside class="dash-side">
+    <div class="dash-profile">
+      <div class="kicker">ПРОФИЛЬ</div>
+      <p class="dash-profile-name" data-auth-name></p>
+      <p class="dash-profile-meta" data-user-email></p>
+      <p class="dash-profile-meta" data-user-phone></p>
+      <p class="dash-profile-meta" data-user-car></p>
+    </div>
+    <div class="dash-side-card">
+      <span class="kicker">СТУДИЯ</span>
+      <p>Нижневартовск, ул. Интернациональная, 71/1</p>
+      <a href="tel:+79224200238">+7 (922) 420-02-38</a>
+      <span>Ежедневно · 10:00–22:00</span>
+    </div>
+  </aside>
+
+  <div class="dash-main">
+    <div class="dash-tabs" role="tablist">
+      <button type="button" class="dash-tab is-active" data-dash-tab="book">Запись</button>
+      <button type="button" class="dash-tab" data-dash-tab="apps">Мои заявки</button>
+      <button type="button" class="dash-tab" data-dash-tab="profile">Профиль</button>
+    </div>
+
+    <div class="dash-panel is-active" data-dash-panel="book">
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <div class="kicker">НОВАЯ ЗАЯВКА</div>
+          <h3>ЗАПИСАТЬСЯ<br>В СТУДИЮ.</h3>
+          <p>Выберите услугу и удобное время. Администратор подтвердит запись.</p>
+        </div>
+        <form class="auth-form" data-application-form novalidate>
+          <p class="form-message form-message--error" hidden></p>
+          <p class="form-message form-message--success" hidden>Заявка отправлена. Мы свяжемся с вами.</p>
+          <label class="field-label">Услуга
+            <select name="service" required>
+              <option value="" disabled selected>Выберите услугу</option>
+              <option value="wash">Мойка и уход за кузовом</option>
+              <option value="polish">Полировка</option>
+              <option value="ceramic">Керамика / защита</option>
+              <option value="interior">Салон и химчистка</option>
+              <option value="complex">Комплексный детейлинг</option>
+              <option value="other">Другое / консультация</option>
             </select>
           </label>
-        </div>
-        <label class="field-label">Автомобиль<input name="car" placeholder="Марка и модель"></label>
-        <label class="field-label">Комментарий<textarea name="comment" placeholder="Пожелания или вопросы"></textarea></label>
-        <button class="button" type="submit">ОТПРАВИТЬ ЗАЯВКУ</button>
-      </form>
+          <div class="form-row form-row--2">
+            <label class="field-label">Дата<input name="date" type="date"></label>
+            <label class="field-label">Время
+              <select name="time">
+                <option value="">Не важно</option>
+                <option value="10:00">10:00</option>
+                <option value="12:00">12:00</option>
+                <option value="14:00">14:00</option>
+                <option value="16:00">16:00</option>
+                <option value="18:00">18:00</option>
+                <option value="20:00">20:00</option>
+              </select>
+            </label>
+          </div>
+          <label class="field-label">Автомобиль<input name="car" placeholder="Марка и модель"></label>
+          <label class="field-label">Комментарий<textarea name="comment" placeholder="Пожелания или вопросы"></textarea></label>
+          <button class="button" type="submit">ОТПРАВИТЬ ЗАЯВКУ</button>
+        </form>
+      </div>
     </div>
-    <div class="auth-card">
-      <div class="kicker">ИСТОРИЯ</div>
-      <h3>МОИ<br>ЗАЯВКИ.</h3>
-      <div class="auth-app-list" data-my-applications></div>
+
+    <div class="dash-panel" data-dash-panel="apps" hidden>
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <div class="kicker">ИСТОРИЯ</div>
+          <h3>МОИ<br>ЗАЯВКИ.</h3>
+          <p>Статусы обновляет администратор студии.</p>
+        </div>
+        <div class="auth-app-list" data-my-applications></div>
+      </div>
+    </div>
+
+    <div class="dash-panel" data-dash-panel="profile" hidden>
+      <div class="dash-card">
+        <div class="dash-card-head">
+          <div class="kicker">ДАННЫЕ</div>
+          <h3>ПРОФИЛЬ<br>КЛИЕНТА.</h3>
+          <p>Эти данные подставляются в заявки и видны администратору.</p>
+        </div>
+        <form class="auth-form" data-profile-form novalidate>
+          <p class="form-message form-message--error" hidden></p>
+          <p class="form-message form-message--success" hidden>Профиль сохранён.</p>
+          <label class="field-label">Имя<input name="name" required autocomplete="name"><span class="field-error" data-error-for="name" hidden></span></label>
+          <label class="field-label">Телефон<input name="phone" type="tel" data-phone-mask required autocomplete="tel"></label>
+          <label class="field-label">Email<input name="email" type="email" readonly></label>
+          <label class="field-label">Автомобиль<input name="car" placeholder="Марка и модель"></label>
+          <button class="button" type="submit">СОХРАНИТЬ</button>
+        </form>
+      </div>
     </div>
   </div>
 </section>

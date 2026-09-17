@@ -8,7 +8,11 @@
     return num.toFixed(1);
   }
 
-  fetch('/api/2gis-rating.json')
+  var dir = (location.pathname || "/").replace(/[^/]+$/, "");
+  var ratingUrl = (location.hostname === "127.0.0.1" || location.hostname === "localhost")
+    ? "/api/2gis-rating.json"
+    : dir + "api/2gis-rating.json";
+  fetch(ratingUrl)
     .then(function (res) {
       if (!res.ok) throw new Error('rating unavailable');
       return res.json();

@@ -124,7 +124,9 @@ def public_user(user: dict[str, object]) -> dict[str, object]:
         "name": user.get("name"),
         "phone": user.get("phone"),
         "email": user.get("email"),
+        "car": user.get("car", ""),
         "role": user.get("role", "user"),
+        "createdAt": user.get("createdAt"),
     }
 
 
@@ -248,6 +250,45 @@ class SiteHandler(SimpleHTTPRequestHandler):
             json_response(self, 200, {"items": items})
             return
 
+        if path == "/api/admin/users":
+            user = get_current_user(get_bearer_token(self))
+            if not user or user.get("role") != "admin":
+                json_response(self, 403, {"error": "Доступ только для администратора"})
+                return
+            apps = load_json(APPLICATIONS_FILE, [])
+            counts: dict[str, int] = {}
+            for app in apps:
+                uid = str(app.get("userId") or "")
+                counts[uid] = counts.get(uid, 0) + 1
+            users = []
+            for item in load_json(USERS_FILE, []):
+                if item.get("role") == "admin":
+                    continue
+                users.append(
+                    {
+                        **public_user(item),
+                        "applications": counts.get(str(item.get("id")), 0),
+                    }
+                )
+            users.sort(key=lambda item: str(item.get("createdAt") or ""), reverse=True)
+            json_response(self, 200, {"items": users})
+            return
+
+        if path == "/api/admin/stats":
+            user = get_current_user(get_bearer_token(self))
+            if not user or user.get("role") != "admin":
+                json_response(self, 403, {"error": "Доступ только для администратора"})
+                return
+            apps = load_json(APPLICATIONS_FILE, [])
+            clients = [u for u in load_json(USERS_FILE, []) if u.get("role") != "admin"]
+            stats = {"total": len(apps), "new": 0, "progress": 0, "done": 0, "cancelled": 0, "clients": len(clients)}
+            for app in apps:
+                status = str(app.get("status") or "new")
+                if status in stats:
+                    stats[status] += 1
+            json_response(self, 200, stats)
+            return
+
         return super().do_GET()
 
     def do_POST(self) -> None:
@@ -286,6 +327,7 @@ class SiteHandler(SimpleHTTPRequestHandler):
                 "email": email,
                 "passwordHash": hash_password(password),
                 "role": "user",
+                "car": "",
                 "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             }
             users.append(user)
@@ -341,6 +383,14 @@ class SiteHandler(SimpleHTTPRequestHandler):
             apps = load_json(APPLICATIONS_FILE, [])
             apps.append(app)
             save_json(APPLICATIONS_FILE, apps)
+            car = str(app.get("car") or "").strip()
+            if car:
+                users = load_json(USERS_FILE, [])
+                for item in users:
+                    if item.get("id") == user.get("id"):
+                        item["car"] = car
+                        break
+                save_json(USERS_FILE, users)
             json_response(self, 201, {"item": app})
             return
 
@@ -349,19 +399,46 @@ class SiteHandler(SimpleHTTPRequestHandler):
     def do_PATCH(self) -> None:
         path = self.path.split("?", 1)[0]
         user = get_current_user(get_bearer_token(self))
-        if not user or user.get("role") != "admin":
-            json_response(self, 403, {"error": "Доступ только для администратора"})
-            return
-
-        match = re.match(r"^/api/admin/applications/([^/]+)$", path)
-        if not match:
-            json_response(self, 404, {"error": "Not found"})
+        if not user:
+            json_response(self, 401, {"error": "Требуется авторизация"})
             return
 
         try:
             data = read_body(self)
         except ValueError as exc:
             json_response(self, 400, {"error": str(exc)})
+            return
+
+        if path == "/api/auth/profile":
+            name = str(data.get("name", user.get("name", ""))).strip()
+            phone = str(data.get("phone", user.get("phone", ""))).strip()
+            car = str(data.get("car", user.get("car", ""))).strip()
+            if len(name) < 2:
+                json_response(self, 400, {"error": "Укажите имя."})
+                return
+            users = load_json(USERS_FILE, [])
+            updated = None
+            for item in users:
+                if item.get("id") == user.get("id"):
+                    item["name"] = name
+                    item["phone"] = phone
+                    item["car"] = car
+                    updated = item
+                    break
+            if not updated:
+                json_response(self, 404, {"error": "Пользователь не найден."})
+                return
+            save_json(USERS_FILE, users)
+            json_response(self, 200, {"user": public_user(updated)})
+            return
+
+        if user.get("role") != "admin":
+            json_response(self, 403, {"error": "Доступ только для администратора"})
+            return
+
+        match = re.match(r"^/api/admin/applications/([^/]+)$", path)
+        if not match:
+            json_response(self, 404, {"error": "Not found"})
             return
 
         app_id = match.group(1)
