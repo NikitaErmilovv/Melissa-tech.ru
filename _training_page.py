@@ -42,6 +42,10 @@ RED_ACCENT_CSS = """
 @media (max-width:1024px){.process .kicker,.step b{color:#6f6f6a}}
 @media (max-width:768px){.process .kicker,.step b{color:#6f6f6a}}
 .hero .eyebrow{visibility:hidden}
+.heroimg{opacity:.80}
+@media (max-width:768px){
+  .heroimg{opacity:.53}
+}
 """
 
 TRAINING_CSS = """
