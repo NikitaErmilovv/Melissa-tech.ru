@@ -436,18 +436,29 @@ CLONE_SITE_CSS = """
 .heroimg{opacity:.89}
 .heroimg:before{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.3) 40%,transparent 70%)}
 .hero:after{background:linear-gradient(90deg,#0a0a0a 0%,transparent 58%,rgba(10,10,10,.75) 100%)}
-.gallery--portfolio{display:flex;flex-wrap:wrap;gap:10px;margin-top:50px}
-.gallery--portfolio .g{flex:1 1 calc(20% - 10px);min-width:min(100%,260px);min-height:0;background:none!important}
-.gallery--portfolio .g img{width:100%;height:auto;display:block}
-.gallery--portfolio .wide,.gallery--portfolio .tall{grid-column:unset;grid-row:unset}
 @media (max-width:768px){
   .heroimg{opacity:.59}
-  .gallery--portfolio .g{flex:1 1 calc(50% - 10px);min-width:calc(50% - 10px)}
-}
-@media (max-width:480px){
-  .gallery--portfolio .g{flex:1 1 100%;min-width:100%}
 }
 """
+
+# Same wide/tall rhythm as dark-detailing/gallery.html
+GALLERY_LAYOUTS = [
+    "wide",
+    "",
+    "tall",
+    "",
+    "",
+    "",
+    "tall",
+    "",
+    "wide",
+    "",
+    "",
+    "tall",
+    "",
+    "wide",
+    "",
+]
 
 
 def clone_site_css(site: dict) -> str:
@@ -529,9 +540,11 @@ def cards_block(site: dict) -> str:
 
 def gallery_block(portfolio_names: list[str]) -> str:
     items = []
-    for name in portfolio_names[:PORTFOLIO_MAX]:
+    for i, name in enumerate(portfolio_names[:PORTFOLIO_MAX]):
+        cls = GALLERY_LAYOUTS[i % len(GALLERY_LAYOUTS)]
+        extra = f" {cls}" if cls else ""
         items.append(
-            f'    <div class="g"><img src="img/works/portfolio/{name}" alt="" loading="lazy"></div>'
+            f"    <div class=\"g{extra}\" style=\"background-image:url('img/works/portfolio/{name}')\"></div>"
         )
     return "\n".join(items)
 

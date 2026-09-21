@@ -598,14 +598,6 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .heroimg{opacity:.89}
 .heroimg:before{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.3) 40%,transparent 70%)}
 .hero:after{background:linear-gradient(90deg,#0a0a0a 0%,transparent 58%,rgba(10,10,10,.75) 100%)}
-.gallery--portfolio{display:flex;flex-wrap:wrap;gap:10px;margin-top:50px}
-.gallery--portfolio .g{flex:1 1 calc(20% - 10px);min-width:min(100%,260px);min-height:0;background:none!important}
-.gallery--portfolio .g img{width:100%;height:auto;display:block}
-.gallery--portfolio .wide,.gallery--portfolio .tall{grid-column:unset;grid-row:unset}
 @media (max-width:768px){
   .heroimg{opacity:.59}
-  .gallery--portfolio .g{flex:1 1 calc(50% - 10px);min-width:calc(50% - 10px)}
-}
-@media (max-width:480px){
-  .gallery--portfolio .g{flex:1 1 100%;min-width:100%}
 }
