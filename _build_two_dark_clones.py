@@ -86,6 +86,7 @@ SITES = [
         "hours_footer": "Ежедневно · 10:00 – 20:00",
         "hours_footer_extra": "",
         "server_name": "BrilliantAutoSite",
+        "photos_dir": "_media/brilliant-auto",
     },
     {
         "slug": "avtoblesk138-irkutsk",
@@ -140,6 +141,7 @@ SITES = [
         "hours_footer_extra": "",
         "social_links": [],
         "server_name": "Avtoblesk138Site",
+        "photos_dir": "_media/avtoblesk138",
     },
 ]
 
@@ -357,6 +359,43 @@ def apply_ba_slider_cache_bust(text: str) -> str:
     return text
 
 
+def local_photo_files(site: dict) -> list[Path]:
+    rel = site.get("photos_dir")
+    if not rel:
+        return []
+    src_dir = Path(rel) if Path(rel).is_absolute() else ROOT / rel
+    if not src_dir.is_dir():
+        return []
+    files: list[Path] = []
+    for pattern in ("*.jpg", "*.jpeg", "*.png", "*.webp"):
+        files.extend(src_dir.glob(pattern))
+    return sorted(files, key=lambda p: p.name.lower())
+
+
+def setup_photos_from_local(dst: Path, sources: list[Path]) -> list[str]:
+    """Hero, portfolio grid, and quote strip — from provided image files."""
+    works = dst / "img" / "works"
+    copy_template_works(works)
+    portfolio = works / "portfolio"
+    portfolio.mkdir(parents=True, exist_ok=True)
+    for old in portfolio.iterdir():
+        if old.is_file():
+            old.unlink()
+
+    names: list[str] = []
+    for i, src in enumerate(sources[:PORTFOLIO_MAX], start=1):
+        ext = src.suffix.lower() if src.suffix else ".jpg"
+        fname = f"gallery-{i:02d}{ext}"
+        shutil.copy2(src, portfolio / fname)
+        names.append(fname)
+
+    if sources:
+        shutil.copy2(sources[0], works / "hero.jpg")
+
+    ensure_template_before_after(works)
+    return names
+
+
 def setup_photos(dst: Path, urls: list[str]) -> list[str]:
     works = dst / "img" / "works"
     copy_template_works(works)
@@ -497,6 +536,10 @@ def apply_file(
 ) -> str:
     brand = site["brand"] or firm["brand"]
     hero = "hero.jpg"
+    if site.get("hero_ver"):
+        hero = f"hero.jpg?v={site['hero_ver']}"
+    if site.get("hero_ver"):
+        hero = f"hero.jpg?v={site['hero_ver']}"
     site = {
         **site,
         "_phone_tel": firm["phone_tel"],
@@ -731,7 +774,12 @@ def build_site(site: dict) -> None:
         shutil.rmtree(dst, onerror=onerror)
     shutil.copytree(SRC, dst, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
 
-    portfolio_names = setup_photos(dst, firm["photos"])
+    local_photos = local_photo_files(site)
+    if local_photos:
+        site = {**site, "hero_ver": "custom"}
+        portfolio_names = setup_photos_from_local(dst, local_photos)
+    else:
+        portfolio_names = setup_photos(dst, firm["photos"])
     download_maps(dst / "img", firm["coords"])
 
     for path in list(dst.rglob("*")):
