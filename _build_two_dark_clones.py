@@ -47,8 +47,9 @@ SITES = [
         "category": "Тонировка и защита автомобиля",
         "hero_p": "Brilliant auto в Благовещенске — тонировка стёкол, бронирование плёнкой, полировка и комплексный уход. Работаем аккуратно, согласуем задачу до старта и показываем результат на выдаче.",
         "services_intro": "Специализируемся на тонировке и защите автомобиля: подбираем плёнку и режим затемнения под ваши задачи и требования.",
-        "works_h2": "РАБОТЫ,<br><span class=\"accent\">КОТОРЫЕ ВИДНО.</span>",
-        "works_intro": "Фото студии и реальные работы из 2ГИС — тонировка, плёнка и уход за автомобилем без лишних обещаний.",
+        "works_h2": "РЕЗУЛЬТАТ,<br><span class=\"accent\">КОТОРЫЙ ВИДНО.</span>",
+        "works_intro": "",
+        "hero_image": "d6345fcc-6ae5-47a0-bdc5-bd9550c1420b.jpg",
         "about_intro": "Brilliant auto — студия в Благовещенске, где в приоритете аккуратная работа и понятный результат. Осмотр, согласование и контроль перед выдачей — без суеты.",
         "story_lead": "Brilliant auto — команда, которая каждый день занимается тонировкой и защитой автомобилей в Благовещенске.",
         "story_p1": "Студия выросла из практики: сначала — свои автомобили и знакомые, затем постоянные клиенты и рекомендации. Сегодня здесь делают тонировку, бронирование и комплексный уход под конкретную задачу.",
@@ -56,11 +57,11 @@ SITES = [
         "story_p3": "На связи в мессенджерах и по телефону: можно уточнить стоимость, записаться и прислать фото автомобиля до визита.",
         "story_caption": "BRILLIANT AUTO · БЛАГОВЕЩЕНСК",
         "founder_name": "Brilliant auto",
-        "strip_tags": ["ТОНИРОВКА", "ПЛЁНКА", "ПОЛИРОВКА"],
+        "strip_tags": ["ПОЛИРОВКА", "РЕМОНТ СКОЛОВ", "ТОНИРОВКА"],
         "cards": [
-            ("01 — TINT", "Тонировка", "Тонировка стёкол и атермальная плёнка — комфорт в салоне и аккуратный внешний вид."),
-            ("02 — PPF", "Бронирование", "Антигравийная плёнка на кузов и зоны риска — защита ЛКП от сколов и пескоструя."),
-            ("03 — SHINE", "Полировка", "Полировка кузова и оптики — возвращаем глубину цвета и ровный блеск."),
+            ("Тонировка", "Тонировка стёкол и атермальная плёнка — комфорт в салоне и аккуратный внешний вид."),
+            ("Бронирование", "Антигравийная плёнка на кузов и зоны риска — защита ЛКП от сколов и пескоструя."),
+            ("Полировка", "Полировка кузова и оптики — возвращаем глубину цвета и ровный блеск."),
         ],
         "card_alts": ["Тонировка автомобиля", "Бронирование плёнкой", "Полировка кузова"],
         "services_extra": [],
@@ -102,8 +103,9 @@ SITES = [
         "category": "Автомойка и комплексный уход",
         "hero_p": "Автоблеск138 в Иркутске — автомойка, химчистка салона, полировка и детейлинг-услуги. Запись по телефону, аккуратная работа и понятный результат на выдаче.",
         "services_intro": "От экспресс-мойки до глубокой химчистки и полировки — подбираем формат ухода под состояние автомобиля и ваши задачи.",
-        "works_h2": "ЧИСТОТА,<br><span class=\"accent\">КОТОРАЯ ВИДНА.</span>",
-        "works_intro": "Реальные фото студии из 2ГИС: мойка, салон и финишная выдача — то, как мы работаем на практике.",
+        "works_h2": "РЕЗУЛЬТАТ,<br><span class=\"accent\">КОТОРЫЙ ВИДНО.</span>",
+        "works_intro": "",
+        "hero_image": "cb25ce77-f98f-4c6b-885c-d43c9c745c4e.jpg",
         "about_intro": "Автоблеск138 — автомойка в Иркутске с акцентом на качество и сервис. Каждый автомобиль проходит подготовку и контроль перед выдачей.",
         "story_lead": "Автоблеск138 — место, куда в Иркутске приезжают за чистым автомобилем и спокойным сервисом.",
         "story_p1": "Начинали с мойки и базового ухода, со временем добавили химчистку, полировку и защитные процедуры. Сегодня это полноценная студия ухода за автомобилем.",
@@ -111,11 +113,11 @@ SITES = [
         "story_p3": "Позвоните или напишите — подскажем по услугам, сориентируем по стоимости и подберём удобное время.",
         "story_caption": "АВТОБЛЕСК138 · ИРКУТСК",
         "founder_name": "Автоблеск138",
-        "strip_tags": ["МОЙКА", "САЛОН", "ПОЛИРОВКА"],
+        "strip_tags": ["ПОЛИРОВКА КУЗОВА", "КОМПЛЕКСНАЯ МОЙКА", "ХИМЧИСТКА САЛОНА"],
         "cards": [
-            ("01 — WASH", "Автомойка", "Комплексная и детальная мойка кузова и колёс — аккуратно и без повреждения ЛКП."),
-            ("02 — INTERIOR", "Химчистка", "Глубокая химчистка салона: сиденья, ковры, потолок и пластик."),
-            ("03 — SHINE", "Полировка", "Полировка кузова и восстановление блеска — заметный результат на свету."),
+            ("Автомойка", "Комплексная и детальная мойка кузова и колёс — аккуратно и без повреждения ЛКП."),
+            ("Химчистка", "Глубокая химчистка салона: сиденья, ковры, потолок и пластик."),
+            ("Полировка", "Полировка кузова и восстановление блеска — заметный результат на свету."),
         ],
         "card_alts": ["Автомойка", "Химчистка салона", "Полировка кузова"],
         "services_extra": [
@@ -369,10 +371,32 @@ def local_photo_files(site: dict) -> list[Path]:
     files: list[Path] = []
     for pattern in ("*.jpg", "*.jpeg", "*.png", "*.webp"):
         files.extend(src_dir.glob(pattern))
-    return sorted(files, key=lambda p: p.name.lower())
+    files = sorted(files, key=lambda p: p.name.lower())
+    order = site.get("photo_order") or []
+    if order:
+        by_name = {p.name.lower(): p for p in files}
+        ordered = [by_name[n.lower()] for n in order if n.lower() in by_name]
+        rest = [p for p in files if p.name.lower() not in {n.lower() for n in order}]
+        return ordered + rest
+    return files
 
 
-def setup_photos_from_local(dst: Path, sources: list[Path]) -> list[str]:
+def resolve_hero_path(sources: list[Path], site: dict) -> Path | None:
+    hero_name = (site.get("hero_image") or "").strip().lower()
+    if hero_name:
+        for path in sources:
+            if path.name.lower() == hero_name:
+                return path
+        src_dir = site.get("photos_dir")
+        if src_dir:
+            base = Path(src_dir) if Path(src_dir).is_absolute() else ROOT / src_dir
+            direct = base / site["hero_image"]
+            if direct.is_file():
+                return direct
+    return sources[0] if sources else None
+
+
+def setup_photos_from_local(dst: Path, sources: list[Path], site: dict) -> list[str]:
     """Hero, portfolio grid, and quote strip — from provided image files."""
     works = dst / "img" / "works"
     copy_template_works(works)
@@ -382,18 +406,35 @@ def setup_photos_from_local(dst: Path, sources: list[Path]) -> list[str]:
         if old.is_file():
             old.unlink()
 
+    hero_path = resolve_hero_path(sources, site)
+    gallery_sources = [
+        p
+        for p in sources
+        if not hero_path or p.resolve() != hero_path.resolve()
+    ]
+    if not gallery_sources:
+        gallery_sources = list(sources)
+
     names: list[str] = []
-    for i, src in enumerate(sources[:PORTFOLIO_MAX], start=1):
+    for i, src in enumerate(gallery_sources[:PORTFOLIO_MAX], start=1):
         ext = src.suffix.lower() if src.suffix else ".jpg"
         fname = f"gallery-{i:02d}{ext}"
         shutil.copy2(src, portfolio / fname)
         names.append(fname)
 
-    if sources:
-        shutil.copy2(sources[0], works / "hero.jpg")
+    if hero_path:
+        shutil.copy2(hero_path, works / "hero.jpg")
 
     ensure_template_before_after(works)
     return names
+
+
+GALLERY_CSS_PATCH = """
+/* clone portfolio: show full photos without aggressive crop */
+.gallery--portfolio{grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(240px,auto);gap:12px}
+.gallery--portfolio .g{min-height:240px;background-size:contain;background-repeat:no-repeat;background-color:#0d0d0d;background-position:center}
+.gallery--portfolio .wide,.gallery--portfolio .tall{grid-column:span 1;grid-row:span 1}
+"""
 
 
 def setup_photos(dst: Path, urls: list[str]) -> list[str]:
@@ -433,13 +474,17 @@ def services_block(site: dict) -> str:
 
 def cards_block(site: dict) -> str:
     cards = []
-    for i, (num, title, desc) in enumerate(site["cards"]):
+    for i, card in enumerate(site["cards"]):
+        if len(card) == 3:
+            _, title, desc = card
+        else:
+            title, desc = card
         alt = site["card_alts"][i]
         img = CARD_IMAGES[i] if i < len(CARD_IMAGES) else CARD_IMAGES[0]
         cards.append(
             f"""    <article class="card">
       <div class="card-media"><img src="{img}" alt="{alt}"></div>
-      <div class="card-body"><div class="num">{num}</div><div><h3>{title}</h3><p>{desc}</p></div></div>
+      <div class="card-body"><div><h3>{title}</h3><p>{desc}</p></div></div>
     </article>"""
         )
     return "\n".join(cards)
@@ -447,28 +492,9 @@ def cards_block(site: dict) -> str:
 
 def gallery_block(portfolio_names: list[str]) -> str:
     items = []
-    layouts = [
-        "wide",
-        "tall",
-        "",
-        "",
-        "wide",
-        "",
-        "wide",
-        "tall",
-        "",
-        "tall",
-        "wide",
-        "",
-        "",
-        "wide",
-        "",
-    ]
-    for i, name in enumerate(portfolio_names[:PORTFOLIO_MAX]):
-        cls = layouts[i % len(layouts)]
-        extra = f" {cls}" if cls else ""
+    for name in portfolio_names[:PORTFOLIO_MAX]:
         items.append(
-            f"    <div class=\"g{extra}\" style=\"background-image:url('img/works/portfolio/{name}')\"></div>"
+            f"    <div class=\"g\" style=\"background-image:url('img/works/portfolio/{name}')\"></div>"
         )
     return "\n".join(items)
 
@@ -615,10 +641,30 @@ def apply_file(
         "<h2>БЛЕСК,<br><span class=\"accent\">КОТОРЫЙ ВИДНО.</span></h2>",
         f"<h2>{site['works_h2']}</h2>",
     )
-    text = text.replace(
-        "Мы показываем не обещания, а результат: отражение света, чистоту линий и фактуру покрытия.",
-        site["works_intro"],
-    )
+    works_intro = (site.get("works_intro") or "").strip()
+    if works_intro:
+        text = text.replace(
+            "Мы показываем не обещания, а результат: отражение света, чистоту линий и фактуру покрытия.",
+            works_intro,
+        )
+    else:
+        text = text.replace(
+            "Мы показываем не обещания, а результат: отражение света, чистоту линий и фактуру покрытия.",
+            "",
+        )
+        text = re.sub(
+            r'(<section class="section" id="works">.*?<h2>.*?</h2></div>\s*)<p class="intro">.*?</p>',
+            r"\1",
+            text,
+            count=1,
+            flags=re.DOTALL,
+        )
+        text = re.sub(r"<p class=\"intro\">\s*</p>\s*", "", text)
+        for old_intro in (
+            "Фото студии и реальные работы из 2ГИС — тонировка, плёнка и уход за автомобилем без лишних обещаний.",
+            "Реальные фото студии из 2ГИС: мойка, салон и финишная выдача — то, как мы работаем на практике.",
+        ):
+            text = text.replace(f'<p class="intro">{old_intro}</p>', "")
     text = text.replace(
         "Мы не гонимся за количеством машин в день. Каждый автомобиль проходит диагностику, подготовку и контроль результата. Именно поэтому процесс может занимать больше времени — и именно поэтому результат заметен.",
         site["about_intro"],
@@ -667,6 +713,21 @@ def apply_file(
     )
 
     if filename == "index.html":
+        text = re.sub(
+            r"(<section class=\"section\" id=\"works\">[\s\S]*?<h2>)"
+            r"[\s\S]*?"
+            r"(</h2>)",
+            lambda m: m.group(1) + site["works_h2"] + m.group(2),
+            text,
+            count=1,
+        )
+        text = re.sub(
+            r"(<section class=\"section\" id=\"works\">[\s\S]*?</h2>\s*</div>\s*)"
+            r"<p class=\"intro\">[\s\S]*?</p>",
+            r"\1",
+            text,
+            count=1,
+        )
         text = re.sub(
             r"<div class=\"cards\">.*?</div>\s*</section>",
             f'<div class="cards">\n{cards_block(site)}\n  </div>\n</section>',
@@ -734,6 +795,15 @@ def apply_file(
             text,
             count=1,
         )
+        marker = "/* clone-portfolio-fit */"
+        if marker not in text:
+            text += f"""
+
+{marker}
+.gallery--portfolio{{grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(240px,auto);gap:12px}}
+.gallery--portfolio .g{{min-height:240px;background-size:contain;background-repeat:no-repeat;background-color:#0f0f0f;background-position:center}}
+.gallery--portfolio .wide,.gallery--portfolio .tall{{grid-column:span 1;grid-row:span 1}}
+"""
 
     if filename == "server.py":
         text = re.sub(r"PORT = \d+", f"PORT = {site['port']}", text)
@@ -776,8 +846,8 @@ def build_site(site: dict) -> None:
 
     local_photos = local_photo_files(site)
     if local_photos:
-        site = {**site, "hero_ver": "custom"}
-        portfolio_names = setup_photos_from_local(dst, local_photos)
+        site = {**site, "hero_ver": "custom2"}
+        portfolio_names = setup_photos_from_local(dst, local_photos, site)
     else:
         portfolio_names = setup_photos(dst, firm["photos"])
     download_maps(dst / "img", firm["coords"])
