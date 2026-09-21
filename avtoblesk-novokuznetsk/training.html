@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Обучение — АвтоБлеск</title>
+<link rel="stylesheet" href="styles.css?v=6298204c">
+</head>
+<body>
+<nav class="site-nav">
+  <div class="logo"><a href="index.html"><span>АВТО</span>БЛЕСК</a></div>
+  <div class="links"><a href="index.html#services">УСЛУГИ</a><a href="index.html#catalog">ЦЕНЫ</a><a href="index.html#story">О СТУДИИ</a><a href="index.html#contacts">КОНТАКТЫ</a><a href="training.html">ОБУЧЕНИЕ</a></div>
+  <div class="nav-actions">
+    <a class="phone" href="tel:+79235322652">+7 (923) 532-26-52</a>
+    <button class="nav-burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu"><a href="index.html#services">УСЛУГИ</a><a href="index.html#catalog">ЦЕНЫ</a><a href="index.html#story">О СТУДИИ</a><a href="index.html#contacts">КОНТАКТЫ</a><a href="training.html">ОБУЧЕНИЕ</a></div>
+</nav>
+
+<section class="subpage-hero">
+  <div class="kicker">05 / ОБУЧЕНИЕ</div>
+  <h1>ШКОЛА<br>ДЕТЕЙЛИНГА<br><span class="accent">АВТОБЛЕСК.</span></h1>
+  <p>Учим работать со стёклами, оптикой и кузовом: ремонт сколов, полировка, защитные составы.
+  Практика на реальных автомобилях в студии в Новокузнецке, по итогу — сертификат с проверкой подлинности.</p>
+  <div class="actions">
+    <a class="button" href="tel:+79235322652">ЗАПИСАТЬСЯ НА КУРС</a>
+    <a class="button dark" href="#verify">ПРОВЕРИТЬ СЕРТИФИКАТ</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><b>124</b><span>ВЫПУСКНИКА</span></div>
+  <div class="stat"><b>5</b><span>ПРОГРАММ ОБУЧЕНИЯ</span></div>
+  <div class="stat"><b>70%</b><span>ВРЕМЕНИ — ПРАКТИКА</span></div>
+  <div class="stat"><b>до 3</b><span>ЧЕЛОВЕК В ГРУППЕ</span></div>
+</div>
+
+<section class="section" id="verify">
+  <div class="section-head">
+    <div>
+      <div class="kicker">ПРОВЕРКА СЕРТИФИКАТА</div>
+      <h2>ПОДТВЕРДИТЕ<br><span class="accent">ПОДЛИННОСТЬ.</span></h2>
+    </div>
+    <p class="intro">Введите номер с бланка или отсканируйте QR-код — покажем данные обучения
+    и статус сертификата в базе АвтоБлеск.</p>
+  </div>
+
+  <div class="cert-box">
+    <div>
+      <div class="cert-tabs" role="tablist">
+        <button type="button" class="cert-tab is-active" data-cert-tab="number">ПО НОМЕРУ</button>
+        <button type="button" class="cert-tab" data-cert-tab="qr">ПО QR-КОДУ</button>
+      </div>
+      <form class="cert-field" id="cert-form" data-cert-panel="number" novalidate>
+        <label for="cert-no">НОМЕР СЕРТИФИКАТА</label>
+        <input id="cert-no" name="cert-no" type="text" placeholder="AB-2026-001" autocomplete="off">
+        <button class="button" type="submit">ПРОВЕРИТЬ</button>
+        <p class="cert-hint">Демо-номера: AB-2026-001 … AB-2026-009.</p>
+        <p class="cert-msg" id="cert-msg" role="status"></p>
+      </form>
+      <div data-cert-panel="qr" hidden>
+        <p class="cert-note">Наведите камеру телефона на QR-код в правом нижнем углу бланка —
+        ссылка откроет эту страницу с уже заполненным номером.</p>
+        <p class="cert-note">Если QR повреждён, введите номер вручную на вкладке «По номеру».</p>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-card-top">
+        <div class="cert-card-brand"><span>АВТО</span>БЛЕСК<small>ДЕТЕЙЛИНГ</small></div>
+        <div class="cert-card-seal">ПРЕМИЯ<br>2ГИС</div>
+      </div>
+      <h3>СЕРТИФИКАТ</h3>
+      <div class="cert-card-name" data-cert-name>Иванов Алексей Сергеевич</div>
+      <div class="cert-card-rows">
+        <div>Курс · <b data-cert-course>Полировка кузова</b></div>
+        <div>Номер · <b data-cert-code>AB-2026-001</b></div>
+        <div>Выдал · <b>АвтоБлеск, Новокузнецк</b></div>
+      </div>
+      <div class="cert-card-foot">
+        <div class="cert-card-sign">Подпись преподавателя</div>
+        <div class="cert-qr" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cert-result" id="cert-result" aria-live="polite">
+    <div class="cert-status"><i>✓</i>СЕРТИФИКАТ НАЙДЕН</div>
+    <div class="cert-data">
+      <div><span>ФИО</span><b id="res-name">—</b></div>
+      <div><span>КУРС</span><b id="res-course">—</b></div>
+      <div><span>ДАТЫ ОБУЧЕНИЯ</span><b id="res-dates">—</b></div>
+      <div><span>НОМЕР</span><b id="res-code">—</b></div>
+    </div>
+    <div class="cert-valid">СЕРТИФИКАТ ДЕЙСТВИТЕЛЕН · ВЫДАН АВТОБЛЕСК, НОВОКУЗНЕЦК</div>
+  </div>
+</section>
+
+<section class="section" id="courses">
+  <div class="section-head">
+    <div>
+      <div class="kicker">ПРОГРАММЫ</div>
+      <h2>ЧЕМУ<br><span class="accent">УЧИМ.</span></h2>
+    </div>
+    <p class="intro">Каждая программа — отдельный навык с практикой на автомобилях студии.
+    Можно пройти один курс или собрать комплекс.</p>
+  </div>
+  <div class="service-list">
+    <div class="service-row"><div class="idx">01</div><div><h3>Ремонт сколов и трещин</h3><p>Диагностика повреждения, инжектор, полимер и УФ-сушка.</p></div><div class="cost">3 дня</div></div>
+    <div class="service-row"><div class="idx">02</div><div><h3>Полировка и шлифовка стёкол</h3><p>Мутность, налёт и царапины: абразивы, войлок, контроль стекла.</p></div><div class="cost">3 дня</div></div>
+    <div class="service-row"><div class="idx">03</div><div><h3>Полировка фар и антидождь</h3><p>Восстановление оптики, защитные составы и гидрофоб на стёкла.</p></div><div class="cost">2 дня</div></div>
+    <div class="service-row"><div class="idx">04</div><div><h3>Полировка кузова</h3><p>Замер ЛКП, подбор паст и кругов, работа машинкой, контроль света.</p></div><div class="cost">4 дня</div></div>
+    <div class="service-row"><div class="idx">05</div><div><h3>Керамика и защитные составы</h3><p>Подготовка кузова, нанесение покрытия, сушка и уход.</p></div><div class="cost">2 дня</div></div>
+  </div>
+</section>
+
+<section class="process" id="how">
+  <div class="kicker">КАК ПРОХОДИТ</div>
+  <h2>ОТ ЗАЯВКИ<br><span class="accent">ДО СЕРТИФИКАТА.</span></h2>
+  <div class="steps">
+      <div class="step"><b>01</b><h3>Заявка</h3><p>Обсуждаем опыт и подбираем программу под задачу.</p></div>
+      <div class="step"><b>02</b><h3>Теория</h3><p>Материалы, инструмент, техника безопасности и типы повреждений.</p></div>
+      <div class="step"><b>03</b><h3>Практика</h3><p>Работаете руками на реальных автомобилях под присмотром мастера.</p></div>
+      <div class="step"><b>04</b><h3>Аттестация</h3><p>Зачётная работа, сертификат и запись в базе проверки.</p></div>
+  </div>
+</section>
+
+<section class="section" id="crm">
+  <div class="section-head">
+    <div>
+      <div class="kicker">ПАНЕЛЬ ШКОЛЫ</div>
+      <h2>ВЕДЕНИЕ<br><span class="accent">УЧЁТА.</span></h2>
+    </div>
+    <p class="intro">Внутренняя панель: статистика, список учеников, сертификаты и карточка
+    каждого обучающегося. Нажмите «Смотреть» в таблице — откроется карточка. Данные демонстрационные.</p>
+  </div>
+
+  <div class="crm">
+    <aside class="crm-side">
+      <div class="crm-logo"><span>АВТО</span>БЛЕСК<small>ДЕТЕЙЛИНГ</small></div>
+      <div class="crm-nav" role="tablist">
+        <button type="button" class="crm-nav-item is-active" data-crm-view="dashboard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Главная</button>
+        <button type="button" class="crm-nav-item" data-crm-view="students"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 11h5"/><path d="M16 15h5"/></svg>Обучающиеся</button>
+        <button type="button" class="crm-nav-item" data-crm-view="student"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="12" rx="1.5"/><path d="M8 20l4-2.5 4 2.5"/></svg>Сертификаты</button>
+        <button type="button" class="crm-nav-item" data-crm-view="courses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16v12H4z"/><path d="M4 10h16"/><path d="M9 6.5v12"/></svg>Курсы</button>
+        <button type="button" class="crm-nav-item" data-crm-view="users"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8.5" cy="9" r="3"/><circle cx="16" cy="10" r="2.4"/><path d="M3 19c0-2.8 2.5-5 5.5-5s5.5 2.2 5.5 5"/><path d="M15 19c0-2 1.3-3.6 3-4"/></svg>Пользователи</button>
+        <button type="button" class="crm-nav-item" data-crm-view="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M21 20H3"/></svg>Статистика</button>
+        <button type="button" class="crm-nav-item" data-crm-view="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>Настройки</button>
+      </div>
+      <div class="crm-user">
+        <div class="crm-user-av">ВЛ</div>
+        <div><b>Владислав</b><span>Администратор</span></div>
+      </div>
+    </aside>
+    <div class="crm-main">
+      <header class="crm-top">
+        <div>
+          <h3 id="crm-title">Панель администратора</h3>
+          <p id="crm-sub">Общая информация и статистика по обучению</p>
+        </div>
+        <div class="crm-top-meta">
+          <span>18 сентября 2026</span>
+          <span class="crm-bell" aria-hidden="true">🔔</span>
+        </div>
+      </header>
+
+      <div class="crm-view" data-crm-panel="dashboard"
+        data-crm-title="Панель администратора" data-crm-sub="Общая информация и статистика по обучению">
+        <div class="crm-cards">
+          <div class="crm-card">
+            <div class="crm-card-top">Всего обучающихся<span class="crm-card-ico">◫</span></div>
+            <b>124</b><small>+12% за месяц</small>
+          </div>
+          <div class="crm-card">
+            <div class="crm-card-top">Активные курсы<span class="crm-card-ico">◷</span></div>
+            <b>5</b><small>+1 новый</small>
+          </div>
+          <div class="crm-card">
+            <div class="crm-card-top">Выдано сертификатов<span class="crm-card-ico">✓</span></div>
+            <b>118</b><small>+15% за месяц</small>
+          </div>
+          <div class="crm-card">
+            <div class="crm-card-top">Ожидают обучения<span class="crm-card-ico">◔</span></div>
+            <b>7</b><small class="is-flat">в процессе</small>
+          </div>
+        </div>
+
+        <div class="crm-charts">
+          <div class="crm-box">
+            <h4>Динамика обучающихся</h4>
+      <svg class="crm-chart" viewBox="0 0 520 190" preserveAspectRatio="none" role="img" aria-label="Динамика обучающихся">
+        <defs>
+          <linearGradient id="crmFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(225,6,0,.45)"/>
+            <stop offset="100%" stop-color="rgba(225,6,0,0)"/>
+          </linearGradient>
+        </defs>
+        <line x1="0" y1="0.0" x2="520" y2="0.0" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="47.5" x2="520" y2="47.5" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="95.0" x2="520" y2="95.0" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="142.5" x2="520" y2="142.5" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="190.0" x2="520" y2="190.0" stroke="rgba(255,255,255,.06)"/>
+        <path d="M0,190 L0.0,134.9 L65.0,121.2 L130.0,125.7 L195.0,102.8 L260.0,84.4 L325.0,93.6 L390.0,66.1 L455.0,47.7 L520.0,24.8 L520,190 Z" fill="url(#crmFade)"/>
+        <polyline points="0.0,134.9 65.0,121.2 130.0,125.7 195.0,102.8 260.0,84.4 325.0,93.6 390.0,66.1 455.0,47.7 520.0,24.8" fill="none" stroke="#e10600" stroke-width="2.5" stroke-linejoin="round"/>
+        <circle cx="0.0" cy="134.9" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="65.0" cy="121.2" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="130.0" cy="125.7" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="195.0" cy="102.8" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="260.0" cy="84.4" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="325.0" cy="93.6" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="390.0" cy="66.1" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="455.0" cy="47.7" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="520.0" cy="24.8" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/>
+      </svg>
+      <div class="crm-axis"><span>Янв</span><span>Фев</span><span>Мар</span><span>Апр</span><span>Май</span><span>Июн</span><span>Июл</span><span>Авг</span><span>Сен</span></div>
+          </div>
+          <div class="crm-box">
+            <h4>Курсы по популярности</h4>
+    <div class="crm-donut-wrap">
+      <div class="crm-donut">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Курсы по популярности">
+          <circle cx="60" cy="60" r="42" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="15"/>
+          <circle cx="60" cy="60" r="42" fill="none" stroke="#e10600" stroke-width="15" stroke-dasharray="87.1 176.8" stroke-dashoffset="-0.0" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="42" fill="none" stroke="#b00500" stroke-width="15" stroke-dasharray="63.3 200.6" stroke-dashoffset="-87.1" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="42" fill="none" stroke="#800400" stroke-width="15" stroke-dasharray="55.4 208.5" stroke-dashoffset="-150.4" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="42" fill="none" stroke="#4f0200" stroke-width="15" stroke-dasharray="39.6 224.3" stroke-dashoffset="-205.8" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="42" fill="none" stroke="#2f2f2f" stroke-width="15" stroke-dasharray="18.5 245.4" stroke-dashoffset="-245.4" transform="rotate(-90 60 60)"/>
+        </svg>
+        <div class="crm-donut-center"><b>124</b><span>чел.</span></div>
+      </div>
+      <div class="crm-legend">
+        <div><i style="background:#e10600"></i>Полировка кузова<b>33%</b></div>
+        <div><i style="background:#b00500"></i>Химчистка салона<b>24%</b></div>
+        <div><i style="background:#800400"></i>Базовый курс<b>21%</b></div>
+        <div><i style="background:#4f0200"></i>Нанесение покрытий<b>15%</b></div>
+        <div><i style="background:#2f2f2f"></i>Другие<b>7%</b></div>
+      </div>
+    </div>
+    <p class="crm-hint">Выдано сертификатов за сезон · 7 в демо-базе</p>
+          </div>
+        </div>
+
+        <div class="crm-box" style="margin-top:14px">
+          <h4>Последние обучающиеся</h4>
+          <div class="crm-table-wrap">
+            <table class="crm-table">
+              <thead>
+                <tr><th>ФИО</th><th>Курс</th><th>Дата обучения</th><th>Статус</th><th>Сертификат</th><th></th></tr>
+              </thead>
+              <tbody>
+          <tr data-crm-row="иванов алексей сергеевич полировка кузова ab-2026-001">
+            <td>Иванов Алексей Сергеевич</td>
+            <td>Полировка кузова</td>
+            <td>15.05.2026 — 18.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-001</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-001">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="петров дмитрий андреевич ремонт сколов и трещин ab-2026-002">
+            <td>Петров Дмитрий Андреевич</td>
+            <td>Ремонт сколов и трещин</td>
+            <td>12.05.2026 — 14.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-002</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-002">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="смирнова екатерина викторовна полировка и шлифовка стёкол ab-2026-003">
+            <td>Смирнова Екатерина Викторовна</td>
+            <td>Полировка и шлифовка стёкол</td>
+            <td>10.05.2026 — 12.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-003</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-003">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="кузнецов максим олегович керамика и защитные составы ab-2026-004">
+            <td>Кузнецов Максим Олегович</td>
+            <td>Керамика и защитные составы</td>
+            <td>08.05.2026 — 09.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-004</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-004">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="васильев артём сергеевич полировка фар и антидождь ab-2026-005">
+            <td>Васильев Артём Сергеевич</td>
+            <td>Полировка фар и антидождь</td>
+            <td>05.05.2026 — 06.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-005</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-005">Смотреть</button></td>
+          </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="crm-view" data-crm-panel="students"
+        data-crm-title="Обучающиеся" data-crm-sub="Все ученики школы, статусы и выданные сертификаты" hidden>
+        <div class="crm-box">
+          <div class="crm-toolbar">
+            <input class="crm-input" type="search" id="crm-search" placeholder="Поиск по ФИО, курсу или номеру сертификата" autocomplete="off">
+            <select class="crm-select" id="crm-filter-status">
+              <option value="">Все статусы</option>
+              <option value="ok">Обучен</option>
+              <option value="wait">Ожидает</option>
+            </select>
+            <select class="crm-select" id="crm-filter-course">
+              <option value="">Все курсы</option><option>Ремонт сколов и трещин</option><option>Полировка и шлифовка стёкол</option><option>Полировка фар и антидождь</option><option>Полировка кузова</option><option>Керамика и защитные составы</option>
+            </select>
+            <button type="button" class="crm-btn is-accent" data-crm-demo>Добавить ученика</button>
+          </div>
+          <div class="crm-table-wrap">
+            <table class="crm-table" id="crm-students">
+              <thead>
+                <tr><th>ФИО</th><th>Курс</th><th>Дата обучения</th><th>Статус</th><th>Сертификат</th><th></th></tr>
+              </thead>
+              <tbody>
+          <tr data-crm-row="иванов алексей сергеевич полировка кузова ab-2026-001">
+            <td>Иванов Алексей Сергеевич</td>
+            <td>Полировка кузова</td>
+            <td>15.05.2026 — 18.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-001</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-001">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="петров дмитрий андреевич ремонт сколов и трещин ab-2026-002">
+            <td>Петров Дмитрий Андреевич</td>
+            <td>Ремонт сколов и трещин</td>
+            <td>12.05.2026 — 14.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-002</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-002">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="смирнова екатерина викторовна полировка и шлифовка стёкол ab-2026-003">
+            <td>Смирнова Екатерина Викторовна</td>
+            <td>Полировка и шлифовка стёкол</td>
+            <td>10.05.2026 — 12.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-003</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-003">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="кузнецов максим олегович керамика и защитные составы ab-2026-004">
+            <td>Кузнецов Максим Олегович</td>
+            <td>Керамика и защитные составы</td>
+            <td>08.05.2026 — 09.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-004</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-004">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="васильев артём сергеевич полировка фар и антидождь ab-2026-005">
+            <td>Васильев Артём Сергеевич</td>
+            <td>Полировка фар и антидождь</td>
+            <td>05.05.2026 — 06.05.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-005</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-005">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="никитина ольга павловна ремонт сколов и трещин ab-2026-006">
+            <td>Никитина Ольга Павловна</td>
+            <td>Ремонт сколов и трещин</td>
+            <td>с 22.09.2026</td>
+            <td><span class="crm-pill is-wait">● Ожидает</span></td>
+            <td>AB-2026-006</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-006">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="орлов павел игоревич полировка и шлифовка стёкол ab-2026-007">
+            <td>Орлов Павел Игоревич</td>
+            <td>Полировка и шлифовка стёкол</td>
+            <td>28.04.2026 — 30.04.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-007</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-007">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="дементьева алина сергеевна полировка фар и антидождь ab-2026-008">
+            <td>Дементьева Алина Сергеевна</td>
+            <td>Полировка фар и антидождь</td>
+            <td>24.04.2026 — 25.04.2026</td>
+            <td><span class="crm-pill">● Обучен</span></td>
+            <td>AB-2026-008</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-008">Смотреть</button></td>
+          </tr>
+          <tr data-crm-row="сафин руслан ильдарович полировка кузова ab-2026-009">
+            <td>Сафин Руслан Ильдарович</td>
+            <td>Полировка кузова</td>
+            <td>с 28.09.2026</td>
+            <td><span class="crm-pill is-wait">● Ожидает</span></td>
+            <td>AB-2026-009</td>
+            <td><button type="button" class="crm-link" data-crm-open="AB-2026-009">Смотреть</button></td>
+          </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="crm-empty" id="crm-students-empty" hidden>По вашему запросу ничего не найдено.</p>
+          <p class="crm-hint">Показано <b id="crm-students-count">9</b> из 9 записей</p>
+        </div>
+      </div>
+
+      <div class="crm-view" data-crm-panel="courses"
+        data-crm-title="Курсы" data-crm-sub="Программы, стоимость и загрузка преподавателей" hidden>
+        <div class="crm-cards">
+          <div class="crm-card">
+            <div class="crm-card-top">Активных программ<span class="crm-card-ico">◫</span></div>
+            <b>4</b><small class="is-flat">из 5 в каталоге</small>
+          </div>
+          <div class="crm-card">
+            <div class="crm-card-top">Учеников на курсах<span class="crm-card-ico">◷</span></div>
+            <b>124</b><small>+9 за сезон</small>
+          </div>
+          <div class="crm-card">
+            <div class="crm-card-top">Самый популярный<span class="crm-card-ico">✓</span></div>
+            <b>41</b><small class="is-flat">Полировка кузова</small>
+          </div>
+          <div class="crm-card">
+            <div class="crm-card-top">Средняя длительность<span class="crm-card-ico">◔</span></div>
+            <b>2.8</b><small class="is-flat">дня на курс</small>
+          </div>
+        </div>
+        <div class="crm-box" style="margin-top:14px">
+          <div class="crm-toolbar">
+            <h4 style="margin:0">Каталог программ</h4>
+            <button type="button" class="crm-btn is-accent" data-crm-demo>Добавить курс</button>
+          </div>
+          <div class="crm-table-wrap">
+            <table class="crm-table">
+              <thead>
+                <tr><th>Название</th><th>Длительность</th><th>Стоимость</th><th>Учеников</th><th>Преподаватель</th><th>Статус</th><th></th></tr>
+              </thead>
+              <tbody>
+          <tr>
+            <td>Ремонт сколов и трещин</td>
+            <td>3 дня</td>
+            <td>32 000 ₽</td>
+            <td>28</td>
+            <td>Сергей Ковалёв</td>
+            <td><span class="crm-pill">● Активен</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Изменить</button></td>
+          </tr>
+          <tr>
+            <td>Полировка и шлифовка стёкол</td>
+            <td>3 дня</td>
+            <td>30 000 ₽</td>
+            <td>24</td>
+            <td>Артём Гуськов</td>
+            <td><span class="crm-pill">● Активен</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Изменить</button></td>
+          </tr>
+          <tr>
+            <td>Полировка фар и антидождь</td>
+            <td>2 дня</td>
+            <td>22 000 ₽</td>
+            <td>18</td>
+            <td>Артём Гуськов</td>
+            <td><span class="crm-pill">● Активен</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Изменить</button></td>
+          </tr>
+          <tr>
+            <td>Полировка кузова</td>
+            <td>4 дня</td>
+            <td>45 000 ₽</td>
+            <td>41</td>
+            <td>Сергей Ковалёв</td>
+            <td><span class="crm-pill">● Активен</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Изменить</button></td>
+          </tr>
+          <tr>
+            <td>Керамика и защитные составы</td>
+            <td>2 дня</td>
+            <td>28 000 ₽</td>
+            <td>13</td>
+            <td>Сергей Ковалёв</td>
+            <td><span class="crm-pill is-wait">● Набор группы</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Изменить</button></td>
+          </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="crm-view" data-crm-panel="users"
+        data-crm-title="Пользователи" data-crm-sub="Сотрудники школы и уровни доступа к панели" hidden>
+        <div class="crm-box">
+          <div class="crm-toolbar">
+            <h4 style="margin:0">Команда школы</h4>
+            <button type="button" class="crm-btn is-accent" data-crm-demo>Пригласить сотрудника</button>
+          </div>
+          <div class="crm-table-wrap">
+            <table class="crm-table">
+              <thead>
+                <tr><th>ФИО</th><th>Роль</th><th>Email</th><th>Последний вход</th><th>Статус</th><th></th></tr>
+              </thead>
+              <tbody>
+          <tr>
+            <td>Владислав Петров</td>
+            <td>Администратор</td>
+            <td>vlad@avtoblesk.ru</td>
+            <td>сегодня, 09:14</td>
+            <td><span class="crm-pill">● Активен</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Права</button></td>
+          </tr>
+          <tr>
+            <td>Сергей Ковалёв</td>
+            <td>Преподаватель</td>
+            <td>kovalev@avtoblesk.ru</td>
+            <td>сегодня, 08:40</td>
+            <td><span class="crm-pill">● Активен</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Права</button></td>
+          </tr>
+          <tr>
+            <td>Артём Гуськов</td>
+            <td>Преподаватель</td>
+            <td>guskov@avtoblesk.ru</td>
+            <td>вчера, 19:02</td>
+            <td><span class="crm-pill">● Активен</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Права</button></td>
+          </tr>
+          <tr>
+            <td>Мария Лаптева</td>
+            <td>Менеджер</td>
+            <td>lapteva@avtoblesk.ru</td>
+            <td>вчера, 17:35</td>
+            <td><span class="crm-pill">● Активен</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Права</button></td>
+          </tr>
+          <tr>
+            <td>Игорь Дёмин</td>
+            <td>Стажёр</td>
+            <td>demin@avtoblesk.ru</td>
+            <td>12.09.2026</td>
+            <td><span class="crm-pill is-wait">● Доступ ограничен</span></td>
+            <td><button type="button" class="crm-link" data-crm-demo>Права</button></td>
+          </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="crm-grid" style="margin-top:14px">
+          <div class="crm-box">
+            <h4>Права по роли</h4>
+            <div class="crm-fields">
+              <div><span>Администратор</span><b>Полный доступ</b></div>
+              <div><span>Преподаватель</span><b>Ученики и зачёты</b></div>
+              <div><span>Менеджер</span><b>Заявки и расписание</b></div>
+              <div><span>Стажёр</span><b>Только просмотр</b></div>
+            </div>
+          </div>
+          <div class="crm-box">
+            <h4>Последние действия</h4>
+            <ul class="crm-steps">
+              <li><span><i>✓</i>Сергей Ковалёв выдал сертификат AB-2026-001</span><time>18.05.2026</time></li>
+              <li><span><i>✓</i>Мария Лаптева добавила заявку</span><time>17.09.2026</time></li>
+              <li><span><i>✓</i>Владислав Петров обновил цену курса</span><time>15.09.2026</time></li>
+              <li><span><i>✓</i>Артём Гуськов закрыл группу №1</span><time>12.09.2026</time></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="crm-view" data-crm-panel="stats"
+        data-crm-title="Статистика" data-crm-sub="Показатели школы за сезон 2026" hidden>
+        <div class="crm-charts">
+          <div class="crm-box">
+            <h4>Учеников по месяцам</h4>
+<div class="crm-months"><div><i style="height:33%"></i><small>Янв</small></div><div><i style="height:42%"></i><small>Фев</small></div><div><i style="height:39%"></i><small>Мар</small></div><div><i style="height:53%"></i><small>Апр</small></div><div><i style="height:64%"></i><small>Май</small></div><div><i style="height:58%"></i><small>Июн</small></div><div><i style="height:75%"></i><small>Июл</small></div><div><i style="height:86%"></i><small>Авг</small></div><div><i style="height:100%"></i><small>Сен</small></div></div>
+          </div>
+          <div class="crm-box">
+            <h4>Ключевые показатели</h4>
+            <div class="crm-kpi"><div><span>Средний чек курса</span><b>31 400 ₽</b><small>+4% к прошлому сезону</small></div><div><span>Доходимость до зачёта</span><b>92%</b><small>+3% к прошлому сезону</small></div><div><span>Возвращаются на второй курс</span><b>18%</b><small>+5% к прошлому сезону</small></div><div><span>Средняя оценка курса</span><b>4.9</b><small>по 118 отзывам</small></div></div>
+          </div>
+        </div>
+        <div class="crm-charts" style="margin-top:14px">
+          <div class="crm-box">
+            <h4>Динамика обучающихся</h4>
+      <svg class="crm-chart" viewBox="0 0 520 190" preserveAspectRatio="none" role="img" aria-label="Динамика обучающихся">
+        <defs>
+          <linearGradient id="crmFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(225,6,0,.45)"/>
+            <stop offset="100%" stop-color="rgba(225,6,0,0)"/>
+          </linearGradient>
+        </defs>
+        <line x1="0" y1="0.0" x2="520" y2="0.0" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="47.5" x2="520" y2="47.5" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="95.0" x2="520" y2="95.0" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="142.5" x2="520" y2="142.5" stroke="rgba(255,255,255,.06)"/><line x1="0" y1="190.0" x2="520" y2="190.0" stroke="rgba(255,255,255,.06)"/>
+        <path d="M0,190 L0.0,134.9 L65.0,121.2 L130.0,125.7 L195.0,102.8 L260.0,84.4 L325.0,93.6 L390.0,66.1 L455.0,47.7 L520.0,24.8 L520,190 Z" fill="url(#crmFade)"/>
+        <polyline points="0.0,134.9 65.0,121.2 130.0,125.7 195.0,102.8 260.0,84.4 325.0,93.6 390.0,66.1 455.0,47.7 520.0,24.8" fill="none" stroke="#e10600" stroke-width="2.5" stroke-linejoin="round"/>
+        <circle cx="0.0" cy="134.9" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="65.0" cy="121.2" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="130.0" cy="125.7" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="195.0" cy="102.8" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="260.0" cy="84.4" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="325.0" cy="93.6" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="390.0" cy="66.1" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="455.0" cy="47.7" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/><circle cx="520.0" cy="24.8" r="3" fill="#e10600" stroke="#161616" stroke-width="2"/>
+      </svg>
+      <div class="crm-axis"><span>Янв</span><span>Фев</span><span>Мар</span><span>Апр</span><span>Май</span><span>Июн</span><span>Июл</span><span>Авг</span><span>Сен</span></div>
+          </div>
+          <div class="crm-box">
+            <h4>Откуда приходят ученики</h4>
+            <div class="crm-bars"><div class="crm-bar"><span>2ГИС<b>46%</b></span><i><em style="width:46%"></em></i></div><div class="crm-bar"><span>Сарафанное радио<b>27%</b></span><i><em style="width:27%"></em></i></div><div class="crm-bar"><span>Instagram<b>18%</b></span><i><em style="width:18%"></em></i></div><div class="crm-bar"><span>Сайт студии<b>9%</b></span><i><em style="width:9%"></em></i></div></div>
+          </div>
+        </div>
+        <div class="crm-box" style="margin-top:14px">
+          <div class="crm-toolbar">
+            <h4 style="margin:0">Отчёты</h4>
+            <button type="button" class="crm-btn is-accent" data-crm-demo>Выгрузить в Excel</button>
+          </div>
+          <div class="crm-fields">
+            <div><span>Выдано сертификатов за сезон</span><b>118</b></div>
+            <div><span>Средняя загрузка группы</span><b>2.4 из 3 человек</b></div>
+            <div><span>Самый загруженный месяц</span><b>Сентябрь · 36 учеников</b></div>
+            <div><span>Отмены и переносы</span><b>4 записи</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="crm-view" data-crm-panel="settings"
+        data-crm-title="Настройки" data-crm-sub="Данные школы, сертификаты и уведомления" hidden>
+        <div class="crm-grid">
+          <div class="crm-box">
+            <h4>Общие данные</h4>
+            <div class="crm-form">
+              <label>Название школы<input class="crm-input" type="text" value="АвтоБлеск"></label>
+              <label>Город<input class="crm-input" type="text" value="Новокузнецк"></label>
+              <label>Телефон<input class="crm-input" type="text" value="+7 (923) 532-26-52"></label>
+              <label>Адрес студии<input class="crm-input" type="text" value=""></label>
+              <label>Email для заявок<input class="crm-input" type="email" value="school@avtoblesk.ru"></label>
+            </div>
+          </div>
+          <div class="crm-box">
+            <h4>Сертификаты</h4>
+            <div class="crm-form">
+              <label>Префикс номера<input class="crm-input" type="text" value="AB-2026-"></label>
+              <label>Шаблон бланка
+                <select class="crm-select"><option>Тёмный (фирменный)</option><option>Светлый</option></select>
+              </label>
+              <label>Подпись на бланке
+                <select class="crm-select"><option>Сергей Ковалёв</option><option>Артём Гуськов</option></select>
+              </label>
+              <label>Срок действия
+                <select class="crm-select"><option>Без ограничения</option><option>3 года</option></select>
+              </label>
+            </div>
+            <div class="crm-cert-actions">
+              <button type="button" class="crm-btn is-accent" data-crm-demo>Сохранить изменения</button>
+              <button type="button" class="crm-btn" data-crm-demo>Предпросмотр бланка</button>
+            </div>
+          </div>
+          <div class="crm-box" style="grid-column:1/-1">
+            <h4>Уведомления и доступы</h4>
+            <div class="crm-switch">
+              <div><b>Публичная проверка сертификатов</b><p>Страница проверки доступна клиентам на сайте</p></div>
+              <button type="button" aria-pressed="true" aria-label="Публичная проверка сертификатов"></button>
+            </div>            <div class="crm-switch">
+              <div><b>Автоматическая нумерация</b><p>Номер присваивается при выдаче сертификата</p></div>
+              <button type="button" aria-pressed="true" aria-label="Автоматическая нумерация"></button>
+            </div>            <div class="crm-switch">
+              <div><b>Email при новой заявке</b><p>Письмо администратору и преподавателю курса</p></div>
+              <button type="button" aria-pressed="true" aria-label="Email при новой заявке"></button>
+            </div>            <div class="crm-switch">
+              <div><b>SMS ученику о начале курса</b><p>Напоминание за сутки до первого дня</p></div>
+              <button type="button" aria-pressed="false" aria-label="SMS ученику о начале курса"></button>
+            </div>            <div class="crm-switch">
+              <div><b>Напоминание о зачётной работе</b><p>Уведомление преподавателю за день до аттестации</p></div>
+              <button type="button" aria-pressed="true" aria-label="Напоминание о зачётной работе"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="crm-view" data-crm-panel="student"
+        data-crm-title="Сертификаты" data-crm-sub="Карточка обучающегося и выданный бланк" hidden>
+        <button type="button" class="crm-back" data-crm-view="dashboard">← Назад</button>
+        <div class="crm-student-head">
+          <h3>Карточка обучающегося</h3>
+          <button type="button" class="crm-btn" data-crm-demo>Редактировать</button>
+        </div>
+        <div class="crm-grid">
+          <div class="crm-box">
+            <div class="crm-profile-top">
+              <div class="crm-avatar" data-cert-initials>ИА</div>
+              <div>
+                <h4 data-cert-name>Иванов Алексей Сергеевич</h4>
+                <div class="crm-badges">
+                  <span class="crm-badge is-ok" data-cert-status>● Обучен</span>
+                  <span class="crm-badge is-accent">Сертификат выдан</span>
+                </div>
+              </div>
+            </div>
+            <div class="crm-fields">
+              <div><span>Телефон</span><b data-cert-phone>+7 900 123-45-67</b></div>
+              <div><span>Email</span><b data-cert-email>ivanov@mail.ru</b></div>
+              <div><span>Даты обучения</span><b data-cert-dates>15.05.2026 — 18.05.2026</b></div>
+              <div><span>Курс</span><b data-cert-course>Полировка кузова</b></div>
+              <div><span>Группа</span><b data-cert-group>Группа №3</b></div>
+              <div><span>Преподаватель</span><b data-cert-teacher>Сергей Ковалёв</b></div>
+            </div>
+          </div>
+          <div class="crm-box">
+            <h4>Сертификат</h4>
+            <div class="cert-card">
+      <div class="cert-card-top">
+        <div class="cert-card-brand"><span>АВТО</span>БЛЕСК<small>ДЕТЕЙЛИНГ</small></div>
+        <div class="cert-card-seal">ПРЕМИЯ<br>2ГИС</div>
+      </div>
+      <h3>СЕРТИФИКАТ</h3>
+      <div class="cert-card-name" data-cert-name>Иванов Алексей Сергеевич</div>
+      <div class="cert-card-rows">
+        <div>Курс · <b data-cert-course>Полировка кузова</b></div>
+        <div>Номер · <b data-cert-code>AB-2026-001</b></div>
+        <div>Выдал · <b>АвтоБлеск, Новокузнецк</b></div>
+      </div>
+      <div class="cert-card-foot">
+        <div class="cert-card-sign">Подпись преподавателя</div>
+        <div class="cert-qr" aria-hidden="true"></div>
+      </div>
+    </div>
+            <div class="crm-cert-actions">
+              <button type="button" class="crm-btn is-accent" data-crm-demo>Скачать PDF</button>
+              <a class="crm-btn" href="#verify">Проверить в базе</a>
+            </div>
+          </div>
+          <div class="crm-box">
+            <h4>История обучения</h4>
+            <ul class="crm-steps">
+              <li><span><i>✓</i>Регистрация на курс</span><time data-cert-reg>05.05.2026</time></li>
+              <li><span><i>✓</i>Прохождение обучения</span><time data-cert-dates>15.05.2026 — 18.05.2026</time></li>
+              <li><span><i>✓</i>Сдача итогового теста</span><time data-cert-issued>18.05.2026</time></li>
+              <li><span><i>✓</i>Выдача сертификата</span><time data-cert-issued>18.05.2026</time></li>
+            </ul>
+          </div>
+          <div class="crm-box crm-notes">
+            <h4>Примечания</h4>
+            <div data-cert-notes>
+              <p>Отлично проявил себя на практике: ровно выводит риски, аккуратно работает на кромках и рёбрах кузова.</p><p>Рекомендуется для дальнейшего повышения квалификации.</p>
+            </div>
+            <footer><b data-cert-teacher>Сергей Ковалёв</b>Преподаватель</footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="crm-toast" id="crm-toast" role="status"></div>
+</section>
+
+<section class="process" id="faq">
+  <div class="kicker">FAQ</div>
+  <h2>ЧАСТЫЕ<br><span class="accent">ВОПРОСЫ.</span></h2>
+  <div class="faq">
+    <details open><summary>Нужен ли опыт для обучения?</summary><p>Нет. Базовые курсы рассчитаны на новичков: начинаем с материалов и инструмента, затем переходим к практике на автомобилях.</p></details>
+    <details><summary>Сколько человек в группе?</summary><p>До трёх человек, чтобы у каждого была практика на своём участке и обратная связь мастера.</p></details>
+    <details><summary>Что выдаём после обучения?</summary><p>Сертификат с индивидуальным номером. Подлинность проверяется на этой странице по номеру или QR-коду с бланка.</p></details>
+    <details><summary>Помогаете после курса?</summary><p>Да, остаётесь на связи с преподавателем: разбираем сложные случаи и подбор материалов.</p></details>
+  </div>
+</section>
+
+<div class="site-bottom">
+<section class="address-map" id="contacts">
+  <div class="address-map-bg">
+    <div class="address-map-glow address-map-glow--tr"></div>
+    <div class="address-map-glow address-map-glow--bl"></div>
+  </div>
+  <div class="address-map-inner">
+    <div class="address-map-grid">
+      <div class="address-map-intro">
+        <div class="address-map-kicker">
+          <span class="address-map-line"></span>
+          <span class="kicker">04 / ЛОКАЦИЯ</span>
+        </div>
+        <h2 class="address-map-title">ГДЕ МЫ<br><span>НАХОДИМСЯ.</span></h2>
+        <p class="address-map-text">Приезжайте в студию по записи. Адрес и маршрут — в 2ГИС.</p>
+        <div class="address-map-divider" aria-hidden="true"></div>
+      </div>
+      <div class="address-map-visual">
+        <a href="https://2gis.ru/novokuznetsk/firm/70000001098503533" class="address-map-frame" target="_blank" rel="noopener noreferrer">
+          <img class="address-map-img address-map-img--desktop" src="https://static.maps.2gis.com/1.0?s=880x450&amp;c=53.773115,87.220443&amp;z=18&amp;pt=53.773115,87.220443~k:p" alt="">
+          <img class="address-map-img address-map-img--mobile" src="https://static.maps.2gis.com/1.0?s=720x720&amp;c=53.773115,87.220443&amp;z=18&amp;pt=53.773115,87.220443~k:p" alt="Карта 2ГИС — г. Новокузнецк, Аульская улица, 65В">
+          <div class="address-map-pin-label" aria-hidden="true">
+            <span class="address-map-pin-label-text"><span>АВТО</span>БЛЕСК</span>
+          </div>
+        </a>
+        <div class="address-map-decor"></div>
+      </div>
+      <div class="address-map-details-wrap">
+        <div class="address-map-details">
+          <div class="address-map-detail">
+            <span class="address-map-detail-label">СТУДИЯ</span>
+            <p class="address-map-brand"><span>АВТО</span>БЛЕСК</p>
+            <p class="address-map-muted">г. Новокузнецк, Аульская улица, 65В</p>
+            <p class="address-map-muted-sm">Ежедневно по записи</p>
+          </div>
+          <div class="address-map-detail">
+            <span class="address-map-detail-label">ТЕЛЕФОН</span>
+            <a href="tel:+79235322652" class="address-map-phone">+7 (923) 532-26-52</a>
+          </div>
+        </div>
+        <a href="https://2gis.ru/novokuznetsk/firm/70000001098503533" class="address-map-btn" target="_blank" rel="noopener noreferrer">Как добраться</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid footer-desktop-only">
+    <div class="footer-col footer-col--brand-hours">
+      <div class="footer-brand-block">
+        <div class="footer-logo"><span>АВТО</span>БЛЕСК</div>
+        <div class="footer-social"><a href="https://2gis.ru/novokuznetsk/firm/70000001098503533" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
+      </div>
+      <div class="footer-hours-block">
+        <b>РЕЖИМ РАБОТЫ</b>
+        <span>Ежедневно · по записи</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <b>НАВИГАЦИЯ</b>
+      <a href="index.html">Главная</a>
+      <a href="index.html#catalog">Услуги</a>
+      <a href="index.html#works">Работы</a>
+      <a href="index.html#story">О студии</a>
+      <a href="index.html#contacts">Контакты</a>
+      <a href="training.html">Обучение</a>
+    </div>
+    <div class="footer-col">
+      <b>КОНТАКТЫ</b>
+      <a class="footer-phone-inline" href="tel:+79235322652">+7 (923) 532-26-52</a>
+      </div>
+  </div>
+  <div class="footer-grid footer-mobile-only">
+    <div class="footer-col">
+      <b>НАВИГАЦИЯ</b>
+      <a href="index.html">Главная</a>
+      <a href="index.html#catalog">Услуги</a>
+      <a href="index.html#works">Работы</a>
+      <a href="index.html#story">О студии</a>
+      <a href="index.html#contacts">Контакты</a>
+      <a href="training.html">Обучение</a>
+    </div>
+    <div class="footer-col footer-col--brand-hours">
+      <div class="footer-phones-block">
+        <b>КОНТАКТЫ</b>
+        <a class="footer-phone-inline" href="tel:+79235322652">+7 (923) 532-26-52</a>
+        </div>
+      <div class="footer-brand-divider" aria-hidden="true"></div>
+      <div class="footer-brand-block">
+        <div class="footer-logo"><span>АВТО</span>БЛЕСК</div>
+        <div class="footer-social"><a href="https://2gis.ru/novokuznetsk/firm/70000001098503533" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
+      </div>
+      <div class="footer-hours-block">
+        <b>РЕЖИМ РАБОТЫ</b>
+        <span>Ежедневно · по записи</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 АвтоБлеск</span>
+    <span>ДЕТЕЙЛИНГ · НОВОКУЗНЕЦК</span>
+  </div>
+</footer>
+</div>
+
+<script src="nav.js"></script>
+<script>window.TRAINING_DB = {"AB-2026-001": {"cert": "AB-2026-001", "name": "Иванов Алексей Сергеевич", "course": "Полировка кузова", "dates": "15.05.2026 — 18.05.2026", "issued": "18.05.2026", "status": "ok", "phone": "+7 900 123-45-67", "email": "ivanov@mail.ru", "group": "Группа №3", "teacher": "Сергей Ковалёв", "notes": ["Отлично проявил себя на практике: ровно выводит риски, аккуратно работает на кромках и рёбрах кузова.", "Рекомендуется для дальнейшего повышения квалификации."]}, "AB-2026-002": {"cert": "AB-2026-002", "name": "Петров Дмитрий Андреевич", "course": "Ремонт сколов и трещин", "dates": "12.05.2026 — 14.05.2026", "issued": "14.05.2026", "status": "ok", "phone": "+7 903 221-08-14", "email": "petrov.d@mail.ru", "group": "Группа №2", "teacher": "Сергей Ковалёв", "notes": ["Уверенно работает с инжектором и полимером — сколы выведены без остаточного контура.", "Стоит добавить практику по длинным трещинам."]}, "AB-2026-003": {"cert": "AB-2026-003", "name": "Смирнова Екатерина Викторовна", "course": "Полировка и шлифовка стёкол", "dates": "10.05.2026 — 12.05.2026", "issued": "12.05.2026", "status": "ok", "phone": "+7 913 640-77-02", "email": "smirnova@mail.ru", "group": "Группа №2", "teacher": "Артём Гуськов", "notes": ["Контролирует нагрев стекла и не допускает линз при шлифовке.", "Готова работать с клиентскими автомобилями самостоятельно."]}, "AB-2026-004": {"cert": "AB-2026-004", "name": "Кузнецов Максим Олегович", "course": "Керамика и защитные составы", "dates": "08.05.2026 — 09.05.2026", "issued": "09.05.2026", "status": "ok", "phone": "+7 923 118-93-40", "email": "kuznetsov@mail.ru", "group": "Группа №1", "teacher": "Сергей Ковалёв", "notes": ["Аккуратно готовит кузов перед нанесением, соблюдает время полимеризации.", "Рекомендован к курсу по полировке кузова."]}, "AB-2026-005": {"cert": "AB-2026-005", "name": "Васильев Артём Сергеевич", "course": "Полировка фар и антидождь", "dates": "05.05.2026 — 06.05.2026", "issued": "06.05.2026", "status": "ok", "phone": "+7 905 772-16-58", "email": "vasilev@mail.ru", "group": "Группа №1", "teacher": "Артём Гуськов", "notes": ["Выводит фары до полной прозрачности, ровно наносит защитный лак.", "Хорошо объясняет клиенту порядок ухода."]}, "AB-2026-006": {"cert": "AB-2026-006", "name": "Никитина Ольга Павловна", "course": "Ремонт сколов и трещин", "dates": "с 22.09.2026", "issued": "—", "status": "wait", "phone": "+7 908 415-30-771", "email": "nikitina@mail.ru", "group": "Группа №4", "teacher": "Сергей Ковалёв", "notes": ["Записана на курс, ожидает начала обучения."]}, "AB-2026-007": {"cert": "AB-2026-007", "name": "Орлов Павел Игоревич", "course": "Полировка и шлифовка стёкол", "dates": "28.04.2026 — 30.04.2026", "issued": "30.04.2026", "status": "ok", "phone": "+7 913 204-66-19", "email": "orlov@mail.ru", "group": "Группа №1", "teacher": "Артём Гуськов", "notes": ["Ровно снимает налёт, аккуратно работает по краю стекла."]}, "AB-2026-008": {"cert": "AB-2026-008", "name": "Дементьева Алина Сергеевна", "course": "Полировка фар и антидождь", "dates": "24.04.2026 — 25.04.2026", "issued": "25.04.2026", "status": "ok", "phone": "+7 923 887-04-12", "email": "dementieva@mail.ru", "group": "Группа №1", "teacher": "Артём Гуськов", "notes": ["Хорошо готовит оптику перед лаком, держит равномерный слой."]}, "AB-2026-009": {"cert": "AB-2026-009", "name": "Сафин Руслан Ильдарович", "course": "Полировка кузова", "dates": "с 28.09.2026", "issued": "—", "status": "wait", "phone": "+7 906 331-72-45", "email": "safin@mail.ru", "group": "Группа №4", "teacher": "Сергей Ковалёв", "notes": ["Оплатил курс, ждёт начала группы."]}};
+window.TRAINING_DEFAULT = "AB-2026-001";</script>
+<script src="training.js"></script>
+</body>
+</html>
