@@ -609,3 +609,9 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 @media (max-width:480px){
   .gallery--portfolio .g{flex:1 1 100%;min-width:100%}
 }
+
+.heroimg{background-position:50% 88%!important}
+
+@media (max-width:768px){
+  .heroimg{background-position:50% bottom!important}
+}

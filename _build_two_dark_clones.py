@@ -144,6 +144,8 @@ SITES = [
         "social_links": [],
         "server_name": "Avtoblesk138Site",
         "photos_dir": "_media/avtoblesk138",
+        "hero_bg_position": "50% 88%",
+        "hero_bg_position_mobile": "50% bottom",
     },
 ]
 
@@ -448,13 +450,28 @@ CLONE_SITE_CSS = """
 """
 
 
-def patch_clone_styles(text: str) -> str:
+def clone_site_css(site: dict) -> str:
+    css = CLONE_SITE_CSS
+    hero_pos = site.get("hero_bg_position")
+    hero_pos_m = site.get("hero_bg_position_mobile")
+    if hero_pos:
+        css += f"\n.heroimg{{background-position:{hero_pos}!important}}\n"
+    if hero_pos_m:
+        css += (
+            "\n@media (max-width:768px){\n"
+            f"  .heroimg{{background-position:{hero_pos_m}!important}}\n"
+            "}\n"
+        )
+    return css
+
+
+def patch_clone_styles(text: str, site: dict) -> str:
     text = re.sub(
         r"\n/\* clone-(?:site-tweaks|portfolio-fit|hero-light) \*/[\s\S]*?(?=\n/\* clone-|\Z)",
         "",
         text,
     )
-    return text.rstrip() + "\n" + CLONE_SITE_CSS
+    return text.rstrip() + "\n" + clone_site_css(site)
 
 
 def setup_photos(dst: Path, urls: list[str]) -> list[str]:
@@ -815,7 +832,7 @@ def apply_file(
             text,
             count=1,
         )
-        text = patch_clone_styles(text)
+        text = patch_clone_styles(text, site)
 
     if filename == "server.py":
         text = re.sub(r"PORT = \d+", f"PORT = {site['port']}", text)
