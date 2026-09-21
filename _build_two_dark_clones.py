@@ -429,12 +429,32 @@ def setup_photos_from_local(dst: Path, sources: list[Path], site: dict) -> list[
     return names
 
 
-GALLERY_CSS_PATCH = """
-/* clone portfolio: show full photos without aggressive crop */
-.gallery--portfolio{grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(240px,auto);gap:12px}
-.gallery--portfolio .g{min-height:240px;background-size:contain;background-repeat:no-repeat;background-color:#0d0d0d;background-position:center}
-.gallery--portfolio .wide,.gallery--portfolio .tall{grid-column:span 1;grid-row:span 1}
+CLONE_SITE_CSS = """
+/* clone-site-tweaks */
+.heroimg{opacity:.89}
+.heroimg:before{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.3) 40%,transparent 70%)}
+.hero:after{background:linear-gradient(90deg,#0a0a0a 0%,transparent 58%,rgba(10,10,10,.75) 100%)}
+.gallery--portfolio{display:flex;flex-wrap:wrap;gap:10px;margin-top:50px}
+.gallery--portfolio .g{flex:1 1 calc(20% - 10px);min-width:min(100%,260px);min-height:0;background:none!important}
+.gallery--portfolio .g img{width:100%;height:auto;display:block}
+.gallery--portfolio .wide,.gallery--portfolio .tall{grid-column:unset;grid-row:unset}
+@media (max-width:768px){
+  .heroimg{opacity:.59}
+  .gallery--portfolio .g{flex:1 1 calc(50% - 10px);min-width:calc(50% - 10px)}
+}
+@media (max-width:480px){
+  .gallery--portfolio .g{flex:1 1 100%;min-width:100%}
+}
 """
+
+
+def patch_clone_styles(text: str) -> str:
+    text = re.sub(
+        r"\n/\* clone-(?:site-tweaks|portfolio-fit|hero-light) \*/[\s\S]*?(?=\n/\* clone-|\Z)",
+        "",
+        text,
+    )
+    return text.rstrip() + "\n" + CLONE_SITE_CSS
 
 
 def setup_photos(dst: Path, urls: list[str]) -> list[str]:
@@ -494,7 +514,7 @@ def gallery_block(portfolio_names: list[str]) -> str:
     items = []
     for name in portfolio_names[:PORTFOLIO_MAX]:
         items.append(
-            f"    <div class=\"g\" style=\"background-image:url('img/works/portfolio/{name}')\"></div>"
+            f'    <div class="g"><img src="img/works/portfolio/{name}" alt="" loading="lazy"></div>'
         )
     return "\n".join(items)
 
@@ -795,15 +815,7 @@ def apply_file(
             text,
             count=1,
         )
-        marker = "/* clone-portfolio-fit */"
-        if marker not in text:
-            text += f"""
-
-{marker}
-.gallery--portfolio{{grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(240px,auto);gap:12px}}
-.gallery--portfolio .g{{min-height:240px;background-size:contain;background-repeat:no-repeat;background-color:#0f0f0f;background-position:center}}
-.gallery--portfolio .wide,.gallery--portfolio .tall{{grid-column:span 1;grid-row:span 1}}
-"""
+        text = patch_clone_styles(text)
 
     if filename == "server.py":
         text = re.sub(r"PORT = \d+", f"PORT = {site['port']}", text)
@@ -846,7 +858,7 @@ def build_site(site: dict) -> None:
 
     local_photos = local_photo_files(site)
     if local_photos:
-        site = {**site, "hero_ver": "custom2"}
+        site = {**site, "hero_ver": "custom3"}
         portfolio_names = setup_photos_from_local(dst, local_photos, site)
     else:
         portfolio_names = setup_photos(dst, firm["photos"])
