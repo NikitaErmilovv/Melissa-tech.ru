@@ -94,7 +94,7 @@ def compress_models() -> None:
         print(f"Compressing {name}.glb (meshopt, full detail)...")
         run_gltf(
             f'npx --yes @gltf-transform/cli optimize "{source}" "{tmp}" '
-            f'--compress meshopt --simplify false'
+            f'--compress meshopt --simplify false --join false --flatten false --weld false'
         )
         shutil.copy2(tmp, published)
         tmp.unlink(missing_ok=True)

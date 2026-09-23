@@ -6,7 +6,7 @@ import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 
 const MODEL_NAMES={dodge:'Dodge Challenger SRT Demon',mercedes:'Mercedes-Benz C-Class'};
-const MODEL_URLS={dodge:'models/dodge.glb?v=4',mercedes:'models/mercedes.glb?v=4'};
+const MODEL_URLS={dodge:'models/dodge.glb?v=5',mercedes:'models/mercedes.glb?v=5'};
 function prefetchMercedesModel(){if(window.__mbPrefetch)return;window.__mbPrefetch=1;fetch(MODEL_URLS.mercedes,{priority:'low'}).catch(()=>{})}
 const zoneDefs={
  hood:['Капот',21600],roof:['Крыша',18500],fenderFrontL:['Переднее крыло L',11200],fenderFrontR:['Переднее крыло R',11200],doorFrontL:['Передняя дверь L',13680],doorFrontR:['Передняя дверь R',13680],doorRearL:['Задняя дверь L',13680],doorRearR:['Задняя дверь R',13680],quarterL:['Задняя часть L',15400],quarterR:['Задняя часть R',15400],trunk:['Крышка багажника',14800],bumperFront:['Передний бампер',18900],bumperRear:['Задний бампер',18900],sideLowerL:['Нижняя часть L',9800],sideLowerR:['Нижняя часть R',9800],mirrorL:['Зеркало L',4200],mirrorR:['Зеркало R',4200]
