@@ -7,6 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>АвтоБлеск — детейлинг</title>
 <link rel="stylesheet" href="styles.css?v=hero10">
+<link rel="stylesheet" href="wrap-configurator.css">
 </head>
 <body>
 <nav class="site-nav">
@@ -58,6 +59,90 @@
       <div class="card-media"><img src="img/interior.png" alt="Полировка фар"></div>
       <div class="card-body"><div><h3>Полировка фар и антидождь</h3><p>Возвращаем свет фарам и наносим гидрофоб на стёкла для дождя.</p></div></div>
     </article>
+  </div>
+</section>
+
+<section class="section" id="wrap">
+  <div class="section-head">
+    <div>
+      <div class="kicker">ОКЛЕЙКА</div>
+      <h2>ОКЛЕЙКА<br><span class="accent">ПЛЁНКОЙ.</span></h2>
+    </div>
+  </div>
+  <div id="wrap-cfg">
+    <section class="wrap-viewer">
+      <div id="canvas" class="canvas"></div>
+      <div class="wrap-hero">
+        <h3>Оклейка <span>плёнкой</span></h3>
+      </div>
+      <div class="wrap-badge"><b id="status">Загрузка модели</b></div>
+      <div class="wrap-view-actions">
+        <button id="rotate" class="tool active" type="button">↻ Автовращение</button>
+        <button id="reset" class="tool" type="button">⟲ Сброс</button>
+      </div>
+      <div id="marker" class="marker" style="display:none"></div>
+    </section>
+    <aside class="sidebar">
+      <h2 class="side-title">Оклейка</h2>
+      <div class="wrap-block">
+        <div class="label">Автомобиль</div>
+        <div class="tools" style="grid-template-columns:repeat(2,1fr)">
+          <button class="tool active" data-model="dodge" type="button">Dodge Challenger SRT Demon</button>
+          <button class="tool" data-model="mercedes" type="button">Mercedes-Benz C-Class</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Инструмент</div>
+        <div class="tools">
+          <button class="tool active" data-tool="select" type="button">Выбор</button>
+          <button class="tool" data-tool="fill" type="button">Заливка</button>
+          <button class="tool" data-tool="eyedrop" type="button">Пипетка</button>
+          <button class="tool" data-tool="remove" type="button">Снять</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Зоны кузова</div>
+        <div class="zones" id="zones"></div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Выбранная деталь</div>
+        <div id="selectedInfo" class="selectedInfo">Нажмите на деталь автомобиля</div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Цвет плёнки</div>
+        <div id="swatches" class="swatches"></div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Финиш</div>
+        <div class="finish">
+          <button class="active" data-finish="gloss" type="button">Глубокий глянец</button>
+          <button data-finish="satin" type="button">Сатин</button>
+          <button data-finish="matte" type="button">Матовая</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Материал / эффект</div>
+        <div class="finish" style="grid-template-columns:repeat(4,1fr)">
+          <button class="active" data-effect="solid" type="button">Solid</button>
+          <button data-effect="metal" type="button">Metallic</button>
+          <button data-effect="pearl" type="button">Pearl</button>
+          <button data-effect="carbon" type="button">Carbon</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Детали</div>
+        <div id="parts" class="parts"></div>
+      </div>
+    </aside>
+    <div class="summary">
+      <div class="summary-row">
+        <div>
+          <div class="sumlabel">Ваш подбор</div>
+          <div id="total" class="total">0 ₽</div>
+        </div>
+        <button class="cta" id="quote" type="button">ПОЛУЧИТЬ РАСЧЁТ</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -300,5 +385,7 @@
 <script src="nav.js"></script>
 <script src="stats.js"></script>
 <script src="ba-slider.js"></script>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script type="module" src="wrap-configurator.js?v=reardoor1"></script>
 </body>
 </html>
