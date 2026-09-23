@@ -1,6 +1,6 @@
 
 const MODEL_NAMES={dodge:'Dodge Challenger SRT Demon',mercedes:'Mercedes-Benz C-Class'};
-const MODEL_URLS={dodge:'models/dodge.glb?v=1',mercedes:'models/mercedes.glb?v=1'};
+const MODEL_URLS={dodge:'models/dodge.glb?v=2',mercedes:'models/mercedes.glb?v=2'};
 function prefetchMercedesModel(){if(window.__mbPrefetch)return;window.__mbPrefetch=1;fetch(MODEL_URLS.mercedes,{priority:'low'}).catch(()=>{})}
 const zoneDefs={
  hood:['Капот',21600],roof:['Крыша',18500],fenderFrontL:['Переднее крыло L',11200],fenderFrontR:['Переднее крыло R',11200],doorFrontL:['Передняя дверь L',13680],doorFrontR:['Передняя дверь R',13680],doorRearL:['Задняя дверь L',13680],doorRearR:['Задняя дверь R',13680],quarterL:['Задняя часть L',15400],quarterR:['Задняя часть R',15400],trunk:['Крышка багажника',14800],bumperFront:['Передний бампер',18900],bumperRear:['Задний бампер',18900],sideLowerL:['Нижняя часть L',9800],sideLowerR:['Нижняя часть R',9800],mirrorL:['Зеркало L',4200],mirrorR:['Зеркало R',4200]
@@ -22,7 +22,7 @@ const pmrem=new THREE.PMREMGenerator(renderer);const envScene=new RoomEnvironmen
 scene.add(new THREE.HemisphereLight(0xffffff,0x111522,1.8));
 const key=new THREE.DirectionalLight(0xffffff,5);key.position.set(4,7,6);scene.add(key);const fill=new THREE.DirectionalLight(0x8bb8ff,2.2);fill.position.set(-5,3,-4);scene.add(fill);
 const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.target.set(0,.7,0);controls.minDistance=3.2;controls.maxDistance=11;
-const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();const loader=new GLTFLoader();const roots={};
+const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();const loader=new GLTFLoader();const dracoLoader=new DRACOLoader();dracoLoader.setDecoderPath('./vendor/three/examples/jsm/libs/draco/gltf/');loader.setDRACOLoader(dracoLoader);const roots={};
 function smoothMesh(mesh){if(!mesh.isMesh||!mesh.geometry)return;try{mesh.geometry=mergeVertices(mesh.geometry,1e-4)}catch(e){}mesh.geometry.computeVertexNormals();mesh.material.flatShading=false;mesh.material.needsUpdate=true;if('envMapIntensity' in mesh.material)mesh.material.envMapIntensity=1.35}
 function makeCanvasTexture(){const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d');x.fillStyle='#16191d';x.fillRect(0,0,128,128);x.strokeStyle='rgba(255,255,255,.12)';x.lineWidth=2;for(let i=-128;i<256;i+=18){x.beginPath();x.moveTo(i,0);x.lineTo(i+128,128);x.stroke();x.beginPath();x.moveTo(i,128);x.lineTo(i+128,0);x.stroke()}const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(2.5,2.5);return t}
 const carbonTex=makeCanvasTexture();

@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import base64
 import re
+import shutil
+import subprocess
 import urllib.request
 from pathlib import Path
 
@@ -26,11 +28,15 @@ VENDOR_FILES = [
     "examples/jsm/environments/RoomEnvironment.js",
     "examples/jsm/loaders/DRACOLoader.js",
     "examples/jsm/libs/meshopt_decoder.module.js",
+    "examples/jsm/libs/draco/gltf/draco_decoder.js",
+    "examples/jsm/libs/draco/gltf/draco_decoder.wasm",
+    "examples/jsm/libs/draco/gltf/draco_wasm_wrapper.js",
 ]
 
 IMPORTS = """import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 
@@ -72,6 +78,31 @@ def ensure_vendor() -> None:
         dest.write_bytes(fetch(url))
 
 
+def compress_models() -> None:
+    source_dir = MODELS / "source"
+    source_dir.mkdir(parents=True, exist_ok=True)
+    for name in ("dodge", "mercedes"):
+        published = MODELS / f"{name}.glb"
+        source = source_dir / f"{name}.glb"
+        if not source.is_file():
+            if not published.is_file():
+                continue
+            shutil.copy2(published, source)
+            print(f"Archived source {name}.glb")
+        raw_size = source.stat().st_size
+        tmp = MODELS / f"{name}.compressed.glb"
+        print(f"Compressing {name}.glb with Draco...")
+        cmd = (
+            f'npx --yes @gltf-transform/cli optimize "{source}" "{tmp}" --compress draco'
+        )
+        subprocess.run(cmd, check=True, cwd=ROOT, shell=True)
+        shutil.copy2(tmp, published)
+        tmp.unlink(missing_ok=True)
+        new_size = published.stat().st_size
+        pct = 100 - int(new_size * 100 / raw_size)
+        print(f"{name}.glb {raw_size // 1024 // 1024} MiB -> {new_size // 1024 // 1024} MiB (-{pct}%)")
+
+
 def build_core() -> None:
     body = LOGIC.read_text(encoding="utf-8").strip()
     if "MODEL_DATA" in body:
@@ -82,6 +113,7 @@ def build_core() -> None:
 
 def main() -> None:
     ensure_models()
+    compress_models()
     ensure_vendor()
     build_core()
     print("Wrap fast build OK")

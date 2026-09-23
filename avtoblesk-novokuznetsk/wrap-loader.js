@@ -1,6 +1,6 @@
-const CORE_URL = './wrap-configurator.core.js?v=fast1';
-const DODGE_URL = './models/dodge.glb?v=1';
-const MERCEDES_URL = './models/mercedes.glb?v=1';
+const CORE_URL = './wrap-configurator.core.js?v=fast2';
+const DODGE_URL = './models/dodge.glb?v=2';
+const MERCEDES_URL = './models/mercedes.glb?v=2';
 
 let started = false;
 
@@ -24,7 +24,7 @@ export function startConfigurator() {
 }
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js?v=fast1').catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=fast2').catch(() => {});
 }
 
 window.addEventListener('load', () => {

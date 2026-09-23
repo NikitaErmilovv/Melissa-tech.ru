@@ -1,8 +1,11 @@
-const CACHE = 'avtoblesk-wrap-v1';
+const CACHE = 'avtoblesk-wrap-v2';
 const ASSETS = [
-  './wrap-configurator.core.js?v=fast1',
-  './models/dodge.glb?v=1',
-  './models/mercedes.glb?v=1',
+  './wrap-configurator.core.js?v=fast2',
+  './models/dodge.glb?v=2',
+  './models/mercedes.glb?v=2',
+  './vendor/three/examples/jsm/libs/draco/gltf/draco_decoder.js',
+  './vendor/three/examples/jsm/libs/draco/gltf/draco_wasm_wrapper.js',
+  './vendor/three/examples/jsm/libs/draco/gltf/draco_decoder.wasm',
   './vendor/three/build/three.module.js',
   './vendor/three/examples/jsm/controls/OrbitControls.js',
   './vendor/three/examples/jsm/loaders/GLTFLoader.js',
@@ -34,6 +37,7 @@ self.addEventListener('fetch', (event) => {
   const isWrapAsset =
     path.includes('wrap-configurator.core.js') ||
     path.includes('/vendor/three/') ||
+    path.includes('/draco/') ||
     isModel;
   if (!isWrapAsset) return;
 
