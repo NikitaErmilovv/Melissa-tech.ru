@@ -75,7 +75,7 @@
       <div class="wrap-hero">
         <h3>Оклейка <span>плёнкой</span></h3>
       </div>
-      <div class="wrap-badge"><b id="status">Загрузка модели</b></div>
+      <div class="wrap-badge"><b id="status">Подготовка 3D…</b></div>
       <div class="wrap-view-actions">
         <button id="rotate" class="tool active" type="button">↻ Автовращение</button>
         <button id="reset" class="tool" type="button">⟲ Сброс</button>
@@ -385,7 +385,9 @@
 <script src="nav.js"></script>
 <script src="stats.js"></script>
 <script src="ba-slider.js"></script>
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
-<script type="module" src="wrap-configurator.js?v=reardoor1"></script>
+<link rel="preconnect" href="https://melissa-tech.ru" crossorigin>
+<link rel="prefetch" href="models/dodge.glb?v=1" as="fetch" crossorigin>
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+<script type="module" src="wrap-loader.js?v=fast1"></script>
 </body>
 </html>

@@ -1,3 +1,8 @@
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 
 const MODEL_NAMES={dodge:'Dodge Challenger SRT Demon',mercedes:'Mercedes-Benz C-Class'};
 const MODEL_URLS={dodge:'models/dodge.glb?v=1',mercedes:'models/mercedes.glb?v=1'};
