@@ -33,6 +33,7 @@ IMPORTS = """import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js';
+import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 
 """
@@ -80,11 +81,7 @@ def run_gltf(cmd: str) -> None:
 def compress_models() -> None:
     source_dir = MODELS / "source"
     source_dir.mkdir(parents=True, exist_ok=True)
-    specs = (
-        ("dodge", 1.0),
-        ("mercedes", 0.68),
-    )
-    for name, simplify_ratio in specs:
+    for name in ("dodge", "mercedes"):
         published = MODELS / f"{name}.glb"
         source = source_dir / f"{name}.glb"
         if not source.is_file():
@@ -93,21 +90,13 @@ def compress_models() -> None:
             shutil.copy2(published, source)
             print(f"Archived source {name}.glb")
         raw_size = source.stat().st_size
-        stage = MODELS / f"{name}.stage.glb"
         tmp = MODELS / f"{name}.compressed.glb"
-        print(f"Compressing {name}.glb (meshopt)...")
-        if simplify_ratio < 1.0:
-            run_gltf(
-                f'npx --yes @gltf-transform/cli simplify "{source}" "{stage}" --ratio {simplify_ratio}'
-            )
-            input_path = stage
-        else:
-            input_path = source
+        print(f"Compressing {name}.glb (meshopt, full detail)...")
         run_gltf(
-            f'npx --yes @gltf-transform/cli optimize "{input_path}" "{tmp}" --compress meshopt'
+            f'npx --yes @gltf-transform/cli optimize "{source}" "{tmp}" '
+            f'--compress meshopt --simplify false'
         )
         shutil.copy2(tmp, published)
-        stage.unlink(missing_ok=True)
         tmp.unlink(missing_ok=True)
         new_size = published.stat().st_size
         pct = 100 - int(new_size * 100 / raw_size)
