@@ -385,9 +385,10 @@
 <script src="nav.js"></script>
 <script src="stats.js"></script>
 <script src="ba-slider.js"></script>
-<link rel="preconnect" href="https://melissa-tech.ru" crossorigin>
-<link rel="prefetch" href="models/dodge.glb?v=2" as="fetch" crossorigin>
+<link rel="modulepreload" href="vendor/three/build/three.module.js">
+<link rel="modulepreload" href="wrap-configurator.core.js?v=fast3">
+<link rel="preload" href="models/dodge.glb?v=3" as="fetch" type="model/gltf-binary" crossorigin fetchpriority="high">
 <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
-<script type="module" src="wrap-loader.js?v=fast2"></script>
+<script type="module" src="wrap-loader.js?v=fast3"></script>
 </body>
 </html>

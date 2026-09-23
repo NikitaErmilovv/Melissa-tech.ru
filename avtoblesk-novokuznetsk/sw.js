@@ -1,16 +1,13 @@
-const CACHE = 'avtoblesk-wrap-v2';
+const CACHE = 'avtoblesk-wrap-v3';
 const ASSETS = [
-  './wrap-configurator.core.js?v=fast2',
-  './models/dodge.glb?v=2',
-  './models/mercedes.glb?v=2',
-  './vendor/three/examples/jsm/libs/draco/gltf/draco_decoder.js',
-  './vendor/three/examples/jsm/libs/draco/gltf/draco_wasm_wrapper.js',
-  './vendor/three/examples/jsm/libs/draco/gltf/draco_decoder.wasm',
+  './wrap-configurator.core.js?v=fast3',
+  './wrap-loader.js?v=fast3',
+  './models/dodge.glb?v=3',
   './vendor/three/build/three.module.js',
   './vendor/three/examples/jsm/controls/OrbitControls.js',
   './vendor/three/examples/jsm/loaders/GLTFLoader.js',
-  './vendor/three/examples/jsm/utils/BufferGeometryUtils.js',
   './vendor/three/examples/jsm/environments/RoomEnvironment.js',
+  './vendor/three/examples/jsm/libs/meshopt_decoder.module.js',
 ];
 
 self.addEventListener('install', (event) => {
@@ -36,8 +33,8 @@ self.addEventListener('fetch', (event) => {
   const isModel = path.includes('/models/') && path.endsWith('.glb');
   const isWrapAsset =
     path.includes('wrap-configurator.core.js') ||
+    path.includes('wrap-loader.js') ||
     path.includes('/vendor/three/') ||
-    path.includes('/draco/') ||
     isModel;
   if (!isWrapAsset) return;
 

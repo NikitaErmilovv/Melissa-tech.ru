@@ -1,22 +1,22 @@
-const CORE_URL = './wrap-configurator.core.js?v=fast2';
-const DODGE_URL = './models/dodge.glb?v=2';
-const MERCEDES_URL = './models/mercedes.glb?v=2';
+const CORE_URL = './wrap-configurator.core.js?v=fast3';
+const DODGE_URL = './models/dodge.glb?v=3';
+const MERCEDES_URL = './models/mercedes.glb?v=3';
 
 let started = false;
 
-function prefetch(url) {
-  if (document.querySelector(`link[rel="prefetch"][href="${url}"]`)) return;
-  const link = document.createElement('link');
-  link.rel = 'prefetch';
-  link.as = 'fetch';
-  link.href = url;
-  document.head.appendChild(link);
-}
+window.__wrapGlb = window.__wrapGlb || {};
+const dodgeFetch = fetch(DODGE_URL, { priority: 'high' })
+  .then((r) => r.arrayBuffer())
+  .then((buf) => {
+    window.__wrapGlb.dodge = buf;
+    return buf;
+  })
+  .catch(() => undefined);
 
 export function startConfigurator() {
   if (started) return;
   started = true;
-  import(CORE_URL).catch(() => {
+  Promise.all([dodgeFetch, import(CORE_URL)]).catch(() => {
     started = false;
     const status = document.getElementById('status');
     if (status) status.textContent = 'Не удалось загрузить конфигуратор';
@@ -24,17 +24,10 @@ export function startConfigurator() {
 }
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js?v=fast2').catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=fast3').catch(() => {});
 }
 
-window.addEventListener('load', () => {
-  prefetch(DODGE_URL);
-  const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
-  idle(() => {
-    prefetch(MERCEDES_URL);
-    startConfigurator();
-  }, { timeout: 2000 });
-});
+startConfigurator();
 
 const wrap = document.getElementById('wrap');
 if (wrap && 'IntersectionObserver' in window) {
@@ -42,7 +35,7 @@ if (wrap && 'IntersectionObserver' in window) {
     (entries) => {
       if (entries.some((e) => e.isIntersecting)) startConfigurator();
     },
-    { rootMargin: '800px 0px 800px 0px', threshold: 0.01 }
+    { rootMargin: '1200px 0px 1200px 0px', threshold: 0.01 }
   );
   io.observe(wrap);
 }
@@ -53,7 +46,19 @@ document.querySelectorAll('a[href="#wrap"]').forEach((a) => {
   a.addEventListener('click', () => startConfigurator());
 });
 
+function prefetchMercedes() {
+  if (window.__wrapGlb.mercedes || window.__mbPrefetch) return;
+  window.__mbPrefetch = 1;
+  fetch(MERCEDES_URL, { priority: 'low' })
+    .then((r) => r.arrayBuffer())
+    .then((buf) => {
+      window.__wrapGlb.mercedes = buf;
+    })
+    .catch(() => {});
+}
+
 document.querySelectorAll('[data-model="mercedes"]').forEach((btn) => {
-  btn.addEventListener('mouseenter', () => prefetch(MERCEDES_URL), { once: true });
-  btn.addEventListener('focus', () => prefetch(MERCEDES_URL), { once: true });
+  btn.addEventListener('mouseenter', prefetchMercedes, { once: true });
+  btn.addEventListener('focus', prefetchMercedes, { once: true });
+  btn.addEventListener('click', prefetchMercedes);
 });
