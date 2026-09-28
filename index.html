@@ -75,6 +75,32 @@
     font-size: 0.85rem;
     color: var(--muted);
   }
+
+  .contacts {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .contacts .who {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .phone {
+    display: inline-block;
+    margin: 10px 0 12px;
+    color: var(--text);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .phone:hover { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -84,6 +110,12 @@
   <h1>Персональный <span>доступ</span></h1>
   <p class="intro">Демо-версия сайта доступна только по индивидуальной ссылке от менеджера.</p>
   <p class="note">Если вы получили ссылку — откройте её напрямую. Список проектов на этой странице не публикуется.</p>
+  <div class="contacts">
+    <p class="who">ИП Переверзев Артём К.</p>
+    <p>ИНН 220911551579</p>
+    <p>ОГРНИП 325220200012522</p>
+    <a class="phone" href="tel:+79021404116">+7 902 140-41-16</a>
+  </div>
 </main>
 </body>
 </html>
