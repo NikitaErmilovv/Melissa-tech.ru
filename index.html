@@ -24,8 +24,8 @@
     min-height: 100vh;
     line-height: 1.5;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
   }
 
   .glow {
@@ -39,9 +39,14 @@
 
   .wrap {
     position: relative;
+    flex: 1;
+    width: 100%;
     max-width: 480px;
     padding: 48px 24px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .kicker {
@@ -77,11 +82,22 @@
   }
 
   .contacts {
-    margin-top: 28px;
+    width: min(480px, 100%);
+    margin-top: 8vh;
+    padding: 28px 24px 40px;
+    border-top: 1px solid var(--border);
     text-align: center;
     font-size: 0.9rem;
     color: var(--muted);
     line-height: 1.65;
+  }
+
+  .contacts .label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
   }
 
   .contacts .who {
@@ -110,12 +126,13 @@
   <h1>Персональный <span>доступ</span></h1>
   <p class="intro">Демо-версия сайта доступна только по индивидуальной ссылке от менеджера.</p>
   <p class="note">Если вы получили ссылку — откройте её напрямую. Список проектов на этой странице не публикуется.</p>
-  <div class="contacts">
-    <p class="who">ИП Переверзев Артём К.</p>
-    <p>ИНН 220911551579</p>
-    <p>ОГРНИП 325220200012522</p>
-    <a class="phone" href="tel:+79021404116">+7 902 140-41-16</a>
-  </div>
 </main>
+<footer class="contacts">
+  <p class="label">Контактные данные</p>
+  <p class="who">ИП Переверзев Артём К.</p>
+  <p>ИНН 220911551579</p>
+  <p>ОГРНИП 325220200012522</p>
+  <a class="phone" href="tel:+79021404116">+7 902 140-41-16</a>
+</footer>
 </body>
 </html>
