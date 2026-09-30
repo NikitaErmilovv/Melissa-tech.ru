@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import re
+import secrets
 import time
 import urllib.error
 import urllib.request
@@ -15,8 +16,49 @@ PORT = int(__import__("os").environ.get("PORT", "8092"))
 FIRM_URL = "https://2gis.ru/novokuznetsk/firm/70000001098503533"
 CACHE_TTL = 3600
 ROOT = Path(__file__).resolve().parent
+CMS_DIR = ROOT / "cms"
+CMS_CONTENT = CMS_DIR / "content.json"
+CMS_CONFIG = CMS_DIR / "config.local.json"
+CMS_CONFIG_EXAMPLE = CMS_DIR / "config.example.json"
+CMS_UPLOADS = ROOT / "img" / "cms" / "uploads"
+CMS_UPLOADS.mkdir(parents=True, exist_ok=True)
 
 _cache: dict[str, object] = {"ts": 0.0}
+_cms_tokens: dict[str, float] = {}
+CMS_TOKEN_TTL = 86400
+
+
+def cms_password() -> str:
+    if CMS_CONFIG.is_file():
+        data = json.loads(CMS_CONFIG.read_text(encoding="utf-8"))
+        return str(data.get("password", ""))
+    if CMS_CONFIG_EXAMPLE.is_file():
+        data = json.loads(CMS_CONFIG_EXAMPLE.read_text(encoding="utf-8"))
+        return str(data.get("password", ""))
+    return ""
+
+
+def cms_check_token(header: str | None) -> bool:
+    if not header or not header.startswith("Bearer "):
+        return False
+    token = header[7:].strip()
+    exp = _cms_tokens.get(token)
+    if exp is None:
+        return False
+    if time.time() > exp:
+        _cms_tokens.pop(token, None)
+        return False
+    return True
+
+
+def cms_read_content() -> dict:
+    if not CMS_CONTENT.is_file():
+        return {}
+    return json.loads(CMS_CONTENT.read_text(encoding="utf-8"))
+
+
+def cms_write_content(data: dict) -> None:
+    CMS_CONTENT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def fetch_2gis_rating() -> dict[str, object]:
@@ -96,6 +138,91 @@ class SiteHandler(SimpleHTTPRequestHandler):
             return
 
         return super().do_GET()
+
+    def do_POST(self) -> None:
+        path = self.path.split("?", 1)[0]
+        if path == "/api/cms/login":
+            length = int(self.headers.get("Content-Length", "0"))
+            body = self.rfile.read(length) if length else b"{}"
+            try:
+                payload = json.loads(body.decode("utf-8"))
+            except json.JSONDecodeError:
+                payload = {}
+            pwd = str(payload.get("password", ""))
+            expected = cms_password()
+            if not expected or not secrets.compare_digest(pwd, expected):
+                self.send_error(401, "Unauthorized")
+                return
+            token = secrets.token_urlsafe(32)
+            _cms_tokens[token] = time.time() + CMS_TOKEN_TTL
+            out = json.dumps({"token": token}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(out)))
+            self.end_headers()
+            self.wfile.write(out)
+            return
+
+        if path == "/api/cms/save":
+            if not cms_check_token(self.headers.get("Authorization")):
+                self.send_error(401, "Unauthorized")
+                return
+            length = int(self.headers.get("Content-Length", "0"))
+            body = self.rfile.read(length)
+            try:
+                payload = json.loads(body.decode("utf-8"))
+            except json.JSONDecodeError:
+                self.send_error(400, "Bad JSON")
+                return
+            page = str(payload.get("page", ""))
+            if not page:
+                self.send_error(400, "Missing page")
+                return
+            store = cms_read_content()
+            store.setdefault(page, {"text": {}, "images": {}, "backgrounds": {}})
+            store[page]["text"].update(payload.get("text") or {})
+            store[page]["images"].update(payload.get("images") or {})
+            store[page]["backgrounds"].update(payload.get("backgrounds") or {})
+            if payload.get("lists"):
+                store[page]["lists"] = payload.get("lists")
+            cms_write_content(store)
+            out = json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(out)))
+            self.end_headers()
+            self.wfile.write(out)
+            return
+
+        if path == "/api/cms/upload":
+            if not cms_check_token(self.headers.get("Authorization")):
+                self.send_error(401, "Unauthorized")
+                return
+            ctype = self.headers.get("Content-Type", "")
+            if "multipart/form-data" not in ctype:
+                self.send_error(400, "Expected multipart")
+                return
+            import cgi
+
+            form = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={"REQUEST_METHOD": "POST"})
+            file_item = form["file"] if "file" in form else None
+            if file_item is None or not getattr(file_item, "file", None):
+                self.send_error(400, "Missing file")
+                return
+            filename = Path(getattr(file_item, "filename", "upload.jpg")).name
+            safe = re.sub(r"[^a-zA-Z0-9._-]", "_", filename) or "upload.jpg"
+            dest = CMS_UPLOADS / f"{int(time.time())}_{safe}"
+            dest.write_bytes(file_item.file.read())
+            url = f"img/cms/uploads/{dest.name}"
+            out = json.dumps({"url": url}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(out)))
+            self.end_headers()
+            self.wfile.write(out)
+            return
+
+        self.send_error(404)
 
 
 if __name__ == "__main__":

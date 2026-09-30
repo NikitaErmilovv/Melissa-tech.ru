@@ -1,0 +1,67 @@
+.cms-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:99999;
+  display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;
+  padding:10px 16px;background:rgba(10,12,18,.94);border-top:1px solid rgba(255,255,255,.12);
+  font:600 13px/1.2 system-ui,sans-serif;color:#f2f2ee;
+}
+.cms-bar button{
+  border:0;border-radius:8px;padding:10px 16px;cursor:pointer;
+  font:inherit;font-weight:700;
+}
+.cms-bar .cms-save{background:#d71935;color:#fff}
+.cms-bar .cms-exit{background:#2a2f3a;color:#fff}
+.cms-bar .cms-add{background:#1a5fd4;color:#fff}
+.gallery--portfolio .g{position:relative}
+.cms-remove-item{
+  position:absolute;top:8px;right:8px;z-index:2;
+  width:28px;height:28px;border:0;border-radius:50%;
+  background:rgba(0,0,0,.65);color:#fff;font-size:18px;line-height:1;cursor:pointer;
+}
+.service-row{position:relative}
+.cms-remove-service{
+  display:block;margin-top:10px;border:0;background:transparent;
+  color:#d71935;font-size:12px;cursor:pointer;text-decoration:underline;
+}
+.cms-bar .cms-hint{opacity:.75;font-weight:500;max-width:520px;text-align:center}
+body.cms-editing [data-cms-key]{
+  outline:2px dashed rgba(215,25,53,.55);outline-offset:3px;cursor:text;
+}
+body.cms-editing [data-cms-img]{
+  outline:2px dashed rgba(56,140,255,.65);outline-offset:2px;cursor:pointer;
+}
+body.cms-editing [data-cms-bg]{
+  outline:2px dashed rgba(56,140,255,.65);outline-offset:2px;cursor:pointer;
+}
+.cms-login-wrap{
+  min-height:100vh;display:grid;place-items:center;background:#0a0a0a;color:#eee;
+  font-family:system-ui,sans-serif;padding:24px;
+}
+.cms-login-box{width:min(400px,100%);background:#141820;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:28px}
+.cms-login-box h1{font-size:22px;margin:0 0 8px}
+.cms-login-box p{margin:0 0 20px;color:#999;font-size:14px}
+.cms-login-box input{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:8px;border:1px solid #333;background:#0d1016;color:#fff;margin-bottom:12px}
+.cms-login-box button{width:100%;padding:12px;border:0;border-radius:8px;background:#d71935;color:#fff;font-weight:700;cursor:pointer}
+.cms-login-box .err{color:#ff6b6b;font-size:13px;margin-top:10px}
+.cms-login-back{margin-top:18px;font-size:13px;text-align:center}
+.cms-login-back a{color:#9a9a94}
+.cms-admin-body{background:#0a0a0a;margin:0}
+.cms-admin-section{padding:24px 4vw 48px;max-width:1400px;margin:0 auto}
+.cms-admin-crm{margin-top:0}
+.cms-admin-toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.cms-admin-save{background:var(--accent,#d71935)!important;border-color:var(--accent)!important;color:#fff!important}
+.cms-admin-stack{display:grid;gap:14px}
+.cms-admin-album,.cms-admin-service{background:#161616;border:1px solid rgba(255,255,255,.08);padding:18px}
+.cms-admin-album-head{display:grid;gap:10px;margin-bottom:12px}
+.cms-admin-album-head label{font-size:12px;color:#8d8d87;display:grid;gap:6px}
+.crm-input{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid rgba(255,255,255,.12);background:#0d0d0d;color:#eee;font:inherit}
+textarea.crm-input{resize:vertical;min-height:64px}
+.cms-admin-media-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.cms-admin-media{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0d0d;border:1px solid rgba(255,255,255,.08);font-size:11px}
+.cms-admin-media-label{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cms-admin-page-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px;background:#161616;border:1px solid rgba(255,255,255,.08)}
+.cms-admin-note{margin-top:20px;font-size:13px;color:#7d7d77;line-height:1.6}
+.cms-admin-note code{font-size:12px;color:#c2c2bc}
+.cms-album-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.cms-add-album-photo,.cms-remove-album{font-size:11px;padding:6px 10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);color:#ddd;cursor:pointer}
+.cms-remove-album{color:#ef8078;border-color:rgba(215,25,53,.35)}
+.cms-bar .cms-add-link{display:inline-flex;align-items:center;text-decoration:none;padding:10px 14px;border-radius:6px}

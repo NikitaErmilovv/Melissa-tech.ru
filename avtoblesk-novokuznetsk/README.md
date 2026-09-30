@@ -7,3 +7,7 @@
 ## Локальный запуск
 
 `start.bat` или `python server.py` → http://127.0.0.1:8092/
+
+## CMS
+
+http://127.0.0.1:8092/cms/admin-panel.html — см. `cms/README.md`

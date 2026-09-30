@@ -8,8 +8,9 @@
 <title>АвтоБлеск — детейлинг</title>
 <link rel="stylesheet" href="styles.css?v=hero10">
 <link rel="stylesheet" href="wrap-configurator.css">
+<link rel="stylesheet" href="cms/cms.css">
 </head>
-<body>
+<body data-cms-page="index.html">
 <nav class="site-nav">
   <div class="logo"><a href="index.html"><span>АВТО</span>БЛЕСК</a></div>
   <div class="links"><a href="#services">УСЛУГИ</a><a href="#works">РАБОТЫ</a><a href="#story">О СТУДИИ</a><a href="#contacts">КОНТАКТЫ</a><a href="training.html">ОБУЧЕНИЕ</a></div>
@@ -25,7 +26,7 @@
 </nav>
 
 <section class="hero">
-  <div class="heroimg"></div>
+  <div class="heroimg" style="background-image:url('img/works/hero.jpg?v=custom3')"></div>
   <div class="hero-content">
     <div class="eyebrow">ДЕТЕЙЛИНГ · НОВОКУЗНЕЦК</div>
     <h1><span class="accent">АВТО</span><br>БЛЕСК</h1>
@@ -390,5 +391,7 @@
 <link rel="preload" href="models/dodge.glb?v=5" as="fetch" type="model/gltf-binary" crossorigin fetchpriority="high">
 <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
 <script type="module" src="wrap-loader.js?v=fast5"></script>
+<script src="cms/cms-api.js" defer></script>
+<script src="cms/cms.js" defer></script>
 </body>
 </html>

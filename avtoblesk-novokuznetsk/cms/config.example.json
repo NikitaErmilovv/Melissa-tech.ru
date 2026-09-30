@@ -1,0 +1,4 @@
+{
+  "password": "avtoblesk-cms-change-me",
+  "note": "Copy to config.local.json and set your password. config.local.json is not committed."
+}

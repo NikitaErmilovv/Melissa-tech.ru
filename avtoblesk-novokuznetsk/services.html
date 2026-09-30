@@ -7,8 +7,9 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Услуги — АвтоБлеск</title>
 <link rel="stylesheet" href="styles.css?v=hero10">
+<link rel="stylesheet" href="cms/cms.css">
 </head>
-<body>
+<body data-cms-page="services.html">
 <nav class="site-nav">
   <div class="logo"><a href="index.html"><span>АВТО</span>БЛЕСК</a></div>
   <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О СТУДИИ</a><a href="contact.html">КОНТАКТЫ</a></div>
@@ -36,7 +37,7 @@
 
 <section class="section">
   <div class="kicker">КАТАЛОГ</div>
-  <div class="service-list">
+  <div class="service-list" data-cms-list="services">
     <div class="service-row"><div class="idx">01</div><div><h3>Сколы и трещины</h3><p>Ремонт лобового и боковых стёкол: локальная работа со сколами и трещинами.</p></div><div class="cost">от 50 ₽</div></div>
     <div class="service-row"><div class="idx">02</div><div><h3>Полировка-шлифовка стёкол</h3><p>Полировка и шлифовка стёкол от налёта, мутности и мелких царапин.</p></div><div class="cost">от 1 000 ₽</div></div>
     <div class="service-row"><div class="idx">03</div><div><h3>Полировка фар</h3><p>Восстановление прозрачности и блеска фар.</p></div><div class="cost">от 2 000 ₽</div></div>
@@ -165,5 +166,7 @@
 </footer>
 </div>
 <script src="nav.js"></script>
+<script src="cms/cms-api.js" defer></script>
+<script src="cms/cms.js" defer></script>
 </body>
 </html>
