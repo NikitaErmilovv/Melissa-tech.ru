@@ -1,0 +1,4 @@
+build=2026-09-30-full-site
+pages=index,services,gallery,about,contact
+features=photo-strip-services,catalog-10,work-blocks-by-service,gallery-lightbox,second-phone
+git=609ca04
