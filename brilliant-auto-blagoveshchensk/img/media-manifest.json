@@ -1,0 +1,289 @@
+{
+  "copied": [
+    {
+      "kind": "image",
+      "path": "img/works/zashchitnaya-plenka/photo_2026-09-25_15-10-40.jpg",
+      "source": "photo_2026-09-25_15-10-40.jpg"
+    },
+    {
+      "kind": "video",
+      "path": "img/works/zashchitnaya-plenka/video_2026-09-30_10-13-32.mp4",
+      "source": "video_2026-09-30_10-13-32.mp4"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/zamena-tsveta/photo_2026-09-25_15-14-58.jpg",
+      "source": "photo_2026-09-25_15-14-58.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/zamena-tsveta/photo_2026-09-25_15-14-59-2.jpg",
+      "source": "photo_2026-09-25_15-14-59 (2).jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/zamena-tsveta/photo_2026-09-25_15-14-59-3.jpg",
+      "source": "photo_2026-09-25_15-14-59 (3).jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/zamena-tsveta/photo_2026-09-25_15-14-59.jpg",
+      "source": "photo_2026-09-25_15-14-59.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/zamena-tsveta/photo_2026-09-25_15-15-00.jpg",
+      "source": "photo_2026-09-25_15-15-00.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/antikhrom/photo_2026-09-25_15-13-39-2.jpg",
+      "source": "photo_2026-09-25_15-13-39 (2).jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/antikhrom/photo_2026-09-25_15-13-39.jpg",
+      "source": "photo_2026-09-25_15-13-39.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/antikhrom/photo_2026-09-25_15-13-40-2.jpg",
+      "source": "photo_2026-09-25_15-13-40 (2).jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/antikhrom/photo_2026-09-25_15-13-40-3.jpg",
+      "source": "photo_2026-09-25_15-13-40 (3).jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/antikhrom/photo_2026-09-25_15-13-40.jpg",
+      "source": "photo_2026-09-25_15-13-40.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-42-35.jpg",
+      "source": "photo_2026-09-26_06-42-35.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-42-36.jpg",
+      "source": "photo_2026-09-26_06-42-36.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-42-38.jpg",
+      "source": "photo_2026-09-26_06-42-38.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-54-03-2.jpg",
+      "source": "photo_2026-09-26_06-54-03 (2).jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-54-03.jpg",
+      "source": "photo_2026-09-26_06-54-03.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/keramika/photo_2026-09-25_15-15-55.jpg",
+      "source": "photo_2026-09-25_15-15-55.jpg"
+    },
+    {
+      "kind": "video",
+      "path": "img/works/keramika/video_2026-09-30_10-09-15.mp4",
+      "source": "video_2026-09-30_10-09-15.mp4"
+    },
+    {
+      "kind": "video",
+      "path": "img/works/keramika/video_2026-09-30_10-09-34.mp4",
+      "source": "video_2026-09-30_10-09-34.mp4"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/bronirovanie-lobovogo/photo_2026-09-26_06-56-45.jpg",
+      "source": "photo_2026-09-26_06-56-45.jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/bronirovanie-lobovogo/photo_2026-09-26_06-56-47-2.jpg",
+      "source": "photo_2026-09-26_06-56-47 (2).jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/atermalnaya-plenka/photo_2026-09-26_06-56-47-3.jpg",
+      "source": "photo_2026-09-26_06-56-47 (3).jpg"
+    },
+    {
+      "kind": "image",
+      "path": "img/works/atermalnaya-plenka/photo_2026-09-26_06-56-47.jpg",
+      "source": "photo_2026-09-26_06-56-47.jpg"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Установка защитной плёнки",
+      "slug": "zashchitnaya-plenka",
+      "items": [
+        {
+          "kind": "image",
+          "path": "img/works/zashchitnaya-plenka/photo_2026-09-25_15-10-40.jpg",
+          "source": "photo_2026-09-25_15-10-40.jpg"
+        },
+        {
+          "kind": "video",
+          "path": "img/works/zashchitnaya-plenka/video_2026-09-30_10-13-32.mp4",
+          "source": "video_2026-09-30_10-13-32.mp4"
+        }
+      ]
+    },
+    {
+      "title": "Замена цвета",
+      "slug": "zamena-tsveta",
+      "items": [
+        {
+          "kind": "image",
+          "path": "img/works/zamena-tsveta/photo_2026-09-25_15-14-58.jpg",
+          "source": "photo_2026-09-25_15-14-58.jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/zamena-tsveta/photo_2026-09-25_15-14-59-2.jpg",
+          "source": "photo_2026-09-25_15-14-59 (2).jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/zamena-tsveta/photo_2026-09-25_15-14-59-3.jpg",
+          "source": "photo_2026-09-25_15-14-59 (3).jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/zamena-tsveta/photo_2026-09-25_15-14-59.jpg",
+          "source": "photo_2026-09-25_15-14-59.jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/zamena-tsveta/photo_2026-09-25_15-15-00.jpg",
+          "source": "photo_2026-09-25_15-15-00.jpg"
+        }
+      ]
+    },
+    {
+      "title": "Антихром",
+      "slug": "antikhrom",
+      "items": [
+        {
+          "kind": "image",
+          "path": "img/works/antikhrom/photo_2026-09-25_15-13-39-2.jpg",
+          "source": "photo_2026-09-25_15-13-39 (2).jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/antikhrom/photo_2026-09-25_15-13-39.jpg",
+          "source": "photo_2026-09-25_15-13-39.jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/antikhrom/photo_2026-09-25_15-13-40-2.jpg",
+          "source": "photo_2026-09-25_15-13-40 (2).jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/antikhrom/photo_2026-09-25_15-13-40-3.jpg",
+          "source": "photo_2026-09-25_15-13-40 (3).jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/antikhrom/photo_2026-09-25_15-13-40.jpg",
+          "source": "photo_2026-09-25_15-13-40.jpg"
+        }
+      ]
+    },
+    {
+      "title": "Шумоизоляция",
+      "slug": "shumoizolyatsiya",
+      "items": [
+        {
+          "kind": "image",
+          "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-42-35.jpg",
+          "source": "photo_2026-09-26_06-42-35.jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-42-36.jpg",
+          "source": "photo_2026-09-26_06-42-36.jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-42-38.jpg",
+          "source": "photo_2026-09-26_06-42-38.jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-54-03-2.jpg",
+          "source": "photo_2026-09-26_06-54-03 (2).jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/shumoizolyatsiya/photo_2026-09-26_06-54-03.jpg",
+          "source": "photo_2026-09-26_06-54-03.jpg"
+        }
+      ]
+    },
+    {
+      "title": "Нанесение защитных составов",
+      "slug": "keramika",
+      "items": [
+        {
+          "kind": "image",
+          "path": "img/works/keramika/photo_2026-09-25_15-15-55.jpg",
+          "source": "photo_2026-09-25_15-15-55.jpg"
+        },
+        {
+          "kind": "video",
+          "path": "img/works/keramika/video_2026-09-30_10-09-15.mp4",
+          "source": "video_2026-09-30_10-09-15.mp4"
+        },
+        {
+          "kind": "video",
+          "path": "img/works/keramika/video_2026-09-30_10-09-34.mp4",
+          "source": "video_2026-09-30_10-09-34.mp4"
+        }
+      ]
+    },
+    {
+      "title": "Бронирование лобового стекла",
+      "slug": "bronirovanie-lobovogo",
+      "items": [
+        {
+          "kind": "image",
+          "path": "img/works/bronirovanie-lobovogo/photo_2026-09-26_06-56-45.jpg",
+          "source": "photo_2026-09-26_06-56-45.jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/bronirovanie-lobovogo/photo_2026-09-26_06-56-47-2.jpg",
+          "source": "photo_2026-09-26_06-56-47 (2).jpg"
+        }
+      ]
+    },
+    {
+      "title": "Атермальная плёнка",
+      "slug": "atermalnaya-plenka",
+      "items": [
+        {
+          "kind": "image",
+          "path": "img/works/atermalnaya-plenka/photo_2026-09-26_06-56-47-3.jpg",
+          "source": "photo_2026-09-26_06-56-47 (3).jpg"
+        },
+        {
+          "kind": "image",
+          "path": "img/works/atermalnaya-plenka/photo_2026-09-26_06-56-47.jpg",
+          "source": "photo_2026-09-26_06-56-47.jpg"
+        }
+      ]
+    }
+  ],
+  "hero": "img/works/hero.jpg"
+}
