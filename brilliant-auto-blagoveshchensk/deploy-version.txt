@@ -1,4 +1,6 @@
-build=2026-09-30-full-site
-pages=index,services,gallery,about,contact
-features=photo-strip-services,catalog-10,work-blocks-by-service,gallery-lightbox,second-phone
-git=b3fe6a4
+release=brilliant-auto-master-2026-09-30
+index=hero-original,photo-strip-10-in-services-section,works-quote-no-duplicate-strip
+services=catalog-10-paragraphs,studio-kicker
+gallery=by-service-blocks,lightbox,client-review-photos
+css=v10
+deploy=git-push-timeweb-hook
