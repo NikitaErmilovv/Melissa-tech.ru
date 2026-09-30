@@ -383,6 +383,9 @@ html.media-lightbox-open{overflow:hidden}
 .service-row .service-desc p:last-child{margin-bottom:0}
 .photo-strip--gallery{margin-top:0;margin-bottom:8px}
 .section--gallery-overview{padding-top:48px;padding-bottom:24px}
+.gallery--home-keys{margin-top:40px}
+.work-block-intro{margin-top:12px;max-width:520px;font-size:14px;color:#888}
+.work-block--keys-only{padding-bottom:12px}
 .service-catalog-head{margin-bottom:8px}
 .service-catalog-head h2{font-size:clamp(32px,5vw,52px);letter-spacing:-.04em;margin:12px 0 0}
 .service-row .cost{text-align:right;font-size:18px;color:var(--accent)}
