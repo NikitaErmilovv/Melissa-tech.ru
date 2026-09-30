@@ -21,13 +21,6 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .links a:hover{color:var(--accent)}
 .phone{border:1px solid rgba(255,255,255,.19);padding:13px 20px;border-radius:3px;font-size:12px;font-weight:600;white-space:nowrap;transition:border-color .2s,color .2s}
 .phone:hover{border-color:var(--accent-soft);color:var(--accent)}
-.nav-phones{display:flex;align-items:center;gap:8px;flex-shrink:1;min-width:0}
-.nav-phones .phone{padding:11px 14px;font-size:11px}
-.hero-phones{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:22px;font-size:14px;font-weight:600;letter-spacing:-.01em}
-.hero-phones span{color:#666;font-weight:400}
-.hero-phones a{transition:color .2s}
-.hero-phones a:hover{color:var(--accent)}
-
 .hero{min-height:760px;padding:82px 6vw 70px;display:flex;align-items:flex-end;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#343434 0,#171717 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
 .heroimg{position:absolute;right:0;top:82px;width:65%;height:678px;background:url('img/works/hero.jpg?v=20260930') center/cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
@@ -557,8 +550,6 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .card{min-height:260px}
   .card-body{min-height:260px}
   .card--service,.card--service .card-body{min-height:280px}
-  .nav-phones{flex-direction:column;align-items:flex-end;gap:4px}
-  .nav-phones .phone{padding:7px 10px;font-size:9px;letter-spacing:-.02em}
   .process{padding:72px 5vw;overflow-x:hidden;max-width:100%}
   .process .kicker{color:#777}
   .process h2{font-size:clamp(32px,9vw,52px)}
