@@ -12,3 +12,15 @@
 - Linux/macOS: `python3 server.py`
 
 Сайт: http://127.0.0.1:8090/
+
+## Деплой (melissa-tech.ru)
+
+Публикуется только **`master`**, папка `brilliant-auto-blagoveshchensk/`.  
+На главной блок услуг — **`photo-strip`** (подписи ЗАЩИТНАЯ ПЛЁНКА, ЗАМЕНА ЦВЕТА…), не карточки с длинным текстом (это была ветка `cursor/brilliant-auto-v2`).
+
+```bat
+cd ..\
+brilliant-auto-blagoveshchensk\deploy-push.bat
+```
+
+После push на сервере: `git pull origin master` в каталоге сайта (если автодеплой не настроен).
