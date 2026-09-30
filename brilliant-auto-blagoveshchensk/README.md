@@ -1,9 +1,14 @@
 # Brilliant auto — Благовещенск
 
 - **Адрес:** г. Благовещенск, 50 лет Октября улица, 167
-- **Телефон:** +7 (914) 605-53-53
+- **Телефоны:** +7 (914) 605-53-53, +7 (914) 615 49-14
 - **2ГИС:** https://2gis.ru/blagoveshensk/firm/70000001090035899
 
 ## Локальный запуск
 
-`start.bat` или `python server.py` → http://127.0.0.1:8090/
+Из папки `brilliant-auto-blagoveshchensk`:
+
+- Windows: двойной клик по `start.bat` или в cmd: `start.bat`
+- Linux/macOS: `python3 server.py`
+
+Сайт: http://127.0.0.1:8090/
