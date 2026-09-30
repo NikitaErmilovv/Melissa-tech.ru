@@ -4,4 +4,4 @@ services=catalog-10-paragraphs,studio-kicker
 gallery=by-service-blocks,lightbox,client-review-photos
 css=v10
 deploy=git-push-timeweb-hook
-deploy-trigger=brilliant-auto-final-2026-09-30
+deploy-trigger=08f2e7a-retry-1
