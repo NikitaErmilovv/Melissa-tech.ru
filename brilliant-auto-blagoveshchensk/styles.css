@@ -367,8 +367,22 @@ html.media-lightbox-open{overflow:hidden}
 .service-row .idx{color:var(--accent);font-size:11px;opacity:.75}
 .service-row h3{margin:0;font-size:25px}
 .service-row p{margin:7px 0 0;color:#777;font-size:12px;line-height:1.5}
-.service-row .service-desc p{margin:10px 0 0}
-.service-row .service-desc p:first-child{margin-top:7px}
+.service-row .service-desc{margin-top:4px}
+.service-row .service-desc p{
+  margin:0 0 1.15em;
+  color:#9a9a94;
+  font-size:15px;
+  line-height:1.68;
+}
+.service-row .service-desc p.service-lead{
+  color:#e6e6e0;
+  font-size:16px;
+  font-weight:500;
+  margin-top:10px;
+}
+.service-row .service-desc p:last-child{margin-bottom:0}
+.photo-strip--gallery{margin-top:0;margin-bottom:8px}
+.section--gallery-overview{padding-top:48px;padding-bottom:24px}
 .service-catalog-head{margin-bottom:8px}
 .service-catalog-head h2{font-size:clamp(32px,5vw,52px);letter-spacing:-.04em;margin:12px 0 0}
 .service-row .cost{text-align:right;font-size:18px;color:var(--accent)}
