@@ -1,14 +1,14 @@
-const CORE_URL = './wrap-configurator.core.js?v=fast5';
-const DODGE_URL = './models/dodge.glb?v=5';
+const CORE_URL = './wrap-configurator.core.js?v=mb26';
 const MERCEDES_URL = './models/mercedes.glb?v=5';
+const MAZDA_URL = './models/mazda.glb?v=5';
 
 let started = false;
 
 window.__wrapGlb = window.__wrapGlb || {};
-const dodgeFetch = fetch(DODGE_URL, { priority: 'high' })
+const mercedesFetch = fetch(MERCEDES_URL, { priority: 'high' })
   .then((r) => r.arrayBuffer())
   .then((buf) => {
-    window.__wrapGlb.dodge = buf;
+    window.__wrapGlb.mercedes = buf;
     return buf;
   })
   .catch(() => undefined);
@@ -16,7 +16,7 @@ const dodgeFetch = fetch(DODGE_URL, { priority: 'high' })
 export function startConfigurator() {
   if (started) return;
   started = true;
-  Promise.all([dodgeFetch, import(CORE_URL)]).catch(() => {
+  Promise.all([mercedesFetch, import(CORE_URL)]).catch(() => {
     started = false;
     const status = document.getElementById('status');
     if (status) status.textContent = 'Не удалось загрузить конфигуратор';
@@ -24,7 +24,7 @@ export function startConfigurator() {
 }
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js?v=fast5').catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=mb26').catch(() => {});
 }
 
 startConfigurator();
@@ -46,19 +46,19 @@ document.querySelectorAll('a[href="#wrap"]').forEach((a) => {
   a.addEventListener('click', () => startConfigurator());
 });
 
-function prefetchMercedes() {
-  if (window.__wrapGlb.mercedes || window.__mbPrefetch) return;
-  window.__mbPrefetch = 1;
-  fetch(MERCEDES_URL, { priority: 'low' })
+function prefetchMazda() {
+  if (window.__wrapGlb.mazda || window.__mzPrefetch) return;
+  window.__mzPrefetch = 1;
+  fetch(MAZDA_URL, { priority: 'low' })
     .then((r) => r.arrayBuffer())
     .then((buf) => {
-      window.__wrapGlb.mercedes = buf;
+      window.__wrapGlb.mazda = buf;
     })
     .catch(() => {});
 }
 
-document.querySelectorAll('[data-model="mercedes"]').forEach((btn) => {
-  btn.addEventListener('mouseenter', prefetchMercedes, { once: true });
-  btn.addEventListener('focus', prefetchMercedes, { once: true });
-  btn.addEventListener('click', prefetchMercedes);
+document.querySelectorAll('[data-model="mazda"]').forEach((btn) => {
+  btn.addEventListener('mouseenter', prefetchMazda, { once: true });
+  btn.addEventListener('focus', prefetchMazda, { once: true });
+  btn.addEventListener('click', prefetchMazda);
 });

@@ -1,8 +1,8 @@
-const CACHE = 'avtoblesk-wrap-v5';
+const CACHE = 'avtoblesk-wrap-mb26';
 const ASSETS = [
-  './wrap-configurator.core.js?v=fast5',
-  './wrap-loader.js?v=fast5',
-  './models/dodge.glb?v=5',
+  './wrap-configurator.core.js?v=mb26',
+  './wrap-loader.js?v=mb26',
+  './models/mercedes.glb?v=5',
   './vendor/three/build/three.module.js',
   './vendor/three/examples/jsm/controls/OrbitControls.js',
   './vendor/three/examples/jsm/loaders/GLTFLoader.js',

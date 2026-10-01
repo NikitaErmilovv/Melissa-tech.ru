@@ -1,13 +1,14 @@
 @echo off
 setlocal
 cd /d "%~dp0"
+set PORT=8092
 
-for /f "tokens=5" %%a in ('netstat -ano ^| findstr ":8092" ^| findstr "LISTENING"') do (
+for /f "tokens=5" %%a in ('netstat -ano ^| findstr ":%PORT%" ^| findstr "LISTENING"') do (
   taskkill /F /PID %%a >nul 2>&1
 )
 
 echo.
-echo АвтоБлеск — http://127.0.0.1:8092/
+echo Avtoblesk — http://127.0.0.1:%PORT%/#wrap
 echo Press Ctrl+C to stop.
 echo.
 
