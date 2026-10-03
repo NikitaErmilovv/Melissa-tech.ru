@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#e8e8e8;
-  --accent-soft:rgba(232,232,232,.18);
-  --accent-hover:rgba(255,255,255,.92);
-  --accent-ink:#1a1a1a;
+  --accent:#ff296f;
+  --accent-soft:rgba(255,41,111,.38);
+  --accent-hover:#ff477f;
+  --accent-ink:#fff;
 }
 
 *{box-sizing:border-box}
@@ -684,3 +684,39 @@ html.media-lightbox-open{overflow:hidden}
 @media (max-width:768px){
   .heroimg{opacity:.59}
 }
+
+/* pink-accent — Brilliant auto (#ff296f) */
+:root{
+  --accent:#ff296f;
+  --accent-soft:rgba(255,41,111,.38);
+  --accent-hover:#ff477f;
+  --accent-ink:#fff;
+}
+.process h2 .accent{color:#ff296f}
+@media (max-width:1024px){.process h2 .accent{color:#ff296f}}
+@media (max-width:768px){.process h2 .accent{color:#ff296f}}
+.review .stars{color:var(--accent)}
+.faq details[open] summary{color:var(--accent)}
+.process .faq details[open] summary{color:#ff296f}
+.button.dark:hover{background:rgba(255,41,111,.08)}
+.nav-mobile-menu a:last-child{color:var(--accent)}
+
+/* нейтральные подписи — акцент только в шаблонных местах */
+.stat b{color:#f5f5f2}
+.kicker,
+.subpage-hero .kicker,
+.award-panel-copy .kicker,
+.founder-copy .kicker,
+.address-map-kicker .kicker{color:#8d8d87}
+.num,
+.service-row .idx,
+.ba-item figcaption,
+.address-map-detail-label,
+.footer-col b,
+.footer-phones-block b,
+.footer-hours-block b{color:#8d8d87;opacity:1}
+.photo .tag{color:#f5f5f2}
+.process .kicker,
+.step b{color:#6f6f6a}
+@media (max-width:1024px){.process .kicker,.step b{color:#6f6f6a}}
+@media (max-width:768px){.process .kicker,.step b{color:#6f6f6a}}
