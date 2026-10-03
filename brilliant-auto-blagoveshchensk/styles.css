@@ -203,8 +203,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 }
 .gallery--client-reviews{margin-top:36px;margin-bottom:8px}
 .gallery--portfolio .g--media img{width:100%;height:auto;display:block;vertical-align:middle}
-.gallery--portfolio .g--video video{width:100%;height:auto;max-height:min(75vh,640px);object-fit:contain;display:block;background:#0a0a0a;vertical-align:middle}
-.gallery--portfolio .g--gif img{width:100%;height:auto;max-height:min(75vh,640px);object-fit:contain;display:block;background:#0a0a0a;vertical-align:middle}
+.gallery--portfolio .g--loop video,.gallery--portfolio .g--video video{width:100%;height:auto;max-height:min(75vh,640px);object-fit:contain;display:block;background:#0a0a0a;vertical-align:middle}
 .gallery--portfolio .wide,.gallery--portfolio .tall{grid-column:auto;grid-row:auto}
 .work-block{scroll-margin-top:110px}
 .work-block .section-head{align-items:flex-start}
