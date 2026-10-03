@@ -3,8 +3,15 @@
   var index = 0;
   var root = null;
 
-  function collect() {
-    links = Array.prototype.slice.call(document.querySelectorAll("[data-lightbox]"));
+  function collectFor(activeLink) {
+    var group = activeLink.getAttribute("data-lightbox");
+    if (!group) {
+      links = [];
+      return;
+    }
+    links = Array.prototype.slice.call(
+      document.querySelectorAll('[data-lightbox="' + group + '"]')
+    );
   }
 
   function ensureRoot() {
@@ -42,7 +49,6 @@
 
   function show(i) {
     if (!links.length) return;
-    collect();
     index = (i + links.length) % links.length;
     var href = links[index].getAttribute("href");
     ensureRoot();
@@ -66,7 +72,7 @@
     var link = e.target.closest("[data-lightbox]");
     if (!link) return;
     e.preventDefault();
-    collect();
+    collectFor(link);
     var i = links.indexOf(link);
     if (i >= 0) show(i);
   });
