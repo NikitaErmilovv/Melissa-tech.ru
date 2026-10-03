@@ -1,0 +1,455 @@
+{
+  "order": [
+    "hood",
+    "roof",
+    "bumperFront",
+    "bumperRear",
+    "fenderFrontR",
+    "fenderFrontL",
+    "doorFrontR",
+    "doorFrontL",
+    "doorRearR",
+    "doorRearL",
+    "quarterR",
+    "quarterL",
+    "sideLowerR",
+    "sideLowerL",
+    "mirrorR",
+    "mirrorL",
+    "headlights",
+    "taillights",
+    "windshield",
+    "trunk",
+    "fuelCap",
+    "handles",
+    "pillars"
+  ],
+  "zones": {
+    "hood": {
+      "name": "Капот",
+      "price": 21600
+    },
+    "roof": {
+      "name": "Крыша",
+      "price": 18500
+    },
+    "bumperFront": {
+      "name": "Бампер передний",
+      "price": 18900
+    },
+    "bumperRear": {
+      "name": "Бампер задний",
+      "price": 18900
+    },
+    "fenderFrontR": {
+      "name": "Крыло переднее левое",
+      "price": 11200
+    },
+    "fenderFrontL": {
+      "name": "Крыло переднее правое",
+      "price": 11200
+    },
+    "doorFrontR": {
+      "name": "Дверь передняя левая",
+      "price": 13680
+    },
+    "doorFrontL": {
+      "name": "Дверь передняя правая",
+      "price": 13680
+    },
+    "doorRearR": {
+      "name": "Дверь задняя левая",
+      "price": 13680
+    },
+    "doorRearL": {
+      "name": "Дверь задняя правая",
+      "price": 13680
+    },
+    "quarterR": {
+      "name": "Заднее крыло и стойка крыши левые",
+      "price": 15400
+    },
+    "quarterL": {
+      "name": "Заднее крыло и стойка крыши правые",
+      "price": 15400
+    },
+    "sideLowerR": {
+      "name": "Порог левый",
+      "price": 9800
+    },
+    "sideLowerL": {
+      "name": "Порог правый",
+      "price": 9800
+    },
+    "mirrorR": {
+      "name": "Зеркало левое",
+      "price": 4200
+    },
+    "mirrorL": {
+      "name": "Зеркало правое",
+      "price": 4200
+    },
+    "headlights": {
+      "name": "Фары передние",
+      "price": 2000,
+      "from": true,
+      "nopaint": true,
+      "note": "Полировка фар"
+    },
+    "taillights": {
+      "name": "Фары задние",
+      "price": 2000,
+      "from": true,
+      "nopaint": true,
+      "note": "Полировка фар"
+    },
+    "windshield": {
+      "name": "Полировка лобового",
+      "price": 2000,
+      "from": true,
+      "nopaint": true,
+      "note": "Полировка лобового"
+    },
+    "trunk": {
+      "name": "Крышка багажника",
+      "price": 14800
+    },
+    "fuelCap": {
+      "name": "Лючок бензобака",
+      "price": 1000,
+      "from": true,
+      "nopaint": true,
+      "note": "Оклейка лючка"
+    },
+    "handles": {
+      "name": "Ручки дверей",
+      "price": 2000,
+      "from": true,
+      "nopaint": true,
+      "note": "Плёнка под ручки"
+    },
+    "pillars": {
+      "name": "Стойки дверные",
+      "price": 3000,
+      "from": true,
+      "nopaint": true,
+      "note": "Оклейка стоек"
+    }
+  },
+  "models": {
+    "mercedes": {
+      "label": "Легковой автомобиль",
+      "zones": {
+        "hood": {
+          "name": "Капот",
+          "price": 21600
+        },
+        "roof": {
+          "name": "Крыша",
+          "price": 18500
+        },
+        "bumperFront": {
+          "name": "Бампер передний",
+          "price": 18900
+        },
+        "bumperRear": {
+          "name": "Бампер задний",
+          "price": 18900
+        },
+        "fenderFrontR": {
+          "name": "Крыло переднее левое",
+          "price": 11200
+        },
+        "fenderFrontL": {
+          "name": "Крыло переднее правое",
+          "price": 11200
+        },
+        "doorFrontR": {
+          "name": "Дверь передняя левая",
+          "price": 13680
+        },
+        "doorFrontL": {
+          "name": "Дверь передняя правая",
+          "price": 13680
+        },
+        "doorRearR": {
+          "name": "Дверь задняя левая",
+          "price": 13680
+        },
+        "doorRearL": {
+          "name": "Дверь задняя правая",
+          "price": 13680
+        },
+        "quarterR": {
+          "name": "Заднее крыло и стойка крыши левые",
+          "price": 15400
+        },
+        "quarterL": {
+          "name": "Заднее крыло и стойка крыши правые",
+          "price": 15400
+        },
+        "sideLowerR": {
+          "name": "Порог левый",
+          "price": 9800
+        },
+        "sideLowerL": {
+          "name": "Порог правый",
+          "price": 9800
+        },
+        "mirrorR": {
+          "name": "Зеркало левое",
+          "price": 4200
+        },
+        "mirrorL": {
+          "name": "Зеркало правое",
+          "price": 4200
+        },
+        "headlights": {
+          "name": "Фары передние",
+          "price": 2000,
+          "from": true,
+          "nopaint": true,
+          "note": "Полировка фар"
+        },
+        "taillights": {
+          "name": "Фары задние",
+          "price": 2000,
+          "from": true,
+          "nopaint": true,
+          "note": "Полировка фар"
+        },
+        "windshield": {
+          "name": "Полировка лобового",
+          "price": 2000,
+          "from": true,
+          "nopaint": true,
+          "note": "Полировка лобового"
+        },
+        "trunk": {
+          "name": "Крышка багажника",
+          "price": 14800
+        },
+        "fuelCap": {
+          "name": "Лючок бензобака",
+          "price": 1000,
+          "from": true,
+          "nopaint": true,
+          "note": "Оклейка лючка"
+        },
+        "handles": {
+          "name": "Ручки дверей",
+          "price": 2000,
+          "from": true,
+          "nopaint": true,
+          "note": "Плёнка под ручки"
+        },
+        "pillars": {
+          "name": "Стойки дверные",
+          "price": 3000,
+          "from": true,
+          "nopaint": true,
+          "note": "Оклейка стоек"
+        }
+      }
+    },
+    "mazda": {
+      "label": "Кроссовер",
+      "zones": {
+        "hood": {
+          "name": "Капот",
+          "price": 21600
+        },
+        "roof": {
+          "name": "Крыша",
+          "price": 18500
+        },
+        "bumperFront": {
+          "name": "Бампер передний",
+          "price": 18900
+        },
+        "bumperRear": {
+          "name": "Бампер задний",
+          "price": 18900
+        },
+        "fenderFrontR": {
+          "name": "Крыло переднее левое",
+          "price": 11200
+        },
+        "fenderFrontL": {
+          "name": "Крыло переднее правое",
+          "price": 11200
+        },
+        "doorFrontR": {
+          "name": "Дверь передняя левая",
+          "price": 13680
+        },
+        "doorFrontL": {
+          "name": "Дверь передняя правая",
+          "price": 13680
+        },
+        "doorRearR": {
+          "name": "Дверь задняя левая",
+          "price": 13680
+        },
+        "doorRearL": {
+          "name": "Дверь задняя правая",
+          "price": 13680
+        },
+        "quarterR": {
+          "name": "Заднее крыло и стойка крыши левые",
+          "price": 15400
+        },
+        "quarterL": {
+          "name": "Заднее крыло и стойка крыши правые",
+          "price": 15400
+        },
+        "sideLowerR": {
+          "name": "Порог левый",
+          "price": 9800
+        },
+        "sideLowerL": {
+          "name": "Порог правый",
+          "price": 9800
+        },
+        "mirrorR": {
+          "name": "Зеркало левое",
+          "price": 4200
+        },
+        "mirrorL": {
+          "name": "Зеркало правое",
+          "price": 4200
+        },
+        "headlights": {
+          "name": "Фары передние",
+          "price": 2000,
+          "from": true,
+          "nopaint": true,
+          "note": "Полировка фар"
+        },
+        "taillights": {
+          "name": "Фары задние",
+          "price": 2000,
+          "from": true,
+          "nopaint": true,
+          "note": "Полировка фар"
+        },
+        "windshield": {
+          "name": "Полировка лобового",
+          "price": 2000,
+          "from": true,
+          "nopaint": true,
+          "note": "Полировка лобового"
+        },
+        "trunk": {
+          "name": "Крышка багажника",
+          "price": 14800
+        },
+        "fuelCap": {
+          "name": "Лючок бензобака",
+          "price": 1000,
+          "from": true,
+          "nopaint": true,
+          "note": "Оклейка лючка"
+        },
+        "handles": {
+          "name": "Ручки дверей",
+          "price": 2000,
+          "from": true,
+          "nopaint": true,
+          "note": "Плёнка под ручки"
+        },
+        "pillars": {
+          "name": "Стойки дверные",
+          "price": 3000,
+          "from": true,
+          "nopaint": true,
+          "note": "Оклейка стоек"
+        }
+      }
+    }
+  },
+  "colors": [
+    {
+      "hex": "#0b0d10",
+      "name": "Obsidian Black"
+    },
+    {
+      "hex": "#f5f5f2",
+      "name": "Pearl White"
+    },
+    {
+      "hex": "#d71935",
+      "name": "Racing Red"
+    },
+    {
+      "hex": "#1246b8",
+      "name": "Sapphire Blue"
+    },
+    {
+      "hex": "#0b6f46",
+      "name": "Emerald Green"
+    },
+    {
+      "hex": "#bfc4cc",
+      "name": "Silver"
+    },
+    {
+      "hex": "#d39b16",
+      "name": "Champagne Gold"
+    },
+    {
+      "hex": "#6d2bbd",
+      "name": "Electric Purple"
+    },
+    {
+      "hex": "#ff6b16",
+      "name": "Burnt Orange"
+    },
+    {
+      "hex": "#e64f89",
+      "name": "Candy Pink"
+    },
+    {
+      "hex": "#11a9b0",
+      "name": "Turquoise"
+    },
+    {
+      "hex": "#63351f",
+      "name": "Cocoa Brown"
+    }
+  ],
+  "finishes": [
+    {
+      "id": "gloss",
+      "name": "Глубокий глянец",
+      "hidden": false
+    },
+    {
+      "id": "satin",
+      "name": "Сатин",
+      "hidden": false
+    },
+    {
+      "id": "matte",
+      "name": "Матовая",
+      "hidden": false
+    }
+  ],
+  "effects": [
+    {
+      "id": "solid",
+      "name": "Solid",
+      "hidden": false
+    },
+    {
+      "id": "metal",
+      "name": "Metallic",
+      "hidden": false
+    },
+    {
+      "id": "pearl",
+      "name": "Pearl",
+      "hidden": false
+    }
+  ]
+}

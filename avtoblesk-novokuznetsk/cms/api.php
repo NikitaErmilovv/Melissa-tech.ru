@@ -27,7 +27,7 @@ function cms_password(): string {
         }
         $data = json_decode((string) file_get_contents($path), true);
         if (is_array($data) && !empty($data['password'])) {
-            return (string) $data['password'];
+            return trim((string) $data['password']);
         }
     }
     return '';
@@ -88,7 +88,7 @@ $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 if ($action === 'login' && $method === 'POST') {
     $body = json_decode((string) file_get_contents('php://input'), true);
-    $pwd = is_array($body) ? (string) ($body['password'] ?? '') : '';
+    $pwd = is_array($body) ? trim((string) ($body['password'] ?? '')) : '';
     $expected = cms_password();
     if ($expected === '' || !hash_equals($expected, $pwd)) {
         send_json(401, ['error' => 'Unauthorized']);
@@ -123,6 +123,9 @@ if ($action === 'save' && $method === 'POST') {
     if (isset($payload['backgrounds']) && is_array($payload['backgrounds'])) {
         $store[$page]['backgrounds'] = array_merge($store[$page]['backgrounds'] ?? [], $payload['backgrounds']);
     }
+    if (array_key_exists('hiddenBlocks', $payload) && is_array($payload['hiddenBlocks'])) {
+        $store[$page]['hiddenBlocks'] = $payload['hiddenBlocks'];
+    }
     if (isset($payload['lists']) && is_array($payload['lists'])) {
         $store[$page]['lists'] = $payload['lists'];
     }
@@ -152,6 +155,91 @@ if ($action === 'upload' && $method === 'POST') {
         send_json(500, ['error' => 'Move failed']);
     }
     send_json(200, ['url' => 'img/cms/uploads/' . $name]);
+}
+
+if ($action === 'reviews-2gis' && $method === 'GET') {
+    $cacheFile = dirname(__DIR__) . '/data/reviews-2gis.json';
+    $url = 'https://api.reviews.2gis.com/2.0/branches/70000001098503533/reviews?key=d463a78e-4d44-4198-8cd5-7fc0762032cb&limit=50&offset=0&sort_by=date_created';
+    $ctx = stream_context_create(['http' => ['timeout' => 20, 'header' => "Accept: application/json\r\nUser-Agent: AvtobleskSite/1.0\r\n"]]);
+    $items = [];
+    $offset = 0;
+    for ($i = 0; $i < 3; $i++) {
+        $raw = @file_get_contents(str_replace('offset=0', 'offset=' . $offset, $url), false, $ctx);
+        if ($raw === false) {
+            break;
+        }
+        $data = json_decode($raw, true);
+        $page = $data['reviews'] ?? [];
+        if (!$page) {
+            break;
+        }
+        foreach ($page as $rev) {
+            if (!empty($rev['is_hidden']) || empty($rev['rating'])) {
+                continue;
+            }
+            $user = $rev['user'] ?? [];
+            $iso = $rev['date_created'] ?? '';
+            $date = $iso ? date('j.m.Y', strtotime($iso)) : '';
+            $items[] = [
+                'name' => trim($user['name'] ?? ($user['first_name'] ?? 'Клиент')),
+                'text' => trim((string)($rev['text'] ?? '')) ?: 'Без текста',
+                'rating' => (int)$rev['rating'],
+                'date' => $date,
+                'id' => (string)($rev['id'] ?? ''),
+            ];
+        }
+        if (empty($data['meta']['next_link'])) {
+            break;
+        }
+        $offset += 50;
+    }
+    if ($items) {
+        @file_put_contents($cacheFile, json_encode($items, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n");
+        send_json(200, $items);
+    }
+    if (is_file($cacheFile)) {
+        $cached = json_decode((string)file_get_contents($cacheFile), true);
+        if (is_array($cached)) {
+            send_json(200, $cached);
+        }
+    }
+    send_json(502, ['error' => '2gis']);
+}
+
+if ($action === 'wrap-zones-save' && $method === 'POST') {
+    if (!check_token(bearer_token())) {
+        send_json(401, ['error' => 'Unauthorized']);
+    }
+    $raw = file_get_contents('php://input');
+    $payload = json_decode($raw, true);
+    $hasZones = isset($payload['zones']) && is_array($payload['zones']);
+    $hasModels = isset($payload['models']) && is_array($payload['models']);
+    if (!is_array($payload) || (!$hasZones && !$hasModels)) {
+        send_json(400, ['error' => 'Missing zones']);
+    }
+    $path = dirname(__DIR__) . '/data/wrap-zones.json';
+    $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n";
+    if (file_put_contents($path, $json) === false) {
+        send_json(500, ['error' => 'Write failed']);
+    }
+    send_json(200, ['ok' => true]);
+}
+
+if ($action === 'training-save' && $method === 'POST') {
+    if (!check_token(bearer_token())) {
+        send_json(401, ['error' => 'Unauthorized']);
+    }
+    $raw = file_get_contents('php://input');
+    $payload = json_decode($raw, true);
+    if (!is_array($payload) || !isset($payload['students']) || !is_array($payload['students'])) {
+        send_json(400, ['error' => 'Missing students']);
+    }
+    $path = dirname(__DIR__) . '/data/training.json';
+    $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n";
+    if (file_put_contents($path, $json) === false) {
+        send_json(500, ['error' => 'Write failed']);
+    }
+    send_json(200, ['ok' => true]);
 }
 
 send_json(404, ['error' => 'Not found']);

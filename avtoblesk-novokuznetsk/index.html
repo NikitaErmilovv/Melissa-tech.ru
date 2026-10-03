@@ -6,14 +6,14 @@
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>АвтоБлеск — детейлинг</title>
-<link rel="stylesheet" href="styles.css?v=hero10">
-<link rel="stylesheet" href="wrap-configurator.css?v=mb26">
-<link rel="stylesheet" href="cms/cms.css">
+<link rel="stylesheet" href="styles.css?v=hero11">
+<link rel="stylesheet" href="wrap-configurator.css?v=mb28">
+<link rel="stylesheet" href="cms/cms.css?v=hide1">
 </head>
 <body data-cms-page="index.html">
 <nav class="site-nav">
   <div class="logo"><a href="index.html"><span>АВТО</span>БЛЕСК</a></div>
-  <div class="links"><a href="#services">УСЛУГИ</a><a href="#works">РАБОТЫ</a><a href="#story">О СТУДИИ</a><a href="#contacts">КОНТАКТЫ</a><a href="training.html">ОБУЧЕНИЕ</a></div>
+  <div class="links"><a href="#services">УСЛУГИ</a><a href="album.html">АЛЬБОМ</a><a href="#story">О СТУДИИ</a><a href="#contacts">КОНТАКТЫ</a><a href="training.html">ОБУЧЕНИЕ</a></div>
   <div class="nav-actions">
     <a class="phone" href="tel:+79235322652">+7 (923) 532-26-52</a>
     <button class="nav-burger" type="button" aria-label="Открыть меню" aria-expanded="false">
@@ -22,7 +22,7 @@
       <span class="nav-burger-line"></span>
     </button>
   </div>
-  <div class="nav-mobile-menu"><a href="#services">УСЛУГИ</a><a href="#works">РАБОТЫ</a><a href="#story">О СТУДИИ</a><a href="#contacts">КОНТАКТЫ</a><a href="training.html">ОБУЧЕНИЕ</a></div>
+  <div class="nav-mobile-menu"><a href="#services">УСЛУГИ</a><a href="album.html">АЛЬБОМ</a><a href="#story">О СТУДИИ</a><a href="#contacts">КОНТАКТЫ</a><a href="training.html">ОБУЧЕНИЕ</a></div>
 </nav>
 
 <section class="hero">
@@ -181,7 +181,7 @@
       <figcaption>Восстановление фар</figcaption>
     </figure>
   </div>
-  <div class="quote">«Хороший детейлинг — это когда автомобиль выглядит так, <span>будто его только что собрали.</span>»</div>
+  <p class="intro" style="margin-top:24px"><a class="button dark" href="album.html">СМОТРЕТЬ АЛЬБОМ РАБОТ</a></p>
   <div class="photo-strip">
     <div class="photo big" style="background-image:url('img/works/portfolio/gallery-01.jpg')"><span class="tag">РЕМОНТ СКОЛОВ</span></div>
     <div class="photo" style="background-image:url('img/works/portfolio/gallery-02.jpg')"><span class="tag">ПОЛИРОВКА СТЁКОЛ</span></div>
@@ -213,7 +213,7 @@
           <p>Позвоните или напишите — подскажем по услугам, сориентируем по стоимости и подберём удобное время.</p>
         </div>
       </div>
-      <div class="founder-visual">
+      <div class="founder-visual" data-cms-bg style="background-image:url('img/works/portfolio/gallery-07.jpg');background-size:cover;background-position:50% 30%">
         <div class="founder-visual-placeholder" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="8" r="4.25"/>
@@ -229,7 +229,7 @@
 
 <section class="section" id="catalog">
   <div class="kicker">КАТАЛОГ</div>
-  <div class="service-list">
+  <div class="service-list" data-cms-list="services">
     <div class="service-row"><div class="idx">01</div><div><h3>Сколы и трещины</h3><p>Ремонт лобового и боковых стёкол: локальная работа со сколами и трещинами.</p></div><div class="cost">от 50 ₽</div></div>
     <div class="service-row"><div class="idx">02</div><div><h3>Полировка-шлифовка стёкол</h3><p>Полировка и шлифовка стёкол от налёта, мутности и мелких царапин.</p></div><div class="cost">от 1 000 ₽</div></div>
     <div class="service-row"><div class="idx">03</div><div><h3>Полировка фар</h3><p>Восстановление прозрачности и блеска фар.</p></div><div class="cost">от 2 000 ₽</div></div>
@@ -247,10 +247,13 @@
     <div><div class="kicker">ОТЗЫВЫ</div><h2>ЛЮДИ<br><span class="accent">ЗАМЕЧАЮТ.</span></h2></div>
     <p class="intro">Реальные отзывы клиентов о качестве работы и сервисе студии.</p>
   </div>
-  <div class="reviews">
-    <div class="review"><div class="stars">★★★★★</div><p>«Детейлинг - форма искусства. Ручная работа, точность в каждом движении»</p><small>Саша Густарев · 2ГИС</small></div>
-    <div class="review"><div class="stars">★★★★★</div><p>«Добрый вечер, большое спасибо за отзыв и оценку!!! Успехов вам 🤗»</p><small>Константин Найданов · 2ГИС</small></div>
-    <div class="review"><div class="stars">★★★★★</div><p>«Анастасия, спасибо вам за приятный отзыв 🔥»</p><small>Анастасия Даниленко · 2ГИС</small></div>
+  <div class="reviews-carousel" data-reviews-carousel data-cms-skip>
+    <button type="button" class="reviews-nav reviews-nav--prev" aria-label="Предыдущие отзывы">‹</button>
+    <div class="reviews-viewport">
+      <div class="reviews-track"></div>
+    </div>
+    <button type="button" class="reviews-nav reviews-nav--next" aria-label="Следующие отзывы">›</button>
+    <div class="reviews-dots" aria-hidden="true"></div>
   </div>
 </section>
 
@@ -348,7 +351,7 @@
       <b>НАВИГАЦИЯ</b>
       <a href="index.html">Главная</a>
       <a href="#catalog">Услуги</a>
-      <a href="#works">Работы</a>
+      <a href="album.html">Альбом</a>
       <a href="#story">О студии</a>
       <a href="#contacts">Контакты</a>
       <a href="training.html">Обучение</a>
@@ -363,7 +366,7 @@
       <b>НАВИГАЦИЯ</b>
       <a href="index.html">Главная</a>
       <a href="#catalog">Услуги</a>
-      <a href="#works">Работы</a>
+      <a href="album.html">Альбом</a>
       <a href="#story">О студии</a>
       <a href="#contacts">Контакты</a>
       <a href="training.html">Обучение</a>
@@ -393,12 +396,13 @@
 <script src="nav.js"></script>
 <script src="stats.js"></script>
 <script src="ba-slider.js"></script>
+<script src="reviews-carousel.js?v=r4" defer></script>
 <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
 <link rel="modulepreload" href="vendor/three/build/three.module.js">
-<link rel="modulepreload" href="wrap-configurator.core.js?v=mb26">
+<link rel="modulepreload" href="wrap-configurator.core.js?v=mb28">
 <link rel="preload" href="models/mercedes.glb?v=5" as="fetch" type="model/gltf-binary" crossorigin fetchpriority="high">
-<script type="module" src="wrap-loader.js?v=mb26"></script>
-<script src="cms/cms-api.js" defer></script>
-<script src="cms/cms.js" defer></script>
+<script type="module" src="wrap-loader.js?v=mb28"></script>
+<script src="cms/cms-api.js?v=hide1" defer></script>
+<script src="cms/cms.js?v=bgpan1" defer></script>
 </body>
 </html>

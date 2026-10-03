@@ -1,6 +1,7 @@
 (function () {
   const TOKEN_KEY = 'avtoblesk_cms_token';
   const PAGE = document.body.dataset.cmsPage || (location.pathname.split('/').pop() || 'index.html');
+  let hiddenBlocks = [];
 
   function isExcluded(el) {
     return !!(
@@ -19,6 +20,65 @@
       el.closest('.address-map-frame') ||
       el.classList?.contains('address-map-img')
     );
+  }
+
+  function isLockedFrame(el) {
+    return !!(
+      el.classList.contains('hero') ||
+      el.classList.contains('subpage-hero') ||
+      el.hasAttribute('data-cms-lock')
+    );
+  }
+
+  function hideableBlocks() {
+    return Array.from(document.querySelectorAll('section, .stats')).filter((el) => {
+      if (isLockedFrame(el)) return false;
+      if (el.closest('.site-nav, footer, .cms-bar, .cms-modal-wrap')) return false;
+      const parentBlock = el.parentElement && el.parentElement.closest('section');
+      if (parentBlock && parentBlock !== el) return false;
+      return true;
+    });
+  }
+
+  function blockKey(el, index) {
+    return el.id || el.getAttribute('data-cms-block') || 'block-' + (index + 1);
+  }
+
+  function applyHiddenBlocks() {
+    hideableBlocks().forEach((el, i) => {
+      const key = blockKey(el, i);
+      el.setAttribute('data-cms-block', key);
+      el.classList.toggle('cms-block-off', hiddenBlocks.indexOf(key) !== -1);
+    });
+  }
+
+  function toggleBlock(key) {
+    const i = hiddenBlocks.indexOf(key);
+    if (i >= 0) hiddenBlocks.splice(i, 1);
+    else hiddenBlocks.push(key);
+    applyHiddenBlocks();
+    attachBlockToggles();
+  }
+
+  function attachBlockToggles() {
+    if (!document.body.classList.contains('cms-editing')) return;
+    hideableBlocks().forEach((el, i) => {
+      const key = blockKey(el, i);
+      let btn = el.querySelector(':scope > .cms-hide-btn');
+      if (!btn) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'cms-hide-btn';
+        el.insertBefore(btn, el.firstChild);
+      }
+      const off = hiddenBlocks.indexOf(key) !== -1;
+      btn.textContent = off ? 'Показать блок' : 'Скрыть блок';
+      btn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleBlock(key);
+      };
+    });
   }
 
   function sectionId(el) {
@@ -56,9 +116,35 @@
     return '';
   }
 
-  function setBg(el, url) {
-    if (!url) return;
-    el.style.backgroundImage = "url('" + url.replace(/'/g, "\\'") + "')";
+  function bgPosition(el) {
+    const pos = el.style.backgroundPosition || getComputedStyle(el).backgroundPosition || '50% 50%';
+    const parts = pos.split(/\s+/);
+    const x = parseFloat(parts[0]) || 50;
+    const y = parseFloat(parts[1] != null ? parts[1] : parts[0]) || 50;
+    return { x, y };
+  }
+
+  function parseBgStored(value) {
+    if (value == null || value === '') return null;
+    if (typeof value === 'string') return { url: value, posX: 50, posY: 50 };
+    return {
+      url: value.url || '',
+      posX: value.posX != null ? value.posX : 50,
+      posY: value.posY != null ? value.posY : 50,
+    };
+  }
+
+  function setBg(el, value) {
+    const data = parseBgStored(value);
+    if (!data || !data.url) return;
+    el.style.backgroundImage = "url('" + data.url.replace(/'/g, "\\'") + "')";
+    el.style.backgroundSize = el.style.backgroundSize || 'cover';
+    el.style.backgroundPosition = data.posX + '% ' + data.posY + '%';
+    el.classList.toggle('is-has-photo', true);
+    if (el.classList.contains('founder-visual')) {
+      const ph = el.querySelector('.founder-visual-placeholder');
+      if (ph) ph.style.display = 'none';
+    }
   }
 
   function assignKeys() {
@@ -74,7 +160,7 @@
     };
 
     document.querySelectorAll(
-      '.eyebrow,.kicker,.intro,.tag,.cost,.quote,.founder-lead,.contact-note,.address-map-text,.address-map-muted,.address-map-muted-sm,.address-map-detail-label,.address-map-btn,.founder-visual-caption,.stars,p,h1,h2,h3,h4,figcaption,small,summary,.service-row p,.service-row h3,.step h3,.step p,.card-body h3,.card-body p,.review p,.review small,.footer-hours-block span,.footer-bottom span,.subpage-hero p,.details p'
+      '.eyebrow,.kicker,.intro,.tag,.cost,.quote,.founder-lead,.cms-album-desc,.contact-note,.address-map-text,.address-map-muted,.address-map-muted-sm,.address-map-detail-label,.address-map-btn,.founder-visual-caption,.stars,p,h1,h2,h3,h4,figcaption,small,summary,.service-row p,.service-row h3,.step h3,.step p,.card-body h3,.card-body p,.review p,.review small,.footer-hours-block span,.footer-bottom span,.subpage-hero p,.details p'
     ).forEach(mark);
 
     document.querySelectorAll('a.button, a.address-map-phone, .footer-phone-inline, .footer-logo, .address-map-brand').forEach((el) => {
@@ -91,7 +177,7 @@
       }
     });
 
-    const bgTargets = '.photo, .heroimg, .card-media, [data-cms-bg]';
+    const bgTargets = '.photo, .heroimg, .card-media, .founder-visual, [data-cms-bg]';
     document.querySelectorAll(bgTargets).forEach((el) => {
       if (isExcluded(el)) return;
       if (el.dataset.cmsBg) return;
@@ -204,7 +290,9 @@
       if (page.lists?.albums) renderAlbums(page.lists.albums);
       else if (page.lists?.portfolio && A) renderAlbums(A.migratePortfolio(page.lists.portfolio));
       if (page.lists?.services) renderServices(page.lists.services);
+      hiddenBlocks = Array.isArray(page.hiddenBlocks) ? page.hiddenBlocks.slice() : [];
       assignKeys();
+      applyHiddenBlocks();
       Object.entries(page.text || {}).forEach(([k, v]) => applyField(k, v, 'text'));
       Object.entries(page.images || {}).forEach(([k, v]) => applyField(k, v, 'img'));
       Object.entries(page.backgrounds || {}).forEach(([k, v]) => applyField(k, v, 'bg'));
@@ -224,18 +312,25 @@
       if (isExcluded(el)) return;
       images[el.dataset.cmsImg] = { src: el.getAttribute('src') || '', alt: el.alt || '' };
     });
+    document.querySelectorAll('[data-cms-bg]').forEach((el) => {
+      if (isExcluded(el)) return;
+      const url = bgUrl(el);
+      if (url) el.classList.add('is-has-photo');
+    });
     const backgrounds = {};
     document.querySelectorAll('[data-cms-bg]').forEach((el) => {
       if (isExcluded(el)) return;
       const url = bgUrl(el);
-      if (url) backgrounds[el.dataset.cmsBg] = url;
+      if (!url) return;
+      const pos = bgPosition(el);
+      backgrounds[el.dataset.cmsBg] = { url, posX: pos.x, posY: pos.y };
     });
     const lists = {};
     const albums = collectAlbums();
     if (albums) lists.albums = albums;
     const services = collectServices();
     if (services) lists.services = services;
-    return { page: PAGE, text, images, backgrounds, lists };
+    return { page: PAGE, text, images, backgrounds, lists, hiddenBlocks: hiddenBlocks.slice() };
   }
 
   function token() {
@@ -280,7 +375,7 @@
       const link = targetEl.closest('a.g--media');
       if (link) link.setAttribute('href', data.url);
     } else {
-      setBg(targetEl, data.url);
+      setBg(targetEl, { url: data.url, posX: bgPosition(targetEl).x, posY: bgPosition(targetEl).y });
     }
     return data.url;
   }
@@ -295,13 +390,64 @@
     input.click();
   }
 
+  let activeBgEl = null;
+  let bgDrag = null;
+
+  function selectBgEl(el) {
+    if (activeBgEl && activeBgEl !== el) activeBgEl.classList.remove('cms-bg-active');
+    activeBgEl = el;
+    if (el) el.classList.add('cms-bg-active');
+  }
+
   function bindBgClick(el) {
     el.addEventListener('click', (e) => {
       if (!document.body.classList.contains('cms-editing')) return;
       e.preventDefault();
       e.stopPropagation();
+      if (activeBgEl !== el) {
+        selectBgEl(el);
+        return;
+      }
       pickImage(el, 'bg');
     });
+    el.addEventListener('dblclick', (e) => {
+      if (!document.body.classList.contains('cms-editing')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      pickImage(el, 'bg');
+    });
+    el.addEventListener('pointerdown', (e) => {
+      if (!document.body.classList.contains('cms-editing')) return;
+      if (!bgUrl(el)) return;
+      selectBgEl(el);
+      bgDrag = {
+        el,
+        startX: e.clientX,
+        startY: e.clientY,
+        pos: bgPosition(el),
+      };
+      el.setPointerCapture?.(e.pointerId);
+      e.preventDefault();
+    });
+    el.addEventListener('pointermove', (e) => {
+      if (!bgDrag || bgDrag.el !== el) return;
+      const rect = el.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const dx = ((e.clientX - bgDrag.startX) / rect.width) * 100;
+      const dy = ((e.clientY - bgDrag.startY) / rect.height) * 100;
+      const nx = Math.min(100, Math.max(0, bgDrag.pos.x - dx));
+      const ny = Math.min(100, Math.max(0, bgDrag.pos.y - dy));
+      el.style.backgroundPosition = nx + '% ' + ny + '%';
+    });
+    const endDrag = (e) => {
+      if (!bgDrag || bgDrag.el !== el) return;
+      bgDrag = null;
+      try {
+        el.releasePointerCapture?.(e.pointerId);
+      } catch (_) {}
+    };
+    el.addEventListener('pointerup', endDrag);
+    el.addEventListener('pointercancel', endDrag);
   }
 
   function bindImgClick(el) {
@@ -337,7 +483,7 @@
     const n = root.querySelectorAll('[data-cms-album]').length + 1;
     const wrap = document.createElement('div');
     wrap.innerHTML = A.albumSectionHtml(
-      { kicker: String(n).padStart(2, '0'), title: 'Новый альбом', items: [] },
+      { kicker: String(n).padStart(2, '0'), title: 'Новый альбом', description: 'Краткое описание блока', items: [] },
       n - 1
     );
     const sec = wrap.firstElementChild;
@@ -382,6 +528,7 @@
     albumSection.querySelector('.section-head')?.appendChild(tools);
     albumSection.querySelectorAll('.g--media, .g--video').forEach(attachMediaRemove);
     albumSection.querySelectorAll('.g--media img').forEach((img) => bindImgClick(img));
+    enableTextEditOn(albumSection);
   }
 
   function addServiceRow() {
@@ -461,11 +608,13 @@
 
     document.querySelectorAll('[data-cms-album]').forEach(attachAlbumChrome);
     document.querySelectorAll('[data-cms-list="services"] .service-row').forEach(attachServiceRemove);
+    applyHiddenBlocks();
+    attachBlockToggles();
 
     const bar = document.createElement('div');
     bar.className = 'cms-bar';
     bar.innerHTML =
-      '<span class="cms-hint">Текст — клик и печать. Фото — клик по картинке. Не забудьте «Сохранить страницу».</span>' +
+      '<span class="cms-hint">Текст — клик. Фото: клик по зоне — выделение, перетаскивание — кадр, второй клик или двойной — замена. Затем «Сохранить страницу».</span>' +
       '<button type="button" class="cms-save">Сохранить страницу</button>' +
       '<button type="button" class="cms-exit">Выйти</button>';
 
@@ -508,6 +657,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     loadContent().then(() => {
+      applyHiddenBlocks();
       if (token()) enableEditing();
     });
   });

@@ -45,6 +45,7 @@
 
   function albumSectionHtml(album, index) {
     const kicker = album.kicker || String(index + 1).padStart(2, '0');
+    const desc = album.description || album.desc || '';
     const items = (album.items || []).map(mediaItemHtml).join('');
     return (
       '<section class="section work-block" data-cms-album>' +
@@ -52,7 +53,11 @@
       escapeHtml(kicker) +
       '</div><h2 class="cms-album-title">' +
       escapeHtml(album.title || 'Работы') +
-      '</h2></div></div>' +
+      '</h2>' +
+      (desc
+        ? '<p class="intro cms-album-desc">' + escapeHtml(desc) + '</p>'
+        : '<p class="intro cms-album-desc"></p>') +
+      '</div></div>' +
       '<div class="gallery gallery--portfolio">' +
       items +
       '</div></section>'
@@ -77,6 +82,7 @@
       return {
         kicker: sec.querySelector('.cms-album-kicker')?.textContent.trim() || String(i + 1).padStart(2, '0'),
         title: sec.querySelector('.cms-album-title')?.textContent.trim() || '',
+        description: sec.querySelector('.cms-album-desc')?.textContent.trim() || '',
         items,
       };
     });
@@ -88,6 +94,7 @@
       {
         kicker: '01',
         title: 'Работы студии',
+        description: '',
         items: flat.map((it) => ({ type: 'image', url: it.url || '' })),
       },
     ];

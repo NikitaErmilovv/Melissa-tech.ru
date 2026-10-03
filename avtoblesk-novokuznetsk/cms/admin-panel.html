@@ -5,24 +5,31 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>CMS — АвтоБлеск</title>
+<style>
+#cms-login[hidden],#cms-login.is-off{display:none!important}
+#cms-app[hidden]{display:none!important}
+.cms-login-box .err{display:block}
+.cms-login-box .err[hidden]{display:none!important}
+</style>
 <link rel="stylesheet" href="../styles.css?v=albums1">
-<link rel="stylesheet" href="cms.css">
+<link rel="stylesheet" href="cms.css?v=hide4">
 </head>
 <body class="cms-admin-body">
-<div id="cms-login" class="cms-login-wrap" hidden>
+<div id="cms-login" class="cms-login-wrap">
   <div class="cms-login-box">
     <h1>CMS АвтоБлеск</h1>
     <p>Панель управления сайтом: альбомы работ, услуги, правки на страницах.</p>
     <form id="cms-login-form">
       <input type="password" id="cms-login-password" placeholder="Пароль CMS" autocomplete="current-password" required>
-      <button type="submit">Войти</button>
+      <button type="submit" id="cms-login-submit">Войти</button>
       <div class="err" id="cms-login-err" hidden></div>
     </form>
+    <p class="cms-login-hint">Открывайте панель только через сервер:<br><code>http://127.0.0.1:8092/cms/admin-panel.html</code></p>
     <p class="cms-login-back"><a href="../index.html">← На сайт</a></p>
   </div>
 </div>
 
-<div id="cms-app" class="section cms-admin-section" hidden>
+<div id="cms-app" class="cms-admin-section" hidden>
   <div class="crm cms-admin-crm">
     <aside class="crm-side">
       <div class="crm-logo"><span>АВТО</span>БЛЕСК<small>CMS</small></div>
@@ -31,10 +38,19 @@
         <button type="button" class="crm-nav-item" data-cms-nav="albums">Альбомы работ</button>
         <button type="button" class="crm-nav-item" data-cms-nav="services">Услуги</button>
         <button type="button" class="crm-nav-item" data-cms-nav="pages">Страницы сайта</button>
+        <button type="button" class="crm-nav-item" data-cms-nav="wrap">Конфигуратор 3D</button>
+        <div class="cms-nav-label">Школа</div>
+        <button type="button" class="crm-nav-item" data-cms-nav="school">Обучение</button>
+        <button type="button" class="crm-nav-item" data-cms-nav="school-students">Обучающиеся</button>
+        <button type="button" class="crm-nav-item" data-cms-nav="school-certs">Сертификаты</button>
+        <button type="button" class="crm-nav-item" data-cms-nav="school-courses">Курсы</button>
+        <button type="button" class="crm-nav-item" data-cms-nav="school-users">Сотрудники</button>
+        <button type="button" class="crm-nav-item" data-cms-nav="school-stats">Статистика</button>
+        <button type="button" class="crm-nav-item" data-cms-nav="school-settings">Настройки школы</button>
       </div>
       <div class="crm-user">
         <div class="crm-user-av">AB</div>
-        <div><b>Редактор</b><span>melissa-tech.ru</span></div>
+        <div><b>Редактор</b><span>АвтоБлеск · Новокузнецк</span></div>
       </div>
     </aside>
     <div class="crm-main">
@@ -51,9 +67,9 @@
 
       <div class="crm-view" data-cms-panel="dashboard">
         <div class="crm-cards">
-          <div class="crm-card"><div class="crm-card-top">Альбомы<div class="crm-card-ico">◫</div></div><b>Работы</b><small>Блоки по услугам + lightbox</small></div>
-          <div class="crm-card"><div class="crm-card-top">Услуги<div class="crm-card-ico">≡</div></div><b>Каталог</b><small>services.html</small></div>
-          <div class="crm-card"><div class="crm-card-top">Страницы<div class="crm-card-ico">✎</div></div><b>6</b><small>Текст и фото на сайте</small></div>
+          <div class="crm-card"><div class="crm-card-top">Альбом<div class="crm-card-ico">◫</div></div><b>album.html</b><small>01 · название · описание · фото</small></div>
+          <div class="crm-card"><div class="crm-card-top">Услуги<div class="crm-card-ico">≡</div></div><b>Каталог</b><small>на главной index.html</small></div>
+          <div class="crm-card"><div class="crm-card-top">Страницы<div class="crm-card-ico">✎</div></div><b>3</b><small>Сайт · альбом · обучение</small></div>
           <div class="crm-card"><div class="crm-card-top">API<div class="crm-card-ico">⚙</div></div><b>PHP</b><small>cms/api.php на хостинге</small></div>
         </div>
         <p class="cms-admin-note">Сохранённые альбомы и услуги попадают в <code>cms/content.json</code>. На Timeweb создайте <code>cms/config.local.json</code> с паролем (не коммитить).</p>
@@ -61,6 +77,7 @@
 
       <div class="crm-view" data-cms-panel="albums" hidden>
         <div class="cms-admin-toolbar">
+          <a class="crm-link" href="../album.html" target="_blank" rel="noopener">Открыть альбом на сайте</a>
           <button type="button" class="crm-btn" id="cms-add-album">+ Альбом</button>
           <button type="button" class="crm-btn cms-admin-save" id="cms-save-albums">Сохранить альбомы</button>
         </div>
@@ -78,12 +95,47 @@
       <div class="crm-view" data-cms-panel="pages" hidden>
         <div id="cms-pages-list" class="cms-admin-stack"></div>
       </div>
+
+      <div class="crm-view" data-cms-panel="wrap" hidden>
+        <p class="cms-admin-note">Палитра цветов конфигуратора сохраняется автоматически при изменении. Зоны и финиш — кнопкой ниже. Файл <code>data/wrap-zones.json</code>.</p>
+        <div class="cms-admin-toolbar">
+          <button type="button" class="crm-btn cms-admin-save" id="cms-save-wrap">Сохранить конфигуратор</button>
+        </div>
+        <div id="cms-wrap-editor" class="cms-admin-wrap-table-wrap"></div>
+      </div>
+
+      <div class="crm-view" data-cms-panel="school" hidden>
+        <div id="cms-school-dashboard"></div>
+      </div>
+      <div class="crm-view" data-cms-panel="school-students" hidden>
+        <div id="cms-school-students"></div>
+      </div>
+      <div class="crm-view" data-cms-panel="school-certs" hidden>
+        <div id="cms-school-certs"></div>
+      </div>
+      <div class="crm-view" data-cms-panel="school-courses" hidden>
+        <div id="cms-school-courses"></div>
+      </div>
+      <div class="crm-view" data-cms-panel="school-users" hidden>
+        <div id="cms-school-users"></div>
+      </div>
+      <div class="crm-view" data-cms-panel="school-stats" hidden>
+        <div id="cms-school-stats"></div>
+      </div>
+      <div class="crm-view" data-cms-panel="school-settings" hidden>
+        <div id="cms-school-settings"></div>
+      </div>
+      <div class="crm-view" data-cms-panel="school-student" hidden>
+        <div id="cms-school-student"></div>
+      </div>
     </div>
   </div>
+  <div class="crm-toast" id="cms-school-toast" role="status"></div>
 </div>
 
-<script src="cms-api.js"></script>
+<script src="cms-api.js?v=hide3"></script>
 <script src="cms-albums.js"></script>
-<script src="admin-panel.js"></script>
+<script src="school-crm.js"></script>
+<script src="admin-panel.js?v=hide3"></script>
 </body>
 </html>

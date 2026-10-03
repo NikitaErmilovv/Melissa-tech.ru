@@ -2,10 +2,9 @@
 
 ## Вход
 
-**Прод:** https://melissa-tech.ru/avtoblesk-novokuznetsk/cms/admin-panel.html  
-**Локально:** http://127.0.0.1:8092/cms/admin-panel.html  
+**Локально:** http://127.0.0.1:8092/cms/admin-panel.html
 
-Пароль по умолчанию — в `config.example.json`. На сервере создайте `config.local.json` (в git не попадает):
+Пароль по умолчанию — в `config.example.json`. На Timeweb создайте `config.local.json` со своим паролем (в git не попадает):
 
 ```json
 { "password": "ваш-секретный-пароль" }
@@ -13,9 +12,11 @@
 
 ## Панель CMS
 
-- **Альбомы работ** — блоки по услугам (как Brilliant Auto), загрузка фото/видео, сохранение в `content.json`.
+- **Альбомы работ** — блоки по услугам, загрузка фото/видео, сохранение в `content.json`.
 - **Услуги** — список на `services.html`.
-- **Страницы сайта** — открыть страницу: внизу панель inline-редактирования (текст, фото, hero, до/после).
+- **Страницы сайта** — открыть страницу: внизу панель правок (текст, фото, скрытие блоков).
+- **Конфигуратор 3D** — цены и названия зон отдельно для легкового и кроссовера, палитра, финиш.
+- **Школа** — курсы, ученики, сертификаты (`data/training.json`). Демо-ученики перед выкладкой удалены.
 
 ## Галерея
 
@@ -26,6 +27,6 @@
 | Окружение | Сохранение |
 |-----------|------------|
 | `python server.py` | `/api/cms/*` |
-| Timeweb (PHP) | `cms/api.php?action=login|save|upload` |
+| Timeweb (PHP) | `cms/api.php?action=login\|save\|upload` плюс `wrap-zones-save`, `training-save` |
 
 После правок на статике без PHP можно закоммитить `cms/content.json` и файлы из `img/cms/uploads/`.

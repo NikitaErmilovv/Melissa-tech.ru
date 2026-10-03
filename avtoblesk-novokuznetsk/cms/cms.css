@@ -31,22 +31,75 @@ body.cms-editing [data-cms-img]{
 }
 body.cms-editing [data-cms-bg]{
   outline:2px dashed rgba(56,140,255,.65);outline-offset:2px;cursor:pointer;
+  background-size:cover;
 }
+body.cms-editing [data-cms-bg].cms-bg-active{
+  outline:3px solid rgba(56,140,255,.95);outline-offset:0;
+  box-shadow:inset 0 0 0 9999px rgba(56,140,255,.12);
+  cursor:grab;
+}
+body.cms-editing [data-cms-bg].cms-bg-active:active{cursor:grabbing}
+.founder-visual.is-has-photo .founder-visual-placeholder{display:none}
+.cms-cert-preview-box .cert-card{max-width:480px;margin-top:12px}
+.work-block .cms-album-desc{margin-top:10px;max-width:42rem}
+.cert-card--light{background:#f5f5f2;color:#111;border-color:rgba(0,0,0,.12)}
+.cert-card--light .cert-card-rows{color:#555}
+.cert-card--light .cert-card-rows b{color:#111}
 .cms-login-wrap{
   min-height:100vh;display:grid;place-items:center;background:#0a0a0a;color:#eee;
   font-family:system-ui,sans-serif;padding:24px;
 }
+#cms-login[hidden],
+#cms-login.is-off,
+.cms-login-wrap[hidden],
+.cms-login-wrap.is-off{
+  display:none!important;
+}
+#cms-app[hidden]{display:none!important}
 .cms-login-box{width:min(400px,100%);background:#141820;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:28px}
 .cms-login-box h1{font-size:22px;margin:0 0 8px}
 .cms-login-box p{margin:0 0 20px;color:#999;font-size:14px}
 .cms-login-box input{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:8px;border:1px solid #333;background:#0d1016;color:#fff;margin-bottom:12px}
 .cms-login-box button{width:100%;padding:12px;border:0;border-radius:8px;background:#d71935;color:#fff;font-weight:700;cursor:pointer}
 .cms-login-box .err{color:#ff6b6b;font-size:13px;margin-top:10px}
-.cms-login-back{margin-top:18px;font-size:13px;text-align:center}
+.cms-login-hint{margin-top:14px;font-size:12px;color:#888;line-height:1.5}
+.cms-login-hint code{font-size:11px;color:#c2c2bc}
+body:not(.cms-editing) .cms-block-off{display:none!important}
+body.cms-editing .cms-block-off{outline:2px dashed rgba(225,6,0,.7);outline-offset:-4px;opacity:.55}
+.cms-hide-btn{
+  position:absolute;top:10px;right:10px;z-index:20;
+  border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.75);color:#fff;
+  font:600 11px/1.2 system-ui,sans-serif;padding:8px 10px;cursor:pointer
+}
+section[data-cms-block],.stats[data-cms-block]{position:relative}
 .cms-login-back a{color:#9a9a94}
-.cms-admin-body{background:#0a0a0a;margin:0}
-.cms-admin-section{padding:24px 4vw 48px;max-width:1400px;margin:0 auto}
-.cms-admin-crm{margin-top:0}
+.cms-admin-body{background:#0a0a0a;margin:0;min-height:100vh;overflow:hidden}
+.cms-admin-section{
+  padding:0!important;
+  max-width:none!important;
+  width:100%;
+  margin:0!important;
+  min-height:100vh;
+}
+.cms-admin-crm.crm{
+  margin:0;
+  min-height:100vh;
+  height:100vh;
+  width:100%;
+  grid-template-columns:260px minmax(0,1fr);
+  border:0;
+  overflow:hidden;
+}
+.cms-admin-crm .crm-side{
+  overflow-y:auto;
+  height:100vh;
+  max-height:none;
+}
+.cms-admin-crm .crm-main{
+  overflow-y:auto;
+  height:100vh;
+  padding:28px 40px 48px;
+}
 .cms-admin-toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
 .cms-admin-save{background:var(--accent,#d71935)!important;border-color:var(--accent)!important;color:#fff!important}
 .cms-admin-stack{display:grid;gap:14px}
@@ -61,6 +114,34 @@ textarea.crm-input{resize:vertical;min-height:64px}
 .cms-admin-page-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px;background:#161616;border:1px solid rgba(255,255,255,.08)}
 .cms-admin-note{margin-top:20px;font-size:13px;color:#7d7d77;line-height:1.6}
 .cms-admin-note code{font-size:12px;color:#c2c2bc}
+.cms-admin-wrap-table-wrap{overflow-x:auto}
+.cms-wrap-table{width:100%;border-collapse:collapse;font-size:13px}
+.cms-wrap-table th,.cms-wrap-table td{padding:10px 12px;border:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:middle}
+.cms-wrap-table th{background:#121212;color:#9a9a94;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.cms-wrap-table tr:nth-child(even){background:#141414}
+.cms-wrap-table code{font-size:11px;color:#7a7a74}
+.cms-wrap-table .crm-input{width:100%;min-width:120px}
+.cms-wrap-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.cms-wrap-tabs button{border:1px solid rgba(255,255,255,.12);background:#161616;color:#ddd;padding:8px 14px;cursor:pointer;font:inherit}
+.cms-wrap-tabs button.is-active{background:#d71935;border-color:#d71935;color:#fff}
+.cms-wrap-h{margin:22px 0 10px;font-size:15px}
+.cms-wrap-colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-bottom:8px}
+.cms-wrap-color{display:grid;gap:8px;padding:12px;background:#161616;border:1px solid rgba(255,255,255,.08)}
+.cms-wrap-color-row{display:flex;gap:8px;align-items:center}
+.cms-wrap-color input[type=color]{width:42px;height:34px;padding:0;border:1px solid rgba(255,255,255,.15);background:transparent;cursor:pointer}
+.cms-wrap-looks{display:grid;gap:8px}
+.cms-wrap-look{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 12px;background:#161616;border:1px solid rgba(255,255,255,.08)}
+.cms-wrap-look code{font-size:11px;color:#888}
+.cms-wrap-check{display:flex;align-items:center;gap:6px;font-size:12px;color:#aaa;white-space:nowrap}
+.cms-nav-label{padding:16px 18px 6px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#666}
+.cms-modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:80;display:grid;place-items:center;padding:20px}
+.cms-modal{width:min(560px,100%);max-height:90vh;overflow:auto;background:#161616;border:1px solid rgba(255,255,255,.12);padding:22px}
+.cms-modal h3{margin:0 0 14px}
+.cms-school-donut-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.cms-school-donut{width:120px;height:120px;border-radius:50%;display:grid;place-items:center}
+.cms-school-donut>div{width:72px;height:72px;border-radius:50%;background:#161616;display:grid;place-items:center;text-align:center}
+.cms-school-donut b{display:block;font-size:20px}
+.cms-school-donut span{font-size:11px;color:#888}
 .cms-album-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .cms-add-album-photo,.cms-remove-album{font-size:11px;padding:6px 10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);color:#ddd;cursor:pointer}
 .cms-remove-album{color:#ef8078;border-color:rgba(215,25,53,.35)}

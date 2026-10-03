@@ -73,15 +73,6 @@
       "index.html::reviews::div_kicker::1": "ОТЗЫВЫ",
       "index.html::reviews::h2::1": "ЛЮДИ<br><span class=\"accent\">ЗАМЕЧАЮТ.</span>",
       "index.html::reviews::p_intro::1": "Реальные отзывы клиентов о качестве работы и сервисе студии.",
-      "index.html::reviews::div_stars::1": "★★★★★",
-      "index.html::reviews::p::1": "«Детейлинг - форма искусства. Ручная работа, точность в каждом движении»",
-      "index.html::reviews::small::1": "Саша Густарев · 2ГИС",
-      "index.html::reviews::div_stars::2": "★★★★★",
-      "index.html::reviews::p::2": "«Добрый вечер, большое спасибо за отзыв и оценку!!! Успехов вам 🤗»",
-      "index.html::reviews::small::2": "Константин Найданов · 2ГИС",
-      "index.html::reviews::div_stars::3": "★★★★★",
-      "index.html::reviews::p::3": "«Анастасия, спасибо вам за приятный отзыв 🔥»",
-      "index.html::reviews::small::3": "Анастасия Даниленко · 2ГИС",
       "index.html::faq::div_kicker::1": "FAQ",
       "index.html::faq::h2::1": "ЧАСТЫЕ<br><span class=\"accent\">ВОПРОСЫ.</span>",
       "index.html::faq::summary::1": "Как узнать точную стоимость?",
@@ -154,5 +145,34 @@
       "index.html::bg_works::2": "img/works/portfolio/gallery-02.jpg",
       "index.html::bg_works::3": "img/works/portfolio/gallery-03.jpg"
     }
+  },
+  "album.html": {
+    "text": {},
+    "images": {},
+    "backgrounds": {},
+    "lists": {
+      "albums": [
+        {
+          "kicker": "01",
+          "title": "Сколы и трещины",
+          "description": "Локальный ремонт лобового и боковых стёкол — останавливаем расползание трещины.",
+          "items": [
+            { "type": "image", "url": "img/works/portfolio/gallery-01.jpg" },
+            { "type": "image", "url": "img/works/portfolio/gallery-02.jpg" }
+          ]
+        },
+        {
+          "kicker": "02",
+          "title": "Полировка и шлифовка стёкол",
+          "description": "Убираем мутность, налёт и мелкие царапины — возвращаем прозрачность стеклу.",
+          "items": [
+            { "type": "image", "url": "img/works/portfolio/gallery-03.jpg" },
+            { "type": "image", "url": "img/works/portfolio/gallery-04.jpg" },
+            { "type": "image", "url": "img/works/portfolio/gallery-05.jpg" }
+          ]
+        }
+      ]
+    },
+    "hiddenBlocks": []
   }
 }

@@ -1,0 +1,48 @@
+{
+  "settings": {
+    "school": "АвтоБлеск",
+    "city": "Новокузнецк",
+    "phone": "+7 (923) 532-26-52",
+    "address": "г. Новокузнецк, Аульская улица, 65В",
+    "email": "school@avtoblesk.ru",
+    "certPrefix": "AB-2026-",
+    "template": "dark",
+    "defaultTeacher": "Сергей Ковалёв",
+    "certValidity": "unlimited",
+    "notifyPublicVerify": true,
+    "notifyAutoNumber": true,
+    "notifyEmail": true,
+    "notifySms": false,
+    "notifyExam": true
+  },
+  "courses": [
+    { "id": "c1", "name": "Ремонт сколов и трещин", "duration": "3 дня", "price": "32 000 ₽", "teacher": "Сергей Ковалёв", "status": "active" },
+    { "id": "c2", "name": "Полировка и шлифовка стёкол", "duration": "3 дня", "price": "30 000 ₽", "teacher": "Артём Гуськов", "status": "active" },
+    { "id": "c3", "name": "Полировка фар и антидождь", "duration": "2 дня", "price": "22 000 ₽", "teacher": "Артём Гуськов", "status": "active" },
+    { "id": "c4", "name": "Полировка кузова", "duration": "4 дня", "price": "45 000 ₽", "teacher": "Сергей Ковалёв", "status": "active" },
+    { "id": "c5", "name": "Керамика и защитные составы", "duration": "2 дня", "price": "28 000 ₽", "teacher": "Сергей Ковалёв", "status": "wait" }
+  ],
+  "users": [
+    { "id": "u1", "name": "Владислав Петров", "role": "Администратор", "email": "vlad@avtoblesk.ru", "lastLogin": "сегодня", "status": "active" },
+    { "id": "u2", "name": "Сергей Ковалёв", "role": "Преподаватель", "email": "kovalev@avtoblesk.ru", "lastLogin": "сегодня", "status": "active" },
+    { "id": "u3", "name": "Артём Гуськов", "role": "Преподаватель", "email": "guskov@avtoblesk.ru", "lastLogin": "вчера", "status": "active" },
+    { "id": "u4", "name": "Мария Лаптева", "role": "Менеджер", "email": "lapteva@avtoblesk.ru", "lastLogin": "вчера", "status": "active" },
+    { "id": "u5", "name": "Игорь Дёмин", "role": "Стажёр", "email": "demin@avtoblesk.ru", "lastLogin": "12.09.2026", "status": "limited" }
+  ],
+  "students": [
+    {
+      "cert": "AB-2026-001",
+      "name": "Алексей Смирнов",
+      "course": "Ремонт сколов и трещин",
+      "dates": "02.09.2026 — 04.09.2026",
+      "issued": "04.09.2026",
+      "registered": "15.08.2026",
+      "phone": "+7 (923) 000-00-01",
+      "email": "demo@example.com",
+      "group": "С-12",
+      "teacher": "Сергей Ковалёв",
+      "status": "ok",
+      "notes": ["Демо-запись для проверки сертификата на сайте и в CMS."]
+    }
+  ]
+}
