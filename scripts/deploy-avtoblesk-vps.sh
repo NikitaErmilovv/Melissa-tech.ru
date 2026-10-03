@@ -3,7 +3,7 @@
 set -euo pipefail
 
 HOST="${DEPLOY_HOST:-root@201.24.63.204}"
-REMOTE_DIR="${DEPLOY_REMOTE_DIR:-/var/www/autoblesk42.ru}"
+REMOTE_DIR="${DEPLOY_REMOTE_DIR:-/var/www/autoblesk42}"
 SSH_KEY="${DEPLOY_SSH_KEY:-$HOME/.ssh/avtoblesk_timeweb}"
 SRC="$(cd "$(dirname "$0")/../avtoblesk-novokuznetsk" && pwd)"
 
