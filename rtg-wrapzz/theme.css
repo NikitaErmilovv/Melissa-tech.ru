@@ -31,6 +31,8 @@
   color: #e6e6e1;
 }
 
+#wrap-cfg .selectedInfo span { color: #e6e6e1 !important; }
+
 #wrap-cfg .wrap-hero h3,
 #wrap-cfg .side-title,
 #wrap-cfg .wrap-badge b,
