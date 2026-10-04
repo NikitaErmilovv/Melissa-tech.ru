@@ -13,6 +13,7 @@
 | `makcar/` | MakCar, Омск — кузовной ремонт и покраска (HTML/CSS/JS) |
 | `sdc-detailing/` | SDC Detailing, Южно-Сахалинск — детейлинг (HTML/CSS/JS) |
 | `dark-detailing/` | Dark Detailing, Оренбург — детейлинг (HTML/CSS/JS) |
+| `rtg-wrapzz/` | RTG Wrapzz, Arizona — оклейка, chrome delete, PPF (HTML/CSS/JS) |
 | `kamensky-autoservice/` | Автосервис Каменский — легковой автосервис (HTML/CSS/JS) |
 | `ddsprocus-surgut/` | DDSproCustoms, Сургут — детейлинг (HTML/CSS/JS) |
 | `restyle-surgut/` | Restyle, Сургут — детейлинг (HTML/CSS/JS) |
