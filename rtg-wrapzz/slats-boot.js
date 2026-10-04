@@ -1,4 +1,4 @@
-import { mountMicroSlats } from './micro-slats.js?v=hex4';
+import { mountMicroSlats } from './micro-slats.js?v=hex5';
 
 const root = document.getElementById('micro-slats');
 if (root) {

@@ -172,7 +172,7 @@ h1 {
   font-size: 12px;
   color: #b7f5d4;
 }
-.band h2, .wrap-band h2, .loc h2 {
+.band h2, .wrap-band > h2, .loc h2 {
   margin: 0;
   font-size: clamp(40px, 6vw, 72px);
   letter-spacing: -0.05em;

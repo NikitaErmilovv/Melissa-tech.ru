@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="page.css?v=blocks1">
+<link rel="stylesheet" href="page.css?v=blocks2">
 <link rel="stylesheet" href="MicroSlats.css?v=hex2">
 <link rel="stylesheet" href="wrap-configurator.css?v=mb28">
-<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="theme.css?v=dark2">
 </head>
 <body>
 <header class="top" id="topbar">
@@ -128,16 +128,16 @@
       <div id="marker" class="marker" style="display:none"></div>
     </section>
     <aside class="sidebar">
-      <h2 class="side-title">Настройте оклейку</h2>
+      <h2 class="side-title">Оклейка</h2>
       <div class="wrap-block">
-        <div class="label">Выберите автомобиль</div>
-        <div class="tools">
+        <div class="label">Автомобиль</div>
+        <div class="tools" style="grid-template-columns:repeat(2,1fr)">
           <button class="tool active" data-model="mercedes" type="button">Легковой автомобиль</button>
           <button class="tool" data-model="mazda" type="button">Кроссовер</button>
         </div>
       </div>
       <div class="wrap-block">
-        <div class="label">Готовый вариант</div>
+        <div class="label">Готовые варианты</div>
         <div class="presets">
           <button class="preset active" data-preset="0" type="button"><i class="stock"></i><span>Сток<small>Заводской цвет</small></span></button>
           <button class="preset" data-preset="1" type="button"><i style="background:#0b0d10"></i><span>Obsidian Black<small>Сатин · Pearl</small></span></button>
@@ -155,18 +155,18 @@
       </div>
       <div class="wrap-block">
         <div class="label">Инструмент</div>
-        <div class="tools">
+        <div class="tools" style="grid-template-columns:repeat(3,1fr)">
           <button class="tool active" data-tool="select" type="button">Выбор</button>
           <button class="tool" data-tool="fill" type="button">Заливка</button>
           <button class="tool" data-tool="remove" type="button">Отмена</button>
         </div>
       </div>
       <div class="wrap-block">
-        <div class="label">Выберите цвет</div>
+        <div class="label">Цвет плёнки</div>
         <div id="swatches" class="swatches"></div>
       </div>
       <div class="wrap-block">
-        <div class="label">Выберите финиш</div>
+        <div class="label">Финиш</div>
         <div class="finish">
           <button class="active" data-finish="gloss" type="button">Глубокий глянец</button>
           <button data-finish="satin" type="button">Сатин</button>
@@ -174,7 +174,7 @@
         </div>
       </div>
       <div class="wrap-block">
-        <div class="label">Выберите эффект</div>
+        <div class="label">Материал / эффект</div>
         <div class="finish">
           <button class="active" data-effect="solid" type="button">Solid</button>
           <button data-effect="metal" type="button">Metallic</button>
@@ -187,16 +187,12 @@
       </div>
     </aside>
     <div class="summary">
-      <div class="sum-car">
-        <div class="sum-name" id="sum-name">Легковой автомобиль</div>
-        <div class="sum-meta">Оклейка плёнкой</div>
-      </div>
       <div class="summary-row">
-        <div class="sumlabel">Итого</div>
-        <div class="sum-right">
+        <div>
+          <div class="sumlabel">Ваш подбор</div>
           <div id="total" class="total">0 ₽</div>
-          <button class="cta" id="quote" type="button">Получить расчёт</button>
         </div>
+        <button class="cta" id="quote" type="button">ПОЛУЧИТЬ РАСЧЁТ</button>
       </div>
     </div>
   </div>
@@ -255,23 +251,15 @@
 
 <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/","ogl":"./vendor/ogl/src/index.js"}}</script>
 <link rel="modulepreload" href="vendor/three/build/three.module.js">
-<link rel="modulepreload" href="wrap-configurator.core.js?v=mb28">
+<link rel="modulepreload" href="wrap-configurator.core.js?v=mb29">
 <link rel="preload" href="models/mercedes.glb?v=5" as="fetch" type="model/gltf-binary" crossorigin fetchpriority="high">
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach((reg) => reg.unregister()));
 }
 </script>
-<script type="module" src="slats-boot.js?v=hex4"></script>
-<script type="module" src="wrap-loader.js?v=mb28"></script>
-<script>
-document.querySelectorAll("[data-model]").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const name = document.getElementById("sum-name");
-    if (name) name.textContent = btn.textContent.trim();
-  });
-});
-</script>
+<script type="module" src="slats-boot.js?v=hex5"></script>
+<script type="module" src="wrap-loader.js?v=mb29"></script>
 <script src="site.js" defer></script>
 </body>
 </html>

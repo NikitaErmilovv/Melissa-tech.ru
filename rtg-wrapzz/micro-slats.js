@@ -768,6 +768,7 @@ export function mountMicroSlats(container, props = {}) {
   };
 
   const onPointerMove = (e) => {
+    if (e.pointerType === 'touch') return;
     const s = settingsRef.current;
     const spot = locate(e);
     if (!fluid || !s || !s.interactive || reducedMotion || !spot.inside) {
@@ -802,10 +803,48 @@ export function mountMicroSlats(container, props = {}) {
     if (!document.hidden) start();
   };
 
+  let touchPoint = null;
+
+  const onTouchStart = (e) => {
+    if (e.touches.length !== 1) {
+      touchPoint = null;
+      return;
+    }
+    const s = settingsRef.current;
+    const spot = locate(e.touches[0]);
+    if (!fluid || !s || !s.interactive || reducedMotion || !spot.inside) {
+      touchPoint = null;
+      return;
+    }
+    touchPoint = { x: spot.x, y: spot.y };
+  };
+
+  const onTouchMove = (e) => {
+    if (!touchPoint || e.touches.length !== 1) return;
+    const s = settingsRef.current;
+    const spot = locate(e.touches[0]);
+    if (!fluid || !s || !s.interactive || reducedMotion || !spot.inside) {
+      touchPoint = null;
+      return;
+    }
+    if (spot.x !== touchPoint.x || spot.y !== touchPoint.y) {
+      queue(spot.u, spot.v, (spot.x - touchPoint.x) / spot.h, (touchPoint.y - spot.y) / spot.h, null);
+    }
+    touchPoint = { x: spot.x, y: spot.y };
+  };
+
+  const onTouchEnd = () => {
+    touchPoint = null;
+  };
+
   window.addEventListener('pointermove', onPointerMove, { passive: true });
   window.addEventListener('pointerdown', onPointerDown, { passive: true });
   window.addEventListener('pointerout', onPointerOut, { passive: true });
   window.addEventListener('blur', onPointerLeave);
+  window.addEventListener('touchstart', onTouchStart, { passive: true });
+  window.addEventListener('touchmove', onTouchMove, { passive: true });
+  window.addEventListener('touchend', onTouchEnd, { passive: true });
+  window.addEventListener('touchcancel', onTouchEnd, { passive: true });
   document.addEventListener('visibilitychange', onVisibility);
 
   const resizeObserver = new ResizeObserver(resize);
@@ -829,6 +868,10 @@ export function mountMicroSlats(container, props = {}) {
     window.removeEventListener('pointerdown', onPointerDown);
     window.removeEventListener('pointerout', onPointerOut);
     window.removeEventListener('blur', onPointerLeave);
+    window.removeEventListener('touchstart', onTouchStart);
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchend', onTouchEnd);
+    window.removeEventListener('touchcancel', onTouchEnd);
     document.removeEventListener('visibilitychange', onVisibility);
     wakeRef.current = null;
     disposeFluid();
