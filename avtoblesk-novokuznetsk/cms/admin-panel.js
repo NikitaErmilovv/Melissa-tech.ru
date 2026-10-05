@@ -69,18 +69,36 @@
     adminToast._t = setTimeout(() => el.classList.remove('is-visible'), 2200);
   }
 
-  async function persistWrapZonesQuiet() {
+  let wrapSaveGen = 0;
+  let wrapSaveChain = Promise.resolve();
+
+  function enqueueWrapSave() {
+    const gen = ++wrapSaveGen;
     ensureWrapConfig();
     wrapZones.zones = wrapZones.models.mercedes.zones;
-    const res = await window.AvtoCmsApi.saveWrapZones(wrapZones, token());
-    if (!res.ok) throw new Error('save');
+    const payload = JSON.parse(JSON.stringify(wrapZones));
+    const run = wrapSaveChain.then(async () => {
+      if (gen !== wrapSaveGen) return { ok: true, skipped: true };
+      const res = await window.AvtoCmsApi.saveWrapZones(payload, token());
+      if (!res || !res.ok) throw new Error('save');
+      return res;
+    });
+    wrapSaveChain = run.then(
+      () => {},
+      () => {}
+    );
+    return run;
   }
 
   function scheduleWrapSave() {
     clearTimeout(wrapSaveTimer);
     wrapSaveTimer = setTimeout(() => {
-      persistWrapZonesQuiet()
-        .then(() => adminToast('Палитра сохранена'))
+      wrapSaveTimer = null;
+      enqueueWrapSave()
+        .then((res) => {
+          if (res && res.skipped) return;
+          adminToast('Палитра сохранена');
+        })
         .catch(() => adminToast('Не удалось сохранить палитру'));
     }, 550);
   }
@@ -682,14 +700,17 @@
     const saveWrap = $('#cms-save-wrap');
     if (saveWrap) {
       saveWrap.onclick = async () => {
+        clearTimeout(wrapSaveTimer);
+        wrapSaveTimer = null;
+        saveWrap.disabled = true;
         try {
-          ensureWrapConfig();
-          wrapZones.zones = wrapZones.models.mercedes.zones;
-          const res = await window.AvtoCmsApi.saveWrapZones(wrapZones, token());
-          if (!res.ok) throw new Error('save');
+          const res = await enqueueWrapSave();
+          if (res && res.skipped) return;
           alert('Конфигуратор сохранён. Обновите главную страницу.');
         } catch (_) {
           alert('Ошибка сохранения зон.');
+        } finally {
+          saveWrap.disabled = false;
         }
       };
     }

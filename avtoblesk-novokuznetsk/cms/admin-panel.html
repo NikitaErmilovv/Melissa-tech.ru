@@ -18,7 +18,7 @@
 <div id="cms-login" class="cms-login-wrap">
   <div class="cms-login-box">
     <h1>CMS АвтоБлеск</h1>
-    <p>Панель управления сайтом: альбомы работ, услуги, правки на страницах.</p>
+    <p>Панель управления сайтом: альбомы работ и правки на страницах.</p>
     <form id="cms-login-form">
       <input type="password" id="cms-login-password" placeholder="Пароль CMS" autocomplete="current-password" required>
       <button type="submit" id="cms-login-submit">Войти</button>
@@ -36,7 +36,6 @@
       <div class="crm-nav">
         <button type="button" class="crm-nav-item is-active" data-cms-nav="dashboard">Главная</button>
         <button type="button" class="crm-nav-item" data-cms-nav="albums">Альбомы работ</button>
-        <button type="button" class="crm-nav-item" data-cms-nav="services">Услуги</button>
         <button type="button" class="crm-nav-item" data-cms-nav="pages">Страницы сайта</button>
         <button type="button" class="crm-nav-item" data-cms-nav="wrap">Конфигуратор 3D</button>
         <div class="cms-nav-label">Школа</div>
@@ -68,11 +67,10 @@
       <div class="crm-view" data-cms-panel="dashboard">
         <div class="crm-cards">
           <div class="crm-card"><div class="crm-card-top">Альбом<div class="crm-card-ico">◫</div></div><b>album.html</b><small>01 · название · описание · фото</small></div>
-          <div class="crm-card"><div class="crm-card-top">Услуги<div class="crm-card-ico">≡</div></div><b>Каталог</b><small>на главной index.html</small></div>
           <div class="crm-card"><div class="crm-card-top">Страницы<div class="crm-card-ico">✎</div></div><b>3</b><small>Сайт · альбом · обучение</small></div>
           <div class="crm-card"><div class="crm-card-top">API<div class="crm-card-ico">⚙</div></div><b>PHP</b><small>cms/api.php на хостинге</small></div>
         </div>
-        <p class="cms-admin-note">Сохранённые альбомы и услуги попадают в <code>cms/content.json</code>. На Timeweb создайте <code>cms/config.local.json</code> с паролем (не коммитить).</p>
+        <p class="cms-admin-note">Сохранённые альбомы и правки страниц попадают в <code>cms/content.json</code>. Услуги правятся во вкладке «Страницы сайта». На Timeweb создайте <code>cms/config.local.json</code> с паролем (не коммитить).</p>
       </div>
 
       <div class="crm-view" data-cms-panel="albums" hidden>
@@ -82,14 +80,6 @@
           <button type="button" class="crm-btn cms-admin-save" id="cms-save-albums">Сохранить альбомы</button>
         </div>
         <div id="cms-albums-editor" class="cms-admin-stack"></div>
-      </div>
-
-      <div class="crm-view" data-cms-panel="services" hidden>
-        <div class="cms-admin-toolbar">
-          <button type="button" class="crm-btn" id="cms-add-service">+ Услуга</button>
-          <button type="button" class="crm-btn cms-admin-save" id="cms-save-services">Сохранить услуги</button>
-        </div>
-        <div id="cms-services-editor" class="cms-admin-stack"></div>
       </div>
 
       <div class="crm-view" data-cms-panel="pages" hidden>
@@ -136,6 +126,6 @@
 <script src="cms-api.js?v=hide3"></script>
 <script src="cms-albums.js"></script>
 <script src="school-crm.js"></script>
-<script src="admin-panel.js?v=hide3"></script>
+<script src="admin-panel.js?v=save1"></script>
 </body>
 </html>

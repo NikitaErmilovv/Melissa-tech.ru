@@ -399,9 +399,17 @@
     if (el) el.classList.add('cms-bg-active');
   }
 
+  function eventHitsText(el, event) {
+    const node = event.target;
+    if (!node || node === el || !node.closest) return false;
+    const text = node.closest('[data-cms-key]');
+    return !!(text && text !== el && el.contains(text));
+  }
+
   function bindBgClick(el) {
     el.addEventListener('click', (e) => {
       if (!document.body.classList.contains('cms-editing')) return;
+      if (eventHitsText(el, e)) return;
       e.preventDefault();
       e.stopPropagation();
       if (activeBgEl !== el) {
@@ -412,12 +420,14 @@
     });
     el.addEventListener('dblclick', (e) => {
       if (!document.body.classList.contains('cms-editing')) return;
+      if (eventHitsText(el, e)) return;
       e.preventDefault();
       e.stopPropagation();
       pickImage(el, 'bg');
     });
     el.addEventListener('pointerdown', (e) => {
       if (!document.body.classList.contains('cms-editing')) return;
+      if (eventHitsText(el, e)) return;
       if (!bgUrl(el)) return;
       selectBgEl(el);
       bgDrag = {
@@ -614,7 +624,7 @@
     const bar = document.createElement('div');
     bar.className = 'cms-bar';
     bar.innerHTML =
-      '<span class="cms-hint">Текст — клик. Фото: клик по зоне — выделение, перетаскивание — кадр, второй клик или двойной — замена. Затем «Сохранить страницу».</span>' +
+      '<span class="cms-hint">Текст — клик по тексту, в том числе поверх фото. Фото: клик по зоне — выделение, перетаскивание — кадр, второй клик или двойной — замена. Затем «Сохранить страницу».</span>' +
       '<button type="button" class="cms-save">Сохранить страницу</button>' +
       '<button type="button" class="cms-exit">Выйти</button>';
 

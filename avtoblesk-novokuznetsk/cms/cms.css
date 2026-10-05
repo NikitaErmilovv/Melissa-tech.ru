@@ -33,6 +33,8 @@ body.cms-editing [data-cms-bg]{
   outline:2px dashed rgba(56,140,255,.65);outline-offset:2px;cursor:pointer;
   background-size:cover;
 }
+body.cms-editing [data-cms-bg]::before,
+body.cms-editing [data-cms-bg]::after{pointer-events:none}
 body.cms-editing [data-cms-bg].cms-bg-active{
   outline:3px solid rgba(56,140,255,.95);outline-offset:0;
   box-shadow:inset 0 0 0 9999px rgba(56,140,255,.12);

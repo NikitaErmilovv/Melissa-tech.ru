@@ -18,6 +18,7 @@ CACHE_TTL = 3600
 ROOT = Path(__file__).resolve().parent
 CMS_DIR = ROOT / "cms"
 CMS_CONTENT = CMS_DIR / "content.json"
+WRAP_ZONES = ROOT / "data" / "wrap-zones.json"
 CMS_CONFIG = CMS_DIR / "config.local.json"
 CMS_CONFIG_EXAMPLE = CMS_DIR / "config.example.json"
 CMS_UPLOADS = ROOT / "img" / "cms" / "uploads"
@@ -186,6 +187,34 @@ class SiteHandler(SimpleHTTPRequestHandler):
             if payload.get("lists"):
                 store[page]["lists"] = payload.get("lists")
             cms_write_content(store)
+            out = json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(out)))
+            self.end_headers()
+            self.wfile.write(out)
+            return
+
+        if path == "/api/wrap-zones/save":
+            if not cms_check_token(self.headers.get("Authorization")):
+                self.send_error(401, "Unauthorized")
+                return
+            length = int(self.headers.get("Content-Length", "0"))
+            body = self.rfile.read(length)
+            try:
+                payload = json.loads(body.decode("utf-8"))
+            except json.JSONDecodeError:
+                self.send_error(400, "Bad JSON")
+                return
+            has_zones = isinstance(payload.get("zones"), dict)
+            has_models = isinstance(payload.get("models"), dict)
+            if not isinstance(payload, dict) or (not has_zones and not has_models):
+                self.send_error(400, "Missing zones")
+                return
+            raw = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+            tmp = WRAP_ZONES.with_suffix(".json.tmp")
+            tmp.write_text(raw, encoding="utf-8")
+            tmp.replace(WRAP_ZONES)
             out = json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

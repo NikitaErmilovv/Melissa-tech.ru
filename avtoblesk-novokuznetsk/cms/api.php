@@ -219,7 +219,20 @@ if ($action === 'wrap-zones-save' && $method === 'POST') {
     }
     $path = dirname(__DIR__) . '/data/wrap-zones.json';
     $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n";
-    if (file_put_contents($path, $json) === false) {
+    $fp = fopen($path, 'c+');
+    if ($fp === false || !flock($fp, LOCK_EX)) {
+        if (is_resource($fp)) {
+            fclose($fp);
+        }
+        send_json(500, ['error' => 'Write failed']);
+    }
+    ftruncate($fp, 0);
+    rewind($fp);
+    $written = fwrite($fp, $json);
+    fflush($fp);
+    flock($fp, LOCK_UN);
+    fclose($fp);
+    if ($written === false) {
         send_json(500, ['error' => 'Write failed']);
     }
     send_json(200, ['ok' => true]);
