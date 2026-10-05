@@ -12,7 +12,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 PORT = 8104
-FIRM_URL = "https://2gis.ru/norilsk/firm/70000001061521234"
+FIRM_URL = "https://2gis.ru/norilsk/firm/70000001069870096"
 CACHE_TTL = 3600
 ROOT = Path(__file__).resolve().parent
 
@@ -32,7 +32,7 @@ def fetch_2gis_rating() -> dict[str, object]:
 
     req = urllib.request.Request(
         FIRM_URL,
-        headers={"User-Agent": "Mozilla/5.0 (compatible; CarstyleNorilskSite/1.0)"},
+        headers={"User-Agent": "Mozilla/5.0 (compatible; VVSNorilskSite/1.0)"},
     )
     with urllib.request.urlopen(req, timeout=20) as resp:
         html = resp.read().decode("utf-8", "ignore")
