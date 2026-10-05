@@ -1,4 +1,4 @@
-const CORE_URL = './wrap-configurator.core.js?v=mb29';
+const CORE_URL = './wrap-configurator.core.js?v=mb30';
 const MERCEDES_URL = './models/mercedes.glb?v=5';
 const MAZDA_URL = './models/mazda.glb?v=5';
 
@@ -19,7 +19,7 @@ export function startConfigurator() {
   Promise.all([mercedesFetch, import(CORE_URL)]).catch(() => {
     started = false;
     const status = document.getElementById('status');
-    if (status) status.textContent = 'Не удалось загрузить конфигуратор';
+    if (status) status.textContent = 'Could not load the configurator';
   });
 }
 

@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="page.css?v=blocks2">
 <link rel="stylesheet" href="MicroSlats.css?v=hex2">
 <link rel="stylesheet" href="wrap-configurator.css?v=mb28">
-<link rel="stylesheet" href="theme.css?v=dark3">
+<link rel="stylesheet" href="theme.css?v=ui1">
 </head>
 <body>
 <header class="top" id="topbar">
@@ -118,63 +118,63 @@
     <section class="wrap-viewer">
       <div id="canvas" class="canvas"></div>
       <div class="wrap-hero">
-        <h3>Оклейка <span>плёнкой</span></h3>
+        <h3>The <span>wrap</span></h3>
       </div>
-      <div class="wrap-badge"><b id="status">Подготовка 3D…</b></div>
+      <div class="wrap-badge"><b id="status">Preparing 3D…</b></div>
       <div class="wrap-view-actions">
-        <button id="rotate" class="tool active" type="button">↻ Автовращение</button>
-        <button id="reset" class="tool" type="button">⟲ Сброс</button>
+        <button id="rotate" class="tool active" type="button">Auto-rotate</button>
+        <button id="reset" class="tool" type="button">Reset</button>
       </div>
       <div id="marker" class="marker" style="display:none"></div>
     </section>
     <aside class="sidebar">
-      <h2 class="side-title">Оклейка</h2>
+      <h2 class="side-title">Configure your wrap</h2>
       <div class="wrap-block">
-        <div class="label">Автомобиль</div>
-        <div class="tools" style="grid-template-columns:repeat(2,1fr)">
-          <button class="tool active" data-model="mercedes" type="button">Легковой автомобиль</button>
-          <button class="tool" data-model="mazda" type="button">Кроссовер</button>
+        <div class="label">Choose a car</div>
+        <div class="tools">
+          <button class="tool active" data-model="mercedes" type="button">Sedan</button>
+          <button class="tool" data-model="mazda" type="button">Crossover</button>
         </div>
       </div>
       <div class="wrap-block">
-        <div class="label">Готовые варианты</div>
+        <div class="label">Ready looks</div>
         <div class="presets">
-          <button class="preset active" data-preset="0" type="button"><i class="stock"></i><span>Сток<small>Заводской цвет</small></span></button>
-          <button class="preset" data-preset="1" type="button"><i style="background:#0b0d10"></i><span>Obsidian Black<small>Сатин · Pearl</small></span></button>
-          <button class="preset" data-preset="2" type="button"><i style="background:#63351f"></i><span>Cocoa Brown<small>Глянец · Metallic</small></span></button>
-          <button class="preset" data-preset="3" type="button"><i style="background:#f5f5f2"></i><span>Pearl White<small>Глянец · Metallic</small></span></button>
+          <button class="preset active" data-preset="0" type="button"><i class="stock"></i><span>Stock<small>Factory color</small></span></button>
+          <button class="preset" data-preset="1" type="button"><i style="background:#0b0d10"></i><span>Obsidian Black<small>Satin · Pearl</small></span></button>
+          <button class="preset" data-preset="2" type="button"><i style="background:#63351f"></i><span>Cocoa Brown<small>Gloss · Metallic</small></span></button>
+          <button class="preset" data-preset="3" type="button"><i style="background:#f5f5f2"></i><span>Pearl White<small>Gloss · Metallic</small></span></button>
         </div>
       </div>
       <div class="wrap-block">
-        <div class="label">Зоны кузова</div>
+        <div class="label">Body panels</div>
         <div class="zones" id="zones"></div>
       </div>
       <div class="wrap-block">
-        <div class="label">Выбранная деталь</div>
-        <div id="selectedInfo" class="selectedInfo">Нажмите на деталь автомобиля</div>
+        <div class="label">Selected panel</div>
+        <div id="selectedInfo" class="selectedInfo">Tap a panel on the car</div>
       </div>
       <div class="wrap-block">
-        <div class="label">Инструмент</div>
-        <div class="tools" style="grid-template-columns:repeat(3,1fr)">
-          <button class="tool active" data-tool="select" type="button">Выбор</button>
-          <button class="tool" data-tool="fill" type="button">Заливка</button>
-          <button class="tool" data-tool="remove" type="button">Отмена</button>
+        <div class="label">Tool</div>
+        <div class="tools">
+          <button class="tool active" data-tool="select" type="button">Select</button>
+          <button class="tool" data-tool="fill" type="button">Fill</button>
+          <button class="tool" data-tool="remove" type="button">Remove</button>
         </div>
       </div>
       <div class="wrap-block">
-        <div class="label">Цвет плёнки</div>
+        <div class="label">Pick a color</div>
         <div id="swatches" class="swatches"></div>
       </div>
       <div class="wrap-block">
-        <div class="label">Финиш</div>
+        <div class="label">Pick a finish</div>
         <div class="finish">
-          <button class="active" data-finish="gloss" type="button">Глубокий глянец</button>
-          <button data-finish="satin" type="button">Сатин</button>
-          <button data-finish="matte" type="button">Матовая</button>
+          <button class="active" data-finish="gloss" type="button">Gloss</button>
+          <button data-finish="satin" type="button">Satin</button>
+          <button data-finish="matte" type="button">Matte</button>
         </div>
       </div>
       <div class="wrap-block">
-        <div class="label">Материал / эффект</div>
+        <div class="label">Pick an effect</div>
         <div class="finish">
           <button class="active" data-effect="solid" type="button">Solid</button>
           <button data-effect="metal" type="button">Metallic</button>
@@ -182,17 +182,17 @@
         </div>
       </div>
       <div class="wrap-block" hidden>
-        <div class="label">Детали</div>
+        <div class="label">Panels</div>
         <div id="parts" class="parts"></div>
       </div>
     </aside>
     <div class="summary">
       <div class="summary-row">
         <div>
-          <div class="sumlabel">Ваш подбор</div>
+          <div class="sumlabel">Total price</div>
           <div id="total" class="total">0 ₽</div>
         </div>
-        <button class="cta" id="quote" type="button">ПОЛУЧИТЬ РАСЧЁТ</button>
+        <button class="cta" id="quote" type="button">Get a quote</button>
       </div>
     </div>
   </div>
@@ -251,7 +251,7 @@
 
 <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/","ogl":"./vendor/ogl/src/index.js"}}</script>
 <link rel="modulepreload" href="vendor/three/build/three.module.js">
-<link rel="modulepreload" href="wrap-configurator.core.js?v=mb29">
+<link rel="modulepreload" href="wrap-configurator.core.js?v=mb30">
 <link rel="preload" href="models/mercedes.glb?v=5" as="fetch" type="model/gltf-binary" crossorigin fetchpriority="high">
 <script>
 if ('serviceWorker' in navigator) {
@@ -259,7 +259,7 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <script type="module" src="slats-boot.js?v=hex5"></script>
-<script type="module" src="wrap-loader.js?v=mb29"></script>
+<script type="module" src="wrap-loader.js?v=mb30"></script>
 <script src="site.js" defer></script>
 </body>
 </html>
