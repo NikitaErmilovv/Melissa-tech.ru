@@ -1,4 +1,4 @@
-const CORE_URL = './wrap-configurator.core.js?v=mb29';
+const CORE_URL = './wrap-configurator.core.js?v=mb30';
 const MERCEDES_URL = './models/mercedes.glb?v=5';
 const MAZDA_URL = './models/mazda.glb?v=5';
 
@@ -24,7 +24,7 @@ export function startConfigurator() {
 }
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js?v=mb26').catch(() => {});
+  navigator.serviceWorker.register('./sw.js?v=mb30').catch(() => {});
 }
 
 startConfigurator();

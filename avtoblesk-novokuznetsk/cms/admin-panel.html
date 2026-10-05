@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
 <title>CMS — АвтоБлеск</title>
 <style>
 #cms-login[hidden],#cms-login.is-off{display:none!important}
@@ -12,7 +14,7 @@
 .cms-login-box .err[hidden]{display:none!important}
 </style>
 <link rel="stylesheet" href="../styles.css?v=albums1">
-<link rel="stylesheet" href="cms.css?v=hide4">
+<link rel="stylesheet" href="cms.css?v=meta1">
 </head>
 <body class="cms-admin-body">
 <div id="cms-login" class="cms-login-wrap">
@@ -70,7 +72,7 @@
           <div class="crm-card"><div class="crm-card-top">Страницы<div class="crm-card-ico">✎</div></div><b>3</b><small>Сайт · альбом · обучение</small></div>
           <div class="crm-card"><div class="crm-card-top">API<div class="crm-card-ico">⚙</div></div><b>PHP</b><small>cms/api.php на хостинге</small></div>
         </div>
-        <p class="cms-admin-note">Сохранённые альбомы и правки страниц попадают в <code>cms/content.json</code>. Услуги правятся во вкладке «Страницы сайта». На Timeweb создайте <code>cms/config.local.json</code> с паролем (не коммитить).</p>
+        <p class="cms-admin-note">Сохранённые альбомы и правки страниц попадают в <code>cms/content.json</code>. Текст и фото правятся во вкладке «Страницы сайта». На Timeweb создайте <code>cms/config.local.json</code> с паролем (не коммитить).</p>
       </div>
 
       <div class="crm-view" data-cms-panel="albums" hidden>
@@ -123,9 +125,12 @@
   <div class="crm-toast" id="cms-school-toast" role="status"></div>
 </div>
 
+<script>
+document.querySelectorAll('[data-cms-nav="services"],[data-cms-panel="services"]').forEach(function (el) { el.remove(); });
+</script>
 <script src="cms-api.js?v=hide3"></script>
 <script src="cms-albums.js"></script>
 <script src="school-crm.js"></script>
-<script src="admin-panel.js?v=save1"></script>
+<script src="admin-panel.js?v=meta1"></script>
 </body>
 </html>

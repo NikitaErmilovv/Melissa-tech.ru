@@ -114,6 +114,11 @@ textarea.crm-input{resize:vertical;min-height:64px}
 .cms-admin-media{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0d0d0d;border:1px solid rgba(255,255,255,.08);font-size:11px}
 .cms-admin-media-label{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cms-admin-page-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px;background:#161616;border:1px solid rgba(255,255,255,.08)}
+.cms-meta-row{flex-direction:column;align-items:stretch}
+.cms-meta-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.cms-meta-head b{margin-right:auto}
+.cms-meta-field{display:grid;gap:6px;font-size:12px;color:#9a9a94}
+.cms-meta-field textarea{min-height:72px;resize:vertical;font:inherit}
 .cms-admin-note{margin-top:20px;font-size:13px;color:#7d7d77;line-height:1.6}
 .cms-admin-note code{font-size:12px;color:#c2c2bc}
 .cms-admin-wrap-table-wrap{overflow-x:auto}

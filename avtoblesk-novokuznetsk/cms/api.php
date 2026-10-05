@@ -129,6 +129,19 @@ if ($action === 'save' && $method === 'POST') {
     if (isset($payload['lists']) && is_array($payload['lists'])) {
         $store[$page]['lists'] = $payload['lists'];
     }
+    if (isset($payload['meta']) && is_array($payload['meta'])) {
+        $clean = static function ($value, int $limit): string {
+            $text = trim(preg_replace('/\s+/u', ' ', strip_tags((string) $value)) ?? '');
+            if (function_exists('mb_substr')) {
+                return mb_substr($text, 0, $limit);
+            }
+            return substr($text, 0, $limit);
+        };
+        $store[$page]['meta'] = [
+            'title' => $clean($payload['meta']['title'] ?? '', 180),
+            'description' => $clean($payload['meta']['description'] ?? '', 320),
+        ];
+    }
     write_content($store);
     send_json(200, ['ok' => true]);
 }

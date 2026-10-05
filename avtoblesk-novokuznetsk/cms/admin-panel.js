@@ -1,10 +1,20 @@
 (function () {
+  document.querySelectorAll('[data-cms-nav="services"], [data-cms-panel="services"]').forEach((el) => el.remove());
   const TOKEN_KEY = 'avtoblesk_cms_token';
   const ALBUM_PAGE = 'album.html';
   const PAGES = [
     { id: 'index.html', label: 'Сайт (одна главная)' },
     { id: ALBUM_PAGE, label: 'Альбом работ' },
     { id: 'training.html', label: 'Обучение' },
+  ];
+  const META_PAGES = [
+    { id: 'index.html', label: 'Главная', title: 'АвтоБлеск — детейлинг' },
+    { id: 'services.html', label: 'Услуги', title: 'Услуги — АвтоБлеск' },
+    { id: 'about.html', label: 'О студии', title: 'О студии — АвтоБлеск' },
+    { id: 'contact.html', label: 'Контакты', title: 'Контакты — АвтоБлеск' },
+    { id: 'album.html', label: 'Альбом работ', title: 'Альбом работ — АвтоБлеск' },
+    { id: 'training.html', label: 'Обучение', title: 'Обучение — АвтоБлеск' },
+    { id: 'legal.html', label: 'Правовая информация', title: 'Правовая информация — АвтоБлеск' },
   ];
 
   let store = {};
@@ -144,6 +154,21 @@
         }));
       }
     }
+  }
+
+  function escapeAttr(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  async function savePageMeta(page, meta) {
+    const prev = store[page] || { text: {}, images: {}, backgrounds: {} };
+    const res = await window.AvtoCmsApi.save({ page, meta }, token());
+    if (!res.ok) throw new Error('save');
+    store[page] = Object.assign({}, prev, { meta });
   }
 
   async function savePageLists(page, lists) {
@@ -576,20 +601,53 @@
   function renderPages() {
     const root = $('#cms-pages-list');
     if (!root) return;
-    root.innerHTML = PAGES.map(
-      (p) =>
-        '<div class="cms-admin-page-row">' +
-        '<span>' +
-        p.label +
-        '</span>' +
+    root.innerHTML = META_PAGES.map((p) => {
+      const saved = (store[p.id] && store[p.id].meta) || {};
+      const title = saved.title || p.title;
+      const description = saved.description || '';
+      const editable = PAGES.some((item) => item.id === p.id);
+      return (
+        '<div class="cms-admin-page-row cms-meta-row" data-page="' +
+        p.id +
+        '">' +
+        '<div class="cms-meta-head"><b>' +
+        escapeAttr(p.label) +
+        '</b>' +
         '<a class="crm-link" href="../' +
         p.id +
         '" target="_blank" rel="noopener">Открыть</a>' +
-        '<a class="crm-btn" href="../' +
-        p.id +
-        '">Редактировать на сайте</a>' +
+        (editable
+          ? '<a class="crm-btn" href="../' + p.id + '">Редактировать на сайте</a>'
+          : '') +
+        '</div>' +
+        '<label class="cms-meta-field">Заголовок<input class="crm-input cms-meta-title" value="' +
+        escapeAttr(title) +
+        '"></label>' +
+        '<label class="cms-meta-field">Описание<textarea class="crm-input cms-meta-desc" rows="3">' +
+        escapeAttr(description) +
+        '</textarea></label>' +
+        '<button type="button" class="crm-btn cms-admin-save cms-meta-save">Сохранить</button>' +
         '</div>'
-    ).join('');
+      );
+    }).join('');
+    root.querySelectorAll('.cms-meta-save').forEach((btn) => {
+      btn.onclick = async () => {
+        const row = btn.closest('[data-page]');
+        const meta = {
+          title: row.querySelector('.cms-meta-title').value.trim(),
+          description: row.querySelector('.cms-meta-desc').value.trim(),
+        };
+        btn.disabled = true;
+        try {
+          await savePageMeta(row.dataset.page, meta);
+          adminToast('Сохранено');
+        } catch (_) {
+          alert('Ошибка сохранения. Войдите снова.');
+        } finally {
+          btn.disabled = false;
+        }
+      };
+    });
   }
 
   function switchView(view) {

@@ -269,6 +269,34 @@
       .join('');
   }
 
+  function plainMeta(value, limit) {
+    return String(value || '')
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, limit);
+  }
+
+  function upsertMeta(attr, name, content) {
+    let el = document.head.querySelector('meta[' + attr + '="' + name + '"]');
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute(attr, name);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content);
+  }
+
+  function applyMeta(meta) {
+    if (!meta || typeof meta !== 'object') return;
+    const title = plainMeta(meta.title, 180);
+    const description = plainMeta(meta.description, 320);
+    if (title) document.title = title;
+    upsertMeta('name', 'description', description);
+    if (title) upsertMeta('property', 'og:title', title);
+    upsertMeta('property', 'og:description', description);
+  }
+
   function escapeHtml(s) {
     return String(s)
       .replace(/&/g, '&amp;')
@@ -286,6 +314,7 @@
       const data = await res.json();
       const page = data[PAGE];
       if (!page) return;
+      applyMeta(page.meta);
       const A = window.AvtoCmsAlbums;
       if (page.lists?.albums) renderAlbums(page.lists.albums);
       else if (page.lists?.portfolio && A) renderAlbums(A.migratePortfolio(page.lists.portfolio));
@@ -668,7 +697,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     loadContent().then(() => {
       applyHiddenBlocks();
-      if (token()) enableEditing();
+      if (token() && !document.body.hasAttribute('data-cms-meta-only')) enableEditing();
     });
   });
 })();

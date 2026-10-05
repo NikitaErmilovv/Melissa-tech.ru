@@ -180,12 +180,25 @@ class SiteHandler(SimpleHTTPRequestHandler):
                 self.send_error(400, "Missing page")
                 return
             store = cms_read_content()
-            store.setdefault(page, {"text": {}, "images": {}, "backgrounds": {}})
-            store[page]["text"].update(payload.get("text") or {})
-            store[page]["images"].update(payload.get("images") or {})
-            store[page]["backgrounds"].update(payload.get("backgrounds") or {})
+            page_store = store.setdefault(page, {"text": {}, "images": {}, "backgrounds": {}})
+            page_store.setdefault("text", {})
+            page_store.setdefault("images", {})
+            page_store.setdefault("backgrounds", {})
+            page_store["text"].update(payload.get("text") or {})
+            page_store["images"].update(payload.get("images") or {})
+            page_store["backgrounds"].update(payload.get("backgrounds") or {})
             if payload.get("lists"):
-                store[page]["lists"] = payload.get("lists")
+                page_store["lists"] = payload.get("lists")
+            meta = payload.get("meta")
+            if isinstance(meta, dict):
+                def clean_meta(value: object, limit: int) -> str:
+                    text = " ".join(str(value or "").replace("<", " ").replace(">", " ").split())
+                    return text[:limit]
+
+                page_store["meta"] = {
+                    "title": clean_meta(meta.get("title"), 180),
+                    "description": clean_meta(meta.get("description"), 320),
+                }
             cms_write_content(store)
             out = json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
