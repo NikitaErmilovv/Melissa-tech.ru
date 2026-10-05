@@ -1,0 +1,7 @@
+release=vvs-norilsk-2026-10-05
+site=ВВС Норильск (копия carstyle-norilsk)
+path=/vvs/
+subdomain=vvs.melissa-tech.ru
+css=v12
+deploy=git-push-timeweb-hook
+deploy-trigger=0c1ab9a-vvs-1
