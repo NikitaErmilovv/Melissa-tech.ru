@@ -6,9 +6,15 @@
 
 ## Локальный запуск
 
-Из папки `#Делайкузов`:
+Из папки `delaikuzov`:
 
 - Windows: двойной клик по `start.bat`
 - Python: `python server.py`
 
 Сайт: http://127.0.0.1:8110/
+
+## Прод
+
+https://melissa-tech.ru/delaikuzov/
+
+Публикуется из `master`, папка `delaikuzov/` (без `#` в имени — иначе путь на сервере не открывается).

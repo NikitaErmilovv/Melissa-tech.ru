@@ -12,7 +12,7 @@
 | `dark-detailing/` | Dark Detailing, Оренбург — детейлинг (HTML/CSS/JS) |
 | `rtg-wrapzz/` | RTG Wrapzz, Arizona — оклейка, chrome delete, PPF (HTML/CSS/JS) |
 | `restyle-surgut/` | Restyle, Сургут — детейлинг (HTML/CSS/JS) |
-| `#Делайкузов/` | Делайкузов, Новосибирск — кузовной ремонт (HTML/CSS/JS) |
+| `delaikuzov/` | Делайкузов, Новосибирск — кузовной ремонт (HTML/CSS/JS) |
 
 ## Локальный запуск (ps-detailing)
 
@@ -59,12 +59,12 @@ python server.py
 
 Открыть: http://127.0.0.1:8094/
 
-## Локальный запуск (#Делайкузов)
+## Локальный запуск (delaikuzov)
 
 ```bash
-cd "#Делайкузов"
+cd delaikuzov
 python server.py
 ```
 
 Открыть: http://127.0.0.1:8110/  
-Прод: https://melissa-tech.ru/%23%D0%94%D0%B5%D0%BB%D0%B0%D0%B9%D0%BA%D1%83%D0%B7%D0%BE%D0%B2/
+Прод: https://melissa-tech.ru/delaikuzov/
