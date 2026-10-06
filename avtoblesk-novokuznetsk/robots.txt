@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /cms/
+
+Sitemap: https://autoblesk42.ru/sitemap.xml
