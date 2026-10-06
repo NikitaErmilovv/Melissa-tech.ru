@@ -9,10 +9,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="page.css?v=blocks2">
+<link rel="stylesheet" href="page.css?v=blocks3">
 <link rel="stylesheet" href="MicroSlats.css?v=hex2">
 <link rel="stylesheet" href="wrap-configurator.css?v=mb28">
 <link rel="stylesheet" href="theme.css?v=ui1">
+<link rel="stylesheet" href="FlexCarousel.css?v=fc1">
 </head>
 <body>
 <header class="top" id="topbar">
@@ -41,6 +42,10 @@
   </div>
 </section>
 
+<section class="flex-carousel-band" aria-label="Featured work">
+  <div id="flex-carousel" style="width:100%;height:560px;position:relative"></div>
+</section>
+
 <div class="line">
   <span><b>Partial / full wraps</b></span>
   <span><b>Chrome delete</b></span>
@@ -59,7 +64,7 @@
   </div>
   <div class="cards">
     <article class="card">
-      <img src="img/work/cadillac-white.jpg" alt="White Cadillac after a color wrap">
+      <img src="img/work/rtg-01.jpg" alt="RTG Wrapzz full wrap" loading="lazy">
       <div>
         <span>01</span>
         <h3>Full and partial wraps</h3>
@@ -67,7 +72,7 @@
       </div>
     </article>
     <article class="card">
-      <img src="img/work/corvette-rear.jpg" alt="Corvette with chrome deleted" loading="lazy">
+      <img src="img/work/rtg-02.jpg" alt="RTG Wrapzz chrome delete" loading="lazy">
       <div>
         <span>02</span>
         <h3>Chrome delete</h3>
@@ -75,7 +80,7 @@
       </div>
     </article>
     <article class="card">
-      <img src="img/work/satin-fender.jpg" alt="Satin paint protection on a fender" loading="lazy">
+      <img src="img/work/rtg-21.jpg" alt="RTG Wrapzz paint protection film" loading="lazy">
       <div>
         <span>03</span>
         <h3>PPF</h3>
@@ -83,7 +88,7 @@
       </div>
     </article>
     <article class="card">
-      <img src="img/work/decal-green.jpg" alt="Custom decal being laid on a bumper" loading="lazy">
+      <img src="img/work/rtg-31.jpg" alt="RTG Wrapzz custom decals" loading="lazy">
       <div>
         <span>04</span>
         <h3>Custom decals</h3>
@@ -102,12 +107,26 @@
     <p class="sub">A few finishes from the shop. Open a photo to see it larger.</p>
   </div>
   <div class="examples">
-    <button type="button" data-full="img/work/challenger.jpg"><img src="img/work/challenger.jpg" alt="Dodge with red stripes" loading="lazy"><span>Stripes</span></button>
-    <button type="button" data-full="img/work/purple-mercedes.jpg"><img src="img/work/purple-mercedes.jpg" alt="Purple Mercedes in the bay" loading="lazy"><span>Color change</span></button>
-    <button type="button" data-full="img/work/camaro-red.jpg"><img src="img/work/camaro-red.jpg" alt="Dark red Camaro" loading="lazy"><span>Full wrap</span></button>
-    <button type="button" data-full="img/work/white-camaro.jpg"><img src="img/work/white-camaro.jpg" alt="White Camaro with a black hood" loading="lazy"><span>Partial</span></button>
-    <button type="button" data-full="img/work/gmc.jpg"><img src="img/work/gmc.jpg" alt="Black GMC" loading="lazy"><span>Truck</span></button>
-    <button type="button" data-full="img/work/purple-corvette.jpg"><img src="img/work/purple-corvette.jpg" alt="Purple Corvette" loading="lazy"><span>Satin</span></button>
+    <button type="button" data-full="img/work/rtg-03.jpg"><img src="img/work/rtg-03.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Full wrap</span></button>
+    <button type="button" data-full="img/work/rtg-04.jpg"><img src="img/work/rtg-04.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Color change</span></button>
+    <button type="button" data-full="img/work/rtg-05.jpg"><img src="img/work/rtg-05.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Partial</span></button>
+    <button type="button" data-full="img/work/rtg-06.jpg"><img src="img/work/rtg-06.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Chrome delete</span></button>
+    <button type="button" data-full="img/work/rtg-07.jpg"><img src="img/work/rtg-07.jpg" alt="RTG Wrapzz work" loading="lazy"><span>PPF</span></button>
+    <button type="button" data-full="img/work/rtg-10.jpg"><img src="img/work/rtg-10.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Satin</span></button>
+    <button type="button" data-full="img/work/rtg-13.jpg"><img src="img/work/rtg-13.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Truck</span></button>
+    <button type="button" data-full="img/work/rtg-14.jpg"><img src="img/work/rtg-14.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Stripes</span></button>
+    <button type="button" data-full="img/work/rtg-17.jpg"><img src="img/work/rtg-17.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Detail</span></button>
+    <button type="button" data-full="img/work/rtg-18.jpg"><img src="img/work/rtg-18.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Bay</span></button>
+    <button type="button" data-full="img/work/rtg-19.jpg"><img src="img/work/rtg-19.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Finish</span></button>
+    <button type="button" data-full="img/work/rtg-20.jpg"><img src="img/work/rtg-20.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Custom</span></button>
+    <button type="button" data-full="img/work/rtg-22.jpg"><img src="img/work/rtg-22.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Wrap</span></button>
+    <button type="button" data-full="img/work/rtg-23.jpg"><img src="img/work/rtg-23.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Color</span></button>
+    <button type="button" data-full="img/work/rtg-24.jpg"><img src="img/work/rtg-24.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Partial</span></button>
+    <button type="button" data-full="img/work/rtg-25.jpg"><img src="img/work/rtg-25.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Delete</span></button>
+    <button type="button" data-full="img/work/rtg-26.jpg"><img src="img/work/rtg-26.jpg" alt="RTG Wrapzz work" loading="lazy"><span>PPF</span></button>
+    <button type="button" data-full="img/work/rtg-27.jpg"><img src="img/work/rtg-27.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Satin</span></button>
+    <button type="button" data-full="img/work/rtg-28.jpg"><img src="img/work/rtg-28.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Decals</span></button>
+    <button type="button" data-full="img/work/rtg-34.jpg"><img src="img/work/rtg-34.jpg" alt="RTG Wrapzz work" loading="lazy"><span>Shop</span></button>
   </div>
 </section>
 
@@ -205,7 +224,7 @@
     <p>The bay is in Arizona. Write before you come — we book by appointment.</p>
   </div>
   <a class="loc-visual" href="https://www.instagram.com/rtg_wrapzz/" target="_blank" rel="noopener">
-    <img src="img/work/cadillac-white.jpg" alt="RTG Wrapzz bay" loading="lazy">
+    <img src="img/work/rtg-29.jpg" alt="RTG Wrapzz bay" loading="lazy">
   </a>
   <div class="loc-details">
     <div>
@@ -259,6 +278,7 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <script type="module" src="slats-boot.js?v=hex5"></script>
+<script type="module" src="flex-carousel-boot.js?v=fc3"></script>
 <script type="module" src="wrap-loader.js?v=mb30"></script>
 <script src="site.js" defer></script>
 </body>
