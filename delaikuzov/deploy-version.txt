@@ -1,0 +1,4 @@
+path=delaikuzov
+prod=https://melissa-tech.ru/delaikuzov/
+deploy=git-push-timeweb-hook
+deploy-trigger=64e0787-delaikuzov-1
