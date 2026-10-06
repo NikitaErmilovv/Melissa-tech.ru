@@ -6,10 +6,10 @@ MARKER = '<!-- avtoblesk-head-icons -->'
 
 def block(prefix: str, og_image: str) -> str:
     return f"""{MARKER}
-<link rel="icon" href="{prefix}favicon.ico?v=logo1" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="{prefix}favicon-32.png?v=logo1">
-<link rel="apple-touch-icon" sizes="180x180" href="{prefix}apple-touch-icon.png?v=logo1">
-<link rel="manifest" href="{'site.webmanifest?v=logo1' if prefix == 'img/' else '../site.webmanifest?v=logo1'}">
+<link rel="icon" href="{prefix}favicon.ico?v=logo2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{prefix}favicon-32.png?v=logo2">
+<link rel="apple-touch-icon" sizes="180x180" href="{prefix}apple-touch-icon.png?v=logo2">
+<link rel="manifest" href="{'site.webmanifest?v=logo2' if prefix == 'img/' else '../site.webmanifest?v=logo2'}">
 <meta name="theme-color" content="#0c0c0c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="АвтоБлеск">
@@ -20,7 +20,7 @@ def block(prefix: str, og_image: str) -> str:
 <meta name="twitter:image" content="{og_image}">
 """
 
-OG = "https://autoblesk42.ru/img/icon-512.png?v=logo1"
+OG = "https://autoblesk42.ru/img/icon-512.png?v=logo2"
 
 pages = [
     (ROOT / "index.html", "img/"),
