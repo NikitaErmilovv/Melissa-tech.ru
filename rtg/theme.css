@@ -1,0 +1,233 @@
+/* Control chrome only. The car, camera, and scene background stay as they are. */
+
+#wrap-cfg {
+  --accent: #48ec90;
+  --accent-soft: rgba(72, 236, 144, 0.55);
+  --accent-hover: #7af5b0;
+  --wrap-line: rgba(255, 255, 255, 0.12);
+  --wrap-muted: #c8c8c2;
+  border-radius: 28px;
+  background: #0c0c0c;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+#wrap-cfg .sidebar {
+  background: #141414;
+  padding: 28px 22px 128px;
+}
+#wrap-cfg .summary { background: #141414; }
+#wrap-cfg .wrap-viewer {
+  background: radial-gradient(circle at 48% 42%, #1c1c1c 0, #0a0a0a 55%);
+}
+#wrap-cfg .wrap-hero { display: none; }
+
+#wrap-cfg .side-title {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: #f7f7f2;
+  margin: 0 0 18px;
+}
+
+#wrap-cfg .label {
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  color: #f4f4ef;
+  margin: 0 0 10px;
+}
+
+#wrap-cfg .wrap-block {
+  border-top: 0;
+  padding: 0 0 18px;
+}
+
+#wrap-cfg .tools,
+#wrap-cfg .finish,
+#wrap-cfg .zones,
+#wrap-cfg .presets,
+#wrap-cfg .parts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#wrap-cfg .tool,
+#wrap-cfg .chip,
+#wrap-cfg .finish button,
+#wrap-cfg .zone,
+#wrap-cfg .preset,
+#wrap-cfg .part {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+  color: #f4f4ef;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-align: left;
+  box-shadow: none;
+}
+
+#wrap-cfg .tool::before,
+#wrap-cfg .finish button::before,
+#wrap-cfg .zone::before {
+  content: "";
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  background: transparent;
+  box-sizing: border-box;
+}
+
+#wrap-cfg .tool.active::before,
+#wrap-cfg .finish button.active::before,
+#wrap-cfg .zone.active::before {
+  border-color: #48ec90;
+  background: radial-gradient(circle, #48ec90 0 5px, transparent 6px);
+}
+
+#wrap-cfg .tool:hover,
+#wrap-cfg .finish button:hover,
+#wrap-cfg .zone:hover,
+#wrap-cfg .preset:hover,
+#wrap-cfg .part:hover {
+  border-color: rgba(72, 236, 144, 0.7);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+#wrap-cfg .tool.active,
+#wrap-cfg .chip.active,
+#wrap-cfg .finish button.active,
+#wrap-cfg .zone.active,
+#wrap-cfg .preset.active,
+#wrap-cfg .part.active {
+  border-color: #48ec90;
+  background: rgba(72, 236, 144, 0.1);
+  color: #fff;
+  box-shadow: none;
+}
+
+#wrap-cfg .zones {
+  max-height: 248px;
+  overflow: auto;
+  padding-right: 2px;
+}
+#wrap-cfg .zone small {
+  display: inline;
+  margin: 0 0 0 auto;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+#wrap-cfg .preset span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.25;
+}
+#wrap-cfg .preset small {
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+}
+#wrap-cfg .preset i {
+  width: 18px;
+  height: 18px;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+#wrap-cfg .wrap-view-actions .tool {
+  width: auto;
+  min-height: 36px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+#wrap-cfg .wrap-view-actions .tool::before { display: none; }
+
+#wrap-cfg .swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 2px 2px 4px;
+}
+#wrap-cfg .swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  padding: 0;
+}
+#wrap-cfg .swatch.active {
+  outline: 2px solid #48ec90;
+  outline-offset: 3px;
+}
+
+#wrap-cfg .selectedInfo,
+#wrap-cfg .notice {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #e8e8e3;
+}
+#wrap-cfg .selectedInfo span { color: #d5d5cf !important; }
+#wrap-cfg .selectedInfo b,
+#wrap-cfg .marker b,
+#wrap-cfg .marker strong,
+#wrap-cfg .part .name,
+#wrap-cfg .part .price,
+#wrap-cfg .total,
+#wrap-cfg .wrap-badge b {
+  color: #f7f7f2;
+}
+#wrap-cfg .part .meta,
+#wrap-cfg .empty,
+#wrap-cfg .sumlabel,
+#wrap-cfg .wrap-badge,
+#wrap-cfg .marker small {
+  color: #d0d0ca;
+}
+#wrap-cfg .sumlabel {
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 500;
+}
+
+#wrap-cfg .cta {
+  border-radius: 999px;
+  background: #48ec90;
+  color: #07140d;
+  padding: 14px 18px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+#wrap-cfg .cta:hover { background: #7af5b0; color: #07140d; }
+
+#wrap-cfg .pin:before {
+  border-top-color: #48ec90;
+  filter: drop-shadow(0 0 5px rgba(72, 236, 144, 0.75));
+}
+#wrap-cfg .pin:after {
+  background: #48ec90;
+  box-shadow: 0 0 0 4px rgba(72, 236, 144, 0.25);
+}
+
+@media (max-width: 1024px) {
+  #wrap-cfg .sidebar { padding: 22px 16px 24px; }
+  #wrap-cfg { border-radius: 22px; }
+}
