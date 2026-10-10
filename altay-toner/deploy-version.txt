@@ -2,4 +2,4 @@ site=altay-toner
 prod=https://melissa-tech.ru/altay-toner/
 city=Новоалтайск
 updated=2026-10-10
-photos=altay-prototypes-13+hero-extras-4
+photos=altay-white-hero-v8
