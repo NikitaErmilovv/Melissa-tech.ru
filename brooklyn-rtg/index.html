@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="/brooklyn-rtg/">
+<meta name="robots" content="noindex, nofollow">
+<title>Бруклин — детейлинг · Магнитогорск</title>
+<meta name="description" content="Бруклин — студия детейлинга в Магнитогорске. Полировка, PPF, уход за кузовом и салоном. +7 (900) 075-57-45.">
+<style>html,body{background:#000;color:#f5f5f5}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="page.css?v=blocks5">
+<link rel="stylesheet" href="MicroSlats.css?v=hex2">
+<link rel="stylesheet" href="wrap-configurator.css?v=mb28">
+<link rel="stylesheet" href="theme.css?v=ui1">
+<link rel="stylesheet" href="FlexCarousel.css?v=fc1">
+</head>
+<body>
+<header class="top" id="topbar">
+  <a class="brand" href="#top">БРУКЛИН</a>
+  <nav class="menu" id="menu">
+    <a href="#services">Услуги</a>
+    <a href="#wrap">Конфигуратор</a>
+    <a href="#work">Работы</a>
+    <a href="#contact">Адрес</a>
+  </nav>
+  <a class="ig" href="tel:+79000755745">+7 (900) 075-57-45</a>
+  <button class="burger" type="button" id="burger" aria-label="Меню" aria-expanded="false"><span></span></button>
+</header>
+
+<section class="hero slats-frame" id="top">
+  <div id="micro-slats" class="slats-stage micro-slats"></div>
+  <div class="hero-shade"></div>
+  <div class="hero-copy">
+    <p class="eyebrow">Магнитогорск · студия детейлинга</p>
+    <h1>БРУКЛИН<br>STUDIO</h1>
+    <p class="lead">Полировка, защитные плёнки и комплексный уход. Осмотр по записи — согласуем объём и срок до начала работ.</p>
+    <div class="hero-actions">
+      <a class="btn btn-fill" href="#work">Смотреть работы</a>
+      <a class="btn btn-ghost" href="#wrap">Конфигуратор</a>
+    </div>
+  </div>
+</section>
+
+<div class="line">
+  <span><b>Полировка от 12 000 ₽</b></span>
+  <span><b>PPF · зоны риска</b></span>
+  <span><b>от 45 000 ₽</b></span>
+  <span>Рейтинг 4.9 · 2ГИС</span>
+  <span>Запись по телефону</span>
+</div>
+
+<section class="band" id="services">
+  <div class="band-head">
+    <div>
+      <div class="kicker">Услуги</div>
+      <h2>Чем занимаемся.</h2>
+    </div>
+    <p class="sub">Полировка, PPF, детейлинг кузова и салона. Точная смета — после осмотра автомобиля.</p>
+  </div>
+  <div class="cards">
+    <article class="card">
+      <img src="img/work/bk-01.jpg" alt="Бруклин — полировка" loading="lazy">
+      <div>
+        <span>01</span>
+        <h3>Полировка кузова</h3>
+        <p>Коррекция ЛКП и восстановление блеска — от 12 000 ₽.</p>
+      </div>
+    </article>
+    <article class="card">
+      <img src="img/work/bk-02.jpg" alt="Бруклин — зоны риска (ppf)" loading="lazy">
+      <div>
+        <span>02</span>
+        <h3>Зоны риска (PPF)</h3>
+        <p>Защита капота, фар и зон сколов — от 45 000 ₽ по смете.</p>
+      </div>
+    </article>
+    <article class="card">
+      <img src="img/work/bk-03.jpg" alt="Бруклин — детейлинг" loading="lazy">
+      <div>
+        <span>03</span>
+        <h3>Детейлинг</h3>
+        <p>Бережная мойка, подготовка и финишные работы в студии.</p>
+      </div>
+    </article>
+    <article class="card">
+      <img src="img/work/bk-04.jpg" alt="Бруклин — салон" loading="lazy">
+      <div>
+        <span>04</span>
+        <h3>Уход за салоном</h3>
+        <p>Химчистка, кожа и пластик — комплексный уход за салоном.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="wrap-band" id="wrap">
+  <h2>Соберите образ.</h2>
+  <p class="sub">Выберите авто, зоны и отделку. Цифра на экране — ориентир; точную смету дадим после осмотра.</p>
+  <div id="wrap-cfg">
+    <section class="wrap-viewer">
+      <div id="canvas" class="canvas"></div>
+      <div class="wrap-hero">
+        <h3>The <span>wrap</span></h3>
+      </div>
+      <div class="wrap-badge"><b id="status">Preparing 3D…</b></div>
+      <div class="wrap-view-actions">
+        <button id="rotate" class="tool active" type="button">Auto-rotate</button>
+        <button id="reset" class="tool" type="button">Reset</button>
+      </div>
+      <div id="marker" class="marker" style="display:none"></div>
+    </section>
+    <aside class="sidebar">
+      <h2 class="side-title">Configure your wrap</h2>
+      <div class="wrap-block">
+        <div class="label">Choose a car</div>
+        <div class="tools">
+          <button class="tool active" data-model="mercedes" type="button">Sedan</button>
+          <button class="tool" data-model="mazda" type="button">Crossover</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Ready looks</div>
+        <div class="presets">
+          <button class="preset active" data-preset="0" type="button"><i class="stock"></i><span>Stock<small>Factory color</small></span></button>
+          <button class="preset" data-preset="1" type="button"><i style="background:#0b0d10"></i><span>Obsidian Black<small>Satin · Pearl</small></span></button>
+          <button class="preset" data-preset="2" type="button"><i style="background:#63351f"></i><span>Cocoa Brown<small>Gloss · Metallic</small></span></button>
+          <button class="preset" data-preset="3" type="button"><i style="background:#f5f5f2"></i><span>Pearl White<small>Gloss · Metallic</small></span></button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Body panels</div>
+        <div class="zones" id="zones"></div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Selected panel</div>
+        <div id="selectedInfo" class="selectedInfo">Tap a panel on the car</div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Tool</div>
+        <div class="tools">
+          <button class="tool active" data-tool="select" type="button">Select</button>
+          <button class="tool" data-tool="fill" type="button">Fill</button>
+          <button class="tool" data-tool="remove" type="button">Remove</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Pick a color</div>
+        <div id="swatches" class="swatches"></div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Pick a finish</div>
+        <div class="finish">
+          <button class="active" data-finish="gloss" type="button">Gloss</button>
+          <button data-finish="satin" type="button">Satin</button>
+          <button data-finish="matte" type="button">Matte</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Pick an effect</div>
+        <div class="finish">
+          <button class="active" data-effect="solid" type="button">Solid</button>
+          <button data-effect="metal" type="button">Metallic</button>
+          <button data-effect="pearl" type="button">Pearl</button>
+        </div>
+      </div>
+      <div class="wrap-block" hidden>
+        <div class="label">Panels</div>
+        <div id="parts" class="parts"></div>
+      </div>
+    </aside>
+    <div class="summary">
+      <div class="summary-row">
+        <div>
+          <div class="sumlabel">Ориентир</div>
+          <div id="total" class="total">0 ₽</div>
+        </div>
+        <button class="cta" id="quote" type="button">Запросить смету</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="flex-carousel-band" id="work" aria-label="Featured work">
+  <div id="flex-carousel" style="width:100%;height:560px;position:relative"></div>
+</section>
+
+<section class="band" id="examples">
+  <div class="band-head">
+    <div>
+      <div class="kicker">Примеры</div>
+      <h2>Работы из студии.</h2>
+    </div>
+    <p class="sub">Фото с Московской. Нажмите, чтобы открыть крупнее.</p>
+  </div>
+  <div class="examples">
+    <button type="button" data-full="img/work/bk-01.jpg"><img src="img/work/bk-01.jpg" alt="Бруклин — Полировка" loading="lazy"><span>Полировка</span></button>
+    <button type="button" data-full="img/work/bk-02.jpg"><img src="img/work/bk-02.jpg" alt="Бруклин — PPF" loading="lazy"><span>PPF</span></button>
+    <button type="button" data-full="img/work/bk-03.jpg"><img src="img/work/bk-03.jpg" alt="Бруклин — Детейлинг" loading="lazy"><span>Детейлинг</span></button>
+    <button type="button" data-full="img/work/bk-04.jpg"><img src="img/work/bk-04.jpg" alt="Бруклин — Салон" loading="lazy"><span>Салон</span></button>
+    <button type="button" data-full="img/work/bk-05.jpg"><img src="img/work/bk-05.jpg" alt="Бруклин — Кузов" loading="lazy"><span>Кузов</span></button>
+    <button type="button" data-full="img/work/bk-06.jpg"><img src="img/work/bk-06.jpg" alt="Бруклин — Блеск" loading="lazy"><span>Блеск</span></button>
+    <button type="button" data-full="img/work/bk-07.jpg"><img src="img/work/bk-07.jpg" alt="Бруклин — Защита" loading="lazy"><span>Защита</span></button>
+    <button type="button" data-full="img/work/bk-08.jpg"><img src="img/work/bk-08.jpg" alt="Бруклин — Студия" loading="lazy"><span>Студия</span></button>
+    <button type="button" data-full="img/work/bk-09.jpg"><img src="img/work/bk-09.jpg" alt="Бруклин — Результат" loading="lazy"><span>Результат</span></button>
+    <button type="button" data-full="img/work/bk-10.jpg"><img src="img/work/bk-10.jpg" alt="Бруклин — Комплекс" loading="lazy"><span>Комплекс</span></button>
+    <button type="button" data-full="img/work/bk-11.jpg"><img src="img/work/bk-11.jpg" alt="Бруклин — Фары" loading="lazy"><span>Фары</span></button>
+    <button type="button" data-full="img/work/bk-12.jpg"><img src="img/work/bk-12.jpg" alt="Бруклин — ЛКП" loading="lazy"><span>ЛКП</span></button>
+    <button type="button" data-full="img/work/bk-13.jpg"><img src="img/work/bk-13.jpg" alt="Бруклин — Выдача" loading="lazy"><span>Выдача</span></button>
+  </div>
+</section>
+
+<section class="address-map" id="contact">
+  <div class="address-map-bg">
+    <div class="address-map-glow address-map-glow--tr"></div>
+    <div class="address-map-glow address-map-glow--bl"></div>
+  </div>
+  <div class="address-map-inner">
+    <div class="address-map-grid">
+      <div class="address-map-intro">
+        <div class="address-map-kicker">
+          <span class="address-map-line"></span>
+          <span class="kicker">05 / Адрес</span>
+        </div>
+        <h2 class="address-map-title">Где мы<br><span>находимся.</span></h2>
+        <p class="address-map-text">Студия в Магнитогорске. Лучше записаться заранее — маршрут и отзывы в 2ГИС.</p>
+        <div class="address-map-divider" aria-hidden="true"></div>
+      </div>
+      <div class="address-map-visual">
+        <div class="address-map-frame">
+          <iframe title="Бруклин на карте" src="https://maps.google.com/maps?q=53.407556,58.984211&hl=ru&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
+          <a class="address-map-frame-hit" href="https://2gis.ru/magnitogorsk/firm/70000001112968680" target="_blank" rel="noopener noreferrer" aria-label="Открыть в 2ГИС"></a>
+          <div class="address-map-pin-label" aria-hidden="true">
+            <span class="address-map-pin-label-text"><span>БРУКЛИН</span></span>
+          </div>
+        </div>
+        <div class="address-map-decor"></div>
+      </div>
+      <div class="address-map-details-wrap">
+        <div class="address-map-details">
+          <div class="address-map-detail">
+            <span class="address-map-detail-label">Студия</span>
+            <p class="address-map-brand"><span>БРУКЛИН</span></p>
+            <p class="address-map-muted">Московская ул., 5 к1</p>
+            <p class="address-map-muted-sm">Студия детейлинга · по записи</p>
+          </div>
+          <div class="address-map-detail">
+            <span class="address-map-detail-label">Телефон</span>
+            <a href="tel:+79000755745" class="address-map-phone">+7 (900) 075-57-45</a>
+          </div>
+        </div>
+        <a href="https://2gis.ru/magnitogorsk/firm/70000001112968680" class="address-map-btn" target="_blank" rel="noopener noreferrer">Как добраться</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid footer-desktop-only">
+    <div class="footer-col footer-col--brand-hours">
+      <div class="footer-brand-block">
+        <div class="footer-logo"><span>БРУКЛИН</span></div>
+        <div class="footer-social">
+          <a href="https://2gis.ru/magnitogorsk/firm/70000001112968680" target="_blank" rel="noopener noreferrer">2ГИС</a>
+          <a href="https://2gis.ru/magnitogorsk/firm/70000001112968680" target="_blank" rel="noopener noreferrer">Карта</a>
+        </div>
+      </div>
+      <div class="footer-hours-block">
+        <b>Режим</b>
+        <span>По записи</span>
+        <span>Рейтинг 4.9 · 2ГИС</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <b>Навигация</b>
+      <a href="#top">Главная</a>
+      <a href="#services">Услуги</a>
+      <a href="#wrap">Конфигуратор</a>
+      <a href="#work">Работы</a>
+      <a href="#contact">Адрес</a>
+    </div>
+    <div class="footer-col">
+      <b>Контакты</b>
+      <a class="footer-phone-inline" href="https://2gis.ru/magnitogorsk/firm/70000001112968680" target="_blank" rel="noopener noreferrer">+7 (900) 075-57-45</a>
+      <span>Магнитогорск</span>
+    </div>
+  </div>
+  <div class="footer-grid footer-mobile-only">
+    <div class="footer-col">
+      <b>Навигация</b>
+      <a href="#top">Главная</a>
+      <a href="#services">Услуги</a>
+      <a href="#wrap">Конфигуратор</a>
+      <a href="#work">Работы</a>
+      <a href="#contact">Адрес</a>
+    </div>
+    <div class="footer-col footer-col--brand-hours">
+      <div class="footer-phones-block">
+        <b>Контакты</b>
+        <a class="footer-phone-inline" href="https://2gis.ru/magnitogorsk/firm/70000001112968680" target="_blank" rel="noopener noreferrer">+7 (900) 075-57-45</a>
+      </div>
+      <div class="footer-brand-divider" aria-hidden="true"></div>
+      <div class="footer-brand-block">
+        <div class="footer-logo"><span>БРУКЛИН</span></div>
+        <div class="footer-social">
+          <a href="https://2gis.ru/magnitogorsk/firm/70000001112968680" target="_blank" rel="noopener noreferrer">2ГИС</a>
+          <a href="https://2gis.ru/magnitogorsk/firm/70000001112968680" target="_blank" rel="noopener noreferrer">Карта</a>
+        </div>
+      </div>
+      <div class="footer-hours-block">
+        <b>Режим</b>
+        <span>По записи</span>
+        <span>Рейтинг 4.9 · 2ГИС</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Бруклин · прототип Melissa-tech</span>
+    <span class="footer-requisites">Полировка · PPF · детейлинг</span>
+  </div>
+</footer>
+
+<dialog id="lead">
+  <form class="sheet" method="dialog">
+    <h3>Отправить заявку.</h3>
+    <p id="lead-meta">DM +7 (900) 075-57-45 with the panels and the color.</p>
+    <div class="hero-actions">
+      <a class="btn btn-fill" href="tel:+79000755745">Позвонить</a>
+    </div>
+    <button class="close" type="submit">Закрыть</button>
+  </form>
+</dialog>
+<dialog id="light">
+  <form method="dialog">
+    <button type="submit" aria-label="Close" style="position:fixed;inset:0;opacity:0">Закрыть</button>
+    <img alt="">
+  </form>
+</dialog>
+
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/","ogl":"./vendor/ogl/src/index.js"}}</script>
+<link rel="modulepreload" href="vendor/three/build/three.module.js">
+<link rel="modulepreload" href="wrap-configurator.core.js?v=mb30">
+<link rel="preload" href="models/mercedes.glb?v=5" as="fetch" type="model/gltf-binary" crossorigin fetchpriority="high">
+<script>
+if ('serviceРаботыer' in navigator) {
+  navigator.serviceРаботыer.getRegistrations().then((regs) => regs.forEach((reg) => reg.unregister()));
+}
+</script>
+<script type="module" src="slats-boot.js?v=hex5"></script>
+<script type="module" src="flex-carousel-boot.js?v=fc3"></script>
+<script type="module" src="wrap-loader.js?v=mb30"></script>
+<script src="site.js" defer></script>
+</body>
+</html>

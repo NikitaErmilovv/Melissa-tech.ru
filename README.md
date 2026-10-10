@@ -14,6 +14,8 @@
 | `restyle-surgut/` | Restyle, Сургут — детейлинг (HTML/CSS/JS) |
 | `delaikuzov/` | Делайкузов, Новосибирск — кузовной ремонт (HTML/CSS/JS) |
 | `altay-toner/` | Алтай тонер, Новоалтайск — детейлинг и тонировка LLumar (HTML/CSS/JS) |
+| `brooklyn-detailing/` | Бруклин, Магнитогорск — студия детейлинга, вариант SDC (HTML/CSS/JS) |
+| `brooklyn-rtg/` | Бруклин, Магнитогорск — тот же бренд, вариант RTG с 3D-конфигуратором |
 
 ## Локальный запуск (ps-detailing)
 
