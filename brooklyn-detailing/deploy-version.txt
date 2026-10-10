@@ -1,1 +1,5 @@
-brooklyn-detailing-3
+site=brooklyn-detailing
+prod=https://melissa-tech.ru/brooklyn-detailing/
+city=Магнитогорск
+updated=2026-10-10
+photos=brooklyn-hero-x5-v6
