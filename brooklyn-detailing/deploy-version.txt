@@ -2,4 +2,4 @@ site=brooklyn-detailing
 prod=https://melissa-tech.ru/brooklyn-detailing/
 city=Магнитогорск
 updated=2026-10-10
-photos=brooklyn-hero-lighter-v8
+photos=brooklyn-hero-lighter-v8b
