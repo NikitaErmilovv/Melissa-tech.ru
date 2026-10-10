@@ -13,6 +13,7 @@
 | `rtg-wrapzz/` | RTG Wrapzz, Arizona — оклейка, chrome delete, PPF (HTML/CSS/JS) |
 | `restyle-surgut/` | Restyle, Сургут — детейлинг (HTML/CSS/JS) |
 | `delaikuzov/` | Делайкузов, Новосибирск — кузовной ремонт (HTML/CSS/JS) |
+| `altay-toner/` | Алтай тонер, Новоалтайск — детейлинг и тонировка LLumar (HTML/CSS/JS) |
 
 ## Локальный запуск (ps-detailing)
 
@@ -68,3 +69,13 @@ python server.py
 
 Открыть: http://127.0.0.1:8110/  
 Прод: https://melissa-tech.ru/delaikuzov/
+
+## Локальный запуск (altay-toner)
+
+```bash
+cd altay-toner
+python server.py
+```
+
+Открыть: http://127.0.0.1:8088/  
+Прод: https://melissa-tech.ru/altay-toner/
