@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#ffffff;
-  --accent-soft:rgba(255,255,255,.18);
-  --accent-hover:rgba(255,255,255,.85);
+  --accent:#afd3a5;
+  --accent-soft:rgba(175,211,165,.22);
+  --accent-hover:#c4e0bb;
   --accent-ink:#0a0a0a;
 }
 
@@ -24,7 +24,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 
 .hero{min-height:760px;padding:108px 6vw 70px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#343434 0,#171717 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:678px;background:url('img/works/hero.jpg?v=6') center 40%/cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:678px;background:url('img/works/hero.jpg?v=7') center 45%/cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-head,.hero-lead{position:relative;z-index:1;max-width:720px}
 .eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:25px}
