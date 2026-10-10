@@ -81,3 +81,23 @@ python server.py
 
 Открыть: http://127.0.0.1:8088/  
 Прод: https://melissa-tech.ru/altay-toner/
+
+## Локальный запуск (brooklyn-detailing)
+
+```bash
+cd brooklyn-detailing
+python server.py
+```
+
+Открыть: http://127.0.0.1:8092/  
+Прод: https://melissa-tech.ru/brooklyn-detailing/
+
+## Локальный запуск (brooklyn-rtg)
+
+```bash
+cd brooklyn-rtg
+python server.py
+```
+
+Открыть: http://127.0.0.1:8091/  
+Прод: https://melissa-tech.ru/brooklyn-rtg/

@@ -2,12 +2,12 @@
 setlocal
 cd /d "%~dp0"
 
-for /f "tokens=5" %%a in ('netstat -ano ^| findstr ":8092" ^| findstr "LISTENING"') do (
+for /f "tokens=5" %%a in ('netstat -ano ^| findstr ":8091" ^| findstr "LISTENING"') do (
   taskkill /F /PID %%a >nul 2>&1
 )
 
 echo.
-echo Бруклин (SDC) — http://127.0.0.1:8092/
+echo Бруклин RTG — http://127.0.0.1:8091/
 echo Press Ctrl+C to stop.
 echo.
 

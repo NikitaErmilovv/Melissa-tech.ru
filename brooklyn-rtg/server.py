@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Static server for the redesign sandbox."""
+"""Local static server for Brooklyn RTG prototype."""
 
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import os
 
-PORT = int(os.environ.get("PORT", "43127"))
+PORT = int(os.environ.get("PORT", "8091"))
 ROOT = Path(__file__).resolve().parent
 
 
@@ -18,11 +18,8 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Pragma", "no-cache")
         super().end_headers()
 
-    def log_message(self, fmt, *args):
-        print("%s - %s" % (self.address_string(), fmt % args))
-
 
 if __name__ == "__main__":
-    with ThreadingHTTPServer(("0.0.0.0", PORT), Handler) as httpd:
-        print(f"Serving {ROOT} on http://127.0.0.1:{PORT}/")
+    with ThreadingHTTPServer(("127.0.0.1", PORT), Handler) as httpd:
+        print(f"Бруклин RTG — http://127.0.0.1:{PORT}/", flush=True)
         httpd.serve_forever()
