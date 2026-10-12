@@ -24,13 +24,13 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://autoblesk42.ru/img/icon-512.png">
 
-<link rel="stylesheet" href="styles.css?v=works1">
+<link rel="stylesheet" href="styles.css?v=works2">
 <link rel="stylesheet" href="cms/cms.css?v=text1">
 </head>
-<body data-cms-page="album.html">
+<body>
 <nav class="site-nav">
   <div class="logo"><a href="index.html"><span>АВТО</span>БЛЕСК</a></div>
-  <div class="links"><a href="index.html#services">УСЛУГИ</a><a href="index.html#story">О СТУДИИ</a><a href="index.html#contacts">КОНТАКТЫ</a><a href="training.html">ОБУЧЕНИЕ</a><a href="album.html">НАШИ РАБОТЫ</a></div>
+  <div class="links"><a href="index.html#services">УСЛУГИ</a><a href="index.html#story">О СТУДИИ</a><a href="index.html#contacts">КОНТАКТЫ</a><a href="training.html">ОБУЧЕНИЕ</a><a href="album.html" class="is-active" aria-current="page">НАШИ РАБОТЫ</a></div>
   <div class="nav-actions">
     <a class="phone" href="tel:+79235322652">+7 (923) 532-26-52</a>
     <button class="nav-burger" type="button" aria-label="Открыть меню" aria-expanded="false">
@@ -44,19 +44,21 @@
     <a href="index.html#story">О СТУДИИ</a>
     <a href="index.html#contacts">КОНТАКТЫ</a>
     <a href="training.html">ОБУЧЕНИЕ</a>
-    <a href="album.html">НАШИ РАБОТЫ</a>
+    <a href="album.html" class="is-active" aria-current="page">НАШИ РАБОТЫ</a>
   </div>
 </nav>
 
 <section class="subpage-hero">
   <div class="kicker">02 / НАШИ РАБОТЫ</div>
   <h1>РАБОТЫ<br>СТУДИИ<br><span class="accent">АВТОБЛЕСК.</span></h1>
-  <p>Разборы выполненных заказов: ремонт стёкол, полировка и детейлинг в Новокузнецке.</p>
+  <p>Статьи о выполненных заказах: ремонт стёкол, полировка и детейлинг в Новокузнецке.</p>
 </section>
 
-<div class="section" id="articles-feed" aria-live="polite">
-  <p class="intro">Загрузка…</p>
-</div>
+<section class="section articles-hub" id="articles-feed" aria-label="Статьи о работах студии">
+<!-- ARTICLES_FEED -->
+<div class="article-feed article-feed--magazine"><article class="article-row article-row--pinned"><a class="article-row-media" href="works/remont-skola-lobovogo-stekla/" tabindex="-1" aria-hidden="true"><img src="img/works/portfolio/gallery-01.jpg" alt="" loading="lazy" decoding="async"></a><div class="article-row-body"><span class="article-row-pin">Закреплено</span><time class="article-row-date" datetime="2026-03-01">1.03.2026</time><h2 class="article-row-title"><a href="works/remont-skola-lobovogo-stekla/">Ремонт скола на лобовом стекле</a></h2><p class="article-row-excerpt">Локально устранили скол на лобовом стекле — без замены стекла и с контролем зоны ремонта под светом.</p><a class="button dark article-row-btn" href="works/remont-skola-lobovogo-stekla/">Читать статью</a></div></article><article class="article-row"><a class="article-row-media" href="works/polirovka-i-shlifovka-stekol/" tabindex="-1" aria-hidden="true"><img src="img/works/portfolio/gallery-03.jpg" alt="" loading="lazy" decoding="async"></a><div class="article-row-body"><time class="article-row-date" datetime="2026-02-18">18.02.2026</time><h2 class="article-row-title"><a href="works/polirovka-i-shlifovka-stekol/">Полировка и шлифовка автомобильных стёкол</a></h2><p class="article-row-excerpt">Убрали мутность и мелкие царапины с бокового стекла — вернули прозрачность без замены.</p><a class="button dark article-row-btn" href="works/polirovka-i-shlifovka-stekol/">Читать статью</a></div></article></div>
+<!-- /ARTICLES_FEED -->
+</section>
 
 <footer class="site-footer" style="margin-top:48px">
   <div class="footer-bottom">
@@ -66,9 +68,5 @@
 </footer>
 <script src="nav.js"></script>
 <script src="cookie-consent.js" defer></script>
-<script src="cms/cms-api.js?v=articles1" defer></script>
-<script src="cms/cms-articles.js?v=1" defer></script>
-<script src="articles-feed.js?v=1" defer></script>
-<script src="cms/cms.js?v=meta2" defer></script>
 </body>
 </html>

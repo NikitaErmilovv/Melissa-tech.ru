@@ -623,7 +623,7 @@
           });
           const res = await window.AvtoCmsApi.saveArticles({ articles }, token());
           if (!res.ok) throw new Error('save');
-          alert('Статьи сохранены. Страницы works/ обновлены.');
+          alert('Статьи сохранены. Обновлены works/ и лента на album.html.');
         } catch (_) {
           alert('Ошибка сохранения. Войдите снова.');
         }

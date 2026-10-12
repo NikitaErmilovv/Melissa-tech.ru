@@ -136,6 +136,60 @@ def render(article: dict, rel: str = "../../") -> str:
 </html>"""
 
 
+def feed_row(article: dict, base: str = "") -> str:
+    slug = str(article.get("slug") or "")
+    href = esc(base + "works/" + slug + "/")
+    title = esc(str(article.get("title") or ""))
+    excerpt = esc(str(article.get("excerpt") or ""))
+    date_attr = esc(str(article.get("publishedAt") or ""))
+    date = fmt_date(str(article.get("publishedAt") or ""))
+    cover = str(article.get("cover") or "")
+    gallery = article.get("gallery") or []
+    if not cover and gallery:
+        cover = str(gallery[0])
+    pinned = bool(article.get("pinned"))
+    pin = '<span class="article-row-pin">Закреплено</span>' if pinned else ""
+    row_class = "article-row" + (" article-row--pinned" if pinned else "")
+    if cover:
+        src = esc(base + cover.lstrip("/"))
+        media = f'<a class="article-row-media" href="{href}" tabindex="-1" aria-hidden="true"><img src="{src}" alt="" loading="lazy" decoding="async"></a>'
+    else:
+        media = f'<a class="article-row-media article-row-media--empty" href="{href}" tabindex="-1" aria-hidden="true"><span>АвтоБлеск</span></a>'
+    return (
+        f'<article class="{row_class}">{media}<div class="article-row-body">{pin}'
+        f'<time class="article-row-date" datetime="{date_attr}">{date}</time>'
+        f'<h2 class="article-row-title"><a href="{href}">{title}</a></h2>'
+        f'<p class="article-row-excerpt">{excerpt}</p>'
+        f'<a class="button dark article-row-btn" href="{href}">Читать статью</a>'
+        f"</div></article>"
+    )
+
+
+def feed_inner(data: dict, base: str = "") -> str:
+    articles = [a for a in data.get("articles", []) if isinstance(a, dict) and not a.get("hidden")]
+    if not articles:
+        return '<p class="intro">Пока нет опубликованных материалов. Загляните позже.</p>'
+    rows = "".join(feed_row(a, base) for a in sort_articles(articles))
+    return f'<div class="article-feed article-feed--magazine">{rows}</div>'
+
+
+def patch_album(data: dict) -> None:
+    album = ROOT / "album.html"
+    if not album.is_file():
+        return
+    html = album.read_text(encoding="utf-8")
+    inner = feed_inner(data, "")
+    replacement = f"<!-- ARTICLES_FEED -->\n{inner}\n<!-- /ARTICLES_FEED -->"
+    new_html, n = re.subn(
+        r"<!-- ARTICLES_FEED -->[\s\S]*?<!-- /ARTICLES_FEED -->",
+        replacement,
+        html,
+        count=1,
+    )
+    if n:
+        album.write_text(new_html, encoding="utf-8")
+
+
 def main() -> None:
     data = json.loads(ARTICLES.read_text(encoding="utf-8"))
     articles = [a for a in data.get("articles", []) if isinstance(a, dict) and not a.get("hidden")]
@@ -160,6 +214,7 @@ def main() -> None:
                 child.rmdir()
             except OSError:
                 pass
+    patch_album(data)
     print("OK", len(wanted), "articles")
 
 

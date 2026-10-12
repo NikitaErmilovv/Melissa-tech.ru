@@ -40,44 +40,63 @@
     return (base || '') + 'works/' + encodeURIComponent(slug) + '/';
   }
 
-  function cardHtml(article, base) {
+  function rowHtml(article, base) {
     const href = articleUrl(article, base);
     const cover = article.cover || (article.gallery && article.gallery[0]) || '';
-    const img = cover
-      ? '<img src="' + escapeAttr(base + cover) + '" alt="" loading="lazy" decoding="async">'
-      : '<span class="article-card-placeholder"></span>';
-    const pin = article.pinned ? '<span class="article-card-pin">Закреплено</span>' : '';
+    const pin = article.pinned
+      ? '<span class="article-row-pin">Закреплено</span>'
+      : '';
+    const media = cover
+      ? '<a class="article-row-media" href="' +
+        escapeAttr(href) +
+        '" tabindex="-1" aria-hidden="true"><img src="' +
+        escapeAttr(base + cover) +
+        '" alt="" loading="lazy" decoding="async"></a>'
+      : '<a class="article-row-media article-row-media--empty" href="' +
+        escapeAttr(href) +
+        '" tabindex="-1" aria-hidden="true"><span>АвтоБлеск</span></a>';
     return (
-      '<a class="article-card" href="' +
-      escapeAttr(href) +
+      '<article class="article-row' +
+      (article.pinned ? ' article-row--pinned' : '') +
       '">' +
-      '<div class="article-card-media">' +
-      img +
+      media +
+      '<div class="article-row-body">' +
       pin +
-      '</div>' +
-      '<div class="article-card-body">' +
-      '<time class="article-card-date">' +
+      '<time class="article-row-date" datetime="' +
+      escapeAttr(article.publishedAt || '') +
+      '">' +
       formatDate(article.publishedAt) +
       '</time>' +
-      '<h2 class="article-card-title">' +
+      '<h2 class="article-row-title"><a href="' +
+      escapeAttr(href) +
+      '">' +
       escapeHtml(article.title) +
-      '</h2>' +
-      '<p class="article-card-excerpt">' +
+      '</a></h2>' +
+      '<p class="article-row-excerpt">' +
       escapeHtml(article.excerpt || '') +
       '</p>' +
-      '<span class="article-card-more">Читать →</span>' +
-      '</div></a>'
+      '<a class="button dark article-row-btn" href="' +
+      escapeAttr(href) +
+      '">Читать статью</a>' +
+      '</div></article>'
+    );
+  }
+
+  function feedInnerHtml(data, base) {
+    const list = publicArticles(data);
+    if (!list.length) {
+      return '<p class="intro">Пока нет опубликованных материалов. Загляните позже.</p>';
+    }
+    return (
+      '<div class="article-feed article-feed--magazine">' +
+      list.map((a) => rowHtml(a, base)).join('') +
+      '</div>'
     );
   }
 
   function renderFeed(root, data, base) {
     if (!root) return;
-    const list = publicArticles(data);
-    if (!list.length) {
-      root.innerHTML = '<p class="intro">Пока нет опубликованных материалов.</p>';
-      return;
-    }
-    root.innerHTML = '<div class="article-feed">' + list.map((a) => cardHtml(a, base)).join('') + '</div>';
+    root.innerHTML = feedInnerHtml(data, base);
   }
 
   function slugify(title) {
@@ -102,7 +121,8 @@
     sortArticles,
     publicArticles,
     articleUrl,
-    cardHtml,
+    rowHtml,
+    feedInnerHtml,
     renderFeed,
     slugify,
   };

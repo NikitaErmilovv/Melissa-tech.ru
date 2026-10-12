@@ -103,6 +103,71 @@ function articles_public_list(array $data): array {
     return articles_sort_list($list);
 }
 
+/**
+ * @param array<string, mixed> $article
+ */
+function articles_feed_row_html(array $article, string $base = ''): string {
+    $slug = (string) ($article['slug'] ?? '');
+    $href = articles_escape($base . 'works/' . rawurlencode($slug) . '/');
+    $title = articles_escape((string) ($article['title'] ?? ''));
+    $excerpt = articles_escape((string) ($article['excerpt'] ?? ''));
+    $date = articles_escape(articles_format_date((string) ($article['publishedAt'] ?? '')));
+    $dateAttr = articles_escape((string) ($article['publishedAt'] ?? ''));
+    $cover = (string) ($article['cover'] ?? '');
+    $gallery = is_array($article['gallery'] ?? null) ? $article['gallery'] : [];
+    if ($cover === '' && $gallery) {
+        $cover = (string) $gallery[0];
+    }
+    $pinned = !empty($article['pinned']);
+    $pin = $pinned ? '<span class="article-row-pin">Закреплено</span>' : '';
+    $rowClass = 'article-row' . ($pinned ? ' article-row--pinned' : '');
+    if ($cover !== '') {
+        $src = articles_escape($base . ltrim($cover, '/'));
+        $media = '<a class="article-row-media" href="' . $href . '" tabindex="-1" aria-hidden="true"><img src="' . $src . '" alt="" loading="lazy" decoding="async"></a>';
+    } else {
+        $media = '<a class="article-row-media article-row-media--empty" href="' . $href . '" tabindex="-1" aria-hidden="true"><span>АвтоБлеск</span></a>';
+    }
+    return '<article class="' . $rowClass . '">' . $media .
+        '<div class="article-row-body">' . $pin .
+        '<time class="article-row-date" datetime="' . $dateAttr . '">' . $date . '</time>' .
+        '<h2 class="article-row-title"><a href="' . $href . '">' . $title . '</a></h2>' .
+        '<p class="article-row-excerpt">' . $excerpt . '</p>' .
+        '<a class="button dark article-row-btn" href="' . $href . '">Читать статью</a>' .
+        '</div></article>';
+}
+
+function articles_feed_inner_html(array $data, string $base = ''): string {
+    $list = articles_public_list($data);
+    if (!$list) {
+        return '<p class="intro">Пока нет опубликованных материалов. Загляните позже.</p>';
+    }
+    $rows = '';
+    foreach ($list as $article) {
+        if (!is_array($article)) {
+            continue;
+        }
+        $rows .= articles_feed_row_html($article, $base);
+    }
+    return '<div class="article-feed article-feed--magazine">' . $rows . '</div>';
+}
+
+function articles_patch_album_page(array $data): void {
+    $root = dirname(__DIR__);
+    $album = $root . '/album.html';
+    if (!is_file($album)) {
+        return;
+    }
+    $html = (string) file_get_contents($album);
+    $inner = articles_feed_inner_html($data, '');
+    $replacement = "<!-- ARTICLES_FEED -->\n" . $inner . "\n<!-- /ARTICLES_FEED -->";
+    if (preg_match('/<!-- ARTICLES_FEED -->[\s\S]*?<!-- \/ARTICLES_FEED -->/', $html)) {
+        $html = preg_replace('/<!-- ARTICLES_FEED -->[\s\S]*?<!-- \/ARTICLES_FEED -->/', $replacement, $html) ?? $html;
+    } else {
+        return;
+    }
+    file_put_contents($album, $html, LOCK_EX);
+}
+
 function articles_format_date(string $iso): string {
     if ($iso === '') {
         return '';
@@ -234,6 +299,7 @@ function articles_regenerate_static(array $data): void {
         }
     }
     articles_update_sitemap($data, $root);
+    articles_patch_album_page($data);
 }
 
 function articles_update_sitemap(array $data, string $root): void {
