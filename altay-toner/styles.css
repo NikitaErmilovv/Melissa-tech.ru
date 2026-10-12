@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#ffffff;
-  --accent-soft:rgba(255,255,255,.18);
-  --accent-hover:rgba(255,255,255,.85);
+  --accent:#fbeda3;
+  --accent-soft:rgba(251,237,163,.42);
+  --accent-hover:#fff1bc;
+  --accent-deep:#d4c27a;
   --accent-ink:#0a0a0a;
+  --accent-rgb:251,237,163;
 }
 
 *{box-sizing:border-box}
@@ -24,7 +26,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 
 .hero{min-height:760px;padding:108px 6vw 70px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#343434 0,#171717 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:678px;background:url('img/works/hero.jpg?v=8') center/cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:678px;background:url('img/works/hero-frame.jpg?v=2') center 45%/cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85;filter:brightness(1.3)}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-head,.hero-lead{position:relative;z-index:1;max-width:720px}
 .eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:25px}
@@ -74,12 +76,12 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .card p{color:#85857f;font-size:13px;line-height:1.55;margin:0}
 
 .process{background:#e8e8e2;color:#111;padding:110px 6vw}
-.process .kicker{color:#5a5a8a}
+.process .kicker{color:#6f6f6a}
 .process h2{font-size:clamp(38px,5vw,70px);line-height:.95;letter-spacing:-.06em;margin:12px 0 0}
-.process h2 .accent{color:#6a6aad}
+.process h2 .accent{color:var(--accent-deep)}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#c9c9c3;margin-top:55px}
 .step{background:#e8e8e2;padding:25px 22px 35px;min-height:190px}
-.step b{font-size:12px;color:#6a6aad}
+.step b{font-size:12px;color:#111}
 .step h3{font-size:20px;letter-spacing:-.04em}
 .step p{color:#666;font-size:12px;line-height:1.55}
 
@@ -373,7 +375,7 @@ html.media-lightbox-open{overflow:hidden}
   .footer-mobile-only{display:none}
 
   .process .kicker{color:#777}
-  .process h2 .accent{color:#111}
+  .process h2 .accent{color:var(--accent-deep)}
   .step b{color:#111}
 
   .services-process .steps-track{margin-top:55px;overflow:visible}
@@ -518,7 +520,7 @@ html.media-lightbox-open{overflow:hidden}
   .process{padding:72px 5vw;overflow-x:hidden;max-width:100%}
   .process .kicker{color:#777}
   .process h2{font-size:clamp(32px,9vw,52px)}
-  .process h2 .accent{color:#111}
+  .process h2 .accent{color:var(--accent-deep)}
   .step b{color:#111}
   .steps{width:100%;max-width:100%;grid-template-columns:1fr;margin-top:36px}
   .step{min-height:auto;padding:22px 18px 28px}
