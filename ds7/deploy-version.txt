@@ -3,4 +3,4 @@ prod=https://melissa-tech.ru/ds7/
 city=Нижний Новгород
 updated=2026-10-12
 deploy=git-push-timeweb-hook
-deploy-trigger=848cc85-ds7-1
+deploy-trigger=eed8acf-ds7-hero-2
