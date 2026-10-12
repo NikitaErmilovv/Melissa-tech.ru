@@ -106,32 +106,6 @@
       const base = siteBase();
       return base + 'data/training.json?_=' + Date.now();
     },
-    articlesUrl() {
-      const base = siteBase();
-      return base + 'data/articles.json?_=' + Date.now();
-    },
-    async saveArticles(payload, token) {
-      const headers = {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-      };
-      if (isLocal()) {
-        const py = await tryJson('/api/articles/save', {
-          method: 'POST',
-          headers,
-          body: JSON.stringify(payload),
-        });
-        if (py) return py;
-      }
-      const base = siteBase();
-      const php = await tryJson(base + 'cms/api.php?action=articles-save', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload),
-      });
-      if (php) return php;
-      return fetch('/api/articles/save', { method: 'POST', headers, body: JSON.stringify(payload) });
-    },
     async saveTraining(payload, token) {
       const headers = {
         'Content-Type': 'application/json',

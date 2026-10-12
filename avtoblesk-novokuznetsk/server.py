@@ -19,7 +19,6 @@ ROOT = Path(__file__).resolve().parent
 CMS_DIR = ROOT / "cms"
 CMS_CONTENT = CMS_DIR / "content.json"
 WRAP_ZONES = ROOT / "data" / "wrap-zones.json"
-ARTICLES_JSON = ROOT / "data" / "articles.json"
 CMS_CONFIG = CMS_DIR / "config.local.json"
 CMS_CONFIG_EXAMPLE = CMS_DIR / "config.example.json"
 CMS_UPLOADS = ROOT / "img" / "cms" / "uploads"
@@ -229,53 +228,6 @@ class SiteHandler(SimpleHTTPRequestHandler):
             tmp = WRAP_ZONES.with_suffix(".json.tmp")
             tmp.write_text(raw, encoding="utf-8")
             tmp.replace(WRAP_ZONES)
-            out = json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self.send_header("Content-Length", str(len(out)))
-            self.end_headers()
-            self.wfile.write(out)
-            return
-
-        if path == "/api/articles/save":
-            if not cms_check_token(self.headers.get("Authorization")):
-                self.send_error(401, "Unauthorized")
-                return
-            length = int(self.headers.get("Content-Length", "0"))
-            body = self.rfile.read(length)
-            try:
-                payload = json.loads(body.decode("utf-8"))
-            except json.JSONDecodeError:
-                self.send_error(400, "Bad JSON")
-                return
-            if not isinstance(payload, dict) or not isinstance(payload.get("articles"), list):
-                self.send_error(400, "Missing articles")
-                return
-            raw = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-            ARTICLES_JSON.write_text(raw, encoding="utf-8")
-            import subprocess
-
-            py_regen = ROOT / "scripts" / "regenerate_articles.py"
-            regen = ROOT / "cms" / "regenerate-articles.php"
-            try:
-                if py_regen.is_file():
-                    subprocess.run(
-                        [__import__("sys").executable, str(py_regen)],
-                        cwd=str(ROOT),
-                        check=True,
-                        capture_output=True,
-                        timeout=30,
-                    )
-                elif regen.is_file():
-                    subprocess.run(
-                        ["php", str(regen)],
-                        cwd=str(ROOT),
-                        check=True,
-                        capture_output=True,
-                        timeout=30,
-                    )
-            except (FileNotFoundError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
-                pass
             out = json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

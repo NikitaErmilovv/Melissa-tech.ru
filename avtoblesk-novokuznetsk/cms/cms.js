@@ -318,11 +318,8 @@
       if (!page) return;
       applyMeta(page.meta);
       const A = window.AvtoCmsAlbums;
-      const articlesHub = document.getElementById('articles-feed');
-      if (!articlesHub) {
-        if (page.lists?.albums) renderAlbums(page.lists.albums);
-        else if (page.lists?.portfolio && A) renderAlbums(A.migratePortfolio(page.lists.portfolio));
-      }
+      if (page.lists?.albums) renderAlbums(page.lists.albums);
+      else if (page.lists?.portfolio && A) renderAlbums(A.migratePortfolio(page.lists.portfolio));
       if (page.lists?.services) renderServices(page.lists.services);
       hiddenBlocks = Array.isArray(page.hiddenBlocks) ? page.hiddenBlocks.slice() : [];
       assignKeys();

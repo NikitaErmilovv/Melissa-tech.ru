@@ -251,27 +251,6 @@ if ($action === 'wrap-zones-save' && $method === 'POST') {
     send_json(200, ['ok' => true]);
 }
 
-if ($action === 'articles-save' && $method === 'POST') {
-    if (!check_token(bearer_token())) {
-        send_json(401, ['error' => 'Unauthorized']);
-    }
-    require_once __DIR__ . '/articles-lib.php';
-    $payload = json_decode((string) file_get_contents('php://input'), true);
-    if (!is_array($payload)) {
-        send_json(400, ['error' => 'Bad JSON']);
-    }
-    try {
-        $data = articles_normalize_payload($payload);
-        articles_save($data);
-        articles_regenerate_static($data);
-    } catch (InvalidArgumentException $e) {
-        send_json(400, ['error' => $e->getMessage()]);
-    } catch (Throwable $e) {
-        send_json(500, ['error' => 'Save failed']);
-    }
-    send_json(200, ['ok' => true]);
-}
-
 if ($action === 'training-save' && $method === 'POST') {
     if (!check_token(bearer_token())) {
         send_json(401, ['error' => 'Unauthorized']);
