@@ -159,7 +159,8 @@ body.nav-open .nav-burger-line:last-child{transform:translateY(-4.25px) rotate(-
   animation:heroDrift 18s ease-out forwards;
 }
 @media (min-width:900px){
-  .hero-media img{object-position:center 72%}
+  /* show car higher in the frame */
+  .hero-media img{object-position:center 88%}
 }
 @keyframes heroDrift{
   from{transform:scale(1.08)}
@@ -205,8 +206,8 @@ body.nav-open .nav-burger-line:last-child{transform:translateY(-4.25px) rotate(-
 @media (max-width:900px){
   .hero h1{
     /* PREMIUM = 7 glyphs — keep fully on screen */
-    font-size:calc((100vw - 2 * var(--pad)) / 7.25);
-    letter-spacing:-.045em;
+    font-size:calc((100vw - 2 * var(--pad) - 8px) / 7.6);
+    letter-spacing:-.055em;
   }
 }
 .lead{
