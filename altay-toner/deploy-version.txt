@@ -1,4 +1,4 @@
-﻿site=altay-toner
+site=altay-toner
 prod=https://melissa-tech.ru/altay-toner/
 deploy=git-push-timeweb-hook
-deploy-trigger=altay-toner-glass-armor-v16-force
+deploy-trigger=altay-toner-copy-max-v17
