@@ -1,10 +1,10 @@
 (function () {
   document.querySelectorAll('[data-cms-nav="services"], [data-cms-panel="services"]').forEach((el) => el.remove());
   const TOKEN_KEY = 'avtoblesk_cms_token';
-  const ALBUM_PAGE = 'album.html';
+  const WORKS_PAGE = 'album.html';
   const PAGES = [
     { id: 'index.html', label: 'Сайт (одна главная)' },
-    { id: ALBUM_PAGE, label: 'Альбом работ' },
+    { id: WORKS_PAGE, label: 'Наши работы' },
     { id: 'training.html', label: 'Обучение' },
   ];
   const META_PAGES = [
@@ -12,13 +12,14 @@
     { id: 'services.html', label: 'Услуги', title: 'Услуги — АвтоБлеск' },
     { id: 'about.html', label: 'О студии', title: 'О студии — АвтоБлеск' },
     { id: 'contact.html', label: 'Контакты', title: 'Контакты — АвтоБлеск' },
-    { id: 'album.html', label: 'Альбом работ', title: 'Альбом работ — АвтоБлеск' },
+    { id: 'album.html', label: 'Наши работы', title: 'Наши работы — АвтоБлеск' },
     { id: 'training.html', label: 'Обучение', title: 'Обучение — АвтоБлеск' },
     { id: 'legal.html', label: 'Правовая информация', title: 'Правовая информация — АвтоБлеск' },
   ];
 
   let store = {};
-  let albums = [];
+  let articles = [];
+  let articlesAdmin = null;
   let services = [];
   let wrapZones = { order: [], zones: {}, models: {}, colors: [], finishes: [], effects: [] };
   let wrapCarTab = 'mercedes';
@@ -117,26 +118,12 @@
     const url = window.AvtoCmsApi.contentJsonUrl();
     const res = await fetch(url);
     store = res.ok ? await res.json() : {};
-    const gal = store[ALBUM_PAGE] || store['gallery.html'] || {};
-    const lists = gal.lists || {};
-    if (lists.albums) albums = JSON.parse(JSON.stringify(lists.albums));
-    else if (lists.portfolio && window.AvtoCmsAlbums) albums = window.AvtoCmsAlbums.migratePortfolio(lists.portfolio);
-    else albums = [];
-
-    if (!albums.length && window.AvtoCmsAlbums) {
-      const htmlRes = await fetch('../' + ALBUM_PAGE + '?_=' + Date.now());
-      if (htmlRes.ok) {
-        const doc = new DOMParser().parseFromString(await htmlRes.text(), 'text/html');
-        const parsed = window.AvtoCmsAlbums.collectAlbums(doc.querySelector('[data-cms-albums="portfolio"]'));
-        if (parsed?.length) albums = parsed;
-      } else {
-        const legacy = await fetch('../gallery.html?_=' + Date.now());
-        if (legacy.ok) {
-          const doc = new DOMParser().parseFromString(await legacy.text(), 'text/html');
-          const parsed = window.AvtoCmsAlbums.collectAlbums(doc.querySelector('[data-cms-albums="portfolio"]'));
-          if (parsed?.length) albums = parsed;
-        }
-      }
+    try {
+      const artRes = await fetch(window.AvtoCmsApi.articlesUrl());
+      const artData = artRes.ok ? await artRes.json() : { articles: [] };
+      articles = Array.isArray(artData.articles) ? JSON.parse(JSON.stringify(artData.articles)) : [];
+    } catch (_) {
+      articles = [];
     }
 
     const svc = store['index.html'] || store['services.html'] || {};
@@ -186,95 +173,17 @@
     store[page] = Object.assign({}, prev, { lists });
   }
 
-  function renderAlbumsAdmin() {
-    const root = $('#cms-albums-editor');
-    if (!root) return;
-    const A = window.AvtoCmsAlbums;
-    root.innerHTML = albums
-      .map((album, ai) => {
-        const items = (album.items || [])
-          .map((it, ii) => {
-            const thumb = it.type === 'video' ? '▶ video' : it.url.split('/').pop();
-            return (
-              '<div class="cms-admin-media" data-ai="' +
-              ai +
-              '" data-ii="' +
-              ii +
-              '">' +
-              '<span class="cms-admin-media-label">' +
-              A.escapeHtml(thumb) +
-              '</span>' +
-              '<button type="button" class="crm-link cms-admin-replace">Заменить</button>' +
-              '<button type="button" class="crm-link cms-admin-del-media">×</button>' +
-              '</div>'
-            );
-          })
-          .join('');
-        return (
-          '<div class="cms-admin-album" data-ai="' +
-          ai +
-          '">' +
-          '<div class="cms-admin-album-head">' +
-          '<label>№ <input class="crm-input cms-admin-kicker" value="' +
-          A.escapeAttr(album.kicker || '') +
-          '"></label>' +
-          '<label>Название <input class="crm-input cms-admin-title" value="' +
-          A.escapeAttr(album.title || '') +
-          '"></label>' +
-          '<label>Описание<textarea class="crm-input cms-admin-desc" rows="2">' +
-          A.escapeHtml(album.description || album.desc || '') +
-          '</textarea></label>' +
-          '<button type="button" class="crm-link cms-admin-del-album">Удалить альбом</button>' +
-          '</div>' +
-          '<div class="cms-admin-media-grid">' +
-          items +
-          '</div>' +
-          '<button type="button" class="crm-btn cms-admin-add-photo">+ фото / видео</button>' +
-          '</div>'
-        );
-      })
-      .join('');
-
-    root.querySelectorAll('.cms-admin-kicker').forEach((inp) => {
-      inp.oninput = () => {
-        albums[+inp.closest('[data-ai]').dataset.ai].kicker = inp.value;
-      };
-    });
-    root.querySelectorAll('.cms-admin-title').forEach((inp) => {
-      inp.oninput = () => {
-        albums[+inp.closest('[data-ai]').dataset.ai].title = inp.value;
-      };
-    });
-    root.querySelectorAll('.cms-admin-desc').forEach((inp) => {
-      inp.oninput = () => {
-        albums[+inp.closest('[data-ai]').dataset.ai].description = inp.value;
-      };
-    });
-    root.querySelectorAll('.cms-admin-del-album').forEach((btn) => {
-      btn.onclick = () => {
-        const ai = +btn.closest('[data-ai]').dataset.ai;
-        if (confirm('Удалить альбом?')) {
-          albums.splice(ai, 1);
-          renderAlbumsAdmin();
-        }
-      };
-    });
-    root.querySelectorAll('.cms-admin-del-media').forEach((btn) => {
-      btn.onclick = () => {
-        const box = btn.closest('.cms-admin-media');
-        albums[+box.dataset.ai].items.splice(+box.dataset.ii, 1);
-        renderAlbumsAdmin();
-      };
-    });
-    root.querySelectorAll('.cms-admin-add-photo').forEach((btn) => {
-      btn.onclick = () => uploadToAlbum(+btn.closest('[data-ai]').dataset.ai);
-    });
-    root.querySelectorAll('.cms-admin-replace').forEach((btn) => {
-      btn.onclick = () => {
-        const box = btn.closest('.cms-admin-media');
-        replaceMedia(+box.dataset.ai, +box.dataset.ii);
-      };
-    });
+  function renderArticlesAdmin() {
+    const root = $('#cms-articles-editor');
+    if (!root || !window.AvtoCmsArticlesAdmin) return;
+    if (!articlesAdmin) {
+      articlesAdmin = window.AvtoCmsArticlesAdmin.bindArticlesAdmin({
+        articles,
+        token,
+        render: renderArticlesAdmin,
+      });
+    }
+    articlesAdmin.renderEditor(root, articles);
   }
 
   function pickFile(cb) {
@@ -293,38 +202,10 @@
     return (await res.json()).url;
   }
 
-  async function uploadToAlbum(ai) {
-    pickFile(async (file) => {
-      try {
-        const url = await uploadFile(file);
-        const type = file.type.startsWith('video/') ? 'video' : 'image';
-        albums[ai].items.push({ type, url });
-        renderAlbumsAdmin();
-      } catch (_) {
-        alert('Не удалось загрузить файл');
-      }
-    });
-  }
-
-  async function replaceMedia(ai, ii) {
-    pickFile(async (file) => {
-      try {
-        const url = await uploadFile(file);
-        albums[ai].items[ii] = {
-          type: file.type.startsWith('video/') ? 'video' : 'image',
-          url,
-        };
-        renderAlbumsAdmin();
-      } catch (_) {
-        alert('Не удалось загрузить файл');
-      }
-    });
-  }
-
   function renderServicesAdmin() {
     const root = $('#cms-services-editor');
     if (!root) return;
-    const A = window.AvtoCmsAlbums;
+    const A = window.AvtoCmsArticles;
     root.innerHTML = services
       .map(
         (row, i) =>
@@ -426,7 +307,7 @@
     const root = $('#cms-wrap-editor');
     if (!root) return;
     ensureWrapConfig();
-    const A = window.AvtoCmsAlbums;
+    const A = window.AvtoCmsArticles;
     const order = wrapZones.order || [];
     const zones = wrapZones.models[wrapCarTab].zones || {};
     const rows = order
@@ -663,7 +544,7 @@
     });
     const titles = {
       dashboard: ['Панель CMS', 'Управление сайтом АвтоБлеск'],
-      albums: ['Альбомы работ', 'Блоки 01, 02… — название, описание и фото на странице album.html'],
+      articles: ['Наши работы', 'Статьи с фото: создание, закрепление, порядок, скрытие. Отдельные страницы в works/'],
       services: ['Услуги и цены', 'Каталог на главной (раздел «Каталог»)'],
       pages: ['Страницы', 'Сайт, альбом и обучение — правки текста и фото на странице'],
       wrap: ['Конфигуратор 3D', 'Названия и цены зон оклейки на главной'],
@@ -705,30 +586,44 @@
       }
     }
     renderPages();
-    renderAlbumsAdmin();
+    renderArticlesAdmin();
     renderServicesAdmin();
     renderWrapZonesAdmin();
     switchView('dashboard');
 
-    const addAlbum = $('#cms-add-album');
-    if (addAlbum) {
-      addAlbum.onclick = () => {
-        albums.push({
-          kicker: String(albums.length + 1).padStart(2, '0'),
-          title: 'Новый альбом',
-          description: '',
-          items: [],
+    const addArticle = $('#cms-add-article');
+    if (addArticle) {
+      addArticle.onclick = () => {
+        const title = 'Новая статья';
+        articles.unshift({
+          id: 'art-' + Date.now(),
+          slug: window.AvtoCmsArticles.slugify(title),
+          title,
+          excerpt: '',
+          body: '',
+          cover: '',
+          gallery: [],
+          publishedAt: new Date().toISOString().slice(0, 10),
+          pinned: false,
+          hidden: false,
+          order: articles.length + 1,
+          metaTitle: '',
+          metaDescription: '',
         });
-        renderAlbumsAdmin();
+        renderArticlesAdmin();
       };
     }
 
-    const saveAlbums = $('#cms-save-albums');
-    if (saveAlbums) {
-      saveAlbums.onclick = async () => {
+    const saveArticlesBtn = $('#cms-save-articles');
+    if (saveArticlesBtn) {
+      saveArticlesBtn.onclick = async () => {
         try {
-          await savePageLists(ALBUM_PAGE, { albums });
-          alert('Альбомы сохранены.');
+          articles.forEach((a, i) => {
+            a.order = articles.length - i;
+          });
+          const res = await window.AvtoCmsApi.saveArticles({ articles }, token());
+          if (!res.ok) throw new Error('save');
+          alert('Статьи сохранены. Страницы works/ обновлены.');
         } catch (_) {
           alert('Ошибка сохранения. Войдите снова.');
         }

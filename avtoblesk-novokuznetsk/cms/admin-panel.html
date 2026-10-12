@@ -36,7 +36,7 @@
 <div id="cms-login" class="cms-login-wrap">
   <div class="cms-login-box">
     <h1>CMS АвтоБлеск</h1>
-    <p>Панель управления сайтом: альбомы работ и правки на страницах.</p>
+    <p>Панель управления сайтом: статьи «Наши работы» и правки на страницах.</p>
     <form id="cms-login-form">
       <input type="password" id="cms-login-password" placeholder="Пароль CMS" autocomplete="current-password" required>
       <button type="submit" id="cms-login-submit">Войти</button>
@@ -53,7 +53,7 @@
       <div class="crm-logo"><span>АВТО</span>БЛЕСК<small>CMS</small></div>
       <div class="crm-nav">
         <button type="button" class="crm-nav-item is-active" data-cms-nav="dashboard">Главная</button>
-        <button type="button" class="crm-nav-item" data-cms-nav="albums">Альбомы работ</button>
+        <button type="button" class="crm-nav-item" data-cms-nav="articles">Наши работы</button>
         <button type="button" class="crm-nav-item" data-cms-nav="pages">Страницы сайта</button>
         <button type="button" class="crm-nav-item" data-cms-nav="wrap">Конфигуратор 3D</button>
         <div class="cms-nav-label">Школа</div>
@@ -84,20 +84,21 @@
 
       <div class="crm-view" data-cms-panel="dashboard">
         <div class="crm-cards">
-          <div class="crm-card"><div class="crm-card-top">Альбом<div class="crm-card-ico">◫</div></div><b>album.html</b><small>01 · название · описание · фото</small></div>
-          <div class="crm-card"><div class="crm-card-top">Страницы<div class="crm-card-ico">✎</div></div><b>3</b><small>Сайт · альбом · обучение</small></div>
+          <div class="crm-card"><div class="crm-card-top">Статьи<div class="crm-card-ico">◫</div></div><b>album.html</b><small>Наши работы · отдельные страницы</small></div>
+          <div class="crm-card"><div class="crm-card-top">Страницы<div class="crm-card-ico">✎</div></div><b>3</b><small>Сайт · работы · обучение</small></div>
           <div class="crm-card"><div class="crm-card-top">API<div class="crm-card-ico">⚙</div></div><b>PHP</b><small>cms/api.php на хостинге</small></div>
         </div>
-        <p class="cms-admin-note">Сохранённые альбомы и правки страниц попадают в <code>cms/content.json</code>. Текст и фото правятся во вкладке «Страницы сайта». На Timeweb создайте <code>cms/config.local.json</code> с паролем (не коммитить).</p>
+        <p class="cms-admin-note">Статьи сохраняются в <code>data/articles.json</code>, страницы — в <code>works/…/</code>. Правки текстов страниц — во вкладке «Страницы сайта». На Timeweb создайте <code>cms/config.local.json</code> с паролем (не коммитить).</p>
       </div>
 
-      <div class="crm-view" data-cms-panel="albums" hidden>
+      <div class="crm-view" data-cms-panel="articles" hidden>
         <div class="cms-admin-toolbar">
-          <a class="crm-link" href="../album.html" target="_blank" rel="noopener">Открыть альбом на сайте</a>
-          <button type="button" class="crm-btn" id="cms-add-album">+ Альбом</button>
-          <button type="button" class="crm-btn cms-admin-save" id="cms-save-albums">Сохранить альбомы</button>
+          <a class="crm-link" href="../album.html" target="_blank" rel="noopener">Открыть «Наши работы»</a>
+          <button type="button" class="crm-btn" id="cms-add-article">+ Статья</button>
+          <button type="button" class="crm-btn cms-admin-save" id="cms-save-articles">Сохранить статьи</button>
         </div>
-        <div id="cms-albums-editor" class="cms-admin-stack"></div>
+        <p class="cms-admin-note">Закрепление, порядок (↑↓), скрытие и удаление. После сохранения обновляются страницы в <code>works/slug/</code> для поисковиков.</p>
+        <div id="cms-articles-editor" class="cms-admin-stack"></div>
       </div>
 
       <div class="crm-view" data-cms-panel="pages" hidden>
@@ -145,8 +146,9 @@
 document.querySelectorAll('[data-cms-nav="services"],[data-cms-panel="services"]').forEach(function (el) { el.remove(); });
 </script>
 <script src="cms-api.js?v=hide3"></script>
-<script src="cms-albums.js"></script>
+<script src="cms-articles.js"></script>
+<script src="cms-articles-admin.js"></script>
 <script src="school-crm.js"></script>
-<script src="admin-panel.js?v=meta1"></script>
+<script src="admin-panel.js?v=articles1"></script>
 </body>
 </html>
