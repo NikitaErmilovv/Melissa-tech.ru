@@ -18,7 +18,9 @@
       el.closest('.finish') ||
       el.closest('.zones') ||
       el.closest('.address-map-frame') ||
-      el.classList?.contains('address-map-img')
+      el.classList?.contains('address-map-img') ||
+      el.closest('.footer-requisites') ||
+      el.classList?.contains('footer-legal-link')
     );
   }
 
@@ -160,7 +162,7 @@
     };
 
     document.querySelectorAll(
-      '.eyebrow,.kicker,.intro,.tag,.cost,.quote,.founder-lead,.cms-album-desc,.contact-note,.address-map-text,.address-map-muted,.address-map-muted-sm,.address-map-detail-label,.address-map-btn,.founder-visual-caption,.stars,p,h1,h2,h3,h4,figcaption,small,summary,.service-row p,.service-row h3,.step h3,.step p,.card-body h3,.card-body p,.review p,.review small,.footer-hours-block span,.footer-bottom span,.subpage-hero p,.details p'
+      '.eyebrow,.kicker,.intro,.tag,.cost,.quote,.founder-lead,.cms-album-desc,.contact-note,.address-map-text,.address-map-muted,.address-map-muted-sm,.address-map-detail-label,.address-map-btn,.founder-visual-caption,.stars,p,h1,h2,h3,h4,figcaption,small,summary,.service-row p,.service-row h3,.step h3,.step p,.card-body h3,.card-body p,.review p,.review small,.footer-hours-block span,.footer-bottom > span:not(.footer-requisites),.subpage-hero p,.details p'
     ).forEach(mark);
 
     document.querySelectorAll('a.button, a.address-map-phone, .footer-phone-inline, .footer-logo, .address-map-brand').forEach((el) => {
