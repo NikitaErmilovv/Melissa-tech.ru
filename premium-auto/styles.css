@@ -158,6 +158,9 @@ body.nav-open .nav-burger-line:last-child{transform:translateY(-4.25px) rotate(-
   transform:scale(1.06);
   animation:heroDrift 18s ease-out forwards;
 }
+@media (min-width:900px){
+  .hero-media img{object-position:center 72%}
+}
 @keyframes heroDrift{
   from{transform:scale(1.08)}
   to{transform:scale(1)}
@@ -199,11 +202,11 @@ body.nav-open .nav-burger-line:last-child{transform:translateY(-4.25px) rotate(-
   overflow-wrap:normal;
   word-break:keep-all;
 }
-@media (max-width:420px){
+@media (max-width:900px){
   .hero h1{
-    /* PREMIUM = 7 glyphs — fit inside padded viewport */
-    font-size:calc((100vw - 2 * var(--pad)) / 6.35);
-    letter-spacing:-.04em;
+    /* PREMIUM = 7 glyphs — keep fully on screen */
+    font-size:calc((100vw - 2 * var(--pad)) / 7.25);
+    letter-spacing:-.045em;
   }
 }
 .lead{
