@@ -65,11 +65,7 @@
   }
 
   function renderAlbumsRoot(root, albums) {
-    if (!root) return;
-    if (!albums || !albums.length) {
-      root.innerHTML = '<p class="intro album-empty">Пока здесь ничего нет.</p>';
-      return;
-    }
+    if (!root || !albums || !albums.length) return;
     root.innerHTML = albums.map(albumSectionHtml).join('');
   }
 
