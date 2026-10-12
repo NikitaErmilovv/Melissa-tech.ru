@@ -609,6 +609,8 @@
           order: articles.length + 1,
           metaTitle: '',
           metaDescription: '',
+          contentWidth: 'normal',
+          showCover: true,
         });
         renderArticlesAdmin();
       };

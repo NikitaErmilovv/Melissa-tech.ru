@@ -179,6 +179,44 @@ function articles_format_date(string $iso): string {
     return date('j.m.Y', $ts);
 }
 
+function articles_width_mod(string $width): string {
+    $w = strtolower(trim($width));
+    if ($w === 'narrow' || $w === 'wide') {
+        return 'article-page--width-' . $w;
+    }
+    return 'article-page--width-normal';
+}
+
+function articles_show_cover(array $article): bool {
+    if (array_key_exists('showCover', $article)) {
+        return !empty($article['showCover']);
+    }
+    return true;
+}
+
+/**
+ * @param array<int, string> $gallery
+ * @return array<int, string>
+ */
+function articles_gallery_without_cover(array $gallery, string $cover): array {
+    if ($cover === '') {
+        return $gallery;
+    }
+    $norm = static fn (string $p): string => ltrim(str_replace('\\', '/', $p), '/');
+    $c = $norm($cover);
+    $out = [];
+    foreach ($gallery as $url) {
+        if (!is_string($url) || $url === '') {
+            continue;
+        }
+        if ($norm($url) === $c) {
+            continue;
+        }
+        $out[] = $url;
+    }
+    return $out;
+}
+
 /**
  * @param array<string, mixed> $article
  */
@@ -194,6 +232,7 @@ function articles_render_page_html(array $article, string $rel = '../'): string 
     $bodyHtml = articles_body_html((string) ($article['body'] ?? ''));
     $date = articles_format_date((string) ($article['publishedAt'] ?? ''));
     $gallery = is_array($article['gallery'] ?? null) ? $article['gallery'] : [];
+    $gallery = articles_gallery_without_cover($gallery, $cover);
     $galleryHtml = '';
     foreach ($gallery as $url) {
         if (!is_string($url) || $url === '') {
@@ -201,6 +240,12 @@ function articles_render_page_html(array $article, string $rel = '../'): string 
         }
         $href = articles_escape($rel . ltrim($url, '/'));
         $galleryHtml .= '<a class="g g--media" href="' . $href . '" data-lightbox="article"><img src="' . $href . '" alt="" loading="lazy" decoding="async"></a>';
+    }
+
+    $widthMod = articles_width_mod((string) ($article['contentWidth'] ?? 'normal'));
+    $coverHtml = '';
+    if ($cover !== '' && articles_show_cover($article)) {
+        $coverHtml = '<figure class="article-page-cover"><img src="' . articles_escape($rel . ltrim($cover, '/')) . '" alt="' . articles_escape($title) . '" loading="eager" decoding="async"></figure>';
     }
 
     $navWorks = articles_escape($rel . 'album.html');
@@ -214,7 +259,7 @@ function articles_render_page_html(array $article, string $rel = '../'): string 
 <link rel="canonical" href="' . articles_escape($canonical) . '">
 <title>' . articles_escape($metaTitle) . '</title>
 <link rel="icon" href="' . articles_escape($rel) . 'favicon.ico" sizes="any">
-<link rel="stylesheet" href="' . articles_escape($rel) . 'styles.css?v=works1">
+<link rel="stylesheet" href="' . articles_escape($rel) . 'styles.css?v=works3">
 <link rel="stylesheet" href="' . articles_escape($rel) . 'cms/cms.css?v=text1">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="АвтоБлеск">
@@ -241,17 +286,19 @@ function articles_render_page_html(array $article, string $rel = '../'): string 
     <a href="' . $navWorks . '">НАШИ РАБОТЫ</a>
   </div>
 </nav>
-<article class="article-page">
+<article class="article-page ' . articles_escape($widthMod) . '">
   <header class="article-page-hero subpage-hero">
     <div class="kicker">НАШИ РАБОТЫ</div>
     <h1>' . articles_escape($title) . '</h1>
     ' . ($date !== '' ? '<p class="article-page-date">' . $date . '</p>' : '') . '
     ' . (trim((string) ($article['excerpt'] ?? '')) !== '' ? '<p class="article-page-lead">' . articles_escape((string) $article['excerpt']) . '</p>' : '') . '
   </header>
-  ' . ($cover !== '' ? '<figure class="article-page-cover"><img src="' . articles_escape($rel . ltrim($cover, '/')) . '" alt="' . articles_escape($title) . '" width="1200" height="675" loading="eager" decoding="async"></figure>' : '') . '
-  <div class="article-page-body section">' . $bodyHtml . '</div>
-  ' . ($galleryHtml !== '' ? '<div class="section gallery gallery--portfolio article-page-gallery">' . $galleryHtml . '</div>' : '') . '
-  <p class="section intro"><a class="button dark" href="' . $navWorks . '">← Все работы</a></p>
+  <div class="article-page-inner">
+  ' . $coverHtml . '
+  <div class="article-page-body">' . $bodyHtml . '</div>
+  ' . ($galleryHtml !== '' ? '<div class="gallery gallery--portfolio article-page-gallery">' . $galleryHtml . '</div>' : '') . '
+  <p class="intro article-page-back"><a class="button dark" href="' . $navWorks . '">← Все работы</a></p>
+  </div>
 </article>
 <footer class="site-footer" style="margin-top:48px">
   <div class="footer-bottom">
@@ -383,6 +430,10 @@ function articles_normalize_payload(array $payload): array {
             'order' => (int) ($raw['order'] ?? 0),
             'metaTitle' => mb_substr(trim((string) ($raw['metaTitle'] ?? '')), 0, 180),
             'metaDescription' => mb_substr(trim((string) ($raw['metaDescription'] ?? '')), 0, 320),
+            'contentWidth' => in_array((string) ($raw['contentWidth'] ?? 'normal'), ['narrow', 'normal', 'wide'], true)
+                ? (string) $raw['contentWidth']
+                : 'normal',
+            'showCover' => array_key_exists('showCover', $raw) ? !empty($raw['showCover']) : true,
         ];
     }
     return ['articles' => $clean];

@@ -49,6 +49,24 @@ def sort_articles(items: list) -> list:
     return sorted(items, key=key, reverse=True)
 
 
+def width_mod(width: str) -> str:
+    w = (width or "normal").lower().strip()
+    if w in ("narrow", "wide"):
+        return f"article-page--width-{w}"
+    return "article-page--width-normal"
+
+
+def norm_path(p: str) -> str:
+    return p.replace("\\", "/").lstrip("/")
+
+
+def gallery_without_cover(gallery: list, cover: str) -> list:
+    if not cover:
+        return [u for u in gallery if isinstance(u, str) and u]
+    c = norm_path(cover)
+    return [u for u in gallery if isinstance(u, str) and u and norm_path(u) != c]
+
+
 def render(article: dict, rel: str = "../../") -> str:
     slug = str(article.get("slug") or "")
     title = str(article.get("title") or "Статья")
@@ -57,11 +75,9 @@ def render(article: dict, rel: str = "../../") -> str:
     cover = str(article.get("cover") or "")
     og = f"{SITE}/{cover.lstrip('/')}" if cover else f"{SITE}/img/icon-512.png"
     canonical = f"{SITE}/works/{slug}/"
-    gallery = article.get("gallery") or []
+    gallery = gallery_without_cover(article.get("gallery") or [], cover)
     gallery_html = ""
     for url in gallery:
-        if not isinstance(url, str) or not url:
-            continue
         href = esc(rel + url.lstrip("/"))
         gallery_html += f'<a class="g g--media" href="{href}" data-lightbox="article"><img src="{href}" alt="" loading="lazy" decoding="async"></a>'
     nav_works = esc(rel + "album.html")
@@ -69,13 +85,15 @@ def render(article: dict, rel: str = "../../") -> str:
     lead = f'<p class="article-page-lead">{esc(excerpt)}</p>' if excerpt else ""
     date = fmt_date(str(article.get("publishedAt") or ""))
     date_line = f'<p class="article-page-date">{date}</p>' if date else ""
+    show_cover = article.get("showCover", True)
     cover_block = ""
-    if cover:
+    if cover and show_cover:
         src = esc(rel + cover.lstrip("/"))
-        cover_block = f'<figure class="article-page-cover"><img src="{src}" alt="{esc(title)}" width="1200" height="675" loading="eager" decoding="async"></figure>'
+        cover_block = f'<figure class="article-page-cover"><img src="{src}" alt="{esc(title)}" loading="eager" decoding="async"></figure>'
     gal_block = (
-        f'<div class="section gallery gallery--portfolio article-page-gallery">{gallery_html}</div>' if gallery_html else ""
+        f'<div class="gallery gallery--portfolio article-page-gallery">{gallery_html}</div>' if gallery_html else ""
     )
+    wmod = esc(width_mod(str(article.get("contentWidth") or "normal")))
     return f"""<!doctype html>
 <html lang="ru">
 <head>
@@ -85,7 +103,7 @@ def render(article: dict, rel: str = "../../") -> str:
 <link rel="canonical" href="{esc(canonical)}">
 <title>{esc(meta_title)}</title>
 <link rel="icon" href="{esc(rel)}favicon.ico" sizes="any">
-<link rel="stylesheet" href="{esc(rel)}styles.css?v=works1">
+<link rel="stylesheet" href="{esc(rel)}styles.css?v=works3">
 <link rel="stylesheet" href="{esc(rel)}cms/cms.css?v=text1">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="АвтоБлеск">
@@ -112,17 +130,19 @@ def render(article: dict, rel: str = "../../") -> str:
     <a href="{nav_works}">НАШИ РАБОТЫ</a>
   </div>
 </nav>
-<article class="article-page">
+<article class="article-page {wmod}">
   <header class="article-page-hero subpage-hero">
     <div class="kicker">НАШИ РАБОТЫ</div>
     <h1>{esc(title)}</h1>
     {date_line}
     {lead}
   </header>
+  <div class="article-page-inner">
   {cover_block}
-  <div class="article-page-body section">{body_html(str(article.get("body") or ""))}</div>
+  <div class="article-page-body">{body_html(str(article.get("body") or ""))}</div>
   {gal_block}
-  <p class="section intro"><a class="button dark" href="{nav_works}">← Все работы</a></p>
+  <p class="intro article-page-back"><a class="button dark" href="{nav_works}">← Все работы</a></p>
+  </div>
 </article>
 <footer class="site-footer" style="margin-top:48px">
   <div class="footer-bottom">
