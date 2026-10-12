@@ -1,4 +1,4 @@
 site=alligator
 prod=https://melissa-tech.ru/alligator/
 deploy=git-push-timeweb-hook
-deploy-trigger=alligator-force-20261012-205146
+deploy-trigger=alligator-LIVE-20261012-205414
