@@ -31,16 +31,6 @@
           articles[+inp.closest('[data-ai]').dataset.ai].hidden = inp.checked;
         };
       });
-      root.querySelectorAll('.cms-art-select').forEach((sel) => {
-        sel.onchange = () => {
-          articles[+sel.closest('[data-ai]').dataset.ai][sel.dataset.field] = sel.value;
-        };
-      });
-      root.querySelectorAll('.cms-art-show-cover').forEach((inp) => {
-        inp.onchange = () => {
-          articles[+inp.closest('[data-ai]').dataset.ai].showCover = inp.checked;
-        };
-      });
       root.querySelectorAll('.cms-art-field').forEach((inp) => {
         const ev = inp.tagName === 'TEXTAREA' || inp.dataset.field === 'body' ? 'input' : 'input';
         inp[ev] = () => {
@@ -158,18 +148,7 @@
             '<label>Краткое описание (анонс)<textarea class="crm-input cms-art-field" data-field="excerpt" rows="2">' +
             Esc.escapeHtml(art.excerpt || '') +
             '</textarea></label>' +
-            '<label>Ширина колонки текста <select class="crm-input cms-art-select" data-field="contentWidth">' +
-            '<option value="narrow"' +
-            (art.contentWidth === 'narrow' ? ' selected' : '') +
-            '>Узкая</option><option value="normal"' +
-            (!art.contentWidth || art.contentWidth === 'normal' ? ' selected' : '') +
-            '>Стандарт</option><option value="wide"' +
-            (art.contentWidth === 'wide' ? ' selected' : '') +
-            '>Широкая</option></select></label>' +
-            '<label class="cms-art-flag"><input type="checkbox" class="cms-art-show-cover"' +
-            (art.showCover !== false ? ' checked' : '') +
-            '> Показывать обложку в начале статьи</label>' +
-            '<label>Текст статьи <small>Абзацы — через пустую строку</small><textarea class="crm-input cms-art-field" data-field="body" rows="10">' +
+            '<label>Текст статьи<textarea class="crm-input cms-art-field" data-field="body" rows="8">' +
             Esc.escapeHtml(art.body || '') +
             '</textarea></label>' +
             '<label>SEO title <input class="crm-input cms-art-field" data-field="metaTitle" value="' +
