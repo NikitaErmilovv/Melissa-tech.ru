@@ -1,4 +1,4 @@
 site=altay-toner
 prod=https://melissa-tech.ru/altay-toner/
 deploy=git-push-timeweb-hook
-deploy-trigger=glass-card-v20-20261012-200706
+deploy-trigger=glass-card-v21-20261012-201005
