@@ -1,0 +1,455 @@
+{
+  "order": [
+    "hood",
+    "roof",
+    "bumperFront",
+    "bumperRear",
+    "fenderFrontR",
+    "fenderFrontL",
+    "doorFrontR",
+    "doorFrontL",
+    "doorRearR",
+    "doorRearL",
+    "quarterR",
+    "quarterL",
+    "sideLowerR",
+    "sideLowerL",
+    "mirrorR",
+    "mirrorL",
+    "headlights",
+    "taillights",
+    "windshield",
+    "trunk",
+    "fuelCap",
+    "handles",
+    "pillars"
+  ],
+  "zones": {
+    "hood": {
+      "name": "Капот",
+      "price": 20000
+    },
+    "roof": {
+      "name": "Крыша",
+      "price": 17600
+    },
+    "bumperFront": {
+      "name": "Передний бампер",
+      "price": 22000
+    },
+    "bumperRear": {
+      "name": "Задний бампер",
+      "price": 22000
+    },
+    "fenderFrontR": {
+      "name": "Переднее левое крыло",
+      "price": 12000
+    },
+    "fenderFrontL": {
+      "name": "Переднее правое крыло",
+      "price": 12000
+    },
+    "doorFrontR": {
+      "name": "Передняя левая дверь",
+      "price": 14800
+    },
+    "doorFrontL": {
+      "name": "Передняя правая дверь",
+      "price": 14800
+    },
+    "doorRearR": {
+      "name": "Задняя левая дверь",
+      "price": 14800
+    },
+    "doorRearL": {
+      "name": "Задняя правая дверь",
+      "price": 14800
+    },
+    "quarterR": {
+      "name": "Заднее левое крыло",
+      "price": 16000
+    },
+    "quarterL": {
+      "name": "Заднее правое крыло",
+      "price": 16000
+    },
+    "sideLowerR": {
+      "name": "Левый порог",
+      "price": 10000
+    },
+    "sideLowerL": {
+      "name": "Правый порог",
+      "price": 10000
+    },
+    "mirrorR": {
+      "name": "Левое зеркало",
+      "price": 5200
+    },
+    "mirrorL": {
+      "name": "Правое зеркало",
+      "price": 5200
+    },
+    "headlights": {
+      "name": "Фары",
+      "price": 10000,
+      "from": true,
+      "nopaint": true,
+      "note": "Ремонт детали"
+    },
+    "taillights": {
+      "name": "Фонари",
+      "price": 10000,
+      "from": true,
+      "nopaint": true,
+      "note": "Ремонт детали"
+    },
+    "windshield": {
+      "name": "Полировка лобового",
+      "price": 6000,
+      "from": true,
+      "nopaint": true,
+      "note": "Ремонт детали"
+    },
+    "trunk": {
+      "name": "Багажник",
+      "price": 16000
+    },
+    "fuelCap": {
+      "name": "Лючок бака",
+      "price": 3200,
+      "from": true,
+      "nopaint": true,
+      "note": "Ремонт детали"
+    },
+    "handles": {
+      "name": "Ручки дверей",
+      "price": 5600,
+      "from": true,
+      "nopaint": true,
+      "note": "Ремонт детали"
+    },
+    "pillars": {
+      "name": "Стойки",
+      "price": 8000,
+      "from": true,
+      "nopaint": true,
+      "note": "Ремонт детали"
+    }
+  },
+  "models": {
+    "mercedes": {
+      "label": "Седан",
+      "zones": {
+        "hood": {
+          "name": "Капот",
+          "price": 20000
+        },
+        "roof": {
+          "name": "Крыша",
+          "price": 17600
+        },
+        "bumperFront": {
+          "name": "Передний бампер",
+          "price": 22000
+        },
+        "bumperRear": {
+          "name": "Задний бампер",
+          "price": 22000
+        },
+        "fenderFrontR": {
+          "name": "Переднее левое крыло",
+          "price": 12000
+        },
+        "fenderFrontL": {
+          "name": "Переднее правое крыло",
+          "price": 12000
+        },
+        "doorFrontR": {
+          "name": "Передняя левая дверь",
+          "price": 14800
+        },
+        "doorFrontL": {
+          "name": "Передняя правая дверь",
+          "price": 14800
+        },
+        "doorRearR": {
+          "name": "Задняя левая дверь",
+          "price": 14800
+        },
+        "doorRearL": {
+          "name": "Задняя правая дверь",
+          "price": 14800
+        },
+        "quarterR": {
+          "name": "Заднее левое крыло",
+          "price": 16000
+        },
+        "quarterL": {
+          "name": "Заднее правое крыло",
+          "price": 16000
+        },
+        "sideLowerR": {
+          "name": "Левый порог",
+          "price": 10000
+        },
+        "sideLowerL": {
+          "name": "Правый порог",
+          "price": 10000
+        },
+        "mirrorR": {
+          "name": "Левое зеркало",
+          "price": 5200
+        },
+        "mirrorL": {
+          "name": "Правое зеркало",
+          "price": 5200
+        },
+        "headlights": {
+          "name": "Фары",
+          "price": 10000,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "taillights": {
+          "name": "Фонари",
+          "price": 10000,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "windshield": {
+          "name": "Полировка лобового",
+          "price": 6000,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "trunk": {
+          "name": "Багажник",
+          "price": 16000
+        },
+        "fuelCap": {
+          "name": "Лючок бака",
+          "price": 3200,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "handles": {
+          "name": "Ручки дверей",
+          "price": 5600,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "pillars": {
+          "name": "Стойки",
+          "price": 8000,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        }
+      }
+    },
+    "mazda": {
+      "label": "Кроссовер",
+      "zones": {
+        "hood": {
+          "name": "Капот",
+          "price": 23200
+        },
+        "roof": {
+          "name": "Крыша",
+          "price": 22400
+        },
+        "bumperFront": {
+          "name": "Передний бампер",
+          "price": 25600
+        },
+        "bumperRear": {
+          "name": "Задний бампер",
+          "price": 25600
+        },
+        "fenderFrontR": {
+          "name": "Переднее левое крыло",
+          "price": 14000
+        },
+        "fenderFrontL": {
+          "name": "Переднее правое крыло",
+          "price": 14000
+        },
+        "doorFrontR": {
+          "name": "Передняя левая дверь",
+          "price": 16800
+        },
+        "doorFrontL": {
+          "name": "Передняя правая дверь",
+          "price": 16800
+        },
+        "doorRearR": {
+          "name": "Задняя левая дверь",
+          "price": 16800
+        },
+        "doorRearL": {
+          "name": "Задняя правая дверь",
+          "price": 16800
+        },
+        "quarterR": {
+          "name": "Заднее левое крыло",
+          "price": 19200
+        },
+        "quarterL": {
+          "name": "Заднее правое крыло",
+          "price": 19200
+        },
+        "sideLowerR": {
+          "name": "Левый порог",
+          "price": 12000
+        },
+        "sideLowerL": {
+          "name": "Правый порог",
+          "price": 12000
+        },
+        "mirrorR": {
+          "name": "Левое зеркало",
+          "price": 6000
+        },
+        "mirrorL": {
+          "name": "Правое зеркало",
+          "price": 6000
+        },
+        "headlights": {
+          "name": "Фары",
+          "price": 12000,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "taillights": {
+          "name": "Фонари",
+          "price": 12000,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "windshield": {
+          "name": "Полировка лобового",
+          "price": 7200,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "trunk": {
+          "name": "Багажник",
+          "price": 19200
+        },
+        "fuelCap": {
+          "name": "Лючок бака",
+          "price": 3600,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "handles": {
+          "name": "Ручки дверей",
+          "price": 6400,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        },
+        "pillars": {
+          "name": "Стойки",
+          "price": 9600,
+          "from": true,
+          "nopaint": true,
+          "note": "Ремонт детали"
+        }
+      }
+    }
+  },
+  "colors": [
+    {
+      "hex": "#0b0d10",
+      "name": "Obsidian Black"
+    },
+    {
+      "hex": "#f5f5f2",
+      "name": "Pearl White"
+    },
+    {
+      "hex": "#d71935",
+      "name": "Racing Red"
+    },
+    {
+      "hex": "#1246b8",
+      "name": "Sapphire Blue"
+    },
+    {
+      "hex": "#0b6f46",
+      "name": "Emerald Green"
+    },
+    {
+      "hex": "#bfc4cc",
+      "name": "Silver"
+    },
+    {
+      "hex": "#d39b16",
+      "name": "Champagne Gold"
+    },
+    {
+      "hex": "#6d2bbd",
+      "name": "Electric Purple"
+    },
+    {
+      "hex": "#ff6b16",
+      "name": "Burnt Orange"
+    },
+    {
+      "hex": "#e64f89",
+      "name": "Candy Pink"
+    },
+    {
+      "hex": "#11a9b0",
+      "name": "Turquoise"
+    },
+    {
+      "hex": "#63351f",
+      "name": "Cocoa Brown"
+    }
+  ],
+  "finishes": [
+    {
+      "id": "gloss",
+      "name": "Глянец",
+      "hidden": false
+    },
+    {
+      "id": "satin",
+      "name": "Сатин",
+      "hidden": false
+    },
+    {
+      "id": "matte",
+      "name": "Матовый",
+      "hidden": false
+    }
+  ],
+  "effects": [
+    {
+      "id": "solid",
+      "name": "Однотон",
+      "hidden": false
+    },
+    {
+      "id": "metal",
+      "name": "Металлик",
+      "hidden": false
+    },
+    {
+      "id": "pearl",
+      "name": "Перламутр",
+      "hidden": false
+    }
+  ]
+}

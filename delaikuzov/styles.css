@@ -26,7 +26,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 
 .hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:flex-end;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#3a3226 0,#1a1610 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/works/hero-delaikuzov.jpg?v=2026-10-06-bmw') center 40% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/works/hero-raptor.jpg?v=raptor') 72% 48% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-stack{position:relative;z-index:1;width:100%}
 .hero-content{max-width:720px}
@@ -116,7 +116,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .photo{min-height:430px;background-size:cover;background-position:center;position:relative;overflow:hidden}
 .photo.photo-pos-polish{background-position:center 36%}
 .photo.photo-pos-ceramic{background-position:center 40%}
-.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.7))}
+.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.7));pointer-events:none}
 .photo .tag{position:absolute;left:22px;bottom:20px;z-index:1;font-size:10px;letter-spacing:2px;color:var(--accent)}
 .tag-split span + span{margin-left:.4em}
 .photo.big{min-height:540px}
@@ -136,6 +136,45 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 }
 @media (max-width:720px){
   .photo-strip--services{grid-template-columns:repeat(2,1fr)}
+}
+.photo-strip--services .photo--tesla{
+  grid-column:1 / -1;
+  aspect-ratio:21/7;
+}
+.tesla-band{padding-top:80px;padding-bottom:0}
+.tesla-card{
+  display:grid;
+  grid-template-columns:minmax(280px,1.05fr) minmax(0,.95fr);
+  gap:0;
+  border:1px solid rgba(255,255,255,.1);
+  background:#101010;
+  overflow:hidden;
+}
+.tesla-visual{
+  min-height:420px;
+  background-size:cover;
+  background-position:center 40%;
+  position:relative;
+}
+.tesla-visual:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent 40%,#101010 100%);
+}
+.tesla-copy{padding:48px 40px;display:flex;flex-direction:column;justify-content:center}
+.tesla-copy h2{font-size:clamp(34px,4.5vw,58px);line-height:.95;letter-spacing:-.05em;margin:12px 0 18px;font-weight:800}
+.tesla-lead{color:#d7d7d1;font-size:16px;line-height:1.65;margin:0 0 14px;max-width:520px}
+.tesla-copy p{color:#8f8f89;font-size:14px;line-height:1.7;margin:0 0 22px;max-width:520px}
+.service-row--tesla{border-color:var(--accent-soft);background:rgba(201,168,106,.06)}
+.wrap-band{padding:120px 6vw 40px}
+.wrap-band #wrap-cfg{margin-top:36px}
+@media (max-width:900px){
+  .tesla-card{grid-template-columns:1fr}
+  .tesla-visual{min-height:280px}
+  .tesla-visual:after{background:linear-gradient(180deg,transparent 35%,#101010 100%)}
+  .tesla-copy{padding:28px 22px 36px}
+  .photo-strip--services .photo--tesla{aspect-ratio:16/7}
 }
 
 .quote{margin-top:80px;padding:55px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);font-size:clamp(28px,4vw,58px);line-height:1.05;letter-spacing:-.05em;max-width:1000px}
@@ -378,6 +417,10 @@ html.media-lightbox-open{overflow:hidden}
 
 .service-list{margin-top:55px;border-top:1px solid rgba(255,255,255,.08)}
 .service-row{display:grid;grid-template-columns:80px 1fr 130px;gap:20px;padding:30px 0;border-bottom:1px solid rgba(255,255,255,.08);align-items:start}
+a.service-row{color:inherit;text-decoration:none;transition:background .2s,border-color .2s}
+a.service-row:hover{background:rgba(255,255,255,.025)}
+a.service-row:hover h3{color:var(--accent)}
+a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .service-row .idx{color:var(--accent);font-size:11px;opacity:.75}
 .service-row h3{margin:0;font-size:25px}
 .service-row p{margin:7px 0 0;color:#777;font-size:12px;line-height:1.5}
@@ -400,6 +443,23 @@ html.media-lightbox-open{overflow:hidden}
 .service-catalog-head{margin-bottom:8px}
 .service-catalog-head h2{font-size:clamp(32px,5vw,52px);letter-spacing:-.04em;margin:12px 0 0}
 .service-row .cost{text-align:right;font-size:18px;color:var(--accent)}
+
+.service-page-meta{display:flex;flex-wrap:wrap;gap:28px 48px;align-items:flex-end;margin-top:8px;padding-top:28px;border-top:1px solid rgba(255,255,255,.08)}
+.service-page-cost span{display:block;font-size:11px;letter-spacing:2px;color:#777;margin-bottom:8px}
+.service-page-cost b{font-size:28px;color:var(--accent);font-weight:700}
+.service-page-note{color:#8f8f89;font-size:14px;max-width:320px;line-height:1.5}
+.service-works-placeholder{
+  margin-top:36px;min-height:220px;border:1px dashed rgba(255,255,255,.14);
+  background:rgba(255,255,255,.02);display:flex;align-items:center;justify-content:center;padding:40px 28px;text-align:center;
+}
+.service-works-placeholder p{margin:0;color:#777;font-size:14px;line-height:1.6;max-width:420px}
+.service-page-nav{padding-top:40px}
+.service-page-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.service-page-links a{
+  border:1px solid rgba(255,255,255,.12);padding:12px 16px;font-size:12px;letter-spacing:.04em;
+  color:#cfcfc9;transition:border-color .2s,color .2s,background .2s;
+}
+.service-page-links a:hover{border-color:var(--accent-soft);color:var(--accent);background:rgba(201,168,106,.06)}
 
 .address-map-bg{display:none}
 .address-map-inner{padding:120px 6vw 96px;position:relative;z-index:1}
@@ -701,7 +761,7 @@ html.media-lightbox-open{overflow:hidden}
 .heroimg:before{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.22) 28%,transparent 52%)}
 .hero:after{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.35) 34%,transparent 52%,rgba(10,10,10,.28) 100%)}
 @media (max-width:768px){
-  .heroimg{opacity:.59}
+  .heroimg{opacity:.82;width:100%}
 }
 
 /* Делайкузов — акцент в тон кузова BMW на hero */
