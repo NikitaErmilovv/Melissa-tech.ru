@@ -12,7 +12,7 @@
 | `dark-detailing/` | Dark Detailing, Оренбург — детейлинг (HTML/CSS/JS) |
 | `rtg-wrapzz/` | RTG Wrapzz, Arizona — оклейка, chrome delete, PPF (HTML/CSS/JS) |
 | `restyle-surgut/` | Restyle, Сургут — детейлинг (HTML/CSS/JS) |
-| `d2-detailing/` | D2 Detailing, Новосибирск — детейлинг и кузов (HTML/CSS/JS) |
+| `delaikuzov/` | D2 Detailing, Новосибирск — детейлинг и кузов (HTML/CSS/JS) |
 | `altay-toner/` | Алтай тонер, Новоалтайск — детейлинг и тонировка LLumar (HTML/CSS/JS) |
 | `brooklyn-detailing/` | Бруклин, Магнитогорск — студия детейлинга, вариант SDC (HTML/CSS/JS) |
 | `ds7/` | DS7, Нижний Новгород — детейлинг-центр (HTML/CSS/JS) |
@@ -62,15 +62,15 @@ python server.py
 
 Открыть: http://127.0.0.1:8094/
 
-## Локальный запуск (d2-detailing)
+## Локальный запуск (delaikuzov / D2 Detailing)
 
 ```bash
-cd d2-detailing
+cd delaikuzov
 python server.py
 ```
 
 Открыть: http://127.0.0.1:8110/  
-Прод: https://melissa-tech.ru/d2-detailing/
+Прод: https://melissa-tech.ru/delaikuzov/
 
 ## Локальный запуск (altay-toner)
 

@@ -1,4 +1,0 @@
-path=d2-detailing
-prod=https://melissa-tech.ru/d2-detailing/
-deploy=git-push-timeweb-hook
-deploy-trigger=rename-d2-detailing-2

@@ -6,7 +6,7 @@
 
 ## Локальный запуск
 
-Из папки `d2-detailing`:
+Из папки `delaikuzov`:
 
 - Windows: двойной клик по `start.bat`
 - Python: `python server.py`
@@ -15,6 +15,6 @@
 
 ## Прод
 
-https://melissa-tech.ru/d2-detailing/
+https://melissa-tech.ru/delaikuzov/
 
-Публикуется из `master`, папка `d2-detailing/`.
+Публикуется из `master`, папка `delaikuzov/` (бренд на сайте — D2 Detailing).
