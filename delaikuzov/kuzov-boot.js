@@ -1,4 +1,4 @@
-const CORE_URL = './kuzov-configurator.core.js?v=paint1';
+const CORE_URL = './kuzov-configurator.core.js?v=paint2';
 const MERCEDES_URL = './models/mercedes.glb?v=5';
 const MAZDA_URL = './models/mazda.glb?v=5';
 
