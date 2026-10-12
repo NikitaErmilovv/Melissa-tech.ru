@@ -9,6 +9,7 @@
 
   function setOpen(open) {
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
     panel.classList.toggle('is-open', open);
     document.body.classList.toggle('nav-open', open);
   }
