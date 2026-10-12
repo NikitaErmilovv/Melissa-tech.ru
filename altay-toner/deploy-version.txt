@@ -1,4 +1,4 @@
 site=altay-toner
 prod=https://melissa-tech.ru/altay-toner/
-updated=2026-10-13T02:10:00+07:00
-build=a59b6f7-force
+deploy=git-push-timeweb-hook
+deploy-trigger=altay-toner-v14-cream-hero-2026-10-13
