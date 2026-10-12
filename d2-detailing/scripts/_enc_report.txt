@@ -1,0 +1,9 @@
+services.html: fix_text ok=True title=Услуги — D2_detailing
+services.html: fix_encoding ok=True title=Услуги — D2_detailing
+WROTE services.html via fix_encoding
+index.html: fix_text ok=True title=D2_detailing — детейлинг и кузовной ремонт
+index.html: fix_encoding ok=True title=D2_detailing — детейлинг и кузовной ремонт
+WROTE index.html via fix_encoding
+gallery.html: fix_text ok=True title=Работы — D2_detailing
+gallery.html: fix_encoding ok=True title=Работы — D2_detailing
+WROTE gallery.html via fix_encoding

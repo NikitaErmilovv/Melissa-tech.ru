@@ -1,4 +1,4 @@
-# D2_detailing — Новосибирск
+# D2 Detailing — Новосибирск
 
 - **Адрес:** г. Новосибирск, Покатная улица, 30
 - **Телефон:** +7 (913) 005-23-15
@@ -6,7 +6,7 @@
 
 ## Локальный запуск
 
-Из папки `delaikuzov`:
+Из папки `d2-detailing`:
 
 - Windows: двойной клик по `start.bat`
 - Python: `python server.py`
@@ -15,6 +15,6 @@
 
 ## Прод
 
-https://melissa-tech.ru/delaikuzov/
+https://melissa-tech.ru/d2-detailing/
 
-Публикуется из `master`, папка `delaikuzov/` (без `#` в имени — иначе путь на сервере не открывается).
+Публикуется из `master`, папка `d2-detailing/`.

@@ -1,0 +1,9 @@
+<title>Услуги — D2_detailing</title>
+<link rel="stylesheet" href="styles.css?v=14">
+</head>
+<body>
+<nav class="site-nav">
+  <div class="logo"><a href="index.html">D2<span>_detailing</span></a></div>
+  <div class="links"><a href="services.html">УСЛУГИ</a><a href="index.html#wrap">ОКЛЕЙКА</a><a href="kuzov.html">КУЗОВ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О СТУДИИ</a><a href="contact.html">КОНТАКТЫ</a></div>
+  <div class="nav-actions">
+    <a class="phone" href="tel:+79130052315">+7

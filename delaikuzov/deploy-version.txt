@@ -1,4 +1,0 @@
-path=delaikuzov
-prod=https://melissa-tech.ru/delaikuzov/
-deploy=git-push-timeweb-hook
-deploy-trigger=encoding-fix-1
