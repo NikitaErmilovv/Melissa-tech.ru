@@ -27,113 +27,195 @@
   "zones": {
     "hood": {
       "name": "Капот",
-      "price": 20000
+      "price": 40000,
+      "note": "Окрас",
+      "prices": {
+        "base": 40000,
+        "metal": 45000,
+        "pearl": 50000
+      }
     },
     "roof": {
       "name": "Крыша",
-      "price": 17600
+      "price": 80000,
+      "note": "Окрас",
+      "prices": {
+        "base": 80000,
+        "metal": 85000,
+        "pearl": 90000
+      }
     },
     "bumperFront": {
       "name": "Передний бампер",
-      "price": 22000
+      "price": 28000,
+      "note": "Окрас",
+      "prices": {
+        "base": 28000,
+        "metal": 33000,
+        "pearl": 38000
+      }
     },
     "bumperRear": {
       "name": "Задний бампер",
-      "price": 22000
+      "price": 26000,
+      "note": "Окрас",
+      "prices": {
+        "base": 26000,
+        "metal": 31000,
+        "pearl": 36000
+      }
     },
     "fenderFrontR": {
       "name": "Переднее левое крыло",
-      "price": 12000
+      "price": 24000,
+      "note": "Окрас",
+      "prices": {
+        "base": 24000,
+        "metal": 29000,
+        "pearl": 34000
+      }
     },
     "fenderFrontL": {
       "name": "Переднее правое крыло",
-      "price": 12000
+      "price": 24000,
+      "note": "Окрас",
+      "prices": {
+        "base": 24000,
+        "metal": 29000,
+        "pearl": 34000
+      }
     },
     "doorFrontR": {
       "name": "Передняя левая дверь",
-      "price": 14800
+      "price": 28000,
+      "note": "Окрас",
+      "prices": {
+        "base": 28000,
+        "metal": 33000,
+        "pearl": 38000
+      }
     },
     "doorFrontL": {
       "name": "Передняя правая дверь",
-      "price": 14800
+      "price": 28000,
+      "note": "Окрас",
+      "prices": {
+        "base": 28000,
+        "metal": 33000,
+        "pearl": 38000
+      }
     },
     "doorRearR": {
       "name": "Задняя левая дверь",
-      "price": 14800
+      "price": 28000,
+      "note": "Окрас",
+      "prices": {
+        "base": 28000,
+        "metal": 33000,
+        "pearl": 38000
+      }
     },
     "doorRearL": {
       "name": "Задняя правая дверь",
-      "price": 14800
+      "price": 28000,
+      "note": "Окрас",
+      "prices": {
+        "base": 28000,
+        "metal": 33000,
+        "pearl": 38000
+      }
     },
     "quarterR": {
       "name": "Заднее левое крыло",
-      "price": 16000
+      "price": 50000,
+      "note": "Окрас",
+      "prices": {
+        "base": 50000,
+        "metal": 55000,
+        "pearl": 60000
+      }
     },
     "quarterL": {
       "name": "Заднее правое крыло",
-      "price": 16000
+      "price": 50000,
+      "note": "Окрас",
+      "prices": {
+        "base": 50000,
+        "metal": 55000,
+        "pearl": 60000
+      }
     },
     "sideLowerR": {
       "name": "Левый порог",
-      "price": 10000
+      "price": 0,
+      "note": "Окрас",
+      "after_inspect": true
     },
     "sideLowerL": {
       "name": "Правый порог",
-      "price": 10000
+      "price": 0,
+      "note": "Окрас",
+      "after_inspect": true
     },
     "mirrorR": {
       "name": "Левое зеркало",
-      "price": 5200
+      "price": 0,
+      "note": "Окрас",
+      "after_inspect": true
     },
     "mirrorL": {
       "name": "Правое зеркало",
-      "price": 5200
+      "price": 0,
+      "note": "Окрас",
+      "after_inspect": true
     },
     "headlights": {
       "name": "Фары",
-      "price": 10000,
-      "from": true,
-      "nopaint": true,
-      "note": "Ремонт детали"
+      "price": 0,
+      "note": "Ремонт детали",
+      "after_inspect": true,
+      "nopaint": true
     },
     "taillights": {
       "name": "Фонари",
-      "price": 10000,
-      "from": true,
-      "nopaint": true,
-      "note": "Ремонт детали"
+      "price": 0,
+      "note": "Ремонт детали",
+      "after_inspect": true,
+      "nopaint": true
     },
     "windshield": {
       "name": "Полировка лобового",
-      "price": 6000,
-      "from": true,
-      "nopaint": true,
-      "note": "Ремонт детали"
+      "price": 0,
+      "note": "Ремонт детали",
+      "after_inspect": true,
+      "nopaint": true
     },
     "trunk": {
       "name": "Багажник",
-      "price": 16000
+      "price": 0,
+      "note": "Окрас",
+      "after_inspect": true
     },
     "fuelCap": {
       "name": "Лючок бака",
-      "price": 3200,
-      "from": true,
-      "nopaint": true,
-      "note": "Ремонт детали"
+      "price": 0,
+      "note": "Ремонт детали",
+      "after_inspect": true,
+      "nopaint": true
     },
     "handles": {
       "name": "Ручки дверей",
-      "price": 5600,
-      "from": true,
-      "nopaint": true,
-      "note": "Ремонт детали"
+      "price": 0,
+      "note": "Ремонт детали",
+      "after_inspect": true,
+      "nopaint": true
     },
     "pillars": {
       "name": "Стойки",
-      "price": 8000,
-      "from": true,
-      "nopaint": true,
-      "note": "Ремонт детали"
+      "price": 0,
+      "note": "Ремонт детали",
+      "after_inspect": true,
+      "nopaint": true
     }
   },
   "models": {
@@ -142,113 +224,195 @@
       "zones": {
         "hood": {
           "name": "Капот",
-          "price": 20000
+          "price": 40000,
+          "note": "Окрас",
+          "prices": {
+            "base": 40000,
+            "metal": 45000,
+            "pearl": 50000
+          }
         },
         "roof": {
           "name": "Крыша",
-          "price": 17600
+          "price": 80000,
+          "note": "Окрас",
+          "prices": {
+            "base": 80000,
+            "metal": 85000,
+            "pearl": 90000
+          }
         },
         "bumperFront": {
           "name": "Передний бампер",
-          "price": 22000
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "bumperRear": {
           "name": "Задний бампер",
-          "price": 22000
+          "price": 26000,
+          "note": "Окрас",
+          "prices": {
+            "base": 26000,
+            "metal": 31000,
+            "pearl": 36000
+          }
         },
         "fenderFrontR": {
           "name": "Переднее левое крыло",
-          "price": 12000
+          "price": 24000,
+          "note": "Окрас",
+          "prices": {
+            "base": 24000,
+            "metal": 29000,
+            "pearl": 34000
+          }
         },
         "fenderFrontL": {
           "name": "Переднее правое крыло",
-          "price": 12000
+          "price": 24000,
+          "note": "Окрас",
+          "prices": {
+            "base": 24000,
+            "metal": 29000,
+            "pearl": 34000
+          }
         },
         "doorFrontR": {
           "name": "Передняя левая дверь",
-          "price": 14800
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "doorFrontL": {
           "name": "Передняя правая дверь",
-          "price": 14800
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "doorRearR": {
           "name": "Задняя левая дверь",
-          "price": 14800
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "doorRearL": {
           "name": "Задняя правая дверь",
-          "price": 14800
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "quarterR": {
           "name": "Заднее левое крыло",
-          "price": 16000
+          "price": 50000,
+          "note": "Окрас",
+          "prices": {
+            "base": 50000,
+            "metal": 55000,
+            "pearl": 60000
+          }
         },
         "quarterL": {
           "name": "Заднее правое крыло",
-          "price": 16000
+          "price": 50000,
+          "note": "Окрас",
+          "prices": {
+            "base": 50000,
+            "metal": 55000,
+            "pearl": 60000
+          }
         },
         "sideLowerR": {
           "name": "Левый порог",
-          "price": 10000
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "sideLowerL": {
           "name": "Правый порог",
-          "price": 10000
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "mirrorR": {
           "name": "Левое зеркало",
-          "price": 5200
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "mirrorL": {
           "name": "Правое зеркало",
-          "price": 5200
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "headlights": {
           "name": "Фары",
-          "price": 10000,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "taillights": {
           "name": "Фонари",
-          "price": 10000,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "windshield": {
           "name": "Полировка лобового",
-          "price": 6000,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "trunk": {
           "name": "Багажник",
-          "price": 16000
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "fuelCap": {
           "name": "Лючок бака",
-          "price": 3200,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "handles": {
           "name": "Ручки дверей",
-          "price": 5600,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "pillars": {
           "name": "Стойки",
-          "price": 8000,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         }
       }
     },
@@ -257,113 +421,195 @@
       "zones": {
         "hood": {
           "name": "Капот",
-          "price": 23200
+          "price": 40000,
+          "note": "Окрас",
+          "prices": {
+            "base": 40000,
+            "metal": 45000,
+            "pearl": 50000
+          }
         },
         "roof": {
           "name": "Крыша",
-          "price": 22400
+          "price": 80000,
+          "note": "Окрас",
+          "prices": {
+            "base": 80000,
+            "metal": 85000,
+            "pearl": 90000
+          }
         },
         "bumperFront": {
           "name": "Передний бампер",
-          "price": 25600
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "bumperRear": {
           "name": "Задний бампер",
-          "price": 25600
+          "price": 26000,
+          "note": "Окрас",
+          "prices": {
+            "base": 26000,
+            "metal": 31000,
+            "pearl": 36000
+          }
         },
         "fenderFrontR": {
           "name": "Переднее левое крыло",
-          "price": 14000
+          "price": 24000,
+          "note": "Окрас",
+          "prices": {
+            "base": 24000,
+            "metal": 29000,
+            "pearl": 34000
+          }
         },
         "fenderFrontL": {
           "name": "Переднее правое крыло",
-          "price": 14000
+          "price": 24000,
+          "note": "Окрас",
+          "prices": {
+            "base": 24000,
+            "metal": 29000,
+            "pearl": 34000
+          }
         },
         "doorFrontR": {
           "name": "Передняя левая дверь",
-          "price": 16800
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "doorFrontL": {
           "name": "Передняя правая дверь",
-          "price": 16800
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "doorRearR": {
           "name": "Задняя левая дверь",
-          "price": 16800
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "doorRearL": {
           "name": "Задняя правая дверь",
-          "price": 16800
+          "price": 28000,
+          "note": "Окрас",
+          "prices": {
+            "base": 28000,
+            "metal": 33000,
+            "pearl": 38000
+          }
         },
         "quarterR": {
           "name": "Заднее левое крыло",
-          "price": 19200
+          "price": 50000,
+          "note": "Окрас",
+          "prices": {
+            "base": 50000,
+            "metal": 55000,
+            "pearl": 60000
+          }
         },
         "quarterL": {
           "name": "Заднее правое крыло",
-          "price": 19200
+          "price": 50000,
+          "note": "Окрас",
+          "prices": {
+            "base": 50000,
+            "metal": 55000,
+            "pearl": 60000
+          }
         },
         "sideLowerR": {
           "name": "Левый порог",
-          "price": 12000
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "sideLowerL": {
           "name": "Правый порог",
-          "price": 12000
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "mirrorR": {
           "name": "Левое зеркало",
-          "price": 6000
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "mirrorL": {
           "name": "Правое зеркало",
-          "price": 6000
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "headlights": {
           "name": "Фары",
-          "price": 12000,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "taillights": {
           "name": "Фонари",
-          "price": 12000,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "windshield": {
           "name": "Полировка лобового",
-          "price": 7200,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "trunk": {
           "name": "Багажник",
-          "price": 19200
+          "price": 0,
+          "note": "Окрас",
+          "after_inspect": true
         },
         "fuelCap": {
           "name": "Лючок бака",
-          "price": 3600,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "handles": {
           "name": "Ручки дверей",
-          "price": 6400,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         },
         "pillars": {
           "name": "Стойки",
-          "price": 9600,
-          "from": true,
-          "nopaint": true,
-          "note": "Ремонт детали"
+          "price": 0,
+          "note": "Ремонт детали",
+          "after_inspect": true,
+          "nopaint": true
         }
       }
     }

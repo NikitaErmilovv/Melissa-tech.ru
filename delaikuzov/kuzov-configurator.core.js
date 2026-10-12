@@ -13,18 +13,30 @@ const MODEL_NAMES={mercedes:'Седан',mazda:'Кроссовер'};
 const MODEL_URLS={mercedes:'models/mercedes.glb?v=5',mazda:'models/mazda.glb?v=5'};
 function prefetchMazdaModel(){if(window.__mzPrefetch)return;window.__mzPrefetch=1;fetch(MODEL_URLS.mazda,{priority:'low'}).catch(()=>{})}
 const DEFAULT_ZONE_DEFS={
- hood:['Капот',250],roof:['Крыша',220],bumperFront:['Передний бампер',275],bumperRear:['Задний бампер',275],
- fenderFrontR:['Переднее левое крыло',150],fenderFrontL:['Переднее правое крыло',150],doorFrontR:['Передняя левая дверь',185],doorFrontL:['Передняя правая дверь',185],doorRearR:['Задняя левая дверь',185],doorRearL:['Задняя правая дверь',185],
- quarterR:['Заднее левое крыло',200],quarterL:['Заднее правое крыло',200],sideLowerR:['Левый порог',125],sideLowerL:['Правый порог',125],mirrorR:['Левое зеркало',65],mirrorL:['Правое зеркало',65],
- headlights:['Фары',125,{from:1,nopaint:1,note:'Полировка фар'}],taillights:['Фонари',125,{from:1,nopaint:1,note:'Полировка фонарей'}],
- windshield:['Полировка лобового',75,{from:1,nopaint:1,note:'Полировка лобового стекла'}],
- trunk:['Багажник',200],fuelCap:['Лючок бака',40,{from:1,nopaint:1,note:'Оклейка лючка'}],handles:['Ручки дверей',70,{from:1,nopaint:1,note:'Плёнка на ручки'}],pillars:['Стойки',100,{from:1,nopaint:1,note:'Оклейка стоек'}]
+ hood:['Капот',40000,{note:'Окрас',paint:{base:40000,metal:45000,pearl:50000}}],
+ roof:['Крыша',80000,{note:'Окрас',paint:{base:80000,metal:85000,pearl:90000}}],
+ bumperFront:['Передний бампер',28000,{note:'Окрас',paint:{base:28000,metal:33000,pearl:38000}}],
+ bumperRear:['Задний бампер',26000,{note:'Окрас',paint:{base:26000,metal:31000,pearl:36000}}],
+ fenderFrontR:['Переднее левое крыло',24000,{note:'Окрас',paint:{base:24000,metal:29000,pearl:34000}}],
+ fenderFrontL:['Переднее правое крыло',24000,{note:'Окрас',paint:{base:24000,metal:29000,pearl:34000}}],
+ doorFrontR:['Передняя левая дверь',28000,{note:'Окрас',paint:{base:28000,metal:33000,pearl:38000}}],
+ doorFrontL:['Передняя правая дверь',28000,{note:'Окрас',paint:{base:28000,metal:33000,pearl:38000}}],
+ doorRearR:['Задняя левая дверь',28000,{note:'Окрас',paint:{base:28000,metal:33000,pearl:38000}}],
+ doorRearL:['Задняя правая дверь',28000,{note:'Окрас',paint:{base:28000,metal:33000,pearl:38000}}],
+ quarterR:['Заднее левое крыло',50000,{note:'Окрас',paint:{base:50000,metal:55000,pearl:60000}}],
+ quarterL:['Заднее правое крыло',50000,{note:'Окрас',paint:{base:50000,metal:55000,pearl:60000}}],
+ sideLowerR:['Левый порог',0,{note:'Окрас',after:1}],sideLowerL:['Правый порог',0,{note:'Окрас',after:1}],
+ mirrorR:['Левое зеркало',0,{note:'Окрас',after:1}],mirrorL:['Правое зеркало',0,{note:'Окрас',after:1}],
+ headlights:['Фары',0,{nopaint:1,note:'После осмотра',after:1}],taillights:['Фонари',0,{nopaint:1,note:'После осмотра',after:1}],
+ windshield:['Лобовое стекло',0,{nopaint:1,note:'После осмотра',after:1}],
+ trunk:['Багажник',0,{note:'Окрас',after:1}],fuelCap:['Лючок бака',0,{nopaint:1,note:'После осмотра',after:1}],
+ handles:['Ручки дверей',0,{nopaint:1,note:'После осмотра',after:1}],pillars:['Стойки',0,{nopaint:1,note:'После осмотра',after:1}]
 };
 const STOCK_COLORS=[['#0b0d10','Obsidian Black'],['#f5f5f2','Pearl White'],['#d71935','Racing Red'],['#1246b8','Sapphire Blue'],['#0b6f46','Emerald Green'],['#bfc4cc','Silver'],['#d39b16','Champagne Gold'],['#6d2bbd','Electric Purple'],['#ff6b16','Burnt Orange'],['#e64f89','Candy Pink'],['#11a9b0','Turquoise'],['#63351f','Cocoa Brown']];
 const STOCK_FINISHES=[{id:'gloss',name:'Глянец'},{id:'satin',name:'Сатин'},{id:'matte',name:'Матовый'}];
 const STOCK_EFFECTS=[{id:'solid',name:'Однотон'},{id:'metal',name:'Металлик'},{id:'pearl',name:'Перламутр'}];
 let wrapCfg=null,zoneDefs={...DEFAULT_ZONE_DEFS};
-function zoneMapFrom(src){const next={};if(!src)return next;for(const id of Object.keys(DEFAULT_ZONE_DEFS)){const z=src[id];if(!z)continue;const opts={};if(z.from)opts.from=1;if(z.nopaint)opts.nopaint=1;if(z.note)opts.note=z.note;next[id]=Object.keys(opts).length?[z.name,+z.price||0,opts]:[z.name,+z.price||0]}return next}
+function zoneMapFrom(src){const next={};if(!src)return next;for(const id of Object.keys(DEFAULT_ZONE_DEFS)){const z=src[id];if(!z)continue;const opts={};if(z.from)opts.from=1;if(z.nopaint)opts.nopaint=1;if(z.after_inspect||z.after)opts.after=1;if(z.note)opts.note=z.note;const prices=z.prices||null;if(prices&&typeof prices==='object'){opts.paint={base:+prices.base||+z.price||0,metal:+prices.metal||0,pearl:+prices.pearl||0}}next[id]=Object.keys(opts).length?[z.name,+z.price||0,opts]:[z.name,+z.price||0]}return next}
 function syncZoneDefs(model){const src=wrapCfg?.models?.[model]?.zones||wrapCfg?.zones;const next=zoneMapFrom(src);for(const id of Object.keys(DEFAULT_ZONE_DEFS))if(!next[id])next[id]=DEFAULT_ZONE_DEFS[id];zoneDefs=next;if(wrapCfg?.models?.mercedes?.label)MODEL_NAMES.mercedes=wrapCfg.models.mercedes.label;if(wrapCfg?.models?.mazda?.label)MODEL_NAMES.mazda=wrapCfg.models.mazda.label}
 function paletteColors(){const list=wrapCfg?.colors;if(!Array.isArray(list)||!list.length)return STOCK_COLORS.map(([hex,name])=>({hex,name,hidden:false}));return list.map((c,i)=>{const stock=STOCK_COLORS[i]||STOCK_COLORS[0];const hex=String(c.hex||stock[0]);const name=String(c.name||stock[1]);return {hex,name,hidden:!!c.hidden}})}
 function lookItems(kind){const stock=kind==='finish'?STOCK_FINISHES:STOCK_EFFECTS;const extra=wrapCfg?.[kind==='finish'?'finishes':'effects']||[];return stock.map(s=>{const o=extra.find(x=>x.id===s.id)||{};return {id:s.id,name:o.name||s.name,hidden:!!o.hidden}})}
@@ -119,20 +131,26 @@ function resetZone(id){for(const mesh of zones[id]||[]){const s=states[activeMod
 function paintZone(id){if(!id||zoneDefs[id]?.[2]?.nopaint)return;if(tool==='remove')resetZone(id);else if(tool==='eyedrop'){const s=(zones[id]||[]).map(m=>states[activeModel].get(m.uuid)).find(x=>x?.hex);if(s){activeHex=s.hex;document.querySelectorAll('.swatch').forEach(x=>x.classList.toggle('active',x.dataset.hex===activeHex))}}else if(tool!=='select'){for(const mesh of zones[id]||[])applyMaterial(mesh,activeHex)}recalc();renderParts()}
 function friendly(id){return zoneDefs[id]?.[0]||id}function price(id){return zoneDefs[id]?.[1]||0}
 function money(n){return Number(n).toLocaleString('ru-RU')+' ₽'}
-function priceText(id){return (zoneDefs[id]?.[2]?.from?'от ':'')+money(price(id))}
-function subText(id){const note=zoneDefs[id]?.[2]?.note;return note?note+' · '+MODEL_NAMES[activeModel]:MODEL_NAMES[activeModel]}
+function priceText(id){
+  const opts=zoneDefs[id]?.[2]||{};
+  if(opts.after||(!price(id)&&!opts.paint))return 'после осмотра';
+  const paint=opts.paint;
+  if(paint?.base)return money(paint.base);
+  return (opts.from?'от ':'')+money(price(id));
+}
+function subText(id){const note=zoneDefs[id]?.[2]?.note||'Окрас';return note+' · '+MODEL_NAMES[activeModel]}
 function infoAnchors(id){return INFO_ANCHORS[activeModel]?.[id]}
 const pins=[];function hidePins(from=0){for(let i=from;i<pins.length;i++)pins[i].style.display='none'}
 function clearHighlight(){hlMeshes.forEach(h=>h.userData.proxy?h.visible=false:h.removeFromParent());hlMeshes=[];outline.selectedObjects=[];hidePins()}
-const PDR_ZONES=new Set(['hood','roof','fenderFrontR','fenderFrontL','doorFrontR','doorFrontL','doorRearR','doorRearL','quarterR','quarterL','trunk','sideLowerR','sideLowerL']);
-const STRAIGHTEN_ZONES=new Set([...PDR_ZONES,'bumperFront','bumperRear']);
-const NO_PAINT_ZONES=new Set(['headlights','taillights','windshield']);
 function repairWorks(id){
-  const base=price(id);
-  const rows=[];
-  if(STRAIGHTEN_ZONES.has(id))rows.push(['Рихтовка',Math.round(base*.45)]);
-  if(!NO_PAINT_ZONES.has(id))rows.push(['Покраска',base]);
-  if(PDR_ZONES.has(id))rows.push(['Удаление вмятин',Math.round(base*.38)]);
+  const opts=zoneDefs[id]?.[2]||{};
+  if(opts.nopaint||opts.after)return [];
+  const paint=opts.paint;
+  const base=paint?.base||price(id);
+  if(!base)return [];
+  const rows=[['Акриловая / базовая',base]];
+  if(paint?.metal)rows.push(['Металлик',paint.metal]);
+  if(paint?.pearl)rows.push(['Перламутр',paint.pearl]);
   return rows;
 }
 function renderKuzovQuote(id){
@@ -146,9 +164,11 @@ function renderKuzovQuote(id){
   card.hidden=false;
   name.textContent=friendly(id);
   const rows=repairWorks(id);
-  list.innerHTML=rows.length?rows.map(([label,n])=>`<div class="kuzov-work"><span>${label}</span><b>от ${money(n)}</b></div>`).join(''):'<div class="kuzov-work"><span>Стоимость</span><b>после осмотра</b></div>';
+  list.innerHTML=rows.length
+    ?`<div class="kuzov-work-head">Окрас</div>`+rows.map(([label,n])=>`<div class="kuzov-work"><span>${label}</span><b>${money(n)}</b></div>`).join('')
+    :'<div class="kuzov-work"><span>Окрас</span><b>после осмотра</b></div>';
 }
-function selectZone(id){clearHighlight();selectedZone=id;const ms=zones[id]||[];for(const m of ms){if(m.userData.proxy){m.visible=true;hlMeshes.push(m);continue}const h=new THREE.Mesh(m.geometry,hlMat);h.raycast=()=>{};h.renderOrder=2;m.add(h);hlMeshes.push(h)}outline.selectedObjects=ms;document.getElementById('selectedInfo').innerHTML=`<b>${friendly(id)}</b><br>Ремонт: ${priceText(id)}<br><span style="color:#777d88">${subText(id)}</span>`;document.getElementById('status').textContent=friendly(id);markerFor(id);renderParts();renderKuzovQuote(id)}
+function selectZone(id){clearHighlight();selectedZone=id;const ms=zones[id]||[];for(const m of ms){if(m.userData.proxy){m.visible=true;hlMeshes.push(m);continue}const h=new THREE.Mesh(m.geometry,hlMat);h.raycast=()=>{};h.renderOrder=2;m.add(h);hlMeshes.push(h)}outline.selectedObjects=ms;document.getElementById('selectedInfo').innerHTML=`<b>${friendly(id)}</b><br>Окрас: ${priceText(id)}<br><span style="color:#777d88">${subText(id)}</span>`;document.getElementById('status').textContent=friendly(id);markerFor(id);renderParts();renderKuzovQuote(id)}
 function markerFor(id){const marker=document.getElementById('marker');const anchors=infoAnchors(id);if(!id||(!(zones[id]||[]).length&&!anchors)){marker.style.display='none';hidePins();return}const r=app.getBoundingClientRect();const px=v=>[(v.x*.5+.5)*r.width,(-v.y*.5+.5)*r.height];let x,y;
 if(anchors){const root=roots[activeModel];root.updateMatrixWorld();const pts=anchors.map(a=>{const w=root.localToWorld(new THREE.Vector3(...a));const n=new THREE.Vector3(Math.sign(a[0]),0,0).applyQuaternion(root.quaternion);return {s:px(w.clone().project(camera)),vis:n.dot(camera.position.clone().sub(w))>0}});const vis=pts.filter(p=>p.vis),use=vis.length?vis:pts;
 vis.forEach((p,i)=>{let el=pins[i];if(!el){el=document.createElement('div');el.className='pin';marker.parentElement.appendChild(el);pins[i]=el}el.style.left=p.s[0]+'px';el.style.top=p.s[1]+'px';el.style.display='block'});hidePins(vis.length);
@@ -185,7 +205,7 @@ document.querySelectorAll('[data-effect]').forEach(b=>b.onclick=()=>{effect=b.da
 renderer.domElement.addEventListener('pointerdown',e=>{const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const all=Object.values(zones).flat().filter(Boolean);const hits=ray.intersectObjects(all,true);if(!hits.length)return;let hit=hits[0].object,found=null;for(const [id,ms] of Object.entries(zones))if(ms.includes(hit)){found=id;break}if(found){rotating=false;document.getElementById('rotate').classList.remove('active');selectZone(found);if(tool!=='select')paintZone(found)}});
 document.getElementById('rotate').onclick=()=>{rotating=!rotating;document.getElementById('rotate').classList.toggle('active',rotating)};
 document.getElementById('reset').onclick=()=>{turn=null;camera.position.set(4.8,2.2,6.2);controls.target.set(0,.7,0);controls.update();if(roots[activeModel])roots[activeModel].rotation.set(0,0,0)};
-document.getElementById('quote').onclick=()=>alert(`Ориентир по ремонту для «${MODEL_NAMES[activeModel]}». Напишите в Делайкузов — посчитаем точную стоимость.`);
+document.getElementById('quote').onclick=()=>alert(`Ориентир по ремонту для «${MODEL_NAMES[activeModel]}». Напишите в D2_detailing — посчитаем точную стоимость.`);
 function resize(){const r=app.getBoundingClientRect();renderer.setSize(r.width,r.height,false);composer.setPixelRatio(renderer.getPixelRatio());composer.setSize(r.width,r.height);camera.aspect=r.width/r.height;camera.updateProjectionMatrix()}addEventListener('resize',resize);resize();
 let cfgOn=true,cfgRaf=0;
 function loop(now){cfgRaf=0;if(!cfgOn)return;cfgRaf=requestAnimationFrame(loop);stepTurn(now);if(rotating&&!turn&&roots[activeModel])roots[activeModel].rotateY(.0018);controls.update();if(outline.selectedObjects.length)composer.render();else renderer.render(scene,camera);if(selectedZone)markerFor(selectedZone)}

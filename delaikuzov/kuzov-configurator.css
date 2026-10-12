@@ -180,6 +180,9 @@
   line-height:1;
 }
 #kuzov-cfg .kuzov-works{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--wrap-line)}
+#kuzov-cfg .kuzov-work-head{
+  margin:14px 0 4px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,#fbeda3);
+}
 #kuzov-cfg .kuzov-work{
   display:flex;
   justify-content:space-between;
