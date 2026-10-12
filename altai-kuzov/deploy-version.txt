@@ -1,0 +1,4 @@
+site=altai-kuzov
+prod=https://melissa-tech.ru/altai-kuzov/
+deploy=git-push-timeweb-hook
+deploy-trigger=altai-kuzov-LIVE-20261013-043009
