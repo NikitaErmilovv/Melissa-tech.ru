@@ -240,7 +240,7 @@
   function renderAlbums(albums) {
     const A = window.AvtoCmsAlbums;
     const root = albumsRoot();
-    if (!A || !root || !albums || !albums.length) return;
+    if (!A || !root || !albums) return;
     A.renderAlbumsRoot(root, albums);
   }
 
