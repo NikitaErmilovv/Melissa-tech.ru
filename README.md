@@ -15,6 +15,7 @@
 | `delaikuzov/` | Делайкузов, Новосибирск — кузовной ремонт (HTML/CSS/JS) |
 | `altay-toner/` | Алтай тонер, Новоалтайск — детейлинг и тонировка LLumar (HTML/CSS/JS) |
 | `brooklyn-detailing/` | Бруклин, Магнитогорск — студия детейлинга, вариант SDC (HTML/CSS/JS) |
+| `ds7/` | DS7, Нижний Новгород — детейлинг-центр (HTML/CSS/JS) |
 
 ## Локальный запуск (ps-detailing)
 
@@ -90,3 +91,13 @@ python server.py
 
 Открыть: http://127.0.0.1:8092/  
 Прод: https://melissa-tech.ru/brooklyn-detailing/
+
+## Локальный запуск (ds7)
+
+```bash
+cd ds7
+python server.py
+```
+
+Открыть: http://127.0.0.1:8083/  
+Прод: https://melissa-tech.ru/ds7/
