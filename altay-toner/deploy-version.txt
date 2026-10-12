@@ -1,5 +1,4 @@
 site=altay-toner
 prod=https://melissa-tech.ru/altay-toner/
-city=Новоалтайск
-updated=2026-10-10
-photos=altay-hero-split-v9
+updated=2026-10-13T02:10:00+07:00
+build=a59b6f7-force
