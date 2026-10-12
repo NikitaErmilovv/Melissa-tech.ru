@@ -1,4 +1,4 @@
 site=premium-auto
 prod=https://melissa-tech.ru/premium-auto/
 deploy=git-push-timeweb-hook
-deploy-trigger=premium-auto-LIVE-20261013-053000-v2
+deploy-trigger=premium-auto-LIVE-20261013-054000-v3
