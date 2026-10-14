@@ -1,0 +1,4 @@
+site=aliento
+path=/aliento/
+deploy=git-push-timeweb-hook
+deploy-trigger=aliento-LANDING-20261015-013800
