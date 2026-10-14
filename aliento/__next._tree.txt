@@ -1,0 +1,7 @@
+:HL["/aliento/_next/static/chunks/13szvdd62mgc7.css","style"]
+:HL["/aliento/_next/static/media/4e1c87b7aa9e2f2f-s.p.3o02-8iknf6dl.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/aliento/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/aliento/_next/static/media/9c72aa0f40e4eef8-s.p.1y4-pdgsjb-pw.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/aliento/_next/static/media/b59689b1142d37ce-s.p.1bk8_xp319hr4.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=https%3A%2F%2Ft.me%2FSitnikV_Tina%3Ftext%3D%25D0%2597%25D0%25B4%25D1%2580%25D0%25B0%25D0%25B2%25D1%2581%25D1%2582%25D0%25B2%25D1%2583%25D0%25B9%25D1%2582%25D0%25B5!%2520%25D0%25A5%25D0%25BE%25D1%2587%25D1%2583%2520%25D0%25B7%25D0%25B0%25D0%25BF%25D0%25B8%25D1%2581%25D0%25B0%25D1%2582%25D1%258C%25D1%2581%25D1%258F%2520%25D0%25B2%2520Aliento%2520%25E2%2580%2594%2520%25D0%25BF%25D0%25BE%25D0%25B4%25D1%2581%25D0%25BA%25D0%25B0%25D0%25B6%25D0%25B8%25D1%2582%25D0%25B5%252C%2520%25D0%25BA%25D0%25B0%25D0%25BA%25D0%25B0%25D1%258F%2520%25D0%25B3%25D1%2580%25D1%2583%25D0%25BF%25D0%25BF%25D0%25B0%2520%25D0%25BF%25D0%25BE%25D0%25B4%25D0%25BE%25D0%25B9%25D0%25B4%25D1%2591%25D1%2582.","image"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4224,"slots":null}}},"staleTime":300,"buildId":"ggezAn1eBmf5txWHY2U07"}
