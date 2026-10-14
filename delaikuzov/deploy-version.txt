@@ -1,4 +1,4 @@
 site=delaikuzov
 brand=D2 Detailing
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-force-20261015-024045
+deploy-trigger=d2-title-gap-20261015-030148
