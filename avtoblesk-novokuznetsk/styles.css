@@ -30,7 +30,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:25px}
 .hero-title-row{
   --hero-title-size:clamp(58px,8vw,116px);
-  display:flex;align-items:center;gap:clamp(14px,2.2vw,20px);
+  display:flex;align-items:flex-start;gap:clamp(14px,2.2vw,20px);
   margin:0 0 34px;
 }
 .hero-brand-mark{
@@ -666,7 +666,7 @@ html.media-lightbox-open{overflow:hidden}
   .hero-content{margin-top:0}
   .hero-title-row{
     --hero-title-size:clamp(40px,11vw,65px);
-    align-items:center;
+    align-items:flex-start;
     margin-bottom:24px;
     gap:12px;
   }
