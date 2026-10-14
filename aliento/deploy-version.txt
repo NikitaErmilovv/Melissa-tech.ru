@@ -1,4 +1,5 @@
 ﻿site=aliento
 path=/aliento/
 deploy=git-push-timeweb-hook
-deploy-trigger=aliento-PHOTOS-FIX-20261015-020200
+deploy-trigger=aliento-PHOTOS-20261015-020839
+
