@@ -74,7 +74,7 @@ const hlMat=new THREE.MeshBasicMaterial({color:0xfbeda3,transparent:true,opacity
 scene.add(new THREE.HemisphereLight(0xffffff,0x111522,2.2));
 const key=new THREE.DirectionalLight(0xffffff,4.5);key.position.set(4,7,6);scene.add(key);const fill=new THREE.DirectionalLight(0x8bb8ff,1.8);fill.position.set(-5,3,-4);scene.add(fill);
 let envReady=false;function ensureEnv(){if(envReady)return;envReady=true;const pmrem=new THREE.PMREMGenerator(renderer);const envScene=new RoomEnvironment();scene.environment=pmrem.fromScene(envScene,.04).texture;envScene.dispose();pmrem.dispose()}
-const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.rotateSpeed=.7;controls.target.set(0,.7,0);controls.minDistance=3.2;controls.maxDistance=11;
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.rotateSpeed=.7;controls.target.set(0,.7,0);controls.minDistance=3.2;controls.maxDistance=11;controls.enablePan=false;
 const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();const loader=new GLTFLoader();const roots={};
 function smoothMesh(mesh){if(!mesh.isMesh||!mesh.geometry||mesh.userData.part||mesh.userData.proxy)return;try{mesh.geometry=mergeVertices(mesh.geometry,1e-4)}catch(e){}mesh.geometry.computeVertexNormals();mesh.material.flatShading=false;mesh.material.needsUpdate=true;if('envMapIntensity' in mesh.material)mesh.material.envMapIntensity=1.35}
 // Shared attributes would give every part the bounds of the whole source mesh.
@@ -143,7 +143,7 @@ function priceText(id){
   if(paint?.base)return 'от '+money(paint.base);
   return 'от '+money(price(id));
 }
-function subText(id){const note=zoneDefs[id]?.[2]?.note||'Окрас';return note+' · '+MODEL_NAMES[activeModel]}
+function subText(id){const note=(zoneDefs[id]?.[2]?.note||'Окрас').replace(/\s*\(без цвета\)/gi,'').trim();if(id==='headlights'||id==='taillights'||id==='windshield')return note;return note+' · '+MODEL_NAMES[activeModel]}
 function infoAnchors(id){return INFO_ANCHORS[activeModel]?.[id]}
 const pins=[];function hidePins(from=0){for(let i=from;i<pins.length;i++)pins[i].style.display='none'}
 function clearHighlight(){hlMeshes.forEach(h=>h.userData.proxy?h.visible=false:h.removeFromParent());hlMeshes=[];outline.selectedObjects=[];hidePins()}

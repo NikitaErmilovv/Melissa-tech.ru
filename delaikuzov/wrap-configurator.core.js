@@ -16,8 +16,8 @@ const DEFAULT_ZONE_DEFS={
  hood:['Капот',22500],roof:['Крыша',19800],bumperFront:['Передний бампер',24800],bumperRear:['Задний бампер',24800],
  fenderFrontR:['Переднее левое крыло',13500],fenderFrontL:['Переднее правое крыло',13500],doorFrontR:['Передняя левая дверь',16700],doorFrontL:['Передняя правая дверь',16700],doorRearR:['Задняя левая дверь',16700],doorRearL:['Задняя правая дверь',16700],
  quarterR:['Заднее левое крыло',18000],quarterL:['Заднее правое крыло',18000],sideLowerR:['Левый порог',11300],sideLowerL:['Правый порог',11300],mirrorR:['Левое зеркало',5900],mirrorL:['Правое зеркало',5900],
- headlights:['Оклейка фар',11300,{from:1,nopaint:1,note:'Оклейка фар (без цвета)'}],taillights:['Оклейка фонарей',11300,{from:1,nopaint:1,note:'Оклейка фонарей (без цвета)'}],
- windshield:['Оклейка лобового',6800,{from:1,nopaint:1,note:'Оклейка лобового стекла (без цвета)'}],
+ headlights:['Оклейка фар',11300,{from:1,nopaint:1,note:'Оклейка фар'}],taillights:['Оклейка фонарей',11300,{from:1,nopaint:1,note:'Оклейка фонарей'}],
+ windshield:['Оклейка лобового',6800,{from:1,nopaint:1,note:'Оклейка лобового стекла'}],
  trunk:['Багажник',18000],fuelCap:['Лючок бака',3600,{from:1,nopaint:1,note:'Оклейка лючка'}],handles:['Ручки дверей',6300,{from:1,nopaint:1,note:'Плёнка на ручки'}],pillars:['Стойки',9000,{from:1,nopaint:1,note:'Оклейка стоек'}]
 };
 const STOCK_COLORS=[['#0b0d10','Obsidian Black'],['#f5f5f2','Pearl White'],['#d71935','Racing Red'],['#1246b8','Sapphire Blue'],['#0b6f46','Emerald Green'],['#bfc4cc','Silver'],['#d39b16','Champagne Gold'],['#6d2bbd','Electric Purple'],['#ff6b16','Burnt Orange'],['#e64f89','Candy Pink'],['#11a9b0','Turquoise'],['#63351f','Cocoa Brown']];
@@ -57,7 +57,7 @@ const hlMat=new THREE.MeshBasicMaterial({color:0xfbeda3,transparent:true,opacity
 scene.add(new THREE.HemisphereLight(0xffffff,0x111522,2.2));
 const key=new THREE.DirectionalLight(0xffffff,4.5);key.position.set(4,7,6);scene.add(key);const fill=new THREE.DirectionalLight(0x8bb8ff,1.8);fill.position.set(-5,3,-4);scene.add(fill);
 let envReady=false;function ensureEnv(){if(envReady)return;envReady=true;const pmrem=new THREE.PMREMGenerator(renderer);const envScene=new RoomEnvironment();scene.environment=pmrem.fromScene(envScene,.04).texture;envScene.dispose();pmrem.dispose()}
-const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.rotateSpeed=.7;controls.target.set(0,.7,0);controls.minDistance=3.2;controls.maxDistance=11;
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.rotateSpeed=.7;controls.target.set(0,.7,0);controls.minDistance=3.2;controls.maxDistance=11;controls.enablePan=false;
 const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();const loader=new GLTFLoader();const roots={};
 function smoothMesh(mesh){if(!mesh.isMesh||!mesh.geometry||mesh.userData.part||mesh.userData.proxy)return;try{mesh.geometry=mergeVertices(mesh.geometry,1e-4)}catch(e){}mesh.geometry.computeVertexNormals();mesh.material.flatShading=false;mesh.material.needsUpdate=true;if('envMapIntensity' in mesh.material)mesh.material.envMapIntensity=1.35}
 // Shared attributes would give every part the bounds of the whole source mesh.
@@ -120,7 +120,7 @@ function paintZone(id){if(!id||zoneDefs[id]?.[2]?.nopaint)return;if(tool==='remo
 function friendly(id){return zoneDefs[id]?.[0]||id}function price(id){return zoneDefs[id]?.[1]||0}
 function money(n){return Number(n).toLocaleString('ru-RU')+' ₽'}
 function priceText(id){return 'от '+money(price(id))}
-function subText(id){const note=zoneDefs[id]?.[2]?.note;return note?note+' · '+MODEL_NAMES[activeModel]:MODEL_NAMES[activeModel]}
+function subText(id){const note=(zoneDefs[id]?.[2]?.note||'').replace(/\s*\(без цвета\)/gi,'').trim();if(id==='headlights'||id==='taillights'||id==='windshield')return note;return note?note+' · '+MODEL_NAMES[activeModel]:MODEL_NAMES[activeModel]}
 function infoAnchors(id){return INFO_ANCHORS[activeModel]?.[id]}
 const pins=[];function hidePins(from=0){for(let i=from;i<pins.length;i++)pins[i].style.display='none'}
 function clearHighlight(){hlMeshes.forEach(h=>h.userData.proxy?h.visible=false:h.removeFromParent());hlMeshes=[];outline.selectedObjects=[];hidePins()}

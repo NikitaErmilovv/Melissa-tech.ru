@@ -94,21 +94,21 @@
       "price": 11200,
       "from": true,
       "nopaint": true,
-      "note": "Оклейка фар (без цвета)"
+      "note": "Оклейка фар"
     },
     "taillights": {
       "name": "Оклейка фонарей",
       "price": 11200,
       "from": true,
       "nopaint": true,
-      "note": "Оклейка фонарей (без цвета)"
+      "note": "Оклейка фонарей"
     },
     "windshield": {
       "name": "Оклейка лобового",
       "price": 6800,
       "from": true,
       "nopaint": true,
-      "note": "Оклейка лобового стекла (без цвета)"
+      "note": "Оклейка лобового стекла"
     },
     "trunk": {
       "name": "Багажник",
@@ -209,21 +209,21 @@
           "price": 11200,
           "from": true,
           "nopaint": true,
-          "note": "Оклейка фар (без цвета)"
+          "note": "Оклейка фар"
         },
         "taillights": {
           "name": "Оклейка фонарей",
           "price": 11200,
           "from": true,
           "nopaint": true,
-          "note": "Оклейка фонарей (без цвета)"
+          "note": "Оклейка фонарей"
         },
         "windshield": {
           "name": "Оклейка лобового",
           "price": 6800,
           "from": true,
           "nopaint": true,
-          "note": "Оклейка лобового стекла (без цвета)"
+          "note": "Оклейка лобового стекла"
         },
         "trunk": {
           "name": "Багажник",
@@ -324,21 +324,21 @@
           "price": 13500,
           "from": true,
           "nopaint": true,
-          "note": "Оклейка фар (без цвета)"
+          "note": "Оклейка фар"
         },
         "taillights": {
           "name": "Оклейка фонарей",
           "price": 13500,
           "from": true,
           "nopaint": true,
-          "note": "Оклейка фонарей (без цвета)"
+          "note": "Оклейка фонарей"
         },
         "windshield": {
           "name": "Оклейка лобового",
           "price": 8100,
           "from": true,
           "nopaint": true,
-          "note": "Оклейка лобового стекла (без цвета)"
+          "note": "Оклейка лобового стекла"
         },
         "trunk": {
           "name": "Багажник",

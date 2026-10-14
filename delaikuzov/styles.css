@@ -620,16 +620,25 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 @media (max-width:760px){
   /* line is on .service-timeline; dots are on .service-timeline-item (padding-left:28px) → align centers */
-  .service-timeline{padding-left:28px}
+  .service-page--stages{padding-bottom:64px}
+  .service-timeline{padding-left:28px;padding-bottom:36px;margin-bottom:8px}
   .service-timeline-line{left:38px;margin-left:-1px}
   .service-timeline-item{
-    grid-template-columns:1fr;padding:14px 0 22px 28px;min-height:0;
+    grid-template-columns:1fr;padding:14px 0 26px 28px;min-height:0;
   }
   .service-timeline-dot{left:10px;top:16px;transform:translateX(-50%)}
   .service-timeline-item--left .service-timeline-content,
   .service-timeline-item--right .service-timeline-content{
     grid-column:1;justify-self:start;text-align:left;padding:0;max-width:none;
   }
+  .service-stages-result{margin-top:36px}
+  .service-stages-result-list{margin-top:20px;margin-bottom:8px}
+  .service-page--extra{
+    padding-top:48px;padding-bottom:56px;
+    position:relative;z-index:1;clear:both;
+  }
+  .service-page--extra .service-stages-title{margin:0 0 28px;position:relative;z-index:2}
+  .service-extra-list{position:relative;z-index:1;gap:14px}
   .service-price-sil-grid{grid-template-columns:1fr 1fr}
   .service-price-pack-grid{grid-template-columns:1fr}
 }
@@ -1017,6 +1026,14 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .service-extra-list li{
   background:#101010;border:1px solid rgba(255,255,255,.08);
   padding:18px 20px;color:#f5f5f2;font-size:15px;font-weight:600;letter-spacing:-.01em;
+}
+@media (max-width:760px){
+  .service-page--stages{padding-bottom:72px;overflow:hidden}
+  .service-timeline{padding-bottom:40px}
+  .service-stages-result{margin-top:40px}
+  .service-page--extra{padding-top:56px;padding-bottom:64px}
+  .service-page--extra .service-stages-title{margin:0 0 32px}
+  .service-extra-list{gap:14px}
 }
 @media (max-width:640px){
   .service-extra-list{grid-template-columns:1fr}

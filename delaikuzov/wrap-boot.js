@@ -1,4 +1,4 @@
-﻿const CORE_URL = new URL('./wrap-configurator.core.js?v=ot2', import.meta.url).href;
+﻿const CORE_URL = new URL('./wrap-configurator.core.js?v=ot3', import.meta.url).href;
 const MERCEDES_URL = new URL('./models/mercedes.glb?v=5', import.meta.url).href;
 const MAZDA_URL = new URL('./models/mazda.glb?v=5', import.meta.url).href;
 
