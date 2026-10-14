@@ -10,7 +10,8 @@ import {OutlinePass} from 'three/addons/postprocessing/OutlinePass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 
 const MODEL_NAMES={mercedes:'Седан',mazda:'Кроссовер'};
-const MODEL_URLS={mercedes:'models/mercedes.glb?v=5',mazda:'models/mazda.glb?v=5'};
+const ASSET_ROOT=new URL('./',import.meta.url);
+const MODEL_URLS={mercedes:new URL('models/mercedes.glb?v=5',ASSET_ROOT).href,mazda:new URL('models/mazda.glb?v=5',ASSET_ROOT).href};
 function prefetchMazdaModel(){if(window.__mzPrefetch)return;window.__mzPrefetch=1;fetch(MODEL_URLS.mazda,{priority:'low'}).catch(()=>{})}
 const DEFAULT_ZONE_DEFS={
  hood:['Капот',40000,{note:'Окрас',paint:{base:40000,metal:45000,pearl:50000}}],
@@ -25,25 +26,29 @@ const DEFAULT_ZONE_DEFS={
  doorRearL:['Задняя правая дверь',28000,{note:'Окрас',paint:{base:28000,metal:33000,pearl:38000}}],
  quarterR:['Заднее левое крыло',50000,{note:'Окрас',paint:{base:50000,metal:55000,pearl:60000}}],
  quarterL:['Заднее правое крыло',50000,{note:'Окрас',paint:{base:50000,metal:55000,pearl:60000}}],
- sideLowerR:['Левый порог',0,{note:'Окрас',after:1}],sideLowerL:['Правый порог',0,{note:'Окрас',after:1}],
- mirrorR:['Левое зеркало',0,{note:'Окрас',after:1}],mirrorL:['Правое зеркало',0,{note:'Окрас',after:1}],
- headlights:['Фары',0,{nopaint:1,note:'После осмотра',after:1}],taillights:['Фонари',0,{nopaint:1,note:'После осмотра',after:1}],
- windshield:['Лобовое стекло',0,{nopaint:1,note:'После осмотра',after:1}],
- trunk:['Багажник',0,{note:'Окрас',after:1}],fuelCap:['Лючок бака',0,{nopaint:1,note:'После осмотра',after:1}],
+ sideLowerR:['Левый порог',20000,{note:'Окрас',paint:{base:20000,metal:25000,pearl:30000}}],
+ sideLowerL:['Правый порог',20000,{note:'Окрас',paint:{base:20000,metal:25000,pearl:30000}}],
+ mirrorR:['Левое зеркало',6000,{note:'Окрас',paint:{base:6000,metal:8000,pearl:10000}}],
+ mirrorL:['Правое зеркало',6000,{note:'Окрас',paint:{base:6000,metal:8000,pearl:10000}}],
+ headlights:['Фары',3000,{nopaint:1,note:'Полировка фар',from:1}],
+ taillights:['Фонари',0,{nopaint:1,noselect:1,note:'Не окрашивается'}],
+ windshield:['Лобовое стекло',0,{nopaint:1,noselect:1,note:'Не окрашивается'}],
+ trunk:['Багажник',26000,{note:'Окрас',paint:{base:26000,metal:31000,pearl:36000}}],
+ fuelCap:['Лючок бака',0,{nopaint:1,note:'После осмотра',after:1}],
  handles:['Ручки дверей',0,{nopaint:1,note:'После осмотра',after:1}],pillars:['Стойки',0,{nopaint:1,note:'После осмотра',after:1}]
 };
 const STOCK_COLORS=[['#0b0d10','Obsidian Black'],['#f5f5f2','Pearl White'],['#d71935','Racing Red'],['#1246b8','Sapphire Blue'],['#0b6f46','Emerald Green'],['#bfc4cc','Silver'],['#d39b16','Champagne Gold'],['#6d2bbd','Electric Purple'],['#ff6b16','Burnt Orange'],['#e64f89','Candy Pink'],['#11a9b0','Turquoise'],['#63351f','Cocoa Brown']];
 const STOCK_FINISHES=[{id:'gloss',name:'Глянец'},{id:'satin',name:'Сатин'},{id:'matte',name:'Матовый'}];
 const STOCK_EFFECTS=[{id:'solid',name:'Однотон'},{id:'metal',name:'Металлик'},{id:'pearl',name:'Перламутр'}];
 let wrapCfg=null,zoneDefs={...DEFAULT_ZONE_DEFS};
-function zoneMapFrom(src){const next={};if(!src)return next;for(const id of Object.keys(DEFAULT_ZONE_DEFS)){const z=src[id];if(!z)continue;const opts={};if(z.from)opts.from=1;if(z.nopaint)opts.nopaint=1;if(z.after_inspect||z.after)opts.after=1;if(z.note)opts.note=z.note;const prices=z.prices||null;if(prices&&typeof prices==='object'){opts.paint={base:+prices.base||+z.price||0,metal:+prices.metal||0,pearl:+prices.pearl||0}}next[id]=Object.keys(opts).length?[z.name,+z.price||0,opts]:[z.name,+z.price||0]}return next}
+function zoneMapFrom(src){const next={};if(!src)return next;for(const id of Object.keys(DEFAULT_ZONE_DEFS)){const z=src[id];if(!z)continue;const opts={};if(z.from)opts.from=1;if(z.nopaint)opts.nopaint=1;if(z.noselect||z.no_select)opts.noselect=1;if(z.after_inspect||z.after)opts.after=1;if(z.note)opts.note=z.note;const prices=z.prices||null;if(prices&&typeof prices==='object'){opts.paint={base:+prices.base||+z.price||0,metal:+prices.metal||0,pearl:+prices.pearl||0}}next[id]=Object.keys(opts).length?[z.name,+z.price||0,opts]:[z.name,+z.price||0]}return next}
 function syncZoneDefs(model){const src=wrapCfg?.models?.[model]?.zones||wrapCfg?.zones;const next=zoneMapFrom(src);for(const id of Object.keys(DEFAULT_ZONE_DEFS))if(!next[id])next[id]=DEFAULT_ZONE_DEFS[id];zoneDefs=next;if(wrapCfg?.models?.mercedes?.label)MODEL_NAMES.mercedes=wrapCfg.models.mercedes.label;if(wrapCfg?.models?.mazda?.label)MODEL_NAMES.mazda=wrapCfg.models.mazda.label}
 function paletteColors(){const list=wrapCfg?.colors;if(!Array.isArray(list)||!list.length)return STOCK_COLORS.map(([hex,name])=>({hex,name,hidden:false}));return list.map((c,i)=>{const stock=STOCK_COLORS[i]||STOCK_COLORS[0];const hex=String(c.hex||stock[0]);const name=String(c.name||stock[1]);return {hex,name,hidden:!!c.hidden}})}
 function lookItems(kind){const stock=kind==='finish'?STOCK_FINISHES:STOCK_EFFECTS;const extra=wrapCfg?.[kind==='finish'?'finishes':'effects']||[];return stock.map(s=>{const o=extra.find(x=>x.id===s.id)||{};return {id:s.id,name:o.name||s.name,hidden:!!o.hidden}})}
 function applyLookButtons(){lookItems('finish').forEach(item=>{document.querySelectorAll('[data-finish="'+item.id+'"]').forEach(b=>{b.textContent=item.name;b.hidden=!!item.hidden});});lookItems('effect').forEach(item=>{document.querySelectorAll('[data-effect="'+item.id+'"]').forEach(b=>{b.textContent=item.name;b.hidden=!!item.hidden});});const visF=lookItems('finish').find(x=>!x.hidden);if(visF&&lookItems('finish').find(x=>x.id===finish)?.hidden){finish=visF.id;document.querySelectorAll('[data-finish]').forEach(x=>x.classList.toggle('active',x.dataset.finish===finish))}const visE=lookItems('effect').find(x=>!x.hidden);if(visE&&lookItems('effect').find(x=>x.id===effect)?.hidden){effect=visE.id;document.querySelectorAll('[data-effect]').forEach(x=>x.classList.toggle('active',x.dataset.effect===effect))}}
 function renderSwatches(){const box=document.getElementById('swatches');if(!box)return;box.innerHTML='';let list=paletteColors().filter(c=>!c.hidden);if(!list.length)list=paletteColors();if(!list.some(c=>c.hex.toLowerCase()===String(activeHex).toLowerCase())&&list[0])activeHex=list[0].hex;for(const c of list){const b=document.createElement('button');b.className='swatch'+(c.hex.toLowerCase()===String(activeHex).toLowerCase()?' active':'');b.style.background=c.hex;b.title=c.name+' '+c.hex;b.dataset.hex=c.hex;b.onclick=()=>{activeHex=c.hex;document.querySelectorAll('.swatch').forEach(x=>x.classList.toggle('active',x===b));if(selectedZone){const old=tool;if(tool==='select')tool='fill';paintZone(selectedZone);tool=old}};box.appendChild(b)}}
 function applyWrapZoneConfig(cfg){if(cfg&&typeof cfg==='object')wrapCfg=cfg;syncZoneDefs(activeModel||'mercedes');renderSwatches();applyLookButtons()}
-async function loadWrapZoneConfig(){try{const r=await fetch('./data/kuzov-zones.json?v='+Date.now());if(r.ok)applyWrapZoneConfig(await r.json())}catch(e){}}
+async function loadWrapZoneConfig(){try{const r=await fetch(new URL('./data/kuzov-zones.json?v='+Date.now(),ASSET_ROOT));if(r.ok)applyWrapZoneConfig(await r.json())}catch(e){}}
 const PRESETS={0:null,1:{hex:'#0b0d10',finish:'satin',effect:'pearl'},2:{hex:'#63351f',finish:'gloss',effect:'metal'},3:{hex:'#f5f5f2',finish:'gloss',effect:'metal'}};
 // L/R zone ids follow model x<0 / x>0; with the car facing +z, x<0 is the car's right side.
 const INFO_ANCHORS={
@@ -135,8 +140,8 @@ function priceText(id){
   const opts=zoneDefs[id]?.[2]||{};
   if(opts.after||(!price(id)&&!opts.paint))return 'после осмотра';
   const paint=opts.paint;
-  if(paint?.base)return money(paint.base);
-  return (opts.from?'от ':'')+money(price(id));
+  if(paint?.base)return 'от '+money(paint.base);
+  return 'от '+money(price(id));
 }
 function subText(id){const note=zoneDefs[id]?.[2]?.note||'Окрас';return note+' · '+MODEL_NAMES[activeModel]}
 function infoAnchors(id){return INFO_ANCHORS[activeModel]?.[id]}
@@ -144,7 +149,12 @@ const pins=[];function hidePins(from=0){for(let i=from;i<pins.length;i++)pins[i]
 function clearHighlight(){hlMeshes.forEach(h=>h.userData.proxy?h.visible=false:h.removeFromParent());hlMeshes=[];outline.selectedObjects=[];hidePins()}
 function repairWorks(id){
   const opts=zoneDefs[id]?.[2]||{};
-  if(opts.nopaint||opts.after)return [];
+  if(opts.noselect)return [];
+  if(opts.nopaint){
+    const n=price(id);
+    return n?[[opts.note||'Услуга',n]]:[];
+  }
+  if(opts.after)return [];
   const paint=opts.paint;
   const base=paint?.base||price(id);
   if(!base)return [];
@@ -163,12 +173,14 @@ function renderKuzovQuote(id){
   if(empty)empty.hidden=true;
   card.hidden=false;
   name.textContent=friendly(id);
+  const opts=zoneDefs[id]?.[2]||{};
   const rows=repairWorks(id);
+  const head=opts.nopaint?(opts.note||'Услуга'):'Окрас';
   list.innerHTML=rows.length
-    ?`<div class="kuzov-work-head">Окрас</div>`+rows.map(([label,n])=>`<div class="kuzov-work"><span>${label}</span><b>${money(n)}</b></div>`).join('')
-    :'<div class="kuzov-work"><span>Окрас</span><b>после осмотра</b></div>';
+    ?`<div class="kuzov-work-head">${head}</div>`+rows.map(([label,n])=>`<div class="kuzov-work"><span>${label}</span><b>от ${money(n)}</b></div>`).join('')
+    :`<div class="kuzov-work"><span>${head}</span><b>после осмотра</b></div>`;
 }
-function selectZone(id){clearHighlight();selectedZone=id;const ms=zones[id]||[];for(const m of ms){if(m.userData.proxy){m.visible=true;hlMeshes.push(m);continue}const h=new THREE.Mesh(m.geometry,hlMat);h.raycast=()=>{};h.renderOrder=2;m.add(h);hlMeshes.push(h)}outline.selectedObjects=ms;document.getElementById('selectedInfo').innerHTML=`<b>${friendly(id)}</b><br>Окрас: ${priceText(id)}<br><span style="color:#777d88">${subText(id)}</span>`;document.getElementById('status').textContent=friendly(id);markerFor(id);renderParts();renderKuzovQuote(id)}
+function selectZone(id){if(!id||zoneDefs[id]?.[2]?.noselect)return;clearHighlight();selectedZone=id;const ms=zones[id]||[];for(const m of ms){if(m.userData.proxy){m.visible=true;hlMeshes.push(m);continue}const h=new THREE.Mesh(m.geometry,hlMat);h.raycast=()=>{};h.renderOrder=2;m.add(h);hlMeshes.push(h)}outline.selectedObjects=ms;const opts=zoneDefs[id]?.[2]||{};const kind=opts.nopaint?(opts.note||'Стоимость'):'Окрас';document.getElementById('selectedInfo').innerHTML=`<b>${friendly(id)}</b><br>${kind}: ${priceText(id)}<br><span style="color:#777d88">${subText(id)}</span>`;document.getElementById('status').textContent=friendly(id);markerFor(id);renderParts();renderKuzovQuote(id)}
 function markerFor(id){const marker=document.getElementById('marker');const anchors=infoAnchors(id);if(!id||(!(zones[id]||[]).length&&!anchors)){marker.style.display='none';hidePins();return}const r=app.getBoundingClientRect();const px=v=>[(v.x*.5+.5)*r.width,(-v.y*.5+.5)*r.height];let x,y;
 if(anchors){const root=roots[activeModel];root.updateMatrixWorld();const pts=anchors.map(a=>{const w=root.localToWorld(new THREE.Vector3(...a));const n=new THREE.Vector3(Math.sign(a[0]),0,0).applyQuaternion(root.quaternion);return {s:px(w.clone().project(camera)),vis:n.dot(camera.position.clone().sub(w))>0}});const vis=pts.filter(p=>p.vis),use=vis.length?vis:pts;
 vis.forEach((p,i)=>{let el=pins[i];if(!el){el=document.createElement('div');el.className='pin';marker.parentElement.appendChild(el);pins[i]=el}el.style.left=p.s[0]+'px';el.style.top=p.s[1]+'px';el.style.display='block'});hidePins(vis.length);
@@ -183,14 +195,14 @@ const t=controls.target,view=Math.atan2(camera.position.x-t.x,camera.position.z-
 for(const [x,z] of dirs){let d=view-Math.atan2(x,z)-cur;d=Math.atan2(Math.sin(d),Math.cos(d));if(best===null||Math.abs(d)<Math.abs(best))best=d}
 rotating=false;document.getElementById('rotate').classList.remove('active');if(Math.abs(best)<50*Math.PI/180)return;turn={root,from:cur,to:cur+best,t0:performance.now()}}
 function stepTurn(now){if(!turn)return;const k=Math.min(1,(now-turn.t0)/750),e=1-Math.pow(1-k,3);turn.root.quaternion.setFromAxisAngle(UP,turn.from+(turn.to-turn.from)*e);if(k>=1)turn=null}
-function recalc(){total=0;for(const [id,ms] of Object.entries(zones))if(ms.some(m=>states[activeModel].get(m.uuid)?.hex))total+=price(id);document.getElementById('total').textContent=money(total)}
+function recalc(){total=0;for(const [id,ms] of Object.entries(zones))if(ms.some(m=>states[activeModel].get(m.uuid)?.hex))total+=price(id);document.getElementById('total').textContent=(total?'от ':'')+money(total)}
 function renderParts(){const box=document.getElementById('parts');if(!box)return;box.innerHTML='';const painted=Object.keys(zoneDefs).filter(id=>(zones[id]||[]).some(m=>states[activeModel].get(m.uuid)?.hex));if(!painted.length){box.innerHTML='<div class="empty">Ничего не выбрано</div>';return}painted.forEach(id=>{const b=document.createElement('button');b.className='part'+(selectedZone===id?' active':'');b.innerHTML=`<span><span class="name">${friendly(id)}</span><span class="meta">${MODEL_NAMES[activeModel]}</span></span><span class="price">${priceText(id)}</span>`;b.onclick=()=>{selectZone(id);faceZone(id)};box.appendChild(b)})}
 function setLook(hex,fin,eff){if(hex){activeHex=hex;document.querySelectorAll('.swatch').forEach(x=>x.classList.toggle('active',x.dataset.hex===hex))}if(fin){finish=fin;document.querySelectorAll('[data-finish]').forEach(x=>x.classList.toggle('active',x.dataset.finish===fin))}if(eff){effect=eff;document.querySelectorAll('[data-effect]').forEach(x=>x.classList.toggle('active',x.dataset.effect===eff))}}
 const PRESET_STOCK={mercedes:new Set(['roof','mirrorL','mirrorR'])};
 function wrapCar(p){if(!p){for(const id of Object.keys(zoneDefs))resetZone(id)}else{setLook(p.hex,p.finish,p.effect);const keep=PRESET_STOCK[activeModel];for(const id of Object.keys(zoneDefs)){if(zoneDefs[id][2]?.nopaint)continue;if(keep?.has(id)){resetZone(id);continue}for(const mesh of zones[id]||[])applyMaterial(mesh,p.hex)}}recalc();renderParts()}
 function currentPreset(){const a=document.querySelector('[data-preset].active');return PRESETS[a?+a.dataset.preset:0]}
 function applyPreset(n){document.querySelectorAll('[data-preset]').forEach(b=>b.classList.toggle('active',b.dataset.preset===String(n)));wrapCar(PRESETS[n])}
-function rebuildZoneUI(){const box=document.getElementById('zones');box.innerHTML='';for(const id of Object.keys(zoneDefs)){if(!(zones[id]||[]).length&&!infoAnchors(id))continue;const b=document.createElement('button');b.className='zone';b.innerHTML=`${friendly(id)}<small>${priceText(id)}</small>`;b.onclick=()=>{selectZone(id);faceZone(id);if(tool!=='select')paintZone(id)};box.appendChild(b)} }
+function rebuildZoneUI(){const box=document.getElementById('zones');if(!box)return;box.innerHTML='';for(const id of Object.keys(zoneDefs)){if(zoneDefs[id]?.[2]?.noselect)continue;if(!(zones[id]||[]).length&&!infoAnchors(id))continue;const b=document.createElement('button');b.className='zone';b.innerHTML=`${friendly(id)}<small>${priceText(id)}</small>`;b.onclick=()=>{selectZone(id);faceZone(id);if(tool!=='select')paintZone(id)};box.appendChild(b)} }
 function buildZones(root,model){Object.keys(zones).forEach(k=>delete zones[k]);const map=new Map();root.traverse(o=>{if(o.isMesh){smoothMesh(o);map.set(o.name,o)}});if(model==='mazda'){for(const id of Object.keys(zoneDefs))zones[id]=[];const body=root.getObjectByName('Object_12');if(body)splitMazdaBody(body,root);root.traverse(o=>{if(o.isMesh&&o.userData.part)zones[o.userData.part]?.push(o)})}else{for(const id of Object.keys(zoneDefs))zones[id]=[];splitMercedesRoof(root);splitMercedesMirrors(root);const frontDoorL=/^MBPanel_(030|031|034)_/;const frontDoorR=/^MBPanel_(037|038|041)_/;const rearDoorL=/^MBPanel_(032|036|076|077|079|080|081|083|095|096|097|098|099|100|101)_/;const rearDoorR=/^MBPanel_(039|043|113|114|115|116|117|118|119|120|121|123|124|125|127)_/;root.traverse(o=>{if(!o.isMesh)return;let zone=null;if(o.userData.part)zone=o.userData.part;else if(o.name==='MBPanel_010_trunk'||o.name==='MBPanel_011_roof')zone='quarterL';else if(o.name==='MBPanel_018_roof')zone='quarterR';else if(o.name==='MBPanel_203_quarterL'||o.name==='MBPanel_213_quarterR')zone='bumperRear';else if(o.name==='MBPanel_141_mirrorL')zone='doorFrontL';else if(o.name==='MBPanel_150_mirrorR')zone='doorFrontR';else if(o.name==='MBPanel_017_trunk')zone='quarterR';else if(rearDoorL.test(o.name))zone='doorRearL';else if(rearDoorR.test(o.name))zone='doorRearR';else if(frontDoorL.test(o.name))zone='doorFrontL';else if(frontDoorR.test(o.name))zone='doorFrontR';else{const m=o.name.match(/_((?:hood|roof|fenderFrontL|fenderFrontR|doorFrontL|doorFrontR|doorRearL|doorRearR|quarterL|quarterR|trunk|bumperFront|bumperRear|sideLowerL|sideLowerR|mirrorL|mirrorR))$/);if(m)zone=m[1]}if(zone)zones[zone]?.push(o)})}const lights=buildLights(root,model);zones.headlights=lights.headlights;zones.taillights=lights.taillights;zones.windshield=lights.windshield;rebuildZoneUI();selectedZone=null;document.getElementById('selectedInfo').textContent='Нажмите на деталь автомобиля';renderKuzovQuote(null);wrapCar(currentPreset())}
 function coverMercedesPlate(root){root.traverse(o=>{if(!o.isMesh)return;if(o.name!=='Object_6'&&o.material?.name!=='metal_white')return;o.material=new THREE.MeshPhysicalMaterial({color:0x111111,roughness:.45,metalness:.15,envMapIntensity:.6})})}
 function onModelReady(model,r){if(roots[model])return;ensureEnv();r.scale.setScalar(model==='mazda'?1.38:1.45);r.position.y=.03;scene.add(r);roots[model]=r;Object.values(roots).forEach(x=>x.visible=false);r.visible=true;try{buildZones(r,model);if(model==='mercedes')coverMercedesPlate(r);else{const plate=r.getObjectByName('Object_13');if(plate)plate.visible=false}}catch(e){console.warn(e)}document.getElementById('status').textContent=MODEL_NAMES[model]+' готов';if(!window.__kuzovModelReady){window.__kuzovModelReady=1;window.dispatchEvent(new CustomEvent('kuzov-model-ready',{detail:{model}}))}}
@@ -202,7 +214,7 @@ document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>applyPreset(
 document.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>{tool=b.dataset.tool;document.querySelectorAll('[data-tool]').forEach(x=>x.classList.toggle('active',x===b))});
 document.querySelectorAll('[data-finish]').forEach(b=>b.onclick=()=>{finish=b.dataset.finish;document.querySelectorAll('[data-finish]').forEach(x=>x.classList.toggle('active',x===b));if(selectedZone){const old=tool;if(tool==='select')tool='fill';paintZone(selectedZone);tool=old}});
 document.querySelectorAll('[data-effect]').forEach(b=>b.onclick=()=>{effect=b.dataset.effect;document.querySelectorAll('[data-effect]').forEach(x=>x.classList.toggle('active',x===b));if(selectedZone){const old=tool;if(tool==='select')tool='fill';paintZone(selectedZone);tool=old}});
-renderer.domElement.addEventListener('pointerdown',e=>{const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const all=Object.values(zones).flat().filter(Boolean);const hits=ray.intersectObjects(all,true);if(!hits.length)return;let hit=hits[0].object,found=null;for(const [id,ms] of Object.entries(zones))if(ms.includes(hit)){found=id;break}if(found){rotating=false;document.getElementById('rotate').classList.remove('active');selectZone(found);if(tool!=='select')paintZone(found)}});
+renderer.domElement.addEventListener('pointerdown',e=>{const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const all=Object.entries(zones).flatMap(([id,ms])=>zoneDefs[id]?.[2]?.noselect?[]:(ms||[])).filter(Boolean);const hits=ray.intersectObjects(all,true);if(!hits.length)return;let hit=hits[0].object,found=null;for(const [id,ms] of Object.entries(zones))if(ms.includes(hit)){found=id;break}if(found&&!zoneDefs[found]?.[2]?.noselect){rotating=false;document.getElementById('rotate').classList.remove('active');selectZone(found);if(tool!=='select')paintZone(found)}});
 document.getElementById('rotate').onclick=()=>{rotating=!rotating;document.getElementById('rotate').classList.toggle('active',rotating)};
 document.getElementById('reset').onclick=()=>{turn=null;camera.position.set(4.8,2.2,6.2);controls.target.set(0,.7,0);controls.update();if(roots[activeModel])roots[activeModel].rotation.set(0,0,0)};
 document.getElementById('quote').onclick=()=>alert(`Ориентир по ремонту для «${MODEL_NAMES[activeModel]}». Напишите в D2_detailing — посчитаем точную стоимость.`);

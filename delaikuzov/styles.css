@@ -484,7 +484,7 @@ html.media-lightbox-open{overflow:hidden}
 
 .subpage-hero{padding:180px 6vw 90px;min-height:520px;background:radial-gradient(circle at 75% 50%,#30302d,transparent 35%),#0a0a0a}
 .subpage-hero .kicker{color:var(--accent)}
-.subpage-hero h1{font-size:clamp(58px,8vw,110px);line-height:.88;letter-spacing:-.07em;margin:15px 0 0;color:#f5f5f2}
+.subpage-hero h1{font-size:clamp(58px,8vw,110px);line-height:1.02;letter-spacing:-.07em;margin:15px 0 0;color:#f5f5f2}
 .subpage-hero h1 .accent{color:var(--accent)}
 .subpage-hero p{max-width:550px;color:#888;line-height:1.7;margin-top:20px}
 
@@ -619,12 +619,13 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .price-sil{width:72px;height:72px}
 }
 @media (max-width:760px){
+  /* line is on .service-timeline; dots are on .service-timeline-item (padding-left:28px) → align centers */
   .service-timeline{padding-left:28px}
-  .service-timeline-line{left:10px;margin-left:0}
+  .service-timeline-line{left:38px;margin-left:-1px}
   .service-timeline-item{
     grid-template-columns:1fr;padding:14px 0 22px 28px;min-height:0;
   }
-  .service-timeline-dot{left:10px;top:16px}
+  .service-timeline-dot{left:10px;top:16px;transform:translateX(-50%)}
   .service-timeline-item--left .service-timeline-content,
   .service-timeline-item--right .service-timeline-content{
     grid-column:1;justify-self:start;text-align:left;padding:0;max-width:none;
@@ -996,3 +997,27 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .step b{color:#6f6f6a}
 @media (max-width:1024px){.process .kicker,.step b{color:#6f6f6a}}
 @media (max-width:768px){.process .kicker,.step b{color:#6f6f6a}}
+
+
+.service-stages-lead,.service-stages-result{
+  max-width:720px;margin:0 auto 28px;color:#9a9a94;font-size:15px;line-height:1.7;text-align:center;
+}
+.service-stages-result{margin-top:28px;margin-bottom:0;color:#c8c8c0}
+.service-stages-result-list{
+  max-width:720px;margin:16px auto 0;padding:0 0 0 1.2em;color:#9a9a94;font-size:14px;line-height:1.65;
+}
+.service-stages-result-list li{margin:8px 0}
+.service-step-bullets{margin:0;padding:0 0 0 1.1em;color:#b0b0a8;font-size:14px;line-height:1.6}
+.service-step-bullets li{margin:6px 0}
+.service-page--extra{padding-top:24px;padding-bottom:56px}
+.service-extra-list{
+  list-style:none;margin:0 auto;padding:0;max-width:640px;
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+}
+.service-extra-list li{
+  background:#101010;border:1px solid rgba(255,255,255,.08);
+  padding:18px 20px;color:#f5f5f2;font-size:15px;font-weight:600;letter-spacing:-.01em;
+}
+@media (max-width:640px){
+  .service-extra-list{grid-template-columns:1fr}
+}

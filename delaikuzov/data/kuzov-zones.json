@@ -147,54 +147,74 @@
     },
     "sideLowerR": {
       "name": "Левый порог",
-      "price": 0,
+      "price": 20000,
       "note": "Окрас",
-      "after_inspect": true
+      "prices": {
+        "base": 20000,
+        "metal": 25000,
+        "pearl": 30000
+      }
     },
     "sideLowerL": {
       "name": "Правый порог",
-      "price": 0,
+      "price": 20000,
       "note": "Окрас",
-      "after_inspect": true
+      "prices": {
+        "base": 20000,
+        "metal": 25000,
+        "pearl": 30000
+      }
     },
     "mirrorR": {
       "name": "Левое зеркало",
-      "price": 0,
+      "price": 6000,
       "note": "Окрас",
-      "after_inspect": true
+      "prices": {
+        "base": 6000,
+        "metal": 8000,
+        "pearl": 10000
+      }
     },
     "mirrorL": {
       "name": "Правое зеркало",
-      "price": 0,
+      "price": 6000,
       "note": "Окрас",
-      "after_inspect": true
+      "prices": {
+        "base": 6000,
+        "metal": 8000,
+        "pearl": 10000
+      }
     },
     "headlights": {
       "name": "Фары",
-      "price": 0,
-      "note": "Ремонт детали",
-      "after_inspect": true,
-      "nopaint": true
+      "price": 3000,
+      "note": "Полировка фар",
+      "nopaint": true,
+      "from": true
     },
     "taillights": {
       "name": "Фонари",
       "price": 0,
-      "note": "Ремонт детали",
-      "after_inspect": true,
-      "nopaint": true
+      "note": "Не окрашивается",
+      "nopaint": true,
+      "noselect": true
     },
     "windshield": {
-      "name": "Полировка лобового",
+      "name": "Лобовое стекло",
       "price": 0,
-      "note": "Ремонт детали",
-      "after_inspect": true,
-      "nopaint": true
+      "note": "Не окрашивается",
+      "nopaint": true,
+      "noselect": true
     },
     "trunk": {
       "name": "Багажник",
-      "price": 0,
+      "price": 26000,
       "note": "Окрас",
-      "after_inspect": true
+      "prices": {
+        "base": 26000,
+        "metal": 31000,
+        "pearl": 36000
+      }
     },
     "fuelCap": {
       "name": "Лючок бака",
@@ -344,54 +364,74 @@
         },
         "sideLowerR": {
           "name": "Левый порог",
-          "price": 0,
+          "price": 20000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 20000,
+            "metal": 25000,
+            "pearl": 30000
+          }
         },
         "sideLowerL": {
           "name": "Правый порог",
-          "price": 0,
+          "price": 20000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 20000,
+            "metal": 25000,
+            "pearl": 30000
+          }
         },
         "mirrorR": {
           "name": "Левое зеркало",
-          "price": 0,
+          "price": 6000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 6000,
+            "metal": 8000,
+            "pearl": 10000
+          }
         },
         "mirrorL": {
           "name": "Правое зеркало",
-          "price": 0,
+          "price": 6000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 6000,
+            "metal": 8000,
+            "pearl": 10000
+          }
         },
         "headlights": {
           "name": "Фары",
-          "price": 0,
-          "note": "Ремонт детали",
-          "after_inspect": true,
-          "nopaint": true
+          "price": 3000,
+          "note": "Полировка фар",
+          "nopaint": true,
+          "from": true
         },
         "taillights": {
           "name": "Фонари",
           "price": 0,
-          "note": "Ремонт детали",
-          "after_inspect": true,
-          "nopaint": true
+          "note": "Не окрашивается",
+          "nopaint": true,
+          "noselect": true
         },
         "windshield": {
-          "name": "Полировка лобового",
+          "name": "Лобовое стекло",
           "price": 0,
-          "note": "Ремонт детали",
-          "after_inspect": true,
-          "nopaint": true
+          "note": "Не окрашивается",
+          "nopaint": true,
+          "noselect": true
         },
         "trunk": {
           "name": "Багажник",
-          "price": 0,
+          "price": 26000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 26000,
+            "metal": 31000,
+            "pearl": 36000
+          }
         },
         "fuelCap": {
           "name": "Лючок бака",
@@ -541,54 +581,74 @@
         },
         "sideLowerR": {
           "name": "Левый порог",
-          "price": 0,
+          "price": 20000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 20000,
+            "metal": 25000,
+            "pearl": 30000
+          }
         },
         "sideLowerL": {
           "name": "Правый порог",
-          "price": 0,
+          "price": 20000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 20000,
+            "metal": 25000,
+            "pearl": 30000
+          }
         },
         "mirrorR": {
           "name": "Левое зеркало",
-          "price": 0,
+          "price": 6000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 6000,
+            "metal": 8000,
+            "pearl": 10000
+          }
         },
         "mirrorL": {
           "name": "Правое зеркало",
-          "price": 0,
+          "price": 6000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 6000,
+            "metal": 8000,
+            "pearl": 10000
+          }
         },
         "headlights": {
           "name": "Фары",
-          "price": 0,
-          "note": "Ремонт детали",
-          "after_inspect": true,
-          "nopaint": true
+          "price": 3000,
+          "note": "Полировка фар",
+          "nopaint": true,
+          "from": true
         },
         "taillights": {
           "name": "Фонари",
           "price": 0,
-          "note": "Ремонт детали",
-          "after_inspect": true,
-          "nopaint": true
+          "note": "Не окрашивается",
+          "nopaint": true,
+          "noselect": true
         },
         "windshield": {
-          "name": "Полировка лобового",
+          "name": "Лобовое стекло",
           "price": 0,
-          "note": "Ремонт детали",
-          "after_inspect": true,
-          "nopaint": true
+          "note": "Не окрашивается",
+          "nopaint": true,
+          "noselect": true
         },
         "trunk": {
-          "name": "Багажник",
-          "price": 0,
+          "name": "Дверь багажника",
+          "price": 30000,
           "note": "Окрас",
-          "after_inspect": true
+          "prices": {
+            "base": 30000,
+            "metal": 35000,
+            "pearl": 40000
+          }
         },
         "fuelCap": {
           "name": "Лючок бака",

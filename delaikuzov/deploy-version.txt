@@ -1,4 +1,4 @@
-﻿path=delaikuzov
+path=delaikuzov
 prod=https://melissa-tech.ru/delaikuzov/
 deploy=git-push-timeweb-hook
-deploy-trigger=logo-pair-d2ai-logo2-1
+deploy-trigger=d2-services-cfg-20261015

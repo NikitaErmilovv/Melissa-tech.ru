@@ -1,6 +1,6 @@
-const CORE_URL = './wrap-configurator.core.js?v=rub2';
-const MERCEDES_URL = './models/mercedes.glb?v=5';
-const MAZDA_URL = './models/mazda.glb?v=5';
+﻿const CORE_URL = new URL('./wrap-configurator.core.js?v=ot2', import.meta.url).href;
+const MERCEDES_URL = new URL('./models/mercedes.glb?v=5', import.meta.url).href;
+const MAZDA_URL = new URL('./models/mazda.glb?v=5', import.meta.url).href;
 
 let started = false;
 
@@ -34,16 +34,13 @@ if (wrap && 'IntersectionObserver' in window) {
     (entries) => {
       if (entries.some((e) => e.isIntersecting)) startConfigurator();
     },
-    { rootMargin: '1200px 0px 1200px 0px', threshold: 0.01 }
+    { rootMargin: '800px 0px 800px 0px', threshold: 0.01 }
   );
   io.observe(wrap);
 }
 
 if (location.hash === '#wrap') startConfigurator();
-
-document.querySelectorAll('a[href="#wrap"]').forEach((a) => {
-  a.addEventListener('click', () => startConfigurator());
-});
+startConfigurator();
 
 function prefetchMazda() {
   if (window.__wrapGlb.mazda || window.__mzPrefetch) return;

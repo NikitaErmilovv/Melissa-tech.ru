@@ -1,6 +1,6 @@
-const CORE_URL = './kuzov-configurator.core.js?v=paint2';
-const MERCEDES_URL = './models/mercedes.glb?v=5';
-const MAZDA_URL = './models/mazda.glb?v=5';
+﻿const CORE_URL = new URL('./kuzov-configurator.core.js?v=paint4', import.meta.url).href;
+const MERCEDES_URL = new URL('./models/mercedes.glb?v=5', import.meta.url).href;
+const MAZDA_URL = new URL('./models/mazda.glb?v=5', import.meta.url).href;
 
 let started = false;
 
