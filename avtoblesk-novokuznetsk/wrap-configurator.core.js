@@ -117,7 +117,7 @@ mesh.material=m;s.hex=hex;s.finish=finish;s.effect=effect}
 function resetZone(id){for(const mesh of zones[id]||[]){const s=states[activeModel].get(mesh.uuid);if(!s)continue;if(s.original)mesh.material=s.original.clone?s.original.clone():s.original;s.hex=null}}
 function paintZone(id){if(!id||zoneDefs[id]?.[2]?.nopaint)return;if(tool==='remove')resetZone(id);else if(tool==='eyedrop'){const s=(zones[id]||[]).map(m=>states[activeModel].get(m.uuid)).find(x=>x?.hex);if(s){activeHex=s.hex;document.querySelectorAll('.swatch').forEach(x=>x.classList.toggle('active',x.dataset.hex===activeHex))}}else if(tool!=='select'){for(const mesh of zones[id]||[])applyMaterial(mesh,activeHex)}recalc();renderParts()}
 function friendly(id){return zoneDefs[id]?.[0]||id}function price(id){return zoneDefs[id]?.[1]||0}
-function priceText(id){return (zoneDefs[id]?.[2]?.from?'от ':'')+price(id).toLocaleString('ru-RU')+' ₽'}
+function priceText(id){return 'от '+price(id).toLocaleString('ru-RU')+' ₽'}
 function subText(id){const note=zoneDefs[id]?.[2]?.note;return note?note+' · '+MODEL_NAMES[activeModel]:MODEL_NAMES[activeModel]}
 function infoAnchors(id){return INFO_ANCHORS[activeModel]?.[id]}
 const pins=[];function hidePins(from=0){for(let i=from;i<pins.length;i++)pins[i].style.display='none'}
@@ -137,7 +137,7 @@ const t=controls.target,view=Math.atan2(camera.position.x-t.x,camera.position.z-
 for(const [x,z] of dirs){let d=view-Math.atan2(x,z)-cur;d=Math.atan2(Math.sin(d),Math.cos(d));if(best===null||Math.abs(d)<Math.abs(best))best=d}
 rotating=false;document.getElementById('rotate').classList.remove('active');if(Math.abs(best)<50*Math.PI/180)return;turn={root,from:cur,to:cur+best,t0:performance.now()}}
 function stepTurn(now){if(!turn)return;const k=Math.min(1,(now-turn.t0)/1071),e=1-Math.pow(1-k,3);turn.root.quaternion.setFromAxisAngle(UP,turn.from+(turn.to-turn.from)*e);if(k>=1)turn=null}
-function recalc(){total=0;for(const [id,ms] of Object.entries(zones))if(ms.some(m=>states[activeModel].get(m.uuid)?.hex))total+=price(id);document.getElementById('total').textContent=total.toLocaleString('ru-RU')+' ₽'}
+function recalc(){total=0;for(const [id,ms] of Object.entries(zones))if(ms.some(m=>states[activeModel].get(m.uuid)?.hex))total+=price(id);document.getElementById('total').textContent=(total?'от ':'')+total.toLocaleString('ru-RU')+' ₽'}
 function renderParts(){const box=document.getElementById('parts');if(!box)return;box.innerHTML='';const painted=Object.keys(zoneDefs).filter(id=>(zones[id]||[]).some(m=>states[activeModel].get(m.uuid)?.hex));if(!painted.length){box.innerHTML='<div class="empty">Пока ничего не выбрано</div>';return}painted.forEach(id=>{const b=document.createElement('button');b.className='part'+(selectedZone===id?' active':'');b.innerHTML=`<span><span class="name">${friendly(id)}</span><span class="meta">${MODEL_NAMES[activeModel]}</span></span><span class="price">${priceText(id)}</span>`;b.onclick=()=>{selectZone(id);faceZone(id)};box.appendChild(b)})}
 function setLook(hex,fin,eff){if(hex){activeHex=hex;document.querySelectorAll('.swatch').forEach(x=>x.classList.toggle('active',x.dataset.hex===hex))}if(fin){finish=fin;document.querySelectorAll('[data-finish]').forEach(x=>x.classList.toggle('active',x.dataset.finish===fin))}if(eff){effect=eff;document.querySelectorAll('[data-effect]').forEach(x=>x.classList.toggle('active',x.dataset.effect===eff))}}
 const PRESET_STOCK={mercedes:new Set(['roof','mirrorL','mirrorR'])};

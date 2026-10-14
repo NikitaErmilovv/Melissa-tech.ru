@@ -8,9 +8,12 @@
       el.closest('.site-nav') ||
       el.closest('#wrap-cfg') ||
       el.closest('[data-cms-skip]') ||
+      el.closest('#articles-feed') ||
+      el.closest('.articles-hub') ||
+      el.closest('.article-feed') ||
+      el.closest('.article-row') ||
       el.closest('script') ||
       el.closest('template') ||
-      el.id === 'stat-rating' ||
       el.closest('#zones') ||
       el.closest('#swatches') ||
       el.closest('#parts') ||
@@ -35,6 +38,8 @@
   function hideableBlocks() {
     return Array.from(document.querySelectorAll('section, .stats')).filter((el) => {
       if (isLockedFrame(el)) return false;
+      if (el.id === 'articles-feed' || el.classList.contains('articles-hub')) return false;
+      if (el.closest('#articles-feed, .articles-hub')) return false;
       if (el.closest('.site-nav, footer, .cms-bar, .cms-modal-wrap')) return false;
       const parentBlock = el.parentElement && el.parentElement.closest('section');
       if (parentBlock && parentBlock !== el) return false;
@@ -143,10 +148,6 @@
     el.style.backgroundSize = el.style.backgroundSize || 'cover';
     el.style.backgroundPosition = data.posX + '% ' + data.posY + '%';
     el.classList.toggle('is-has-photo', true);
-    if (el.classList.contains('founder-visual')) {
-      const ph = el.querySelector('.founder-visual-placeholder');
-      if (ph) ph.style.display = 'none';
-    }
   }
 
   function assignKeys() {
@@ -162,7 +163,7 @@
     };
 
     document.querySelectorAll(
-      '.eyebrow,.kicker,.intro,.tag,.cost,.quote,.founder-lead,.cms-album-desc,.contact-note,.address-map-text,.address-map-muted,.address-map-muted-sm,.address-map-detail-label,.address-map-btn,.founder-visual-caption,.stars,p,h1,h2,h3,h4,figcaption,small,summary,.service-row p,.service-row h3,.step h3,.step p,.card-body h3,.card-body p,.review p,.review small,.footer-hours-block span,.footer-bottom > span:not(.footer-requisites),.subpage-hero p,.details p'
+      '.stat b,.stat span,.eyebrow,.kicker,.intro,.tag,.cost,.quote,.founder-lead,.cms-album-desc,.contact-note,.address-map-text,.address-map-muted,.address-map-muted-sm,.address-map-detail-label,.address-map-btn,.founder-visual-caption,.stars,p,h1,h2,h3,h4,figcaption,small,summary,.service-row p,.service-row h3,.step h3,.step p,.card-body h3,.card-body p,.review p,.review small,.footer-hours-block span,.footer-bottom > span:not(.footer-requisites),.subpage-hero p,.details p'
     ).forEach(mark);
 
     document.querySelectorAll('a.button, a.address-map-phone, .footer-phone-inline, .footer-logo, .address-map-brand').forEach((el) => {
@@ -179,9 +180,11 @@
       }
     });
 
-    const bgTargets = '.photo, .heroimg, .card-media, .founder-visual, [data-cms-bg]';
+    /* founder-visual is intentionally NOT a CMS bg target — text saves must not stamp a photo there */
+    const bgTargets = '.photo, .heroimg, .card-media, [data-cms-bg]';
     document.querySelectorAll(bgTargets).forEach((el) => {
       if (isExcluded(el)) return;
+      if (el.classList.contains('founder-visual')) return;
       if (el.dataset.cmsBg) return;
       const sec = sectionId(el);
       counters['bg_' + sec] = (counters['bg_' + sec] || 0) + 1;
@@ -329,7 +332,11 @@
       applyHiddenBlocks();
       Object.entries(page.text || {}).forEach(([k, v]) => applyField(k, v, 'text'));
       Object.entries(page.images || {}).forEach(([k, v]) => applyField(k, v, 'img'));
-      Object.entries(page.backgrounds || {}).forEach(([k, v]) => applyField(k, v, 'bg'));
+      Object.entries(page.backgrounds || {}).forEach(([k, v]) => {
+        /* founder photo slot disabled — never re-apply stale bg_story */
+        if (/::bg_story::/.test(k)) return;
+        applyField(k, v, 'bg');
+      });
     } catch (_) {}
   }
 
@@ -348,16 +355,22 @@
     });
     document.querySelectorAll('[data-cms-bg]').forEach((el) => {
       if (isExcluded(el)) return;
+      if (el.classList.contains('founder-visual')) return;
       const url = bgUrl(el);
       if (url) el.classList.add('is-has-photo');
     });
     const backgrounds = {};
     document.querySelectorAll('[data-cms-bg]').forEach((el) => {
       if (isExcluded(el)) return;
+      if (el.classList.contains('founder-visual')) return;
       const url = bgUrl(el);
       if (!url) return;
       const pos = bgPosition(el);
       backgrounds[el.dataset.cmsBg] = { url, posX: pos.x, posY: pos.y };
+    });
+    /* drop legacy founder bg if still present in memory/DOM */
+    Object.keys(backgrounds).forEach((k) => {
+      if (/::bg_story::/.test(k)) delete backgrounds[k];
     });
     const lists = {};
     const albums = collectAlbums();
@@ -694,7 +707,7 @@
     bar.querySelector('.cms-save').onclick = saveAll;
     bar.querySelector('.cms-exit').onclick = () => {
       sessionStorage.removeItem(TOKEN_KEY);
-      location.reload();
+      location.href = 'cms/admin-panel.html';
     };
     document.body.appendChild(bar);
   }

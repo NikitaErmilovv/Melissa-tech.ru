@@ -1,0 +1,20 @@
+Options -Indexes
+DirectoryIndex index.html index.php
+AddDefaultCharset UTF-8
+
+<IfModule mod_mime.c>
+  AddType application/javascript js mjs
+  AddType model/gltf-binary glb
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(glb)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_authz_core.c>
+  <FilesMatch "\.(py|pyc|bat|md)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>

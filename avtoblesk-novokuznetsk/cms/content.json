@@ -41,7 +41,7 @@
       "index.html::story::p::1": "Студия на Аульской улице: полировка кузова и фар, керамика, химчистка, шумоизоляция и работа со стёклами. К каждому автомобилю — осмотр и согласование объёма работ.",
       "index.html::story::p::2": "Нам важно, чтобы клиент понимал, за что платит: без лишних обещаний, с проверкой результата при выдаче. Так формируется доверие и возвращаются снова.",
       "index.html::story::p::3": "Позвоните или напишите — подскажем по услугам, сориентируем по стоимости и подберём удобное время.",
-      "index.html::story::span_founder-visual-caption::1": "АВТОБЛЕСК · НОВОКУЗНЕЦК",
+      "index.html::story::span_founder-visual-caption::1": "АВТОБЛЕСК ---- НОВОКУЗНЕЦК",
       "index.html::catalog::div_kicker::1": "КАТАЛОГ",
       "index.html::catalog::h3::1": "Сколы и трещины",
       "index.html::catalog::p::1": "Ремонт лобового и боковых стёкол: локальная работа со сколами и трещинами.",
@@ -49,7 +49,7 @@
       "index.html::catalog::h3::2": "Полировка-шлифовка стёкол",
       "index.html::catalog::p::2": "Полировка и шлифовка стёкол от налёта, мутности и мелких царапин.",
       "index.html::catalog::div_cost::2": "от 1 000 ₽",
-      "index.html::catalog::h3::3": "Полировка фар",
+      "index.html::catalog::h3::3": "Полировка фар.",
       "index.html::catalog::p::3": "Восстановление прозрачности и блеска фар.",
       "index.html::catalog::div_cost::3": "от 2 000 ₽",
       "index.html::catalog::h3::4": "Антидождь",
@@ -108,7 +108,9 @@
       "index.html::footer::div_footer-logo::2": "АВТОБЛЕСК",
       "index.html::footer::span::2": "Ежедневно · по записи",
       "index.html::footer::span::3": "© 2026 Детейлинг-студия «АвтоБлеск». Все права защищены.<br>*WhatsApp принадлежит компании Meta, признанной экстремистской организацией и запрещенной на территории РФ.",
-      "index.html::footer::span::4": "ДЕТЕЙЛИНГ · НОВОКУЗНЕЦК"
+      "index.html::footer::span::4": "ДЕТЕЙЛИНГ · НОВОКУЗНЕЦК",
+      "index.html::works::p_intro::1": "СМОТРЕТЬ НАШИ РАБОТЫ",
+      "index.html::works::a_button_dark::1": "СМОТРЕТЬ НАШИ РАБОТЫ"
     },
     "images": {
       "index.html::img_services::1": {
@@ -141,38 +143,88 @@
       }
     },
     "backgrounds": {
-      "index.html::bg_works::1": "img/works/portfolio/gallery-01.jpg",
-      "index.html::bg_works::2": "img/works/portfolio/gallery-02.jpg",
-      "index.html::bg_works::3": "img/works/portfolio/gallery-03.jpg"
+      "index.html::bg_works::1": {
+        "url": "img/works/portfolio/gallery-01.jpg",
+        "posX": 50,
+        "posY": 50
+      },
+      "index.html::bg_works::2": {
+        "url": "img/works/portfolio/gallery-02.jpg",
+        "posX": 50,
+        "posY": 50
+      },
+      "index.html::bg_works::3": {
+        "url": "img/works/portfolio/gallery-03.jpg",
+        "posX": 50,
+        "posY": 50
+      },
+      "index.html::bg_hero::1": {
+        "url": "img/works/hero.jpg?v=custom3",
+        "posX": 50,
+        "posY": 62
+      }
+    },
+    "hiddenBlocks": [],
+    "lists": {
+      "services": [
+        {
+          "title": "Сколы и трещины",
+          "text": "Ремонт лобового и боковых стёкол: локальная работа со сколами и трещинами.",
+          "cost": "от 50 ₽"
+        },
+        {
+          "title": "Полировка-шлифовка стёкол",
+          "text": "Полировка и шлифовка стёкол от налёта, мутности и мелких царапин.",
+          "cost": "от 1 000 ₽"
+        },
+        {
+          "title": "Полировка фар.",
+          "text": "Восстановление прозрачности и блеска фар.",
+          "cost": "от 2 000 ₽"
+        },
+        {
+          "title": "Антидождь",
+          "text": "Гидрофобная обработка стёкол — лучше видимость в дождь.",
+          "cost": "от 500 ₽"
+        },
+        {
+          "title": "Полировка кузова автомобиля",
+          "text": "Восстановление блеска ЛКП и устранение мелких дефектов.",
+          "cost": "от 1 000 ₽"
+        },
+        {
+          "title": "Керамика",
+          "text": "Защитное керамическое покрытие на кузов.",
+          "cost": "от 3 000 ₽"
+        },
+        {
+          "title": "Химчистка автомобиля",
+          "text": "Глубокая очистка салона.",
+          "cost": "от 4 000 ₽"
+        },
+        {
+          "title": "Шумоизоляция",
+          "text": "Шумоизоляция салона и отдельных зон.",
+          "cost": "от 2 000 ₽"
+        },
+        {
+          "title": "Выезд на дом",
+          "text": "Выезд специалиста по согласованию.",
+          "cost": "по запросу"
+        }
+      ]
     }
   },
   "album.html": {
-    "text": {},
-    "images": {},
-    "backgrounds": {},
-    "lists": {
-      "albums": [
-        {
-          "kicker": "01",
-          "title": "Сколы и трещины",
-          "description": "Локальный ремонт лобового и боковых стёкол — останавливаем расползание трещины.",
-          "items": [
-            { "type": "image", "url": "img/works/portfolio/gallery-01.jpg" },
-            { "type": "image", "url": "img/works/portfolio/gallery-02.jpg" }
-          ]
-        },
-        {
-          "kicker": "02",
-          "title": "Полировка и шлифовка стёкол",
-          "description": "Убираем мутность, налёт и мелкие царапины — возвращаем прозрачность стеклу.",
-          "items": [
-            { "type": "image", "url": "img/works/portfolio/gallery-03.jpg" },
-            { "type": "image", "url": "img/works/portfolio/gallery-04.jpg" },
-            { "type": "image", "url": "img/works/portfolio/gallery-05.jpg" }
-          ]
-        }
-      ]
+    "text": {
+      "album.html::main::div_kicker::1": "02 / НАШИ РАБОТЫ",
+      "album.html::main::h1::1": "РАБОТЫ<br>СТУДИИ<br><span class=\"accent\">АВТОБЛЕСК</span>",
+      "album.html::main::p::1": "Статьи о выполненных заказах: ремонт стёкол, полировка и детейлинг в Новокузнецке.",
+      "album.html::footer::span::1": "© 2026 Детейлинг-студия «АвтоБлеск». Все права защищены.<br>*WhatsApp принадлежит компании Meta, признанной экстремистской организацией и запрещенной на территории РФ."
     },
+    "images": [],
+    "backgrounds": [],
+    "lists": [],
     "hiddenBlocks": []
   }
 }

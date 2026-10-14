@@ -1,12 +1,7 @@
 (function () {
   document.querySelectorAll('[data-cms-nav="services"], [data-cms-panel="services"]').forEach((el) => el.remove());
   const TOKEN_KEY = 'avtoblesk_cms_token';
-  const WORKS_PAGE = 'album.html';
-  const PAGES = [
-    { id: 'index.html', label: 'Сайт (одна главная)' },
-    { id: WORKS_PAGE, label: 'Наши работы' },
-    { id: 'training.html', label: 'Обучение' },
-  ];
+  const CMS_EDIT_PAGES = new Set(['index.html', 'album.html', 'training.html']);
   const META_PAGES = [
     { id: 'index.html', label: 'Главная', title: 'АвтоБлеск — детейлинг' },
     { id: 'services.html', label: 'Услуги', title: 'Услуги — АвтоБлеск' },
@@ -20,6 +15,8 @@
   let store = {};
   let articles = [];
   let articlesAdmin = null;
+  let activeArticleId = null;
+  let articleEditorMode = 'list';
   let services = [];
   let wrapZones = { order: [], zones: {}, models: {}, colors: [], finishes: [], effects: [] };
   let wrapCarTab = 'mercedes';
@@ -122,6 +119,9 @@
       const artRes = await fetch(window.AvtoCmsApi.articlesUrl());
       const artData = artRes.ok ? await artRes.json() : { articles: [] };
       articles = Array.isArray(artData.articles) ? JSON.parse(JSON.stringify(artData.articles)) : [];
+      articles.forEach((a, i) => {
+        if (a && !a.id) a.id = 'art-' + (a.slug || i) + '-' + i;
+      });
     } catch (_) {
       articles = [];
     }
@@ -173,6 +173,86 @@
     store[page] = Object.assign({}, prev, { lists });
   }
 
+  function isEmptyArticleDraft(a) {
+    const title = String(a?.title || '').trim();
+    const body = String(a?.body || '').trim();
+    const excerpt = String(a?.excerpt || '').trim();
+    return !title && !body && !excerpt && !a?.cover && !(a?.gallery && a.gallery.length);
+  }
+
+  let articlesSaveChain = Promise.resolve();
+  let articlesSaveGen = 0;
+
+  function saveArticlesToSite() {
+    const gen = ++articlesSaveGen;
+    const run = articlesSaveChain.then(async () => {
+      if (gen !== articlesSaveGen) return { skipped: true };
+      const A = window.AvtoCmsArticles;
+      const snapshot = JSON.parse(JSON.stringify(articles));
+      snapshot.forEach((a) => {
+        const t = String(a.title || '').trim();
+        if (!t) return;
+        const slug = String(a.slug || '').trim();
+        if (!slug || /^draft-\d+$/.test(slug)) {
+          a.slug = A.slugify(t);
+        }
+      });
+      const toSave = snapshot.filter((a) => !isEmptyArticleDraft(a));
+      toSave.forEach((a, i) => {
+        a.order = toSave.length - i;
+      });
+      const res = await window.AvtoCmsApi.saveArticles({ articles: toSave }, token());
+      if (!res.ok) throw new Error('save');
+      if (gen !== articlesSaveGen) return { skipped: true };
+      const keepId = activeArticleId;
+      const keepMode = articleEditorMode;
+      const byId = {};
+      toSave.forEach((a) => {
+        byId[a.id] = a;
+      });
+      articles.forEach((a) => {
+        if (a && a.id && byId[a.id]) {
+          Object.assign(a, byId[a.id]);
+        }
+      });
+      const ids = new Set(articles.map((a) => a && a.id));
+      toSave.forEach((a) => {
+        if (!ids.has(a.id)) articles.push(a);
+      });
+      for (let i = articles.length - 1; i >= 0; i--) {
+        if (isEmptyArticleDraft(articles[i]) && articles[i].id !== keepId) {
+          articles.splice(i, 1);
+        }
+      }
+      adminToast('Сохранено');
+      if (keepMode === 'list') {
+        renderArticlesAdmin();
+      } else if (keepId) {
+        const root = $('#cms-articles-editor');
+        const art = articles.find((a) => a && a.id === keepId);
+        const slugInp = root && root.querySelector('[data-field="slug"]');
+        if (art && slugInp && !slugInp.dataset.touched) {
+          slugInp.value = art.slug || '';
+        }
+        const link = root && root.querySelector('.cms-art-preview-feed .article-row-btn');
+        if (art && link && art.slug && !/^draft-\d+$/.test(art.slug)) {
+          const href = '../works/' + encodeURIComponent(art.slug) + '/';
+          root.querySelectorAll('.cms-art-preview-feed a.article-row-media, .cms-art-preview-feed .article-row-title a, .cms-art-preview-feed a.article-row-btn').forEach((el) => {
+            el.setAttribute('href', href);
+          });
+        }
+      }
+      return { ok: true };
+    });
+    articlesSaveChain = run.then(
+      () => {},
+      () => {}
+    );
+    return run.catch(() => {
+      alert('Ошибка сохранения. Войдите снова.');
+    });
+  }
+
   function renderArticlesAdmin() {
     const root = $('#cms-articles-editor');
     if (!root || !window.AvtoCmsArticlesAdmin) return;
@@ -181,6 +261,20 @@
         articles,
         token,
         render: renderArticlesAdmin,
+        getActiveId: () => activeArticleId,
+        setActiveId: (id) => {
+          activeArticleId = id;
+        },
+        getMode: () => articleEditorMode,
+        setMode: (m) => {
+          articleEditorMode = m;
+          const panel = document.querySelector('[data-cms-panel="articles"]');
+          if (panel && !panel.hidden) {
+            $('#cms-title').textContent = m === 'edit' ? 'Редактирование' : 'Статьи';
+            $('#cms-sub').textContent = m === 'edit' ? 'Новая или правка публикации' : 'Публикации раздела «Наши работы»';
+          }
+        },
+        onSave: saveArticlesToSite,
       });
     }
     articlesAdmin.renderEditor(root, articles);
@@ -486,7 +580,18 @@
       const saved = (store[p.id] && store[p.id].meta) || {};
       const title = saved.title || p.title;
       const description = saved.description || '';
-      const editable = PAGES.some((item) => item.id === p.id);
+      const isCms = CMS_EDIT_PAGES.has(p.id);
+      const badge = isCms
+        ? '<span class="cms-page-badge cms-page-badge--cms">CMS</span>'
+        : '<span class="cms-page-badge cms-page-badge--meta">метатеги</span>';
+      const actions = isCms
+        ? '<a class="crm-link" href="../' +
+          p.id +
+          '" target="_blank" rel="noopener">Открыть</a>' +
+          '<a class="crm-btn" href="../' +
+          p.id +
+          '">Редактировать на сайте</a>'
+        : '';
       return (
         '<div class="cms-admin-page-row cms-meta-row" data-page="' +
         p.id +
@@ -494,12 +599,8 @@
         '<div class="cms-meta-head"><b>' +
         escapeAttr(p.label) +
         '</b>' +
-        '<a class="crm-link" href="../' +
-        p.id +
-        '" target="_blank" rel="noopener">Открыть</a>' +
-        (editable
-          ? '<a class="crm-btn" href="../' + p.id + '">Редактировать на сайте</a>'
-          : '') +
+        badge +
+        actions +
         '</div>' +
         '<label class="cms-meta-field">Заголовок<input class="crm-input cms-meta-title" value="' +
         escapeAttr(title) +
@@ -544,7 +645,7 @@
     });
     const titles = {
       dashboard: ['Панель CMS', 'Управление сайтом АвтоБлеск'],
-      articles: ['Наши работы', 'Статьи с фото: создание, закрепление, порядок, скрытие. Отдельные страницы в works/'],
+      articles: ['Статьи', 'Публикации для раздела «Наши работы»'],
       services: ['Услуги и цены', 'Каталог на главной (раздел «Каталог»)'],
       pages: ['Страницы', 'Сайт, альбом и обучение — правки текста и фото на странице'],
       wrap: ['Конфигуратор 3D', 'Названия и цены зон оклейки на главной'],
@@ -558,10 +659,23 @@
       'school-student': ['Карточка ученика', 'Профиль, сертификат, история'],
     };
     const t = titles[view] || titles.dashboard;
-    $('#cms-title').textContent = t[0];
-    $('#cms-sub').textContent = t[1];
+    const main = document.querySelector('.cms-admin-crm .crm-main');
+    if (main) main.classList.toggle('cms-main--articles', view === 'articles');
+    const top = document.querySelector('.cms-admin-crm .crm-top');
+    if (top) top.hidden = false;
+    if (view === 'articles') {
+      $('#cms-title').textContent = articleEditorMode === 'edit' ? 'Редактирование' : 'Статьи';
+      $('#cms-sub').textContent =
+        articleEditorMode === 'edit' ? 'Новая или правка публикации' : 'Публикации раздела «Наши работы»';
+    } else {
+      $('#cms-title').textContent = t[0];
+      $('#cms-sub').textContent = t[1];
+    }
     if (window.AvtoSchoolCrm && String(view).indexOf('school') === 0) {
       window.AvtoSchoolCrm.render(view);
+    }
+    if (view === 'articles') {
+      renderArticlesAdmin();
     }
   }
 
@@ -590,45 +704,6 @@
     renderServicesAdmin();
     renderWrapZonesAdmin();
     switchView('dashboard');
-
-    const addArticle = $('#cms-add-article');
-    if (addArticle) {
-      addArticle.onclick = () => {
-        const title = 'Новая статья';
-        articles.unshift({
-          id: 'art-' + Date.now(),
-          slug: window.AvtoCmsArticles.slugify(title),
-          title,
-          excerpt: '',
-          body: '',
-          cover: '',
-          gallery: [],
-          publishedAt: new Date().toISOString().slice(0, 10),
-          pinned: false,
-          hidden: false,
-          order: articles.length + 1,
-          metaTitle: '',
-          metaDescription: '',
-        });
-        renderArticlesAdmin();
-      };
-    }
-
-    const saveArticlesBtn = $('#cms-save-articles');
-    if (saveArticlesBtn) {
-      saveArticlesBtn.onclick = async () => {
-        try {
-          articles.forEach((a, i) => {
-            a.order = articles.length - i;
-          });
-          const res = await window.AvtoCmsApi.saveArticles({ articles }, token());
-          if (!res.ok) throw new Error('save');
-          alert('Статьи сохранены. Обновлены works/ и лента на album.html.');
-        } catch (_) {
-          alert('Ошибка сохранения. Войдите снова.');
-        }
-      };
-    }
 
     const addService = $('#cms-add-service');
     if (addService) {
@@ -679,7 +754,22 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-cms-nav]').forEach((btn) => {
-      btn.onclick = () => switchView(btn.dataset.cmsNav);
+      btn.onclick = () => {
+        if (btn.dataset.cmsNav === 'articles') {
+          articleEditorMode = 'list';
+          activeArticleId = null;
+        }
+        switchView(btn.dataset.cmsNav);
+      };
+    });
+    document.querySelectorAll('[data-cms-goto]').forEach((btn) => {
+      btn.onclick = () => {
+        if (btn.dataset.cmsGoto === 'articles') {
+          articleEditorMode = 'list';
+          activeArticleId = null;
+        }
+        switchView(btn.dataset.cmsGoto);
+      };
     });
 
     $('#cms-login-form').addEventListener('submit', async (e) => {
@@ -696,13 +786,12 @@
       try {
         res = await window.AvtoCmsApi.login(password);
       } catch (ex) {
-        err.textContent =
-          'Нет связи с сервером. Запустите python server.py и откройте http://127.0.0.1:8092/cms/admin-panel.html';
+        err.textContent = 'Нет связи с сервером. Попробуйте ещё раз.';
         err.hidden = false;
         return;
       }
       if (!res || !res.ok) {
-        err.textContent = 'Неверный пароль. Локально: avtoblesk-cms-change-me';
+        err.textContent = 'Неверный пароль';
         err.hidden = false;
         return;
       }
@@ -710,7 +799,7 @@
       try {
         data = await res.json();
       } catch (_) {
-        err.textContent = 'Сервер не ответил JSON. Проверьте, что открыт адрес с портом 8092, не файл HTML.';
+        err.textContent = 'Не удалось войти. Обновите страницу.';
         err.hidden = false;
         return;
       }

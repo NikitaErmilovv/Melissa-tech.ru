@@ -95,6 +95,7 @@
     document.getElementById('res-dates').textContent = s.dates;
     document.getElementById('res-code').textContent = s.cert;
     result.classList.add('is-visible');
+    refreshPreviewQr(code);
   }
 
   if (form && input && result) {
@@ -103,6 +104,13 @@
       runCheck();
     });
   }
+
+  function refreshPreviewQr(code) {
+    if (window.AvtoCertQr) window.AvtoCertQr.fill(document, code || '');
+  }
+
+  /* Default QR on certificate preview → training page */
+  refreshPreviewQr('');
 
   fetch('./data/training.json?_=' + Date.now())
     .then(function (r) {
@@ -118,6 +126,7 @@
       if (fromUrl && input) {
         input.value = fromUrl.toUpperCase();
         runCheck();
+        refreshPreviewQr(fromUrl);
       } else if (msg && msg.textContent.indexOf('Загружаем') === 0) {
         runCheck();
       }

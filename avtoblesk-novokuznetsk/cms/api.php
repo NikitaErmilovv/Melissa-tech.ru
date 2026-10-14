@@ -78,8 +78,25 @@ function read_content(): array {
     return is_array($data) ? $data : [];
 }
 
+function cms_backup_file(string $label, string $srcPath): void {
+    if (!is_file($srcPath)) {
+        return;
+    }
+    $dir = dirname(__DIR__) . '/data/cms-backups';
+    if (!is_dir($dir) && !mkdir($dir, 0775, true) && !is_dir($dir)) {
+        return;
+    }
+    @copy($srcPath, $dir . '/' . $label . '-' . date('Ymd-His') . '.json');
+    $files = glob($dir . '/' . $label . '-*.json') ?: [];
+    rsort($files);
+    foreach (array_slice($files, 40) as $old) {
+        @unlink($old);
+    }
+}
+
 function write_content(array $data): void {
     global $contentFile;
+    cms_backup_file('content', $contentFile);
     file_put_contents($contentFile, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
 }
 
@@ -192,7 +209,7 @@ if ($action === 'reviews-2gis' && $method === 'GET') {
             }
             $user = $rev['user'] ?? [];
             $iso = $rev['date_created'] ?? '';
-            $date = $iso ? date('j.m.Y', strtotime($iso)) : '';
+            $date = $iso ? date('d.m.Y', strtotime($iso)) : '';
             $items[] = [
                 'name' => trim($user['name'] ?? ($user['first_name'] ?? 'Клиент')),
                 'text' => trim((string)($rev['text'] ?? '')) ?: 'Без текста',
@@ -231,6 +248,7 @@ if ($action === 'wrap-zones-save' && $method === 'POST') {
         send_json(400, ['error' => 'Missing zones']);
     }
     $path = dirname(__DIR__) . '/data/wrap-zones.json';
+    cms_backup_file('wrap-zones', $path);
     $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n";
     $fp = fopen($path, 'c+');
     if ($fp === false || !flock($fp, LOCK_EX)) {
@@ -282,6 +300,7 @@ if ($action === 'training-save' && $method === 'POST') {
         send_json(400, ['error' => 'Missing students']);
     }
     $path = dirname(__DIR__) . '/data/training.json';
+    cms_backup_file('training', $path);
     $json = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n";
     if (file_put_contents($path, $json) === false) {
         send_json(500, ['error' => 'Write failed']);

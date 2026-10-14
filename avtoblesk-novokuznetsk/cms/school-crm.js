@@ -290,6 +290,7 @@
             certCardHtml(s) +
             '</div><div class="crm-cert-actions"><button type="button" class="crm-btn is-accent" id="m-pdf">Скачать PDF</button><button type="button" class="crm-btn" id="m-close">Закрыть</button></div>'
         );
+        if (window.AvtoCertQr) window.AvtoCertQr.fill(document.querySelector('.cms-modal-wrap') || document, s.cert);
         document.getElementById('m-pdf').onclick = () => printCert(s);
         document.getElementById('m-close').onclick = closeModal;
       };
@@ -551,7 +552,9 @@
       esc(city) +
       '</b></div></div><div class="cert-card-foot"><div class="cert-card-sign">Подпись: ' +
       esc(s.teacher || store.settings.defaultTeacher || '') +
-      '</div><div class="cert-qr"></div></div></div>' +
+      '</div><div class="cert-qr">' +
+      (window.AvtoCertQr ? window.AvtoCertQr.imgHtml(s.cert) : '') +
+      '</div></div></div>' +
       '<div class="crm-cert-actions"><button type="button" class="crm-btn is-accent" id="sch-pdf">Скачать / печать</button>' +
       '<a class="crm-btn" href="../training.html?cert=' +
       encodeURIComponent(s.cert) +
@@ -837,7 +840,9 @@
       esc(s.dates) +
       '</b></div></div><div class="cert-card-foot"><div class="cert-card-sign">Подпись: ' +
       esc(teacher) +
-      '</div><div class="cert-qr" aria-hidden="true"></div></div></div>'
+      '</div><div class="cert-qr">' +
+      (window.AvtoCertQr ? window.AvtoCertQr.imgHtml(s.cert) : '') +
+      '</div></div></div>'
     );
   }
 
@@ -853,7 +858,7 @@
         attr(s.cert) +
         '</title><link rel="stylesheet" href="' +
         base +
-        'styles.css?v=cert1"><style>body{margin:0;padding:32px;background:#0a0a0a;display:grid;place-items:center;min-height:100vh}.cert-card{max-width:520px;width:100%}@media print{body{background:#fff;padding:0}.cert-card{max-width:none}}</style></head><body>' +
+        'styles.css?v=qr2"><style>body{margin:0;padding:32px;background:#0a0a0a;display:grid;place-items:center;min-height:100vh}.cert-card{max-width:520px;width:100%}@media print{body{background:#fff;padding:0}.cert-card{max-width:none}}</style></head><body>' +
         certCardHtml(s) +
         '</body></html>'
     );
@@ -865,7 +870,9 @@
 
   function renderCertPreviewBox(container) {
     if (!container) return;
-    container.innerHTML = certCardHtml(sampleCertStudent());
+    const sample = sampleCertStudent();
+    container.innerHTML = certCardHtml(sample);
+    if (window.AvtoCertQr) window.AvtoCertQr.fill(container, sample.cert);
   }
 
   function printCert(s) {

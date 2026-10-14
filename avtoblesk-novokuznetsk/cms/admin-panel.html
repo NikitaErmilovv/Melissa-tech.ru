@@ -30,7 +30,7 @@
 .cms-login-box .err[hidden]{display:none!important}
 </style>
 <link rel="stylesheet" href="../styles.css?v=albums1">
-<link rel="stylesheet" href="cms.css?v=meta1">
+<link rel="stylesheet" href="cms.css?v=artui11">
 </head>
 <body class="cms-admin-body">
 <div id="cms-login" class="cms-login-wrap">
@@ -42,7 +42,6 @@
       <button type="submit" id="cms-login-submit">Войти</button>
       <div class="err" id="cms-login-err" hidden></div>
     </form>
-    <p class="cms-login-hint">Открывайте панель только через сервер:<br><code>http://127.0.0.1:8092/cms/admin-panel.html</code></p>
     <p class="cms-login-back"><a href="../index.html">← На сайт</a></p>
   </div>
 </div>
@@ -53,7 +52,7 @@
       <div class="crm-logo"><span>АВТО</span>БЛЕСК<small>CMS</small></div>
       <div class="crm-nav">
         <button type="button" class="crm-nav-item is-active" data-cms-nav="dashboard">Главная</button>
-        <button type="button" class="crm-nav-item" data-cms-nav="articles">Наши работы</button>
+        <button type="button" class="crm-nav-item" data-cms-nav="articles">Статьи</button>
         <button type="button" class="crm-nav-item" data-cms-nav="pages">Страницы сайта</button>
         <button type="button" class="crm-nav-item" data-cms-nav="wrap">Конфигуратор 3D</button>
         <div class="cms-nav-label">Школа</div>
@@ -84,21 +83,15 @@
 
       <div class="crm-view" data-cms-panel="dashboard">
         <div class="crm-cards">
-          <div class="crm-card"><div class="crm-card-top">Статьи<div class="crm-card-ico">◫</div></div><b>album.html</b><small>Наши работы · отдельные страницы</small></div>
+          <button type="button" class="crm-card crm-card--link" data-cms-goto="articles"><div class="crm-card-top">Статьи<div class="crm-card-ico">◫</div></div><b>Наши работы</b><small>Лента и страницы публикаций</small></button>
           <div class="crm-card"><div class="crm-card-top">Страницы<div class="crm-card-ico">✎</div></div><b>3</b><small>Сайт · работы · обучение</small></div>
           <div class="crm-card"><div class="crm-card-top">API<div class="crm-card-ico">⚙</div></div><b>PHP</b><small>cms/api.php на хостинге</small></div>
         </div>
-        <p class="cms-admin-note">Статьи сохраняются в <code>data/articles.json</code>, страницы — в <code>works/…/</code>. Правки текстов страниц — во вкладке «Страницы сайта». На Timeweb создайте <code>cms/config.local.json</code> с паролем (не коммитить).</p>
+        <p class="cms-admin-note">Здесь правки сразу попадают на сайт: статьи, тексты страниц, конфигуратор и школа.</p>
       </div>
 
       <div class="crm-view" data-cms-panel="articles" hidden>
-        <div class="cms-admin-toolbar">
-          <a class="crm-link" href="../album.html" target="_blank" rel="noopener">Открыть «Наши работы»</a>
-          <button type="button" class="crm-btn" id="cms-add-article">+ Статья</button>
-          <button type="button" class="crm-btn cms-admin-save" id="cms-save-articles">Сохранить статьи</button>
-        </div>
-        <p class="cms-admin-note">Закрепление, порядок (↑↓), скрытие и удаление. После сохранения обновляются страницы в <code>works/slug/</code> для поисковиков.</p>
-        <div id="cms-articles-editor" class="cms-admin-stack"></div>
+        <div id="cms-articles-editor" class="cms-articles-editor-root"></div>
       </div>
 
       <div class="crm-view" data-cms-panel="pages" hidden>
@@ -145,10 +138,11 @@
 <script>
 document.querySelectorAll('[data-cms-nav="services"],[data-cms-panel="services"]').forEach(function (el) { el.remove(); });
 </script>
+<script src="../cert-qr.js?v=qr2"></script>
 <script src="cms-api.js?v=hide3"></script>
-<script src="cms-articles.js"></script>
-<script src="cms-articles-admin.js"></script>
-<script src="school-crm.js"></script>
-<script src="admin-panel.js?v=articles1"></script>
+<script src="cms-articles.js?v=artui7"></script>
+<script src="cms-articles-admin.js?v=artui9"></script>
+<script src="school-crm.js?v=qr1"></script>
+<script src="admin-panel.js?v=artui11"></script>
 </body>
 </html>

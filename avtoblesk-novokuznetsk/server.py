@@ -18,12 +18,15 @@ CACHE_TTL = 3600
 ROOT = Path(__file__).resolve().parent
 CMS_DIR = ROOT / "cms"
 CMS_CONTENT = CMS_DIR / "content.json"
-WRAP_ZONES = ROOT / "data" / "wrap-zones.json"
-ARTICLES_JSON = ROOT / "data" / "articles.json"
 CMS_CONFIG = CMS_DIR / "config.local.json"
 CMS_CONFIG_EXAMPLE = CMS_DIR / "config.example.json"
 CMS_UPLOADS = ROOT / "img" / "cms" / "uploads"
 CMS_UPLOADS.mkdir(parents=True, exist_ok=True)
+WRAP_ZONES = ROOT / "data" / "wrap-zones.json"
+TRAINING_JSON = ROOT / "data" / "training.json"
+REVIEWS_JSON = ROOT / "data" / "reviews-2gis.json"
+REVIEWS_CACHE_TTL = 1800
+_reviews_cache: dict[str, object] = {"ts": 0.0, "items": None}
 
 _cache: dict[str, object] = {"ts": 0.0}
 _cms_tokens: dict[str, float] = {}
@@ -31,12 +34,16 @@ CMS_TOKEN_TTL = 86400
 
 
 def cms_password() -> str:
-    if CMS_CONFIG.is_file():
-        data = json.loads(CMS_CONFIG.read_text(encoding="utf-8"))
-        return str(data.get("password", ""))
-    if CMS_CONFIG_EXAMPLE.is_file():
-        data = json.loads(CMS_CONFIG_EXAMPLE.read_text(encoding="utf-8"))
-        return str(data.get("password", ""))
+    for path in (CMS_CONFIG, CMS_CONFIG_EXAMPLE):
+        if not path.is_file():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        pwd = str(data.get("password", "")).strip()
+        if pwd:
+            return pwd
     return ""
 
 
@@ -115,12 +122,83 @@ def fetch_2gis_rating() -> dict[str, object]:
     }
 
 
+def fetch_2gis_reviews(max_items: int = 120) -> list[dict]:
+    now = time.time()
+    cached = _reviews_cache.get("items")
+    if isinstance(cached, list) and cached and now - float(_reviews_cache.get("ts", 0)) < REVIEWS_CACHE_TTL:
+        return cached
+
+    sys_path = str(ROOT / "scripts")
+    if sys_path not in __import__("sys").path:
+        __import__("sys").path.insert(0, sys_path)
+    from fetch_2gis_reviews import fetch_reviews  # type: ignore
+
+    items = fetch_reviews(max_items)
+    if items:
+        REVIEWS_JSON.parent.mkdir(parents=True, exist_ok=True)
+        REVIEWS_JSON.write_text(json.dumps(items, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        _reviews_cache["items"] = items
+        _reviews_cache["ts"] = now
+        return items
+
+    if REVIEWS_JSON.is_file():
+        fallback = json.loads(REVIEWS_JSON.read_text(encoding="utf-8"))
+        if isinstance(fallback, list):
+            return fallback
+    return []
+
+
 class SiteHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
+    def send_json(self, code: int, payload: dict) -> None:
+        out = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        self.send_response(code)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.send_header("Content-Length", str(len(out)))
+        self.end_headers()
+        self.wfile.write(out)
+
+    def do_OPTIONS(self) -> None:
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.end_headers()
+
     def do_GET(self) -> None:
-        if self.path.split("?", 1)[0] == "/api/2gis-rating.json":
+        path = self.path.split("?", 1)[0]
+        if path == "/api/reviews-2gis.json":
+            try:
+                items = fetch_2gis_reviews()
+                body = json.dumps(items, ensure_ascii=False).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Cache-Control", "public, max-age=300")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+            except (urllib.error.URLError, TimeoutError, ValueError, OSError) as exc:
+                if REVIEWS_JSON.is_file():
+                    body = REVIEWS_JSON.read_bytes()
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json; charset=utf-8")
+                    self.send_header("Content-Length", str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                    return
+                body = json.dumps({"error": str(exc)}, ensure_ascii=False).encode("utf-8")
+                self.send_response(502)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+            return
+
+        if path == "/api/2gis-rating.json":
             try:
                 payload = fetch_2gis_rating()
                 body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
@@ -150,154 +228,102 @@ class SiteHandler(SimpleHTTPRequestHandler):
                 payload = json.loads(body.decode("utf-8"))
             except json.JSONDecodeError:
                 payload = {}
-            pwd = str(payload.get("password", ""))
+            pwd = str(payload.get("password", "")).strip()
             expected = cms_password()
-            if not expected or not secrets.compare_digest(pwd, expected):
-                self.send_error(401, "Unauthorized")
+            if not expected or len(pwd) != len(expected) or not secrets.compare_digest(pwd, expected):
+                self.send_json(401, {"error": "Unauthorized"})
                 return
             token = secrets.token_urlsafe(32)
             _cms_tokens[token] = time.time() + CMS_TOKEN_TTL
-            out = json.dumps({"token": token}, ensure_ascii=False).encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self.send_header("Content-Length", str(len(out)))
-            self.end_headers()
-            self.wfile.write(out)
+            self.send_json(200, {"token": token})
             return
 
         if path == "/api/cms/save":
             if not cms_check_token(self.headers.get("Authorization")):
-                self.send_error(401, "Unauthorized")
+                self.send_json(401, {"error": "Unauthorized"})
                 return
             length = int(self.headers.get("Content-Length", "0"))
             body = self.rfile.read(length)
             try:
                 payload = json.loads(body.decode("utf-8"))
             except json.JSONDecodeError:
-                self.send_error(400, "Bad JSON")
+                self.send_json(400, {"error": "Bad JSON"})
                 return
             page = str(payload.get("page", ""))
             if not page:
-                self.send_error(400, "Missing page")
+                self.send_json(400, {"error": "Missing page"})
                 return
             store = cms_read_content()
-            page_store = store.setdefault(page, {"text": {}, "images": {}, "backgrounds": {}})
-            page_store.setdefault("text", {})
-            page_store.setdefault("images", {})
-            page_store.setdefault("backgrounds", {})
-            page_store["text"].update(payload.get("text") or {})
-            page_store["images"].update(payload.get("images") or {})
-            page_store["backgrounds"].update(payload.get("backgrounds") or {})
+            store.setdefault(page, {"text": {}, "images": {}, "backgrounds": {}})
+            store[page]["text"].update(payload.get("text") or {})
+            store[page]["images"].update(payload.get("images") or {})
+            store[page]["backgrounds"].update(payload.get("backgrounds") or {})
+            if "hiddenBlocks" in payload:
+                store[page]["hiddenBlocks"] = payload.get("hiddenBlocks") or []
             if payload.get("lists"):
-                page_store["lists"] = payload.get("lists")
-            meta = payload.get("meta")
-            if isinstance(meta, dict):
-                def clean_meta(value: object, limit: int) -> str:
-                    text = " ".join(str(value or "").replace("<", " ").replace(">", " ").split())
-                    return text[:limit]
-
-                page_store["meta"] = {
-                    "title": clean_meta(meta.get("title"), 180),
-                    "description": clean_meta(meta.get("description"), 320),
-                }
+                store[page]["lists"] = payload.get("lists")
             cms_write_content(store)
-            out = json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self.send_header("Content-Length", str(len(out)))
-            self.end_headers()
-            self.wfile.write(out)
+            self.send_json(200, {"ok": True})
             return
 
         if path == "/api/wrap-zones/save":
             if not cms_check_token(self.headers.get("Authorization")):
-                self.send_error(401, "Unauthorized")
+                self.send_json(401, {"error": "Unauthorized"})
                 return
             length = int(self.headers.get("Content-Length", "0"))
             body = self.rfile.read(length)
             try:
                 payload = json.loads(body.decode("utf-8"))
             except json.JSONDecodeError:
-                self.send_error(400, "Bad JSON")
+                self.send_json(400, {"error": "Bad JSON"})
                 return
-            has_zones = isinstance(payload.get("zones"), dict)
-            has_models = isinstance(payload.get("models"), dict)
-            if not isinstance(payload, dict) or (not has_zones and not has_models):
-                self.send_error(400, "Missing zones")
+            if not isinstance(payload.get("zones"), dict) and not isinstance((payload.get("models") or {}).get("mercedes"), dict):
+                self.send_json(400, {"error": "Missing zones"})
                 return
-            raw = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-            tmp = WRAP_ZONES.with_suffix(".json.tmp")
-            tmp.write_text(raw, encoding="utf-8")
-            tmp.replace(WRAP_ZONES)
-            out = json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self.send_header("Content-Length", str(len(out)))
-            self.end_headers()
-            self.wfile.write(out)
+            WRAP_ZONES.parent.mkdir(parents=True, exist_ok=True)
+            WRAP_ZONES.write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            self.send_json(200, {"ok": True})
             return
 
-        if path == "/api/articles/save":
+        if path == "/api/training/save":
             if not cms_check_token(self.headers.get("Authorization")):
-                self.send_error(401, "Unauthorized")
+                self.send_json(401, {"error": "Unauthorized"})
                 return
             length = int(self.headers.get("Content-Length", "0"))
             body = self.rfile.read(length)
             try:
                 payload = json.loads(body.decode("utf-8"))
             except json.JSONDecodeError:
-                self.send_error(400, "Bad JSON")
+                self.send_json(400, {"error": "Bad JSON"})
                 return
-            if not isinstance(payload, dict) or not isinstance(payload.get("articles"), list):
-                self.send_error(400, "Missing articles")
+            if not isinstance(payload, dict) or not isinstance(payload.get("students"), list):
+                self.send_json(400, {"error": "Missing students"})
                 return
-            raw = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-            ARTICLES_JSON.write_text(raw, encoding="utf-8")
-            import subprocess
-
-            py_regen = ROOT / "scripts" / "regenerate_articles.py"
-            regen = ROOT / "cms" / "regenerate-articles.php"
-            try:
-                if py_regen.is_file():
-                    subprocess.run(
-                        [__import__("sys").executable, str(py_regen)],
-                        cwd=str(ROOT),
-                        check=True,
-                        capture_output=True,
-                        timeout=30,
-                    )
-                elif regen.is_file():
-                    subprocess.run(
-                        ["php", str(regen)],
-                        cwd=str(ROOT),
-                        check=True,
-                        capture_output=True,
-                        timeout=30,
-                    )
-            except (FileNotFoundError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
-                pass
-            out = json.dumps({"ok": True}, ensure_ascii=False).encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self.send_header("Content-Length", str(len(out)))
-            self.end_headers()
-            self.wfile.write(out)
+            TRAINING_JSON.parent.mkdir(parents=True, exist_ok=True)
+            TRAINING_JSON.write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            self.send_json(200, {"ok": True})
             return
 
         if path == "/api/cms/upload":
             if not cms_check_token(self.headers.get("Authorization")):
-                self.send_error(401, "Unauthorized")
+                self.send_json(401, {"error": "Unauthorized"})
                 return
             ctype = self.headers.get("Content-Type", "")
             if "multipart/form-data" not in ctype:
-                self.send_error(400, "Expected multipart")
+                self.send_json(400, {"error": "Expected multipart"})
                 return
             import cgi
 
             form = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={"REQUEST_METHOD": "POST"})
             file_item = form["file"] if "file" in form else None
             if file_item is None or not getattr(file_item, "file", None):
-                self.send_error(400, "Missing file")
+                self.send_json(400, {"error": "Missing file"})
                 return
             filename = Path(getattr(file_item, "filename", "upload.jpg")).name
             safe = re.sub(r"[^a-zA-Z0-9._-]", "_", filename) or "upload.jpg"
