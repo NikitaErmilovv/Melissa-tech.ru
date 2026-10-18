@@ -1,4 +1,4 @@
 site=delaikuzov
 brand=D2 Detailing
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-copy-20261018-173700
+deploy-trigger=d2-wrap-prices-20261018-184200
