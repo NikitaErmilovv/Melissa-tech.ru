@@ -10,18 +10,19 @@ import {OutlinePass} from 'three/addons/postprocessing/OutlinePass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 
 const MODEL_NAMES={mercedes:'Седан',mazda:'Кроссовер'};
-const MODEL_URLS={mercedes:'models/mercedes.glb?v=5',mazda:'models/mazda.glb?v=5'};
+const ASSET_ROOT=new URL('./',import.meta.url);
+const MODEL_URLS={mercedes:new URL('models/mercedes.glb?v=5',ASSET_ROOT).href,mazda:new URL('models/mazda.glb?v=5',ASSET_ROOT).href};
 function prefetchMazdaModel(){if(window.__mzPrefetch)return;window.__mzPrefetch=1;fetch(MODEL_URLS.mazda,{priority:'low'}).catch(()=>{})}
 const DEFAULT_ZONE_DEFS={
- hood:['Капот',22500],roof:['Крыша',19800],bumperFront:['Передний бампер',24800],bumperRear:['Задний бампер',24800],
- fenderFrontR:['Переднее левое крыло',13500],fenderFrontL:['Переднее правое крыло',13500],doorFrontR:['Передняя левая дверь',16700],doorFrontL:['Передняя правая дверь',16700],doorRearR:['Задняя левая дверь',16700],doorRearL:['Задняя правая дверь',16700],
- quarterR:['Заднее левое крыло',18000],quarterL:['Заднее правое крыло',18000],sideLowerR:['Левый порог',11300],sideLowerL:['Правый порог',11300],mirrorR:['Левое зеркало',5900],mirrorL:['Правое зеркало',5900],
- headlights:['Оклейка фар',11300,{from:1,nopaint:1,note:'Оклейка фар'}],taillights:['Оклейка фонарей',11300,{from:1,nopaint:1,note:'Оклейка фонарей'}],
- windshield:['Оклейка лобового',6800,{from:1,nopaint:1,note:'Оклейка лобового стекла'}],
- trunk:['Багажник',18000],fuelCap:['Лючок бака',3600,{from:1,nopaint:1,note:'Оклейка лючка'}],handles:['Ручки дверей',6300,{from:1,nopaint:1,note:'Плёнка на ручки'}],pillars:['Стойки',9000,{from:1,nopaint:1,note:'Оклейка стоек'}]
+ hood:['Капот',25000],roof:['Крыша',16000],bumperFront:['Передний бампер',25000],bumperRear:['Задний бампер',25000],
+ fenderFrontR:['Переднее левое крыло',12000],fenderFrontL:['Переднее правое крыло',12000],doorFrontR:['Передняя левая дверь',12000],doorFrontL:['Передняя правая дверь',12000],doorRearR:['Задняя левая дверь',12000],doorRearL:['Задняя правая дверь',12000],
+ quarterR:['Заднее левое крыло',35000],quarterL:['Заднее правое крыло',35000],sideLowerR:['Левый порог',15000],sideLowerL:['Правый порог',15000],mirrorR:['Левое зеркало',5900],mirrorL:['Правое зеркало',5900],
+ headlights:['Оклейка фар',10000,{from:1,nopaint:1,note:'Оклейка фар'}],taillights:['Оклейка фонарей',11300,{from:1,nopaint:1,note:'Оклейка фонарей'}],
+ windshield:['Оклейка лобового',25000,{from:1,nopaint:1,note:'Оклейка лобового стекла'}],
+ trunk:['Багажник',16000],fuelCap:['Лючок бака',3600,{from:1,nopaint:1,note:'Оклейка лючка'}],handles:['Ручки дверей',6300,{from:1,nopaint:1,note:'Плёнка на ручки'}],pillars:['Стойки',9000,{from:1,nopaint:1,note:'Оклейка стоек'}]
 };
 const STOCK_COLORS=[['#0b0d10','Obsidian Black'],['#f5f5f2','Pearl White'],['#d71935','Racing Red'],['#1246b8','Sapphire Blue'],['#0b6f46','Emerald Green'],['#bfc4cc','Silver'],['#d39b16','Champagne Gold'],['#6d2bbd','Electric Purple'],['#ff6b16','Burnt Orange'],['#e64f89','Candy Pink'],['#11a9b0','Turquoise'],['#63351f','Cocoa Brown']];
-const STOCK_FINISHES=[{id:'gloss',name:'Глянец'},{id:'satin',name:'Сатин'},{id:'matte',name:'Матовый'}];
+const STOCK_FINISHES=[{id:'gloss',name:'Глянец'},{id:'satin',name:'сатин'},{id:'matte',name:'Матовый'}];
 const STOCK_EFFECTS=[{id:'solid',name:'Однотон'},{id:'metal',name:'Металлик'},{id:'pearl',name:'Перламутр'}];
 let wrapCfg=null,zoneDefs={...DEFAULT_ZONE_DEFS};
 function zoneMapFrom(src){const next={};if(!src)return next;for(const id of Object.keys(DEFAULT_ZONE_DEFS)){const z=src[id];if(!z)continue;const opts={};if(z.from)opts.from=1;if(z.nopaint)opts.nopaint=1;if(z.note)opts.note=z.note;next[id]=Object.keys(opts).length?[z.name,+z.price||0,opts]:[z.name,+z.price||0]}return next}
@@ -31,7 +32,7 @@ function lookItems(kind){const stock=kind==='finish'?STOCK_FINISHES:STOCK_EFFECT
 function applyLookButtons(){lookItems('finish').forEach(item=>{document.querySelectorAll('[data-finish="'+item.id+'"]').forEach(b=>{b.textContent=item.name;b.hidden=!!item.hidden});});lookItems('effect').forEach(item=>{document.querySelectorAll('[data-effect="'+item.id+'"]').forEach(b=>{b.textContent=item.name;b.hidden=!!item.hidden});});const visF=lookItems('finish').find(x=>!x.hidden);if(visF&&lookItems('finish').find(x=>x.id===finish)?.hidden){finish=visF.id;document.querySelectorAll('[data-finish]').forEach(x=>x.classList.toggle('active',x.dataset.finish===finish))}const visE=lookItems('effect').find(x=>!x.hidden);if(visE&&lookItems('effect').find(x=>x.id===effect)?.hidden){effect=visE.id;document.querySelectorAll('[data-effect]').forEach(x=>x.classList.toggle('active',x.dataset.effect===effect))}}
 function renderSwatches(){const box=document.getElementById('swatches');if(!box)return;box.innerHTML='';let list=paletteColors().filter(c=>!c.hidden);if(!list.length)list=paletteColors();if(!list.some(c=>c.hex.toLowerCase()===String(activeHex).toLowerCase())&&list[0])activeHex=list[0].hex;for(const c of list){const b=document.createElement('button');b.className='swatch'+(c.hex.toLowerCase()===String(activeHex).toLowerCase()?' active':'');b.style.background=c.hex;b.title=c.name+' '+c.hex;b.dataset.hex=c.hex;b.onclick=()=>{activeHex=c.hex;document.querySelectorAll('.swatch').forEach(x=>x.classList.toggle('active',x===b));if(selectedZone){const old=tool;if(tool==='select')tool='fill';paintZone(selectedZone);tool=old}};box.appendChild(b)}}
 function applyWrapZoneConfig(cfg){if(cfg&&typeof cfg==='object')wrapCfg=cfg;syncZoneDefs(activeModel||'mercedes');renderSwatches();applyLookButtons()}
-async function loadWrapZoneConfig(){try{const r=await fetch('./data/wrap-zones.json?v='+Date.now());if(r.ok)applyWrapZoneConfig(await r.json())}catch(e){}}
+async function loadWrapZoneConfig(){try{const r=await fetch(new URL('data/wrap-zones.json?v='+Date.now(),ASSET_ROOT));if(r.ok)applyWrapZoneConfig(await r.json())}catch(e){}}
 const PRESETS={0:null,1:{hex:'#0b0d10',finish:'satin',effect:'pearl'},2:{hex:'#63351f',finish:'gloss',effect:'metal'},3:{hex:'#f5f5f2',finish:'gloss',effect:'metal'}};
 // L/R zone ids follow model x<0 / x>0; with the car facing +z, x<0 is the car's right side.
 const INFO_ANCHORS={

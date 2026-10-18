@@ -27,59 +27,59 @@
   "zones": {
     "hood": {
       "name": "Капот",
-      "price": 22500
+      "price": 25000
     },
     "roof": {
       "name": "Крыша",
-      "price": 19800
+      "price": 16000
     },
     "bumperFront": {
       "name": "Передний бампер",
-      "price": 24800
+      "price": 25000
     },
     "bumperRear": {
       "name": "Задний бампер",
-      "price": 24800
+      "price": 25000
     },
     "fenderFrontR": {
       "name": "Переднее левое крыло",
-      "price": 13500
+      "price": 12000
     },
     "fenderFrontL": {
       "name": "Переднее правое крыло",
-      "price": 13500
+      "price": 12000
     },
     "doorFrontR": {
       "name": "Передняя левая дверь",
-      "price": 16600
+      "price": 12000
     },
     "doorFrontL": {
       "name": "Передняя правая дверь",
-      "price": 16600
+      "price": 12000
     },
     "doorRearR": {
       "name": "Задняя левая дверь",
-      "price": 16600
+      "price": 12000
     },
     "doorRearL": {
       "name": "Задняя правая дверь",
-      "price": 16600
+      "price": 12000
     },
     "quarterR": {
       "name": "Заднее левое крыло",
-      "price": 18000
+      "price": 35000
     },
     "quarterL": {
       "name": "Заднее правое крыло",
-      "price": 18000
+      "price": 35000
     },
     "sideLowerR": {
       "name": "Левый порог",
-      "price": 11200
+      "price": 15000
     },
     "sideLowerL": {
       "name": "Правый порог",
-      "price": 11200
+      "price": 15000
     },
     "mirrorR": {
       "name": "Левое зеркало",
@@ -91,7 +91,7 @@
     },
     "headlights": {
       "name": "Оклейка фар",
-      "price": 11200,
+      "price": 10000,
       "from": true,
       "nopaint": true,
       "note": "Оклейка фар"
@@ -105,14 +105,14 @@
     },
     "windshield": {
       "name": "Оклейка лобового",
-      "price": 6800,
+      "price": 25000,
       "from": true,
       "nopaint": true,
       "note": "Оклейка лобового стекла"
     },
     "trunk": {
       "name": "Багажник",
-      "price": 18000
+      "price": 16000
     },
     "fuelCap": {
       "name": "Лючок бака",
@@ -142,59 +142,59 @@
       "zones": {
         "hood": {
           "name": "Капот",
-          "price": 22500
+          "price": 25000
         },
         "roof": {
           "name": "Крыша",
-          "price": 19800
+          "price": 16000
         },
         "bumperFront": {
           "name": "Передний бампер",
-          "price": 24800
+          "price": 25000
         },
         "bumperRear": {
           "name": "Задний бампер",
-          "price": 24800
+          "price": 25000
         },
         "fenderFrontR": {
           "name": "Переднее левое крыло",
-          "price": 13500
+          "price": 12000
         },
         "fenderFrontL": {
           "name": "Переднее правое крыло",
-          "price": 13500
+          "price": 12000
         },
         "doorFrontR": {
           "name": "Передняя левая дверь",
-          "price": 16600
+          "price": 12000
         },
         "doorFrontL": {
           "name": "Передняя правая дверь",
-          "price": 16600
+          "price": 12000
         },
         "doorRearR": {
           "name": "Задняя левая дверь",
-          "price": 16600
+          "price": 12000
         },
         "doorRearL": {
           "name": "Задняя правая дверь",
-          "price": 16600
+          "price": 12000
         },
         "quarterR": {
           "name": "Заднее левое крыло",
-          "price": 18000
+          "price": 35000
         },
         "quarterL": {
           "name": "Заднее правое крыло",
-          "price": 18000
+          "price": 35000
         },
         "sideLowerR": {
           "name": "Левый порог",
-          "price": 11200
+          "price": 15000
         },
         "sideLowerL": {
           "name": "Правый порог",
-          "price": 11200
+          "price": 15000
         },
         "mirrorR": {
           "name": "Левое зеркало",
@@ -206,7 +206,7 @@
         },
         "headlights": {
           "name": "Оклейка фар",
-          "price": 11200,
+          "price": 10000,
           "from": true,
           "nopaint": true,
           "note": "Оклейка фар"
@@ -220,14 +220,14 @@
         },
         "windshield": {
           "name": "Оклейка лобового",
-          "price": 6800,
+          "price": 25000,
           "from": true,
           "nopaint": true,
           "note": "Оклейка лобового стекла"
         },
         "trunk": {
           "name": "Багажник",
-          "price": 18000
+          "price": 16000
         },
         "fuelCap": {
           "name": "Лючок бака",
@@ -257,59 +257,59 @@
       "zones": {
         "hood": {
           "name": "Капот",
-          "price": 26100
+          "price": 25000
         },
         "roof": {
           "name": "Крыша",
-          "price": 25200
+          "price": 16000
         },
         "bumperFront": {
           "name": "Передний бампер",
-          "price": 28800
+          "price": 25000
         },
         "bumperRear": {
           "name": "Задний бампер",
-          "price": 28800
+          "price": 25000
         },
         "fenderFrontR": {
           "name": "Переднее левое крыло",
-          "price": 15800
+          "price": 12000
         },
         "fenderFrontL": {
           "name": "Переднее правое крыло",
-          "price": 15800
+          "price": 12000
         },
         "doorFrontR": {
           "name": "Передняя левая дверь",
-          "price": 18900
+          "price": 12000
         },
         "doorFrontL": {
           "name": "Передняя правая дверь",
-          "price": 18900
+          "price": 12000
         },
         "doorRearR": {
           "name": "Задняя левая дверь",
-          "price": 18900
+          "price": 12000
         },
         "doorRearL": {
           "name": "Задняя правая дверь",
-          "price": 18900
+          "price": 12000
         },
         "quarterR": {
           "name": "Заднее левое крыло",
-          "price": 21600
+          "price": 40000
         },
         "quarterL": {
           "name": "Заднее правое крыло",
-          "price": 21600
+          "price": 40000
         },
         "sideLowerR": {
           "name": "Левый порог",
-          "price": 13500
+          "price": 15000
         },
         "sideLowerL": {
           "name": "Правый порог",
-          "price": 13500
+          "price": 15000
         },
         "mirrorR": {
           "name": "Левое зеркало",
@@ -321,7 +321,7 @@
         },
         "headlights": {
           "name": "Оклейка фар",
-          "price": 13500,
+          "price": 10000,
           "from": true,
           "nopaint": true,
           "note": "Оклейка фар"
@@ -335,14 +335,14 @@
         },
         "windshield": {
           "name": "Оклейка лобового",
-          "price": 8100,
+          "price": 25000,
           "from": true,
           "nopaint": true,
           "note": "Оклейка лобового стекла"
         },
         "trunk": {
           "name": "Багажник",
-          "price": 21600
+          "price": 18000
         },
         "fuelCap": {
           "name": "Лючок бака",
@@ -426,7 +426,7 @@
     },
     {
       "id": "satin",
-      "name": "Сатин",
+      "name": "сатин",
       "hidden": false
     },
     {

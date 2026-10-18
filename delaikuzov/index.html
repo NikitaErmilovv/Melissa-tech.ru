@@ -7,8 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="site-build" content="d2-detailing-2026-10-12">
 <title>D2_detailing — детейлинг, Новосибирск</title>
-<link rel="stylesheet" href="styles.css?v=54">
-<link rel="stylesheet" href="wrap-configurator.css?v=ot3">
+<link rel="stylesheet" href="styles.css?v=55">
 </head>
 <body>
 <nav class="site-nav">
@@ -43,7 +42,7 @@
     </h1>
     <div class="hero-content">
       <p>D2 — комплексный уход за автомобилем: оклейка, керамика, антикор. Пока машина в работе — отвезём вас на Tesla и заберём, когда всё будет готово.</p>
-      <div class="actions"><a class="button" href="tel:+79130052315">ЗАПИСАТЬСЯ</a><a class="button dark" href="#wrap">СОБРАТЬ ОКЛЕЙКУ</a><a class="button dark" href="services/paint.html#kuzov">ОЦЕНИТЬ РЕМОНТ</a></div>
+      <div class="actions"><a class="button" href="tel:+79130052315">ЗАПИСАТЬСЯ</a><a class="button dark" href="services/wrap.html#wrap">СОБРАТЬ ОКЛЕЙКУ</a><a class="button dark" href="services/paint.html#kuzov">ОЦЕНИТЬ РЕМОНТ</a></div>
     </div>
     <div class="stats stats--hero">
       <div class="stat"><b>6+</b><span>ЛЕТ НА РЫНКЕ</span></div>
@@ -85,101 +84,9 @@
   </div>
 </section>
 
-<section class="wrap-band" id="wrap">
-  <div class="section-head">
-    <div>
-      <div class="kicker">02 / КОНФИГУРАТОР</div>
-      <h2>СОБЕРИТЕ<br><span class="accent">ОКЛЕЙКУ.</span></h2>
-    </div>
-    <p class="intro">Выберите автомобиль, детали и финиш. Цифра на карточке — ориентир, точный расчёт даст студия.</p>
-  </div>
-  <div id="wrap-cfg">
-    <section class="wrap-viewer">
-      <div id="canvas" class="canvas"></div>
-      <div class="wrap-hero">
-        <h3>Оклейка <span>плёнкой</span></h3>
-      </div>
-      <div class="wrap-badge"><b id="status">Загрузка модели</b></div>
-      <div class="wrap-view-actions">
-        <button id="rotate" class="tool active" type="button">↻ Автовращение</button>
-        <button id="reset" class="tool" type="button">⟲ Сброс</button>
-      </div>
-      <div id="marker" class="marker" style="display:none"></div>
-    </section>
-    <aside class="sidebar">
-      <h2 class="side-title">Оклейка</h2>
-      <div class="wrap-block">
-        <div class="label">Автомобиль</div>
-        <div class="tools" style="grid-template-columns:repeat(2,1fr)">
-          <button class="tool active" data-model="mercedes" type="button">Седан</button>
-          <button class="tool" data-model="mazda" type="button">Кроссовер</button>
-        </div>
-      </div>
-      <div class="wrap-block">
-        <div class="label">Готовые варианты</div>
-        <div class="presets">
-          <button class="preset active" data-preset="0" type="button"><i class="stock"></i><span>Сток<small>Заводской цвет</small></span></button>
-          <button class="preset" data-preset="1" type="button"><i style="background:#0b0d10"></i><span>Obsidian Black<small>Сатин · Перламутр</small></span></button>
-          <button class="preset" data-preset="2" type="button"><i style="background:#63351f"></i><span>Cocoa Brown<small>Глянец · Металлик</small></span></button>
-          <button class="preset" data-preset="3" type="button"><i style="background:#f5f5f2"></i><span>Pearl White<small>Глянец · Металлик</small></span></button>
-        </div>
-      </div>
-      <div class="wrap-block">
-        <div class="label">Зоны кузова</div>
-        <div class="zones" id="zones"></div>
-      </div>
-      <div class="wrap-block">
-        <div class="label">Выбранная деталь</div>
-        <div id="selectedInfo" class="selectedInfo">Нажмите на деталь автомобиля</div>
-      </div>
-      <div class="wrap-block">
-        <div class="label">Инструмент</div>
-        <div class="tools" style="grid-template-columns:repeat(3,1fr)">
-          <button class="tool active" data-tool="select" type="button">Выбор</button>
-          <button class="tool" data-tool="fill" type="button">Заливка</button>
-          <button class="tool" data-tool="remove" type="button">Отмена</button>
-        </div>
-      </div>
-      <div class="wrap-block">
-        <div class="label">Цвет плёнки</div>
-        <div id="swatches" class="swatches"></div>
-      </div>
-      <div class="wrap-block">
-        <div class="label">Финиш</div>
-        <div class="finish">
-          <button class="active" data-finish="gloss" type="button">Глянец</button>
-          <button data-finish="satin" type="button">Сатин</button>
-          <button data-finish="matte" type="button">Матовый</button>
-        </div>
-      </div>
-      <div class="wrap-block">
-        <div class="label">Материал / эффект</div>
-        <div class="finish">
-          <button class="active" data-effect="solid" type="button">Однотон</button>
-          <button data-effect="metal" type="button">Металлик</button>
-          <button data-effect="pearl" type="button">Перламутр</button>
-        </div>
-      </div>
-      <div class="wrap-block" hidden>
-        <div class="label">Детали</div>
-        <div id="parts" class="parts"></div>
-      </div>
-    </aside>
-    <div class="summary">
-      <div class="summary-row">
-        <div>
-          <div class="sumlabel">Ваш подбор</div>
-          <div id="total" class="total">0 ₽</div>
-        </div>
-        <button class="cta" id="quote" type="button">ПОЛУЧИТЬ РАСЧЁТ</button>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="section" id="works">
   <div class="section-head">
-    <div><div class="kicker">03 / РАБОТЫ</div><h2>НАШИ<br><span class="accent">РАБОТЫ.</span></h2></div>
+    <div><div class="kicker">02 / РАБОТЫ</div><h2>НАШИ<br><span class="accent">РАБОТЫ.</span></h2></div>
     
   </div>
   <div class="photo-strip photo-strip--services">
@@ -192,7 +99,7 @@
 </section>
 
 <section class="process" id="process">
-  <div class="kicker">04 / ПРОЦЕСС</div>
+  <div class="kicker">03 / ПРОЦЕСС</div>
   <h2>КАК МЫ<br><span class="accent">РАБОТАЕМ.</span></h2>
   <div class="steps">
     <div class="step"><b>01</b><h3>Осмотр</h3><p>Фиксируем задачу и согласуем объём: детейлинг, оклейка или кузов.</p></div>
@@ -239,7 +146,7 @@
       <div class="address-map-intro">
         <div class="address-map-kicker">
           <span class="address-map-line"></span>
-          <span class="kicker">05 / ЛОКАЦИЯ</span>
+          <span class="kicker">04 / ЛОКАЦИЯ</span>
         </div>
         <h2 class="address-map-title">ГДЕ МЫ<br><span>НАХОДИМСЯ.</span></h2>
         <p class="address-map-text">Приезжайте по записи. Адрес и маршрут — в 2ГИС.</p>
@@ -332,10 +239,8 @@
   </div>
 </footer>
 </div>
-<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
 <script src="nav.js"></script>
 <script src="stats.js"></script>
-<script type="module" src="wrap-boot.js?v=ot3"></script>
 </body>
 </html>
 
