@@ -1,4 +1,4 @@
 site=delaikuzov
 brand=D2 Detailing
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-map-brand-size-20261020-1016
+deploy-trigger=d2-home-ba-slider-20261020-1022
