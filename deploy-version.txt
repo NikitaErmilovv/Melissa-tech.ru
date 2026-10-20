@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-home-reviews-contacts-20261020-0945
+deploy-trigger=d2-wrap-handles-fuelcap-20261020-0955
