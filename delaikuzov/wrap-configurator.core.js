@@ -19,7 +19,7 @@ const DEFAULT_ZONE_DEFS={
  quarterR:['Заднее левое крыло',35000],quarterL:['Заднее правое крыло',35000],sideLowerR:['Левый порог',15000],sideLowerL:['Правый порог',15000],mirrorR:['Левое зеркало',5000],mirrorL:['Правое зеркало',5000],
  headlights:['Оклейка фар',8000,{from:1,nopaint:1,note:'Оклейка фар'}],taillights:['Оклейка фонарей',10000,{from:1,nopaint:1,note:'Оклейка фонарей'}],
  windshield:['Оклейка лобового',25000,{from:1,nopaint:1,note:'Оклейка лобового стекла'}],
- trunk:['Багажник',16000],fuelCap:['Лючок бака',2000,{from:1,nopaint:1,note:'Оклейка лючка'}],handles:['Ручки дверей',6000,{from:1,nopaint:1,note:'Плёнка на ручки'}],pillars:['Стойки',9000,{from:1,nopaint:1,note:'Оклейка стоек'}]
+ trunk:['Багажник',16000],fuelCap:['Лючок бензобака',2000,{from:1,nopaint:1,note:'Оклейка лючка'}],handles:['Ручки дверей',6000,{from:1,nopaint:1,note:'Плёнка на ручки'}],pillars:['Стойки',9000,{from:1,nopaint:1,note:'Оклейка стоек'}]
 };
 const STOCK_COLORS=[['#0b0d10','Obsidian Black'],['#f5f5f2','Pearl White'],['#d71935','Racing Red'],['#1246b8','Sapphire Blue'],['#0b6f46','Emerald Green'],['#bfc4cc','Silver'],['#d39b16','Champagne Gold'],['#6d2bbd','Electric Purple'],['#ff6b16','Burnt Orange'],['#e64f89','Candy Pink'],['#11a9b0','Turquoise'],['#63351f','Cocoa Brown']];
 const STOCK_FINISHES=[{id:'gloss',name:'Глянец'},{id:'satin',name:'сатин'},{id:'matte',name:'Матовый'}];
@@ -162,7 +162,6 @@ document.querySelectorAll('[data-effect]').forEach(b=>b.onclick=()=>{effect=b.da
 renderer.domElement.addEventListener('pointerdown',e=>{const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const all=Object.values(zones).flat().filter(Boolean);const hits=ray.intersectObjects(all,true);if(!hits.length)return;let hit=hits[0].object,found=null;for(const [id,ms] of Object.entries(zones))if(ms.includes(hit)){found=id;break}if(found){rotating=false;document.getElementById('rotate').classList.remove('active');selectZone(found);if(tool!=='select')paintZone(found)}});
 document.getElementById('rotate').onclick=()=>{rotating=!rotating;document.getElementById('rotate').classList.toggle('active',rotating)};
 document.getElementById('reset').onclick=()=>{turn=null;camera.position.set(4.8,2.2,6.2);controls.target.set(0,.7,0);controls.update();if(roots[activeModel])roots[activeModel].rotation.set(0,0,0)};
-document.getElementById('quote').onclick=()=>alert(`Подбор сохранён для модели «${MODEL_NAMES[activeModel]}». Напишите в D2_detailing — посчитаем точную стоимость.`);
 function resize(){const r=app.getBoundingClientRect();renderer.setSize(r.width,r.height,false);composer.setPixelRatio(renderer.getPixelRatio());composer.setSize(r.width,r.height);camera.aspect=r.width/r.height;camera.updateProjectionMatrix()}addEventListener('resize',resize);resize();
 let cfgOn=true,cfgRaf=0;
 function loop(now){cfgRaf=0;if(!cfgOn)return;cfgRaf=requestAnimationFrame(loop);stepTurn(now);if(rotating&&!turn&&roots[activeModel])roots[activeModel].rotateY(.0018);controls.update();if(outline.selectedObjects.length)composer.render();else renderer.render(scene,camera);if(selectedZone)markerFor(selectedZone)}

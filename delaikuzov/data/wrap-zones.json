@@ -115,7 +115,7 @@
       "price": 16000
     },
     "fuelCap": {
-      "name": "Лючок бака",
+      "name": "Лючок бензобака",
       "price": 2000,
       "from": true,
       "nopaint": true,
@@ -230,7 +230,7 @@
           "price": 16000
         },
         "fuelCap": {
-          "name": "Лючок бака",
+          "name": "Лючок бензобака",
           "price": 2000,
           "from": true,
           "nopaint": true,
@@ -345,7 +345,7 @@
           "price": 18000
         },
         "fuelCap": {
-          "name": "Лючок бака",
+          "name": "Лючок бензобака",
           "price": 2000,
           "from": true,
           "nopaint": true,
