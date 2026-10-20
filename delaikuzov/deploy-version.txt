@@ -1,4 +1,4 @@
 site=delaikuzov
 brand=D2 Detailing
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-booking-dropdown-20261020-0932
+deploy-trigger=d2-home-reviews-contacts-20261020-0945
