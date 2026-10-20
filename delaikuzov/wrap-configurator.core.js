@@ -16,10 +16,10 @@ function prefetchMazdaModel(){if(window.__mzPrefetch)return;window.__mzPrefetch=
 const DEFAULT_ZONE_DEFS={
  hood:['Капот',25000],roof:['Крыша',16000],bumperFront:['Передний бампер',25000],bumperRear:['Задний бампер',25000],
  fenderFrontR:['Переднее левое крыло',12000],fenderFrontL:['Переднее правое крыло',12000],doorFrontR:['Передняя левая дверь',12000],doorFrontL:['Передняя правая дверь',12000],doorRearR:['Задняя левая дверь',12000],doorRearL:['Задняя правая дверь',12000],
- quarterR:['Заднее левое крыло',35000],quarterL:['Заднее правое крыло',35000],sideLowerR:['Левый порог',15000],sideLowerL:['Правый порог',15000],mirrorR:['Левое зеркало',5900],mirrorL:['Правое зеркало',5900],
- headlights:['Оклейка фар',10000,{from:1,nopaint:1,note:'Оклейка фар'}],taillights:['Оклейка фонарей',11300,{from:1,nopaint:1,note:'Оклейка фонарей'}],
+ quarterR:['Заднее левое крыло',35000],quarterL:['Заднее правое крыло',35000],sideLowerR:['Левый порог',15000],sideLowerL:['Правый порог',15000],mirrorR:['Левое зеркало',5000],mirrorL:['Правое зеркало',5000],
+ headlights:['Оклейка фар',8000,{from:1,nopaint:1,note:'Оклейка фар'}],taillights:['Оклейка фонарей',10000,{from:1,nopaint:1,note:'Оклейка фонарей'}],
  windshield:['Оклейка лобового',25000,{from:1,nopaint:1,note:'Оклейка лобового стекла'}],
- trunk:['Багажник',16000],fuelCap:['Лючок бака',3600,{from:1,nopaint:1,note:'Оклейка лючка'}],handles:['Ручки дверей',6300,{from:1,nopaint:1,note:'Плёнка на ручки'}],pillars:['Стойки',9000,{from:1,nopaint:1,note:'Оклейка стоек'}]
+ trunk:['Багажник',16000],fuelCap:['Лючок бака',2000,{from:1,nopaint:1,note:'Оклейка лючка'}],handles:['Ручки дверей',6000,{from:1,nopaint:1,note:'Плёнка на ручки'}],pillars:['Стойки',9000,{from:1,nopaint:1,note:'Оклейка стоек'}]
 };
 const STOCK_COLORS=[['#0b0d10','Obsidian Black'],['#f5f5f2','Pearl White'],['#d71935','Racing Red'],['#1246b8','Sapphire Blue'],['#0b6f46','Emerald Green'],['#bfc4cc','Silver'],['#d39b16','Champagne Gold'],['#6d2bbd','Electric Purple'],['#ff6b16','Burnt Orange'],['#e64f89','Candy Pink'],['#11a9b0','Turquoise'],['#63351f','Cocoa Brown']];
 const STOCK_FINISHES=[{id:'gloss',name:'Глянец'},{id:'satin',name:'сатин'},{id:'matte',name:'Матовый'}];
