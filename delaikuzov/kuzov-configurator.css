@@ -126,14 +126,14 @@
 #kuzov-cfg .cta{
   border:0;
   background:var(--accent);
-  color:#fff;
+  color:var(--accent-ink,#0a0a0a);
   border-radius:0;
   padding:16px 20px;
   font-weight:700;
   font-size:12px;
   letter-spacing:.4px;
 }
-#kuzov-cfg .cta:hover{background:var(--accent-hover)}
+#kuzov-cfg .cta:hover{background:var(--accent-hover);color:var(--accent-ink,#0a0a0a)}
 
 @media (max-width:1024px){
   #kuzov-cfg{grid-template-columns:1fr;height:auto;min-height:0}

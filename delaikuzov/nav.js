@@ -66,7 +66,7 @@
     var pick = document.createElement('div');
     pick.className = 'book-pick';
     pick.hidden = true;
-    pick.innerHTML = '<span class="book-pick-label">Куда написать</span><a data-ch="wa" target="_blank" rel="noopener noreferrer">WhatsApp</a><a data-ch="tg" target="_blank" rel="noopener noreferrer">Telegram</a>';
+    pick.innerHTML = '<span class="book-pick-label">Куда написать</span><a data-ch="wa" target="_blank" rel="noopener noreferrer">WhatsApp</a><a data-ch="tg" target="_blank" rel="noopener noreferrer">Telegram</a><a data-ch="max" target="_blank" rel="noopener noreferrer">Max</a>';
     wrap.appendChild(pick);
     if (btn.tagName === 'A') btn.setAttribute('href', '#booking');
     btn.addEventListener('click', function (e) {
@@ -75,6 +75,7 @@
       var msg = encodeURIComponent(messageFor(btn));
       pick.querySelector('[data-ch="wa"]').href = 'https://wa.me/' + WA + '?text=' + msg;
       pick.querySelector('[data-ch="tg"]').href = 'https://t.me/' + TG + '?text=' + msg;
+      pick.querySelector('[data-ch="max"]').href = 'https://max.ru/';
       if (openWrap && openWrap !== wrap) closePick();
       var willOpen = pick.hidden;
       pick.hidden = !willOpen;
