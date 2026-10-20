@@ -473,7 +473,8 @@ html.media-lightbox-open{overflow:hidden}
 }
 .address-map-brand,.address-map-pin-label-text{display:inline-flex;align-items:baseline;gap:8px}
 .address-map-brand .logo-mark,.address-map-pin-label-text .logo-mark{color:var(--accent);letter-spacing:-.04em}
-.address-map-brand .logo-word,.address-map-pin-label-text .logo-word{color:#f5f5f2;letter-spacing:.14em;font-size:.7em;font-weight:700;line-height:1}
+.address-map-brand .logo-word{color:#f5f5f2;letter-spacing:-.04em;font-size:1em;font-weight:900;line-height:1}
+.address-map-pin-label-text .logo-word{color:#f5f5f2;letter-spacing:.14em;font-size:.7em;font-weight:700;line-height:1}
 .footer-tagline{color:#777;font-size:13px;line-height:1.7;margin:18px 0 22px;max-width:320px}
 .footer-social{display:flex;gap:10px;flex-wrap:wrap}
 .footer-social a{
