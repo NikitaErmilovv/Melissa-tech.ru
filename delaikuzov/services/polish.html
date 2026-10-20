@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="site-build" content="delaikuzov-service-polish-timeline-2026-10-12">
 <title>Полировка — D2_detailing</title>
-<link rel="stylesheet" href="../styles.css?v=60">
+<link rel="stylesheet" href="../styles.css?v=61">
 </head>
 <body>
 <nav class="site-nav">
@@ -62,10 +62,19 @@
 <section class="section service-page-works" id="works">
   <div class="section-head">
     <div><div class="kicker">РАБОТЫ</div><h2>ПРИМЕРЫ<br><span class="accent">ПО УСЛУГЕ.</span></h2></div>
-    <p class="intro">Фото работ по этой услуге появятся здесь — пришлём и добавим.</p>
+    <p class="intro">Сравните капот до и после полировки — потяните ползунок.</p>
   </div>
-  <div class="service-works-placeholder" data-service="polish">
-    <p>Галерея работ пока пустая. Когда будут фото — вставятся в этот блок.</p>
+  <div class="ba-grid ba-grid--single">
+    <figure class="ba-item">
+      <div class="ba-slider" data-ba>
+        <img class="ba-after" src="../img/works/before-after/hood-after.jpg" alt="После — полировка кузова">
+        <div class="ba-before-wrap">
+          <img class="ba-before" src="../img/works/before-after/hood-before.jpg" alt="До — полировка кузова">
+        </div>
+        <div class="ba-handle" aria-hidden="true"><span></span></div>
+      </div>
+      <figcaption>Полировка кузова</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -179,5 +188,6 @@
 </footer>
 </div>
 <script src="../nav.js?v=book3"></script>
+<script src="../ba-slider.js"></script>
 </body>
 </html>

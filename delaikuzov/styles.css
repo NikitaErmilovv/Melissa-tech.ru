@@ -151,6 +151,8 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .step p{color:#666;font-size:12px;line-height:1.55}
 
 .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:70px}
+.ba-grid--single{grid-template-columns:minmax(0,920px);justify-content:center;margin-top:24px}
+.service-page-works .ba-slider{aspect-ratio:3/2}
 .ba-item{margin:0}
 .ba-item figcaption{margin-top:14px;font-size:11px;letter-spacing:2px;color:var(--accent);text-transform:uppercase}
 .ba-slider{
