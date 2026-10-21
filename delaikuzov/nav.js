@@ -75,7 +75,7 @@
       var msg = encodeURIComponent(messageFor(btn));
       pick.querySelector('[data-ch="wa"]').href = 'https://wa.me/' + WA + '?text=' + msg;
       pick.querySelector('[data-ch="tg"]').href = 'https://t.me/' + TG + '?text=' + msg;
-      pick.querySelector('[data-ch="max"]').href = 'https://max.ru/';
+      pick.querySelector('[data-ch="max"]').href = 'https://max.ru/+79130052315';
       if (openWrap && openWrap !== wrap) closePick();
       var willOpen = pick.hidden;
       pick.hidden = !willOpen;

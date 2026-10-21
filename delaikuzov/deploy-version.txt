@@ -1,4 +1,4 @@
 site=delaikuzov
 brand=D2 Detailing
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-reviews-about-quote-20261021-0730
+deploy-trigger=d2-reviews-tesla-max-20261021-0755
