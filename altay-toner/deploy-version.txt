@@ -1,4 +1,4 @@
 site=altay-toner
 prod=https://melissa-tech.ru/altay-toner/
 deploy=git-push-timeweb-hook
-deploy-trigger=URGENT-v21-20261012-201244
+deploy-trigger=altay-toner-athermal-20261021
