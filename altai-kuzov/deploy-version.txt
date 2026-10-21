@@ -1,4 +1,4 @@
 site=altai-kuzov
 prod=https://melissa-tech.ru/altai-kuzov/
 deploy=git-push-timeweb-hook
-deploy-trigger=altai-kuzov-rollback-slider-20261021
+deploy-trigger=altai-kuzov-home-slider-cards-20261021b

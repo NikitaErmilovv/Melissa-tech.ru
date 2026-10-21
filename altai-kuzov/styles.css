@@ -132,7 +132,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 }
 .ba-arrow-row figcaption{margin-top:10px;font-size:11px;letter-spacing:2px;color:var(--accent);text-transform:uppercase}
 .ba-phase{
-  margin-top:12px;font-size:11px;letter-spacing:1px;color:#aaa9a3;text-transform:uppercase;line-height:1.35;
+  margin-top:12px;font-size:11px;letter-spacing:2px;color:#aaa9a3;text-transform:uppercase;
 }
 .ba-arrow-mark{
   display:flex;align-items:center;justify-content:center;
@@ -531,7 +531,9 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .section{padding:72px 5vw}
   .section-head{display:block;margin-bottom:36px}
   .intro{margin-top:20px;max-width:none}
-  .cards{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr!important}
+  #services .cards .card{min-height:320px}
+  #services .cards .card-body{min-height:320px;padding:22px}
   .card{min-height:260px}
   .card-body{min-height:260px}
   .process{padding:72px 5vw;overflow-x:hidden;max-width:100%}

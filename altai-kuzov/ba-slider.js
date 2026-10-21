@@ -11,6 +11,8 @@
   }
 
   function initSlider(slider) {
+    if (slider.dataset.baInit === "1") return;
+    slider.dataset.baInit = "1";
     var beforeWrap = slider.querySelector(".ba-before-wrap");
     var beforeImg = slider.querySelector(".ba-before");
     var handle = slider.querySelector(".ba-handle");
@@ -43,5 +45,14 @@
     });
   }
 
-  document.querySelectorAll("[data-ba]").forEach(initSlider);
+  function boot() {
+    document.querySelectorAll("[data-ba]").forEach(initSlider);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+  window.addEventListener("load", boot);
 })();
