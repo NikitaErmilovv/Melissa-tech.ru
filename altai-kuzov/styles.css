@@ -322,6 +322,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .address-map-divider{height:1px;background:rgba(255,255,255,.08);margin:0 0 32px}
 .address-map-details{display:flex;flex-direction:column;gap:28px;margin-bottom:28px;padding-top:0;border-top:none}
 .address-map-detail-label{font-size:11px;letter-spacing:2px;color:var(--accent);opacity:.72;display:block;margin-bottom:10px}
+.address-map-detail:first-child .address-map-detail-label{color:#fff;opacity:1}
 .address-map-brand{font-size:21px;font-weight:900;color:#fff;margin:0 0 8px;letter-spacing:-1px}
 .address-map-brand span{color:var(--accent)}
 .address-map-muted{color:#85857f;font-size:13px;line-height:1.55;margin:0}
