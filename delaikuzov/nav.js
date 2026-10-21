@@ -51,16 +51,73 @@
     openWrap = null;
   }
 
-  function maxHref(msg) {
-    var text = encodeURIComponent(msg || 'Здравствуйте! Хочу записаться в D2 Detailing.');
-    var path = 'max.ru/' + MAX_PHONE + '?text=' + text;
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(function () {
+        return legacyCopy(text);
+      });
+    }
+    return legacyCopy(text);
+  }
+
+  function legacyCopy(text) {
+    try {
+      var area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.left = '-9999px';
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand('copy');
+      document.body.removeChild(area);
+    } catch (err) { /* ignore */ }
+    return Promise.resolve();
+  }
+
+  function showMaxTip() {
+    var tip = document.querySelector('.max-open-tip');
+    if (!tip) {
+      tip = document.createElement('div');
+      tip.className = 'max-open-tip';
+      tip.setAttribute('role', 'status');
+      tip.textContent = 'Номер ' + MAX_PHONE + ' скопирован. В MAX: Контакты → Найти по номеру.';
+      document.body.appendChild(tip);
+    }
+    tip.classList.add('is-visible');
+    clearTimeout(showMaxTip._timer);
+    showMaxTip._timer = setTimeout(function () {
+      tip.classList.remove('is-visible');
+    }, 4200);
+  }
+
+  function openMax(msg) {
+    var text = msg || 'Здравствуйте! Хочу записаться в D2 Detailing.';
+    var sharePath = 'max.ru/%3Ashare?text=' + encodeURIComponent(text);
+    var shareHttps = 'https://max.ru/:share?text=' + encodeURIComponent(text);
+    copyToClipboard(MAX_PHONE).then(showMaxTip);
     if (/Android/i.test(navigator.userAgent)) {
-      return 'intent://' + path + '#Intent;scheme=https;package=ru.oneme.app;S.browser_fallback_url=https%3A%2F%2Fweb.max.ru%2F;end';
+      window.location.href =
+        'intent://' + sharePath +
+        '#Intent;scheme=https;package=ru.oneme.app;S.browser_fallback_url=' +
+        encodeURIComponent('https://web.max.ru/') + ';end';
+      return;
     }
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      return 'https://' + path;
+      window.location.href = shareHttps;
+      return;
     }
-    return 'https://web.max.ru/';
+    window.open('https://web.max.ru/', '_blank', 'noopener,noreferrer');
+  }
+
+  function bindMaxLink(el, getMsg) {
+    if (!el || el.dataset.maxBound === '1') return;
+    el.dataset.maxBound = '1';
+    el.setAttribute('href', 'https://web.max.ru/');
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      openMax(typeof getMsg === 'function' ? getMsg() : getMsg);
+    });
   }
 
   function messageFor(btn) {
@@ -88,7 +145,9 @@
       var msg = encodeURIComponent(messageFor(btn));
       pick.querySelector('[data-ch="wa"]').href = 'https://wa.me/' + WA + '?text=' + msg;
       pick.querySelector('[data-ch="tg"]').href = 'https://t.me/' + TG + '?text=' + msg;
-      pick.querySelector('[data-ch="max"]').href = maxHref(messageFor(btn));
+      bindMaxLink(pick.querySelector('[data-ch="max"]'), function () {
+        return messageFor(btn);
+      });
       if (openWrap && openWrap !== wrap) closePick();
       var willOpen = pick.hidden;
       pick.hidden = !willOpen;
@@ -102,9 +161,9 @@
     if (text === 'ОНЛАЙН ЗАПИСЬ' || text === 'ЗАПИСАТЬСЯ' || text === 'ЗАКАЗАТЬ ТРАНСФЕР') attachBook(btn);
   });
   document.querySelectorAll('a[href*="max.ru"]').forEach(function (a) {
-    a.setAttribute('href', maxHref());
     a.setAttribute('target', '_blank');
     a.setAttribute('rel', 'noopener noreferrer');
+    bindMaxLink(a);
   });
 
   var quote = document.querySelector('#wrap-cfg #quote');

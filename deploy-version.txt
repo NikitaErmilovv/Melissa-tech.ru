@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-force-live-20261021-0804
+deploy-trigger=d2-max-phone-copy-20261021-0915

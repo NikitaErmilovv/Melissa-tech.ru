@@ -1139,6 +1139,15 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   font-size:12px;font-weight:700;letter-spacing:.02em;
 }
 .book-pick a:hover{border-color:var(--accent-soft);color:var(--accent)}
+.max-open-tip{
+  position:fixed;left:50%;bottom:24px;z-index:60;max-width:min(92vw,420px);
+  transform:translate(-50%,12px);opacity:0;pointer-events:none;
+  padding:14px 18px;background:#161616;border:1px solid rgba(255,255,255,.16);
+  color:#f5f5f2;font-size:13px;line-height:1.5;text-align:center;
+  box-shadow:0 12px 28px rgba(0,0,0,.45);
+  transition:opacity .25s ease,transform .25s ease;
+}
+.max-open-tip.is-visible{opacity:1;transform:translate(-50%,0)}
 @media(max-width:800px){
   .actions .book-wrap{width:100%}
 }
