@@ -25,7 +25,7 @@
 (function () {
   var WA = '79130052315';
   var TG = 'mromand2';
-  var MAX_PHONE = '+79130052315';
+  var MAX_URL = 'https://web.max.ru/241205876';
   var phrases = {
     'wash.html': 'Здравствуйте! Хочу записаться на детейлинг-мойку.',
     'bay.html': 'Здравствуйте! Хочу записаться на мойку подкапотного пространства.',
@@ -51,73 +51,15 @@
     openWrap = null;
   }
 
-  function copyToClipboard(text) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text).catch(function () {
-        return legacyCopy(text);
-      });
-    }
-    return legacyCopy(text);
-  }
-
-  function legacyCopy(text) {
-    try {
-      var area = document.createElement('textarea');
-      area.value = text;
-      area.setAttribute('readonly', '');
-      area.style.position = 'fixed';
-      area.style.left = '-9999px';
-      document.body.appendChild(area);
-      area.select();
-      document.execCommand('copy');
-      document.body.removeChild(area);
-    } catch (err) { /* ignore */ }
-    return Promise.resolve();
-  }
-
-  function showMaxTip() {
-    var tip = document.querySelector('.max-open-tip');
-    if (!tip) {
-      tip = document.createElement('div');
-      tip.className = 'max-open-tip';
-      tip.setAttribute('role', 'status');
-      tip.textContent = 'Номер ' + MAX_PHONE + ' скопирован. В MAX: Контакты → Найти по номеру.';
-      document.body.appendChild(tip);
-    }
-    tip.classList.add('is-visible');
-    clearTimeout(showMaxTip._timer);
-    showMaxTip._timer = setTimeout(function () {
-      tip.classList.remove('is-visible');
-    }, 4200);
-  }
-
-  function openMax(msg) {
-    var text = msg || 'Здравствуйте! Хочу записаться в D2 Detailing.';
-    var sharePath = 'max.ru/%3Ashare?text=' + encodeURIComponent(text);
-    var shareHttps = 'https://max.ru/:share?text=' + encodeURIComponent(text);
-    copyToClipboard(MAX_PHONE).then(showMaxTip);
+  function maxHref() {
     if (/Android/i.test(navigator.userAgent)) {
-      window.location.href =
-        'intent://' + sharePath +
-        '#Intent;scheme=https;package=ru.oneme.app;S.browser_fallback_url=' +
-        encodeURIComponent('https://web.max.ru/') + ';end';
-      return;
+      return (
+        'intent://web.max.ru/241205876#Intent;scheme=https;package=ru.oneme.app;S.browser_fallback_url=' +
+        encodeURIComponent(MAX_URL) +
+        ';end'
+      );
     }
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      window.location.href = shareHttps;
-      return;
-    }
-    window.open('https://web.max.ru/', '_blank', 'noopener,noreferrer');
-  }
-
-  function bindMaxLink(el, getMsg) {
-    if (!el || el.dataset.maxBound === '1') return;
-    el.dataset.maxBound = '1';
-    el.setAttribute('href', 'https://web.max.ru/');
-    el.addEventListener('click', function (e) {
-      e.preventDefault();
-      openMax(typeof getMsg === 'function' ? getMsg() : getMsg);
-    });
+    return MAX_URL;
   }
 
   function messageFor(btn) {
@@ -137,6 +79,7 @@
     pick.className = 'book-pick';
     pick.hidden = true;
     pick.innerHTML = '<span class="book-pick-label">Куда написать</span><a data-ch="wa" target="_blank" rel="noopener noreferrer">WhatsApp</a><a data-ch="tg" target="_blank" rel="noopener noreferrer">Telegram</a><a data-ch="max" target="_blank" rel="noopener noreferrer">Max</a>';
+    pick.querySelector('[data-ch="max"]').href = maxHref();
     wrap.appendChild(pick);
     if (btn.tagName === 'A') btn.setAttribute('href', '#booking');
     btn.addEventListener('click', function (e) {
@@ -145,9 +88,7 @@
       var msg = encodeURIComponent(messageFor(btn));
       pick.querySelector('[data-ch="wa"]').href = 'https://wa.me/' + WA + '?text=' + msg;
       pick.querySelector('[data-ch="tg"]').href = 'https://t.me/' + TG + '?text=' + msg;
-      bindMaxLink(pick.querySelector('[data-ch="max"]'), function () {
-        return messageFor(btn);
-      });
+      pick.querySelector('[data-ch="max"]').href = maxHref();
       if (openWrap && openWrap !== wrap) closePick();
       var willOpen = pick.hidden;
       pick.hidden = !willOpen;
@@ -161,9 +102,9 @@
     if (text === 'ОНЛАЙН ЗАПИСЬ' || text === 'ЗАПИСАТЬСЯ' || text === 'ЗАКАЗАТЬ ТРАНСФЕР') attachBook(btn);
   });
   document.querySelectorAll('a[href*="max.ru"]').forEach(function (a) {
+    a.setAttribute('href', maxHref());
     a.setAttribute('target', '_blank');
     a.setAttribute('rel', 'noopener noreferrer');
-    bindMaxLink(a);
   });
 
   var quote = document.querySelector('#wrap-cfg #quote');
