@@ -25,6 +25,7 @@
 (function () {
   var WA = '79130052315';
   var TG = 'mromand2';
+  var MAX_PHONE = '+79130052315';
   var phrases = {
     'wash.html': 'Здравствуйте! Хочу записаться на детейлинг-мойку.',
     'bay.html': 'Здравствуйте! Хочу записаться на мойку подкапотного пространства.',
@@ -48,6 +49,18 @@
     var pick = openWrap.querySelector('.book-pick');
     if (pick) pick.hidden = true;
     openWrap = null;
+  }
+
+  function maxHref(msg) {
+    var text = encodeURIComponent(msg || 'Здравствуйте! Хочу записаться в D2 Detailing.');
+    var path = 'max.ru/' + MAX_PHONE + '?text=' + text;
+    if (/Android/i.test(navigator.userAgent)) {
+      return 'intent://' + path + '#Intent;scheme=https;package=ru.oneme.app;S.browser_fallback_url=https%3A%2F%2Fweb.max.ru%2F;end';
+    }
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      return 'https://' + path;
+    }
+    return 'https://web.max.ru/';
   }
 
   function messageFor(btn) {
@@ -75,7 +88,7 @@
       var msg = encodeURIComponent(messageFor(btn));
       pick.querySelector('[data-ch="wa"]').href = 'https://wa.me/' + WA + '?text=' + msg;
       pick.querySelector('[data-ch="tg"]').href = 'https://t.me/' + TG + '?text=' + msg;
-      pick.querySelector('[data-ch="max"]').href = 'https://max.ru/+79130052315';
+      pick.querySelector('[data-ch="max"]').href = maxHref(messageFor(btn));
       if (openWrap && openWrap !== wrap) closePick();
       var willOpen = pick.hidden;
       pick.hidden = !willOpen;
@@ -88,6 +101,12 @@
     var text = (btn.textContent || '').replace(/\s+/g, ' ').trim();
     if (text === 'ОНЛАЙН ЗАПИСЬ' || text === 'ЗАПИСАТЬСЯ' || text === 'ЗАКАЗАТЬ ТРАНСФЕР') attachBook(btn);
   });
+  document.querySelectorAll('a[href*="max.ru"]').forEach(function (a) {
+    a.setAttribute('href', maxHref());
+    a.setAttribute('target', '_blank');
+    a.setAttribute('rel', 'noopener noreferrer');
+  });
+
   var quote = document.querySelector('#wrap-cfg #quote');
   if (quote) {
     quote.setAttribute('href', 'tel:+79130052315');
