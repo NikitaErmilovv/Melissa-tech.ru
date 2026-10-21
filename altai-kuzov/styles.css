@@ -125,6 +125,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 }
 #services .ba-arrow-row{margin-top:48px}
 #before-after .ba-arrow-row{margin-top:70px}
+#before-after .ba-arrow-row + .ba-arrow-row{margin-top:28px}
 .ba-arrow-row .ba-static{margin:0}
 .ba-arrow-row .ba-static img{
   width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
@@ -132,7 +133,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 }
 .ba-arrow-row figcaption{margin-top:10px;font-size:11px;letter-spacing:2px;color:var(--accent);text-transform:uppercase}
 .ba-phase{
-  margin-top:12px;font-size:11px;letter-spacing:2px;color:#aaa9a3;text-transform:uppercase;
+  margin-top:12px;font-size:11px;letter-spacing:1px;color:#aaa9a3;text-transform:uppercase;line-height:1.35;
 }
 .ba-arrow-mark{
   display:flex;align-items:center;justify-content:center;
