@@ -97,11 +97,11 @@
       "note": "Оклейка фар"
     },
     "taillights": {
-      "name": "Оклейка фонарей",
-      "price": 10000,
+      "name": "Фары",
+      "price": 8000,
       "from": true,
       "nopaint": true,
-      "note": "Оклейка фонарей"
+      "note": "Фары"
     },
     "windshield": {
       "name": "Оклейка лобового",
@@ -212,11 +212,11 @@
           "note": "Оклейка фар"
         },
         "taillights": {
-          "name": "Оклейка фонарей",
-          "price": 10000,
+          "name": "Фары",
+          "price": 8000,
           "from": true,
           "nopaint": true,
-          "note": "Оклейка фонарей"
+          "note": "Фары"
         },
         "windshield": {
           "name": "Оклейка лобового",
@@ -327,11 +327,11 @@
           "note": "Оклейка фар"
         },
         "taillights": {
-          "name": "Оклейка фонарей",
-          "price": 10000,
+          "name": "Фары",
+          "price": 8000,
           "from": true,
           "nopaint": true,
-          "note": "Оклейка фонарей"
+          "note": "Фары"
         },
         "windshield": {
           "name": "Оклейка лобового",
