@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="site-build" content="delaikuzov-gallery-services-2026-10-06">
+<meta name="site-build" content="d2-gallery-reviews-carousel-2026-10-21">
 <title>Работы — D2_detailing</title>
-<link rel="stylesheet" href="styles.css?v=60">
+<link rel="stylesheet" href="styles.css?v=66">
 </head>
 <body>
 <nav class="site-nav">
@@ -67,12 +67,13 @@
 <section class="section">
   <div class="section-head">
     <div><div class="kicker">ОТЗЫВЫ</div><h2>ОТЗЫВЫ<br><span class="accent">КЛИЕНТОВ.</span></h2></div>
-    <p class="intro">Свежие отзывы с карточки D2_detailing в 2ГИС.</p>
   </div>
-  <div class="reviews">
-    <div class="review"><div class="stars">★★★★★</div><p>«Обращался уже дважды: антикор и оклейка плёнкой, затем покраска бампера. В обоих случаях только положительные впечатления. Плёнка лежит намертво, в сложный цвет — белый перламутр — попали очень точно. Доволен и работой, и сервисом.»</p><small>Павел Гирников · 2ГИС</small></div>
-    <div class="review"><div class="stars">★★★★★</div><p>«Делал на Mazda CX-5 оклейку зон риска, порогов, керамику и тонировку задней полусферы. Роман принял авто в выходной, всё показал. Бесплатно отвезли на вокзал, через неделю — мойка и контрольный осмотр. Гарантия 5 лет на плёнку.»</p><small>Иван Гартвых · 2ГИС</small></div>
-    <div class="review"><div class="stars">★★★★★</div><p>«Делал антикор и бронирование зон риска. Всё качественно, грамотно объяснили, в ходе работы нашли дефект и устранили. Увезли и привезли. Ребята ответственно относятся к делу. Рекомендую.»</p><small>Юрий Калмыков · 2ГИС</small></div>
+  <div class="reviews-carousel" data-reviews-carousel data-reviews-src="data/reviews-2gis.json">
+    <button type="button" class="reviews-nav reviews-nav--prev" aria-label="Предыдущие отзывы">‹</button>
+    <div class="reviews-viewport">
+      <div class="reviews-track"></div>
+    </div>
+    <button type="button" class="reviews-nav reviews-nav--next" aria-label="Следующие отзывы">›</button>
   </div>
 </section>
 
@@ -182,6 +183,7 @@
 </div>
 <script src="gallery-hash-scroll.js"></script>
 <script src="gallery-lightbox.js"></script>
-<script src="nav.js?v=book3"></script>
+<script src="nav.js?v=book6"></script>
+<script src="reviews-carousel.js?v=r2"></script>
 </body>
 </html>

@@ -355,6 +355,38 @@ html.media-lightbox-open{overflow:hidden}
 .review .stars{letter-spacing:4px;font-size:10px;color:var(--accent)}
 .review p{font-size:15px;line-height:1.55;color:#b0b0aa}
 .review small{color:#666}
+.reviews-carousel{
+  position:relative;margin-top:28px;
+  display:grid;grid-template-columns:auto 1fr auto;
+  gap:12px;align-items:center;
+}
+.reviews-viewport{overflow:hidden;min-width:0}
+.reviews-track{display:flex;gap:12px;will-change:transform;align-items:stretch}
+.reviews-track .review{
+  flex:0 0 calc((100% - 24px) / 3);min-width:0;box-sizing:border-box;
+  display:flex;flex-direction:column;gap:12px;
+}
+.reviews-track .review p{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:8;
+  overflow:hidden;
+}
+.reviews-nav{
+  width:40px;height:40px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.04);color:#f5f5f2;font-size:24px;line-height:1;
+  cursor:pointer;transition:border-color .2s,background .2s,color .2s;
+}
+.reviews-nav:hover:not(:disabled){border-color:var(--accent-soft);color:var(--accent)}
+.reviews-nav:disabled{opacity:.35;cursor:default}
+@media (max-width:1100px){
+  .reviews-track .review{flex-basis:calc((100% - 12px) / 2)}
+}
+@media (max-width:768px){
+  .reviews-carousel{grid-template-columns:1fr;padding:0 44px}
+  .reviews-track .review{flex-basis:100%}
+  .reviews-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2}
+  .reviews-nav--prev{left:0}
+  .reviews-nav--next{right:0}
+}
 
 .faq{max-width:900px;margin-top:45px}
 .faq details{border-top:1px solid rgba(255,255,255,.09);padding:22px 0}
@@ -1059,10 +1091,30 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   margin:0;color:#c8c8c2;line-height:1.75;font-size:16px;
   overflow-wrap:break-word;word-wrap:break-word;min-width:0;
 }
-.section-head h2.about-title{white-space:nowrap}
-.section-head>div{min-width:0;max-width:100%}
+.section-head:has(.about-title)>div{
+  flex:none;min-width:max-content;max-width:none;
+}
+.section-head h2.about-title{
+  display:block!important;
+  white-space:nowrap!important;
+  word-break:keep-all;
+  overflow:visible;
+  width:max-content;
+  max-width:none;
+  font-size:clamp(38px,5vw,70px);
+  line-height:.95;
+}
+.section-head h2.about-title .about-title-line{
+  display:inline!important;
+  white-space:nowrap!important;
+}
+.section-head h2.about-title .accent{
+  display:inline!important;
+  white-space:nowrap!important;
+}
+.section-head h2.about-title br{display:none!important}
 @media(max-width:800px){
-  .section-head h2.about-title{white-space:normal}
+  .section-head h2.about-title{white-space:nowrap!important;font-size:clamp(28px,10vw,48px)}
 }
 .service-points{max-width:760px;margin:8px 0 28px;font-size:16px}
 .service-points li{margin:10px 0}

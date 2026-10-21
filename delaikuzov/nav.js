@@ -88,7 +88,14 @@
     var text = (btn.textContent || '').replace(/\s+/g, ' ').trim();
     if (text === 'ОНЛАЙН ЗАПИСЬ' || text === 'ЗАПИСАТЬСЯ' || text === 'ЗАКАЗАТЬ ТРАНСФЕР') attachBook(btn);
   });
-  attachBook(document.getElementById('quote'));
+  var quote = document.querySelector('#wrap-cfg #quote');
+  if (quote) {
+    quote.setAttribute('href', 'tel:+79130052315');
+    quote.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.location.href = 'tel:+79130052315';
+    });
+  }
 
   document.addEventListener('click', function (e) {
     if (!openWrap) return;

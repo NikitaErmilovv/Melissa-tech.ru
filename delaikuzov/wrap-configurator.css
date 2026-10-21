@@ -143,6 +143,14 @@
   font-weight:700;
   font-size:12px;
   letter-spacing:.4px;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  position:relative;
+  z-index:22;
+  pointer-events:auto;
 }
 #wrap-cfg .cta:hover{background:var(--accent-hover);color:var(--accent-ink,#0a0a0a)}
 
