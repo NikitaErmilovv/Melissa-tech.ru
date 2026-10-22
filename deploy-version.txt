@@ -1,4 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-schedule-warranty-20261022
-deploy-trigger=d2-timeline-dot-top-20261022
+deploy-trigger=d2-timeline-bullets-20261022

@@ -636,7 +636,12 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   margin:0;color:#b0b0a8;font-size:14px;line-height:1.6;
 }
 .service-timeline-item--left .service-timeline-content{
-  grid-column:1;justify-self:end;text-align:right;padding-right:8px;
+  grid-column:1;justify-self:end;padding-right:8px;
+}
+.service-timeline-item--left .service-timeline-content h3{text-align:right}
+.service-timeline-item--left .service-timeline-content p,
+.service-timeline-item--left .service-timeline-content .service-step-bullets{
+  text-align:left;
 }
 .service-timeline-item--right .service-timeline-content{
   grid-column:2;justify-self:start;text-align:left;padding-left:8px;
