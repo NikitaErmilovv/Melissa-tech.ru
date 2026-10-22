@@ -1,4 +1,4 @@
 site=delaikuzov
 brand=D2 Detailing
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-map-pin-fine-20261022
+deploy-trigger=d2-map-label-center-20261022
