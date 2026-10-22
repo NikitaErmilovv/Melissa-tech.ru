@@ -119,18 +119,21 @@ def service_page(site: dict, idx: int, slug: str, title: str, lead: str, cost: s
 <body>
 {nav_sub(site)}
 
-<section class="subpage-hero">
-  <div class="kicker">{idx:02d} / УСЛУГА</div>
-  <h1>{h1_html(title)}</h1>
-  <p>{lead}</p>
-  <div class="actions" style="margin-top:28px">
-    <a class="button" href="tel:{site['phone_tel']}">ЗАПИСАТЬСЯ</a>
-    <a class="button dark" href="../gallery.html">СМОТРЕТЬ РАБОТЫ</a>
+<section class="hero hero--studio hero--service">
+  <div class="heroimg" style="background-image:url('{img_path}')"></div>
+  <div class="hero-stack">
+    <div class="service-hero-head">
+      <div class="kicker">{idx:02d} / УСЛУГА</div>
+      <h1 class="service-hero-title">{h1_html(title)}</h1>
+    </div>
+    <div class="hero-content">
+      <p>{lead}</p>
+      <div class="actions">
+        <a class="button" href="tel:{site['phone_tel']}">ЗАПИСАТЬСЯ</a>
+        <a class="button dark" href="../services.html">ВСЕ УСЛУГИ</a>
+      </div>
+    </div>
   </div>
-</section>
-
-<section class="section service-page-hero-photo" aria-hidden="true">
-  <div class="service-page-hero-photo-inner" style="background-image:url('{img_path}')"></div>
 </section>
 
 {timeline_html(steps)}
@@ -222,17 +225,32 @@ def write_services_html(site: dict, dest: Path, slugs: list[str]) -> None:
 def append_css(dest: Path) -> None:
     css = dest / "styles.css"
     extra = """
-.service-page-hero-photo{padding-top:0;padding-bottom:48px}
-.service-page-hero-photo-inner{
-  max-width:var(--page-max,1200px);margin:0 auto;height:min(42vh,360px);
-  border-radius:4px;background-size:cover;background-position:center;
-  border:1px solid rgba(255,255,255,.08);
-}
 .service-list a.service-row{display:grid}
+.hero--service{min-height:min(92vh,880px);padding-bottom:48px}
+.hero--service .hero-stack{justify-content:flex-end;padding-bottom:clamp(32px,6vh,72px)}
+.hero--service .service-hero-head{margin-bottom:clamp(12px,3vh,28px)}
+.hero--service .service-hero-title{
+  font-size:clamp(40px,6.5vw,88px);line-height:1.02;letter-spacing:-.06em;
+  margin:12px 0 0;font-weight:800;color:#f5f5f2;
+}
+.hero--service .service-hero-title .accent{color:var(--accent)}
+.hero--service .kicker{margin:0}
+@media(max-width:800px){
+  .hero--service{min-height:min(88vh,720px)}
+  .hero--service .service-hero-title{font-size:clamp(32px,9vw,52px)}
+}
 """
     text = css.read_text(encoding="utf-8")
-    if "service-page-hero-photo" not in text:
+    # Drop obsolete standalone photo block under service hero
+    text = re.sub(
+        r"\n\.service-page-hero-photo[^\n]*\n\.service-page-hero-photo-inner\{[^}]+\}\n?",
+        "\n",
+        text,
+    )
+    if "hero--service" not in text:
         css.write_text(text + extra, encoding="utf-8")
+    else:
+        css.write_text(text, encoding="utf-8")
 
 
 def process_site(site: dict) -> None:
