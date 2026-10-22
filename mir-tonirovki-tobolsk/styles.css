@@ -1283,3 +1283,16 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .service-list a.service-row{display:grid}
 .subpage-hero--service{min-height:min(72vh,640px);display:flex;flex-direction:column;justify-content:flex-end}
 @media(max-width:800px){.subpage-hero--service{min-height:auto}}
+
+.hero--stats-overlay{
+  flex-direction:column;padding-bottom:0;
+}
+.hero--stats-overlay .hero-panel{flex:1}
+.hero--stats-overlay .stats--hero-transparent{
+  position:relative;z-index:2;width:calc(100% + 12vw);margin:0 -6vw;
+  background:transparent;
+  border-top:1px solid rgba(255,255,255,.14);
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+.hero--stats-overlay .stats--hero-transparent .stat span{color:rgba(245,245,242,.82)}
+#works .photo:after{display:none}
