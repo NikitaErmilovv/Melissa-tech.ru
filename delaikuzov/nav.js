@@ -127,6 +127,19 @@
 })();
 
 (function () {
+  function lastStepTextBottom(item) {
+    var content = item.querySelector('.service-timeline-content');
+    if (!content) return item.getBoundingClientRect().bottom;
+    var parts = content.querySelectorAll('h3, p, .service-step-bullets');
+    if (!parts.length) return content.getBoundingClientRect().bottom;
+    var bottom = 0;
+    parts.forEach(function (el) {
+      var b = el.getBoundingClientRect().bottom;
+      if (b > bottom) bottom = b;
+    });
+    return bottom;
+  }
+
   function alignServiceTimelineLines() {
     document.querySelectorAll('.service-timeline').forEach(function (timeline) {
       var line = timeline.querySelector('.service-timeline-line');
