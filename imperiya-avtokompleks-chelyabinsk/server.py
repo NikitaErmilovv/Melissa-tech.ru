@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import json
 import re
-import sys
 import time
 import urllib.error
 import urllib.request
@@ -93,14 +92,11 @@ class SiteHandler(SimpleHTTPRequestHandler):
             q = parse_qs(urlparse(self.path).query)
             sub = (q.get("dir") or [""])[0]
             base = ROOT / "img" / "works" / "incoming" / sub
-            files: list[str] = []
+            files = []
             if sub and base.is_dir():
-                scripts = ROOT.parent / "scripts"
-                if str(scripts) not in sys.path:
-                    sys.path.insert(0, str(scripts))
-                from studio_gallery_manifest import sorted_gallery_files
-
-                files = sorted_gallery_files(base, ROOT)
+                for p in sorted(base.iterdir()):
+                    if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
+                        files.append(p.relative_to(ROOT).as_posix())
             body = json.dumps({"files": files}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

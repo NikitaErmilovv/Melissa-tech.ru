@@ -443,35 +443,12 @@ def write_contact(site: dict, dest: Path) -> None:
 
 
 def write_gallery_js(dest: Path) -> None:
-    js = """(function () {
-  var grid = document.getElementById('gallery-grid');
-  if (!grid) return;
-  var dir = grid.getAttribute('data-photo-dir');
-  var manifestUrl = 'data/gallery-manifest.json?dir=' + encodeURIComponent(dir || '');
-  fetch(manifestUrl)
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      var files = data.files || [];
-      if (!files.length) return;
-      grid.innerHTML = '';
-      files.forEach(function (src) {
-        var a = document.createElement('a');
-        a.className = 'g g--media';
-        a.href = src;
-        a.setAttribute('data-lightbox', 'work');
-        var img = document.createElement('img');
-        img.src = src;
-        img.alt = '';
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        a.appendChild(img);
-        grid.appendChild(a);
-      });
-    })
-    .catch(function () {});
-})();
-"""
-    (dest / "gallery-load.js").write_text(js, encoding="utf-8")
+    src = Path(__file__).resolve().parent / "studio_gallery_load.js"
+    if src.is_file():
+        (dest / "gallery-load.js").write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
+        return
+    tpl = (ROOT / "klyaksa-tuning-noyabrsk" / "gallery-load.js").read_text(encoding="utf-8")
+    (dest / "gallery-load.js").write_text(tpl, encoding="utf-8")
 
 
 def write_server(site: dict, dest: Path) -> None:
@@ -497,14 +474,11 @@ def patch_server_gallery(dest: Path) -> None:
             q = parse_qs(urlparse(self.path).query)
             sub = (q.get("dir") or [""])[0]
             base = ROOT / "img" / "works" / "incoming" / sub
-            files: list[str] = []
+            files = []
             if sub and base.is_dir():
-                scripts = ROOT.parent / "scripts"
-                if str(scripts) not in sys.path:
-                    sys.path.insert(0, str(scripts))
-                from studio_gallery_manifest import sorted_gallery_files
-
-                files = sorted_gallery_files(base, ROOT)
+                for p in sorted(base.iterdir()):
+                    if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
+                        files.append(p.relative_to(ROOT).as_posix())
             body = json.dumps({"files": files}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
