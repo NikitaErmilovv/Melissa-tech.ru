@@ -150,12 +150,15 @@
       });
 
       var firstDot = items[0].querySelector('.service-timeline-dot');
-      var lastContent = items[items.length - 1].querySelector('.service-timeline-content');
-      if (!firstDot || !lastContent) return;
+      var lastItem = items[items.length - 1];
+      if (!firstDot || !lastItem) return;
       var fRect = firstDot.getBoundingClientRect();
-      var cRect = lastContent.getBoundingClientRect();
+      var endRect = lastItem.getBoundingClientRect();
+      var lineX = fRect.left + fRect.width / 2 - tRect.left;
+      line.style.left = Math.round(lineX) + 'px';
+      line.style.marginLeft = '-1px';
       line.style.top = fRect.top - tRect.top + fRect.height / 2 + 'px';
-      line.style.bottom = Math.max(0, tRect.bottom - cRect.bottom) + 'px';
+      line.style.bottom = Math.max(0, tRect.bottom - endRect.bottom) + 'px';
     });
   }
 
