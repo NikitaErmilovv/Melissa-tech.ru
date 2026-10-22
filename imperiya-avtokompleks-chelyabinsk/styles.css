@@ -1263,3 +1263,11 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   grid-auto-rows:auto;align-items:start;
 }
 .gallery--portfolio .g--media img{width:100%;height:auto;display:block}
+
+.service-page-hero-photo{padding-top:0;padding-bottom:48px}
+.service-page-hero-photo-inner{
+  max-width:var(--page-max,1200px);margin:0 auto;height:min(42vh,360px);
+  border-radius:4px;background-size:cover;background-position:center;
+  border:1px solid rgba(255,255,255,.08);
+}
+.service-list a.service-row{display:grid}

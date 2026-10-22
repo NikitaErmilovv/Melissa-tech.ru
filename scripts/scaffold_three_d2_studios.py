@@ -227,14 +227,21 @@ def head(site: dict, title: str) -> str:
 {nav(site)}"""
 
 
-def service_rows(site: dict) -> str:
+def service_rows(site: dict, slugs: list[str] | None = None) -> str:
     rows = []
     for i, (title, desc, cost) in enumerate(site["services"], 1):
         sid = f"svc-{i:02d}"
+        slug = (slugs[i - 1] if slugs else None)
+        if slug:
+            row_open = f'    <a class="service-row" href="services/{slug}.html" id="{sid}">'
+            row_close = "</a>"
+        else:
+            row_open = f'    <div class="service-row" id="{sid}">'
+            row_close = "</div>"
         rows.append(
-            f'    <div class="service-row" id="{sid}"><div class="idx">{i:02d}</div>'
+            f"{row_open}<div class=\"idx\">{i:02d}</div>"
             f'<div><h3>{title}</h3><div class="service-desc"><p class="service-lead">{desc}</p></div></div>'
-            f'<div class="cost">{cost}</div></div>'
+            f'<div class="cost">{cost}</div>{row_close}'
         )
     return "\n".join(rows)
 
