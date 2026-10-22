@@ -1294,7 +1294,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;
   margin:0;font-weight:800;
 }
-.hero--mir-d2 .heroimg{background-size:cover;background-position:50% 42%}
+.hero--mir-d2 .heroimg{background-size:92%;background-position:50% 42%}
 .hero--mir-d2 .stats--hero-two{
   grid-template-columns:repeat(2,1fr);
   width:50%;
