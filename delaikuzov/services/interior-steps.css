@@ -1,0 +1,26 @@
+/* Химчистка — этапы: список с маркером слева, заголовок к центральной линии */
+.service-page--interior .service-timeline-item--left .service-timeline-content {
+  text-align: left;
+}
+.service-page--interior .service-timeline-item--left .service-timeline-content h3 {
+  text-align: right;
+}
+.service-page--interior .service-step-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+.service-page--interior .service-step-bullets li {
+  position: relative;
+  margin: 6px 0;
+  padding-left: 1.15em;
+  text-align: left;
+}
+.service-page--interior .service-step-bullets li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #9a9a94;
+}
