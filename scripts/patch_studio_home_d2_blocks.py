@@ -248,8 +248,12 @@ SITES = {
         "hero_p": "Центр автотонирования в Тобольске: тонировка, оклейка плёнкой, полировка, шумоизоляция салона и нанесение защитной плёнки.",
         "stat_rating": "4.7",
         "stat_reviews": "54",
-        "stat_extra_b": "24/7",
-        "stat_extra_s": "ЗАПИСЬ НА УСЛУГИ",
+        "stat_extra_b": "5+",
+        "stat_extra_s": "ЛЕТ НА РЫНКЕ",
+        "stat_fourth_b": "24/7",
+        "stat_fourth_s": "ПО ЗАПИСИ",
+        "stats_in_hero": True,
+        "stats_transparent": True,
         "services_intro": "Тонировка, оклейка, полировка, защитная плёнка и шумоизоляция — стоимость после осмотра.",
         "compare": [
             (
@@ -397,8 +401,8 @@ def build_compare(_pairs: list[tuple[str, str, str]] | None = None) -> str:
 
 def build_works(photos: list[tuple[str, str]]) -> str:
     tiles = "\n".join(
-        f'    <a class="photo" href="gallery.html" style="background-image:url(\'{src}\')"><span class="tag">{tag}</span></a>'
-        for src, tag in photos
+        f'    <a class="photo" href="gallery.html" style="background-image:url(\'{src}\')"></a>'
+        for src, _tag in photos
     )
     return f"""<section class="section" id="works">
   <div class="section-head">

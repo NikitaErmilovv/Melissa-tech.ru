@@ -1269,6 +1269,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--sdc .hero-heading{padding-top:4px}
 .hero--sdc .hero-eyebrow-spacer{visibility:hidden}
 .hero--sdc .hero-content{max-width:720px;margin-top:auto}
+#works .photo:after{display:none}
 .hero--sdc .hero-heading h1{
   font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0;
 }
