@@ -125,3 +125,33 @@
     if (e.key === 'Escape') closePick();
   });
 })();
+
+(function () {
+  function alignServiceTimelineLines() {
+    document.querySelectorAll('.service-timeline').forEach(function (timeline) {
+      var line = timeline.querySelector('.service-timeline-line');
+      var items = timeline.querySelectorAll('.service-timeline-item');
+      if (!line || !items.length) return;
+      var firstDot = items[0].querySelector('.service-timeline-dot');
+      var lastDot = items[items.length - 1].querySelector('.service-timeline-dot');
+      if (!firstDot || !lastDot) return;
+      var tRect = timeline.getBoundingClientRect();
+      var fRect = firstDot.getBoundingClientRect();
+      var lRect = lastDot.getBoundingClientRect();
+      line.style.top = fRect.top - tRect.top + fRect.height / 2 + 'px';
+      line.style.bottom = tRect.bottom - lRect.top - lRect.height / 2 + 'px';
+    });
+  }
+
+  function bootTimelines() {
+    alignServiceTimelineLines();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootTimelines);
+  } else {
+    bootTimelines();
+  }
+  window.addEventListener('load', bootTimelines);
+  window.addEventListener('resize', bootTimelines);
+})();

@@ -608,6 +608,14 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;
   background:rgba(255,255,255,.85);
 }
+.subpage-hero .service-warranty-note{
+  margin:22px 0 0;max-width:560px;padding:16px 20px;
+  border-left:3px solid var(--accent);background:rgba(255,255,255,.04);
+}
+.subpage-hero .service-warranty-note p{
+  margin:0 0 8px;color:#f0f0ea;font-size:14px;line-height:1.55;font-weight:600;
+}
+.subpage-hero .service-warranty-note p:last-child{margin-bottom:0}
 .service-timeline-item{
   position:relative;display:grid;grid-template-columns:1fr 1fr;gap:0 56px;
   align-items:start;padding:18px 0 28px;min-height:88px;
