@@ -1295,7 +1295,11 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   margin:0;font-weight:800;
 }
 .hero--mir-d2 .heroimg{background-size:cover;background-position:50% 42%}
-.hero--mir-d2 .stats--hero .stat-label--site-bg{color:#0a0a0a}
+.hero--mir-d2 .stats--hero-two{
+  grid-template-columns:repeat(2,1fr);
+  width:50%;
+  max-width:50%;
+}
 @media(max-width:800px){
   .hero-brand--wordmark h1{font-size:clamp(40px,11vw,65px)}
 }

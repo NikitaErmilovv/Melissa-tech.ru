@@ -458,8 +458,17 @@ def main() -> None:
         nav = head
 
         if cfg.get("hero_layout") == "d2":
-            fourth_b = cfg.get("stat_fourth_b", "2ГИС")
-            fourth_s = cfg.get("stat_fourth_s", "ОТЗЫВЫ КЛИЕНТОВ")
+            stats_class = "stats stats--hero"
+            if cfg.get("hero_stats_two"):
+                stats_class += " stats--hero-two"
+            stats_rows = f"""      <div class="stat"><b>{cfg["stat_extra_b"]}</b><span>{cfg["stat_extra_s"]}</span></div>
+      <div class="stat"><b>{cfg["stat_reviews"]}</b><span>ОЦЕНКИ · 2ГИС</span></div>"""
+            if not cfg.get("hero_stats_two"):
+                fourth_b = cfg.get("stat_fourth_b", "2ГИС")
+                fourth_s = cfg.get("stat_fourth_s", "ОТЗЫВЫ КЛИЕНТОВ")
+                stats_rows += f"""
+      <div class="stat"><b id="stat-rating">{cfg["stat_rating"]}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
+      <div class="stat"><b>{fourth_b}</b><span>{fourth_s}</span></div>"""
             hero = f"""<section class="hero hero--mir-d2">
   <div class="heroimg" style="background-image:url('img/hero.jpg')"></div>
   <div class="hero-stack">
@@ -474,11 +483,8 @@ def main() -> None:
         <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
       </div>
     </div>
-    <div class="stats stats--hero">
-      <div class="stat"><b>{cfg["stat_extra_b"]}</b><span>{cfg["stat_extra_s"]}</span></div>
-      <div class="stat"><b>{cfg["stat_reviews"]}</b><span>ОЦЕНКИ · 2ГИС</span></div>
-      <div class="stat"><b id="stat-rating">{cfg["stat_rating"]}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
-      <div class="stat"><b>{fourth_b}</b><span>{fourth_s}</span></div>
+    <div class="{stats_class}">
+{stats_rows}
     </div>
   </div>
 </section>
