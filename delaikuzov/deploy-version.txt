@@ -1,4 +1,4 @@
 site=delaikuzov
 brand=D2 Detailing
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-interior-steps-css-20261022b
+deploy-trigger=d2-revert-interior-timeline-20261022

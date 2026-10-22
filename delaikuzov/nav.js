@@ -127,17 +127,6 @@
 })();
 
 (function () {
-  function alignServiceTimelineDots() {
-    document.querySelectorAll('.service-timeline-item').forEach(function (item) {
-      var dot = item.querySelector('.service-timeline-dot');
-      var heading = item.querySelector('.service-timeline-content h3');
-      if (!dot || !heading) return;
-      var iRect = item.getBoundingClientRect();
-      var hRect = heading.getBoundingClientRect();
-      dot.style.top = Math.round(hRect.top - iRect.top) + 'px';
-    });
-  }
-
   function alignServiceTimelineLines() {
     document.querySelectorAll('.service-timeline').forEach(function (timeline) {
       var line = timeline.querySelector('.service-timeline-line');
@@ -155,7 +144,6 @@
   }
 
   function bootTimelines() {
-    alignServiceTimelineDots();
     alignServiceTimelineLines();
   }
 
