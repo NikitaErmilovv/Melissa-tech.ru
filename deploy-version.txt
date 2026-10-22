@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-force-sync-20261022-1555
+deploy-trigger=d2-map-pin-center-20261022
