@@ -25,7 +25,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   text-transform:uppercase;line-height:1;
 }
 .site-nav .logo span{color:inherit}
-.site-nav .logo .logo-mark{color:var(--accent)}
+.site-nav .logo .logo-mark{color:#fff}
 .site-nav .logo .logo-word{color:#fff}
 .links{display:flex;gap:34px;font-size:13px;color:#bdbdb7}
 .links a{transition:color .2s}
