@@ -246,7 +246,7 @@ def service_rows(site: dict, slugs: list[str] | None = None) -> str:
     return "\n".join(rows)
 
 
-def home_service_tiles(site: dict, limit: int = 6) -> str:
+def home_service_tiles(site: dict, limit: int = 5) -> str:
     tiles = []
     for i, (title, _, _) in enumerate(site["services"][:limit], 1):
         tiles.append(
