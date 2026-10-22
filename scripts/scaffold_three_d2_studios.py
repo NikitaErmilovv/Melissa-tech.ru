@@ -443,12 +443,35 @@ def write_contact(site: dict, dest: Path) -> None:
 
 
 def write_gallery_js(dest: Path) -> None:
-    src = Path(__file__).resolve().parent / "studio_gallery_load.js"
-    if src.is_file():
-        (dest / "gallery-load.js").write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
-        return
-    tpl = (ROOT / "klyaksa-tuning-noyabrsk" / "gallery-load.js").read_text(encoding="utf-8")
-    (dest / "gallery-load.js").write_text(tpl, encoding="utf-8")
+    js = """(function () {
+  var grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+  var dir = grid.getAttribute('data-photo-dir');
+  var manifestUrl = 'data/gallery-manifest.json?dir=' + encodeURIComponent(dir || '');
+  fetch(manifestUrl)
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var files = data.files || [];
+      if (!files.length) return;
+      grid.innerHTML = '';
+      files.forEach(function (src) {
+        var a = document.createElement('a');
+        a.className = 'g g--media';
+        a.href = src;
+        a.setAttribute('data-lightbox', 'work');
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        a.appendChild(img);
+        grid.appendChild(a);
+      });
+    })
+    .catch(function () {});
+})();
+"""
+    (dest / "gallery-load.js").write_text(js, encoding="utf-8")
 
 
 def write_server(site: dict, dest: Path) -> None:
