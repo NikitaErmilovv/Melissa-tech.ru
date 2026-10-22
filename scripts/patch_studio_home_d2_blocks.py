@@ -250,10 +250,9 @@ SITES = {
         "stat_reviews": "54",
         "stat_extra_b": "5+",
         "stat_extra_s": "ЛЕТ НА РЫНКЕ",
-        "stat_fourth_b": "24/7",
-        "stat_fourth_s": "ПО ЗАПИСИ",
-        "stats_in_hero": True,
-        "stats_transparent": True,
+        "stat_fourth_b": "48",
+        "stat_fourth_s": "ОТЗЫВОВ",
+        "hero_layout": "d2",
         "services_intro": "Тонировка, оклейка, полировка, защитная плёнка и шумоизоляция — стоимость после осмотра.",
         "compare": [
             (
@@ -459,7 +458,34 @@ def main() -> None:
         head = html.split("</nav>", 1)[0] + "</nav>\n\n"
         nav = head
 
-        hero = f"""<section class="hero hero--sdc">
+        if cfg.get("hero_layout") == "d2":
+            fourth_b = cfg.get("stat_fourth_b", "2ГИС")
+            fourth_s = cfg.get("stat_fourth_s", "ОТЗЫВЫ КЛИЕНТОВ")
+            hero = f"""<section class="hero hero--mir-d2">
+  <div class="heroimg" style="background-image:url('img/hero.jpg')"></div>
+  <div class="hero-stack">
+    <div class="hero-brand hero-brand--wordmark">
+      <div class="eyebrow">{cfg["eyebrow"]}</div>
+      <h1>{cfg["hero_h1"]}</h1>
+    </div>
+    <div class="hero-content">
+      <p>{cfg["hero_p"]}</p>
+      <div class="actions">
+        <a class="button" href="tel:{cfg["map"]["phone_href"]}">ЗАПИСАТЬСЯ</a>
+        <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
+      </div>
+    </div>
+    <div class="stats stats--hero">
+      <div class="stat"><b>{cfg["stat_extra_b"]}</b><span>{cfg["stat_extra_s"]}</span></div>
+      <div class="stat"><b>{cfg["stat_reviews"]}</b><span>ОЦЕНКИ · 2ГИС</span></div>
+      <div class="stat"><b id="stat-rating">{cfg["stat_rating"]}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
+      <div class="stat"><b>{fourth_b}</b><span>{fourth_s}</span></div>
+    </div>
+  </div>
+</section>
+"""
+        else:
+            hero = f"""<section class="hero hero--sdc">
   <div class="heroimg" style="background-image:url('img/hero.jpg')"></div>
   <div class="hero-panel">
     <div class="hero-heading">

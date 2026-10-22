@@ -1284,3 +1284,17 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .subpage-hero--service{min-height:min(72vh,640px);display:flex;flex-direction:column;justify-content:flex-end}
 @media(max-width:800px){.subpage-hero--service{min-height:auto}}
 #works .photo:after{display:none}
+
+.hero-brand--wordmark{
+  display:flex;flex-direction:column;align-items:flex-start;
+  margin:0 auto 0 0;margin-bottom:auto;padding-top:12px;
+  font-size:initial;line-height:normal;transform:none;
+}
+.hero-brand--wordmark h1{
+  font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;
+  margin:0;font-weight:800;
+}
+.hero--mir-d2 .heroimg{background-size:cover;background-position:50% 42%}
+@media(max-width:800px){
+  .hero-brand--wordmark h1{font-size:clamp(40px,11vw,65px)}
+}
