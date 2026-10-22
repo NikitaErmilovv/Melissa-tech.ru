@@ -1197,8 +1197,26 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   max-width:720px;margin:16px auto 0;padding:0 0 0 1.2em;color:#9a9a94;font-size:14px;line-height:1.65;
 }
 .service-stages-result-list li{margin:8px 0}
-.service-step-bullets{margin:0;padding:0 0 0 1.1em;color:#b0b0a8;font-size:14px;line-height:1.6}
-.service-step-bullets li{margin:6px 0}
+.service-step-bullets{
+  margin:0;padding:0;list-style:none;color:#b0b0a8;font-size:14px;line-height:1.6;
+  text-align:left;
+}
+.service-step-bullets li{
+  margin:6px 0;position:relative;padding-left:1.15em;text-align:left;
+}
+.service-step-bullets li::before{
+  content:"•";position:absolute;left:0;top:0;color:#9a9a94;
+}
+.service-page--interior .service-timeline-item--left .service-timeline-content{
+  text-align:left;
+}
+.service-page--interior .service-timeline-item--left .service-timeline-content h3{
+  text-align:right;
+}
+.service-page--interior .service-timeline-item--left .service-step-bullets,
+.service-page--interior .service-timeline-item--left .service-step-bullets li{
+  text-align:left;
+}
 .service-page--extra{padding-top:24px;padding-bottom:56px}
 .service-extra-list{
   list-style:none;margin:0 auto;padding:0;max-width:640px;

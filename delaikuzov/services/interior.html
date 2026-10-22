@@ -5,11 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="site-build" content="delaikuzov-service-interior-timeline-2026-10-12">
+<meta name="site-build" content="d2-interior-step-bullets-2026-10-22">
 <title>Химчистка — D2_detailing</title>
-<link rel="stylesheet" href="../styles.css?v=70">
+<link rel="stylesheet" href="../styles.css?v=71">
+<style>
+/* Химчистка: пункты списка слева от маркера, заголовок этапа — к линии */
+.service-page--interior .service-timeline-item--left .service-timeline-content{text-align:left}
+.service-page--interior .service-timeline-item--left .service-timeline-content h3{text-align:right}
+.service-page--interior .service-step-bullets,
+.service-page--interior .service-step-bullets li{text-align:left!important}
+.service-page--interior .service-step-bullets{list-style:none;padding:0;margin:0}
+.service-page--interior .service-step-bullets li{position:relative;padding-left:1.15em}
+.service-page--interior .service-step-bullets li::before{content:"•";position:absolute;left:0;color:#9a9a94}
+</style>
 </head>
-<body>
+<body class="page-interior">
 <nav class="site-nav">
   <div class="logo"><a href="../index.html"><span class="logo-mark">D2</span><span class="logo-word">DETAILING</span></a></div>
   <div class="links"><a href="../services.html">УСЛУГИ</a><a href="../gallery.html">РАБОТЫ</a><a href="../about.html">О НАС</a><a href="../contact.html">КОНТАКТЫ</a></div>
@@ -38,7 +48,7 @@
   </div>
 </section>
 
-<section class="section service-page service-page--stages">
+<section class="section service-page service-page--stages service-page--interior">
   <h2 class="service-stages-title">Этапы работ</h2>
   <div class="service-timeline"><div class="service-timeline-line" aria-hidden="true"></div>
 <div class="service-timeline-item service-timeline-item--left"><div class="service-timeline-content"><h3>Подготовка салона</h3><ul class="service-step-bullets"><li>Уборка личных вещей.</li><li>Пылесосим салон и скрытые ниши.</li></ul></div><span class="service-timeline-dot" aria-hidden="true">1</span></div>
