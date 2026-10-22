@@ -638,7 +638,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .service-timeline-item--left .service-timeline-content{
   grid-column:1;justify-self:end;padding-right:8px;
 }
-.service-timeline-item--left .service-timeline-content h3{text-align:right}
+.service-timeline-item--left .service-timeline-content h3{text-align:left}
 .service-timeline-item--left .service-timeline-content p,
 .service-timeline-item--left .service-timeline-content .service-step-bullets{
   text-align:left;
