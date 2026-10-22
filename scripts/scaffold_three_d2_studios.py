@@ -497,11 +497,14 @@ def patch_server_gallery(dest: Path) -> None:
             q = parse_qs(urlparse(self.path).query)
             sub = (q.get("dir") or [""])[0]
             base = ROOT / "img" / "works" / "incoming" / sub
-            files = []
+            files: list[str] = []
             if sub and base.is_dir():
-                for p in sorted(base.iterdir()):
-                    if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
-                        files.append(p.relative_to(ROOT).as_posix())
+                scripts = ROOT.parent / "scripts"
+                if str(scripts) not in sys.path:
+                    sys.path.insert(0, str(scripts))
+                from studio_gallery_manifest import sorted_gallery_files
+
+                files = sorted_gallery_files(base, ROOT)
             body = json.dumps({"files": files}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
