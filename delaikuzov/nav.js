@@ -132,14 +132,25 @@
       var line = timeline.querySelector('.service-timeline-line');
       var items = timeline.querySelectorAll('.service-timeline-item');
       if (!line || !items.length) return;
-      var firstDot = items[0].querySelector('.service-timeline-dot');
-      var lastDot = items[items.length - 1].querySelector('.service-timeline-dot');
-      if (!firstDot || !lastDot) return;
       var tRect = timeline.getBoundingClientRect();
+
+      items.forEach(function (item) {
+        var dot = item.querySelector('.service-timeline-dot');
+        var heading = item.querySelector('.service-timeline-content h3');
+        if (!dot || !heading) return;
+        var iRect = item.getBoundingClientRect();
+        var hRect = heading.getBoundingClientRect();
+        var dotH = dot.offsetHeight || 28;
+        dot.style.top = Math.round(hRect.top - iRect.top + (hRect.height - dotH) / 2) + 'px';
+      });
+
+      var firstDot = items[0].querySelector('.service-timeline-dot');
+      var lastContent = items[items.length - 1].querySelector('.service-timeline-content');
+      if (!firstDot || !lastContent) return;
       var fRect = firstDot.getBoundingClientRect();
-      var lRect = lastDot.getBoundingClientRect();
+      var cRect = lastContent.getBoundingClientRect();
       line.style.top = fRect.top - tRect.top + fRect.height / 2 + 'px';
-      line.style.bottom = tRect.bottom - lRect.top - lRect.height / 2 + 'px';
+      line.style.bottom = Math.max(0, tRect.bottom - cRect.bottom) + 'px';
     });
   }
 
