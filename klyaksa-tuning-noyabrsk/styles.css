@@ -25,7 +25,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   text-transform:uppercase;line-height:1;
 }
 .site-nav .logo span{color:inherit}
-.site-nav .logo .logo-mark{color:#fff}
+.site-nav .logo .logo-mark{color:var(--accent)}
 .site-nav .logo .logo-word{color:#fff}
 .links{display:flex;gap:34px;font-size:13px;color:#bdbdb7}
 .links a{transition:color .2s}
@@ -1267,6 +1267,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   flex:1;min-height:calc(760px - 152px);max-width:720px;
 }
 .hero--sdc .hero-heading{padding-top:4px}
+.hero--sdc .hero-eyebrow-spacer{visibility:hidden}
 .hero--sdc .hero-content{max-width:720px;margin-top:auto}
 .hero--sdc .hero-heading h1{
   font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0;
