@@ -250,9 +250,8 @@ SITES = {
         "stat_reviews": "54",
         "stat_extra_b": "5+",
         "stat_extra_s": "ЛЕТ НА РЫНКЕ",
-        "stat_fourth_b": "48",
-        "stat_fourth_s": "ОТЗЫВОВ",
         "hero_layout": "d2",
+        "hero_stats_two": True,
         "services_intro": "Тонировка, оклейка, полировка, защитная плёнка и шумоизоляция — стоимость после осмотра.",
         "compare": [
             (
