@@ -1,16 +1,11 @@
 (function () {
-  var root = document.getElementById("gallery-grid");
-  if (!root) return;
-  var dir = root.getAttribute("data-photo-dir");
+  var grid = document.getElementById("gallery-grid");
+  if (!grid) return;
+  var dir = grid.getAttribute("data-photo-dir");
   var manifestUrl =
     "data/gallery-manifest.json?dir=" + encodeURIComponent(dir || "");
 
   var GROUP_ORDER = ["landscape", "square", "portrait"];
-  var GROUP_CLASS = {
-    landscape: "gallery--ratio-43",
-    square: "gallery--ratio-11",
-    portrait: "gallery--ratio-34",
-  };
 
   function classify(w, h) {
     var r = w / h;
@@ -49,32 +44,6 @@
     return a;
   }
 
-  function renderGrouped(items) {
-    var buckets = { landscape: [], square: [], portrait: [] };
-    items.forEach(function (it) {
-      buckets[it.kind].push(it);
-    });
-
-    root.innerHTML = "";
-    var any = false;
-    GROUP_ORDER.forEach(function (kind) {
-      var list = buckets[kind];
-      if (!list.length) return;
-      any = true;
-      var block = document.createElement("div");
-      block.className = "gallery-size-group";
-      var grid = document.createElement("div");
-      grid.className =
-        "gallery gallery--portfolio gallery--uniform " + GROUP_CLASS[kind];
-      list.forEach(function (it) {
-        grid.appendChild(makeTile(it.src));
-      });
-      block.appendChild(grid);
-      root.appendChild(block);
-    });
-    if (!any) return;
-  }
-
   fetch(manifestUrl)
     .then(function (r) {
       return r.json();
@@ -82,7 +51,22 @@
     .then(function (data) {
       var files = data.files || [];
       if (!files.length) return;
-      return Promise.all(files.map(loadMeta)).then(renderGrouped);
+      return Promise.all(files.map(loadMeta)).then(function (items) {
+        var buckets = { landscape: [], square: [], portrait: [] };
+        items.forEach(function (it) {
+          buckets[it.kind].push(it);
+        });
+        var ordered = [];
+        GROUP_ORDER.forEach(function (kind) {
+          buckets[kind].forEach(function (it) {
+            ordered.push(it);
+          });
+        });
+        grid.innerHTML = "";
+        ordered.forEach(function (it) {
+          grid.appendChild(makeTile(it.src));
+        });
+      });
     })
     .catch(function () {});
 })();

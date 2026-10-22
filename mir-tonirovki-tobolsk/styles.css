@@ -1263,14 +1263,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   grid-auto-rows:auto;align-items:start;
 }
 .gallery--portfolio .g--media img{width:100%;height:auto;display:block}
-.gallery-album{display:flex;flex-direction:column;gap:40px;margin-top:36px}
-.gallery-size-group .gallery--portfolio{margin-top:0}
-.gallery--uniform{align-items:stretch}
-.gallery--uniform .g--media{aspect-ratio:4/3;overflow:hidden;display:block}
-.gallery--uniform.gallery--ratio-34 .g--media{aspect-ratio:3/4}
-.gallery--uniform.gallery--ratio-11 .g--media{aspect-ratio:1/1}
-.gallery--uniform .g--media img{width:100%;height:100%;object-fit:cover;display:block}
-
 .service-list a.service-row{display:grid}
 
 .service-list a.service-row{display:grid}

@@ -361,7 +361,7 @@ def write_gallery(site: dict, dest: Path) -> None:
   <div class="section-head">
     <div><div class="kicker">АЛЬБОМ</div><h2>РАБОТЫ СТУДИИ</h2></div>
   </div>
-  <div class="gallery-album" id="gallery-grid" data-photo-dir="{pf}">
+  <div class="gallery gallery--portfolio" id="gallery-grid" data-photo-dir="{pf}">
     <p class="gallery-empty">Пока нет фото. Положите JPG/PNG в <strong>img/works/incoming/{pf}/</strong> и перезагрузите страницу.</p>
   </div>
 </section>
