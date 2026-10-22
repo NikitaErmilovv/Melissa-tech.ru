@@ -189,8 +189,9 @@ def patch_index(path: Path, content: str) -> None:
 
 SITES = {
     "klyaksa-tuning-noyabrsk": {
-        "eyebrow": "ТЮНИНГ · НОЯБРЬСК",
-        "hero_h1": "КЛЯКСА<br><span class=\"accent\">TUNING.</span>",
+        "eyebrow": "НОЯБРЬСК",
+        "hero_h1": "КЛЯКСА<br><span class=\"accent\">TUNING STUDIO.</span>",
+        "map_pin_short": "КЛЯКСА",
         "hero_p": "Детейлинг-мойка, полировка, химчистка, защита кузова и салона, антигравий, антихром, тонировка и шумоизоляция в Ноябрьске.",
         "stat_rating": "5.0",
         "stat_reviews": "99",
@@ -228,7 +229,7 @@ SITES = {
             "map_c": "63.182081,75.431801",
             "intro": "Приезжайте по записи. Адрес и маршрут — в 2ГИС.",
             "brand_mark": "КЛЯКСА",
-            "brand_word": "TUNING",
+            "brand_word": "TUNING STUDIO",
             "address": "г. Ноябрьск, ул. Строителей, 24",
             "hours": "Ежедневно · 10:00–20:00",
             "phone": "+7 (932) 059-05-91",
@@ -295,7 +296,7 @@ SITES = {
         "fix_sound_tile": False,
     },
     "imperiya-avtokompleks-chelyabinsk": {
-        "eyebrow": "АВТОКОМПЛЕКС · ЧЕЛЯБИНСК",
+        "eyebrow": "ЧЕЛЯБИНСК",
         "hero_h1": "ИМПЕРИЯ<br><span class=\"accent\">АВТОКОМПЛЕКС.</span>",
         "hero_p": "Автокомплекс в Челябинске: мойка, шиномонтаж, химчистка, кузовной и малярный ремонт, детейлинг, антикор и сезонное хранение шин.",
         "stat_rating": "4.7",
@@ -456,13 +457,17 @@ def main() -> None:
 
         hero = f"""<section class="hero hero--sdc">
   <div class="heroimg" style="background-image:url('img/hero.jpg')"></div>
-  <div class="hero-content">
-    <div class="eyebrow">{cfg["eyebrow"]}</div>
-    <h1>{cfg["hero_h1"]}</h1>
-    <p>{cfg["hero_p"]}</p>
-    <div class="actions">
-      <a class="button" href="tel:{cfg["map"]["phone_href"]}">ЗАПИСАТЬСЯ</a>
-      <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
+  <div class="hero-panel">
+    <div class="hero-heading">
+      <div class="eyebrow">{cfg["eyebrow"]}</div>
+      <h1>{cfg["hero_h1"]}</h1>
+    </div>
+    <div class="hero-content">
+      <p>{cfg["hero_p"]}</p>
+      <div class="actions">
+        <a class="button" href="tel:{cfg["map"]["phone_href"]}">ЗАПИСАТЬСЯ</a>
+        <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
+      </div>
     </div>
   </div>
 </section>

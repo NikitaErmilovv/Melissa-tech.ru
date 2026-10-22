@@ -1257,14 +1257,19 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--studio .hero-brand-word{font-size:clamp(42px,6vw,72px);line-height:.95;letter-spacing:-.04em}
 .hero--studio .heroimg{opacity:.75}
 .hero--sdc{
-  min-height:760px;padding:82px 6vw 70px;align-items:flex-end;
+  min-height:760px;padding:82px 6vw 70px;align-items:stretch;
 }
 .hero--sdc .heroimg{
   height:678px;min-height:0;width:65%;opacity:.85;
 }
-.hero--sdc .hero-content{position:relative;z-index:1}
-.hero--sdc h1{
-  font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0 0 34px;
+.hero--sdc .hero-panel{
+  position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;
+  flex:1;min-height:calc(760px - 152px);max-width:720px;
+}
+.hero--sdc .hero-heading{padding-top:4px}
+.hero--sdc .hero-content{max-width:720px;margin-top:auto}
+.hero--sdc .hero-heading h1{
+  font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0;
 }
 .gallery-empty{grid-column:1/-1;color:#888;padding:24px;border:1px dashed rgba(255,255,255,.15)}
 .service-list .service-row{text-decoration:none;color:inherit}
