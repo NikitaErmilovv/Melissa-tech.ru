@@ -27,6 +27,8 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .site-nav .logo span{color:inherit}
 .site-nav .logo .logo-mark{color:#fff}
 .site-nav .logo .logo-word{color:var(--accent)}
+.logo--brand-img a{display:inline-flex;align-items:center;line-height:0}
+.logo--brand-img .logo-img{display:block;height:36px;width:auto;max-width:min(52vw,220px)}
 .links{display:flex;gap:34px;font-size:13px;color:#bdbdb7}
 .links a{transition:color .2s}
 .links a:hover{color:var(--accent)}
@@ -829,7 +831,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   color:#fff;white-space:nowrap;
   box-shadow:0 4px 14px rgba(0,0,0,.35);
 }
-.address-map-pin-label-text span{color:var(--accent)}
 .address-map-pin-label-text::after{
   content:'';position:absolute;left:50%;bottom:-4px;
   transform:translateX(-50%);
@@ -1292,7 +1293,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 .hero-brand--wordmark h1{
   font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;
-  margin:0;font-weight:800;
+  margin:0;font-weight:800;color:#f5f5f2;
 }
 .hero--mir-d2 .heroimg{background-size:92%;background-position:50% 42%}
 .hero--mir-d2 .stats--hero-two{
