@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=dark-detailing-full-update-20261022
+deploy-trigger=dark-detailing-card-text-z-20261022
