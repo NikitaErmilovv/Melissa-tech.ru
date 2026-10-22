@@ -244,7 +244,7 @@ SITES = {
     },
     "mir-tonirovki-tobolsk": {
         "eyebrow": "ТОБОЛЬСК",
-        "hero_h1": "МИР<br><span class=\"accent\">ТОНИРОВКИ</span>",
+        "hero_h1": "МИР<br><span class=\"accent\">ТОНИРОВКИ.</span>",
         "hero_p": "Центр автотонирования в Тобольске: тонировка, оклейка плёнкой, полировка, шумоизоляция салона и нанесение защитной плёнки.",
         "stat_rating": "4.7",
         "stat_reviews": "54",
