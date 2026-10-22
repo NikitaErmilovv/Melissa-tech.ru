@@ -1271,7 +1271,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--sdc .hero-heading h1{
   font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0;
 }
-.hero--imperiya-logo .hero-brand-logo{margin:0;line-height:0}
+.hero--imperiya-logo .hero-brand-logo{margin:12px 0 0;line-height:0}
 .hero--imperiya-logo .hero-brand-logo img{
   display:block;width:min(400px,78vw);max-width:100%;height:auto;
 }
