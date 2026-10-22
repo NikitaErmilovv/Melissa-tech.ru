@@ -117,7 +117,7 @@
     (function loadNext(i) {
       if (i >= urls.length) {
         track.innerHTML =
-          '<div class="review"><p>Не удалось загрузить отзывы 2ГИС.</p><small><a href="https://2gis.ru/novosibirsk/firm/70000001061278508/tab/reviews" target="_blank" rel="noopener">Открыть на 2ГИС</a></small></div>';
+          '<div class="review"><p>Не удалось загрузить отзывы 2ГИС.</p><small><a href="https://2gis.ru/chelyabinsk/firm/70000001019425061/tab/reviews" target="_blank" rel="noopener">Открыть на 2ГИС</a></small></div>';
         return;
       }
       fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=r2")

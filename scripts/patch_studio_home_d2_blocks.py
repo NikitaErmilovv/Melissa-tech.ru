@@ -363,14 +363,33 @@ def ba_slider(before: str, after: str, caption: str) -> str:
     </figure>"""
 
 
-def build_compare(pairs: list[tuple[str, str, str]]) -> str:
-    items = "\n".join(ba_slider(b, a, c) for b, a, c in pairs)
-    return f"""<section class="section" id="compare">
+def build_compare(_pairs: list[tuple[str, str, str]] | None = None) -> str:
+    """Shared D2 before/after block (agency photos) — same on all studio prototypes."""
+    return """<section class="section" id="compare">
   <div class="section-head">
     <div><div class="kicker">ДО / ПОСЛЕ</div><h2>РЕЗУЛЬТАТ,<br><span class="accent">КОТОРЫЙ ВИДНО.</span></h2></div>
   </div>
   <div class="ba-grid">
-{items}
+    <figure class="ba-item">
+      <div class="ba-slider" data-ba>
+        <img class="ba-after" src="img/works/before-after/hood-after.jpg" alt="После — полировка кузова">
+        <div class="ba-before-wrap">
+          <img class="ba-before" src="img/works/before-after/hood-before.jpg" alt="До — полировка кузова">
+        </div>
+        <div class="ba-handle" aria-hidden="true"><span></span></div>
+      </div>
+      <figcaption>Полировка кузова</figcaption>
+    </figure>
+    <figure class="ba-item">
+      <div class="ba-slider" data-ba>
+        <img class="ba-after" src="img/works/before-after/headlight-after.jpg" alt="После — восстановление фар">
+        <div class="ba-before-wrap">
+          <img class="ba-before" src="img/works/before-after/headlight-before.jpg" alt="До — восстановление фар">
+        </div>
+        <div class="ba-handle" aria-hidden="true"><span></span></div>
+      </div>
+      <figcaption>Восстановление фар</figcaption>
+    </figure>
   </div>
 </section>"""
 
