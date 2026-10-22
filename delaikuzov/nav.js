@@ -138,6 +138,11 @@
         var dot = item.querySelector('.service-timeline-dot');
         var heading = item.querySelector('.service-timeline-content h3');
         if (!dot || !heading) return;
+        var pos = window.getComputedStyle(dot).position;
+        if (pos === 'static' || pos === 'relative') {
+          dot.style.top = '';
+          return;
+        }
         var iRect = item.getBoundingClientRect();
         var hRect = heading.getBoundingClientRect();
         var dotH = dot.offsetHeight || 28;

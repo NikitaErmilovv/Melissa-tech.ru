@@ -816,7 +816,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .address-map-frame:hover img{transform:scale(1.02)}
 .address-map-pin-label{
   position:absolute;left:50%;top:50%;
-  transform:translate(calc(-50% + 5px), calc(-100% - 22px));
+  transform:translate(calc(-50% + 7px), calc(-100% - 22px));
   pointer-events:none;z-index:2;
 }
 .address-map-pin-label-text{
@@ -923,9 +923,9 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .address-map-img--desktop{display:block}
   .address-map-img--mobile{display:none}
   .address-map-pin-label{
-    left:calc(50% - 16px);
+    left:50%;
     top:50%;
-    transform:translate(-50%,calc(-100% - 32px));
+    transform:translate(calc(-50% + 6px),calc(-100% - 32px));
   }
   .address-map-pin-label-text{
     font-size:8px;
@@ -1084,7 +1084,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .address-map-title{margin-bottom:20px}
   .address-map-details{gap:22px;margin-bottom:24px}
   .address-map-btn{width:100%;align-self:stretch}
-  .address-map-pin-label{left:calc(50% - 12px);transform:translate(-50%,calc(-100% - 18px))}
+  .address-map-pin-label{left:50%;transform:translate(calc(-50% + 4px),calc(-100% - 18px))}
   .address-map-pin-label-text{font-size:7px;padding:3px 6px 2px;white-space:nowrap}
 }
 
