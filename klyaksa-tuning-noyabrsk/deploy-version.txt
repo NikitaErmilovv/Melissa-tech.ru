@@ -1,0 +1,2 @@
+prod=https://melissa-tech.ru/klyaksa-tuning-noyabrsk/
+deploy=git-push-timeweb-hook

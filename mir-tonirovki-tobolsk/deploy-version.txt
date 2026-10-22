@@ -1,0 +1,2 @@
+prod=https://melissa-tech.ru/mir-tonirovki-tobolsk/
+deploy=git-push-timeweb-hook

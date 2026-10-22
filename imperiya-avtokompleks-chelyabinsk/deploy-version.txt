@@ -1,0 +1,2 @@
+prod=https://melissa-tech.ru/imperiya-avtokompleks-chelyabinsk/
+deploy=git-push-timeweb-hook
