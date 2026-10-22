@@ -11,7 +11,7 @@ SITES = {
     "klyaksa-tuning-noyabrsk": {
         "gis": "https://2gis.ru/noyabrsk/firm/70000001035583613",
         "wa": "79320590591",
-        "tg_url": "https://t.me/klyaksa_89",
+        "tg_url": "https://t.me/+79320590591",
         "tg_label": "Telegram",
         "max_url": "",
     },
