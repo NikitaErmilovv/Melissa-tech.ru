@@ -106,7 +106,6 @@ def service_page(site: dict, idx: int, slug: str, title: str, lead: str, cost: s
     nav_links = "".join(
         f'<a href="{s}.html">{t}</a>' for s, t in all_slugs if s != slug
     )
-    img_path = f"../{home_img}"
     return f"""<!doctype html>
 <html lang="ru">
 <head>
@@ -119,18 +118,13 @@ def service_page(site: dict, idx: int, slug: str, title: str, lead: str, cost: s
 <body>
 {nav_sub(site)}
 
-<section class="subpage-hero">
+<section class="subpage-hero subpage-hero--service">
   <div class="kicker">{idx:02d} / УСЛУГА</div>
   <h1>{h1_html(title)}</h1>
   <p>{lead}</p>
   <div class="actions" style="margin-top:28px">
     <a class="button" href="tel:{site['phone_tel']}">ЗАПИСАТЬСЯ</a>
-    <a class="button dark" href="../gallery.html">СМОТРЕТЬ РАБОТЫ</a>
   </div>
-</section>
-
-<section class="section service-page-hero-photo" aria-hidden="true">
-  <div class="service-page-hero-photo-inner" style="background-image:url('{img_path}')"></div>
 </section>
 
 {timeline_html(steps)}
@@ -222,17 +216,20 @@ def write_services_html(site: dict, dest: Path, slugs: list[str]) -> None:
 def append_css(dest: Path) -> None:
     css = dest / "styles.css"
     extra = """
-.service-page-hero-photo{padding-top:0;padding-bottom:48px}
-.service-page-hero-photo-inner{
-  max-width:var(--page-max,1200px);margin:0 auto;height:min(42vh,360px);
-  border-radius:4px;background-size:cover;background-position:center;
-  border:1px solid rgba(255,255,255,.08);
-}
 .service-list a.service-row{display:grid}
+.subpage-hero--service{min-height:min(72vh,640px);display:flex;flex-direction:column;justify-content:flex-end}
+@media(max-width:800px){.subpage-hero--service{min-height:auto}}
 """
     text = css.read_text(encoding="utf-8")
-    if "service-page-hero-photo" not in text:
+    text = re.sub(
+        r"\n\.service-page-hero-photo[^\n]*\n\.service-page-hero-photo-inner\{[^}]+\}\n?",
+        "\n",
+        text,
+    )
+    if "subpage-hero--service" not in text:
         css.write_text(text + extra, encoding="utf-8")
+    else:
+        css.write_text(text, encoding="utf-8")
 
 
 def process_site(site: dict) -> None:

@@ -62,13 +62,16 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="reviews">
   <div class="section-head">
-    <div><div class="kicker">ОТЗЫВЫ</div><h2>2ГИС</h2></div>
+    <div><div class="kicker">ОТЗЫВЫ</div><h2>ОТЗЫВЫ<br><span class="accent">КЛИЕНТОВ.</span></h2></div>
   </div>
-  <div class="reviews">
-<div class="review"><div class="stars">★★★★★</div><p>«Тонировали авто — всё ровно, без пузырей.»</p><small>Клиент · 2ГИС</small></div>
-<div class="review"><div class="stars">★★★★★</div><p>«Хороший сервис, можно записаться заранее.»</p><small>Клиент · 2ГИС</small></div>
+  <div class="reviews-carousel" data-reviews-carousel data-reviews-src="data/reviews-2gis.json">
+    <button type="button" class="reviews-nav reviews-nav--prev" aria-label="Предыдущие отзывы">‹</button>
+    <div class="reviews-viewport">
+      <div class="reviews-track"></div>
+    </div>
+    <button type="button" class="reviews-nav reviews-nav--next" aria-label="Следующие отзывы">›</button>
   </div>
   <p class="intro" style="margin-top:24px"><a href="https://2gis.ru/tobolsk/firm/70000001030915203" target="_blank" rel="noopener noreferrer">Все отзывы в 2ГИС →</a></p>
 </section>
@@ -127,5 +130,6 @@
 </div>
 <script src="nav.js"></script>
 <script src="stats.js"></script>
+<script src="reviews-carousel.js?v=r2"></script>
 </body>
 </html>

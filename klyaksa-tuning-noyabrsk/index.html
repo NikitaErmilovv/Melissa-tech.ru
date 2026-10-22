@@ -58,17 +58,20 @@
     <a class="photo" href="services/interior.html" style="background-image:url('img/works/home/interior.jpg')"><span class="tag">ХИМЧИСТКА САЛОНА</span></a>
     <a class="photo" href="services/protection.html" style="background-image:url('img/works/home/protection.jpg')"><span class="tag">ЗАЩИТА САЛОНА</span></a>
     <a class="photo" href="services/ppf.html" style="background-image:url('img/works/home/ppf.jpg')"><span class="tag">АНТИГРАВИЙ</span></a>
-    <a class="photo" href="services/sound.html" style="background-image:url('img/works/home/sound.jpg')"><span class="tag">ШУМОИЗОЛЯЦИЯ</span></a>
+    <a class="photo" href="services/antichrome.html" style="background-image:url('img/works/home/sound.jpg')"><span class="tag">ШУМОИЗОЛЯЦИЯ</span></a>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="reviews">
   <div class="section-head">
-    <div><div class="kicker">ОТЗЫВЫ</div><h2>2ГИС</h2></div>
+    <div><div class="kicker">ОТЗЫВЫ</div><h2>ОТЗЫВЫ<br><span class="accent">КЛИЕНТОВ.</span></h2></div>
   </div>
-  <div class="reviews">
-<div class="review"><div class="stars">★★★★★</div><p>«Отличная студия, аккуратная работа и нормальные цены.»</p><small>Клиент · 2ГИС</small></div>
-<div class="review"><div class="stars">★★★★★</div><p>«Делали тонировку и полировку — доволен результатом.»</p><small>Клиент · 2ГИС</small></div>
+  <div class="reviews-carousel" data-reviews-carousel data-reviews-src="data/reviews-2gis.json">
+    <button type="button" class="reviews-nav reviews-nav--prev" aria-label="Предыдущие отзывы">‹</button>
+    <div class="reviews-viewport">
+      <div class="reviews-track"></div>
+    </div>
+    <button type="button" class="reviews-nav reviews-nav--next" aria-label="Следующие отзывы">›</button>
   </div>
   <p class="intro" style="margin-top:24px"><a href="https://2gis.ru/noyabrsk/firm/70000001035583613" target="_blank" rel="noopener noreferrer">Все отзывы в 2ГИС →</a></p>
 </section>
@@ -127,5 +130,6 @@
 </div>
 <script src="nav.js"></script>
 <script src="stats.js"></script>
+<script src="reviews-carousel.js?v=r2"></script>
 </body>
 </html>
