@@ -147,6 +147,8 @@ def service_page(site: dict, idx: int, slug: str, title: str, lead: str, cost: s
 {map_block(site)}
 {footer(site)}
 </div>
+<script src="../contacts-config.js"></script>
+<script src="../messenger-picker.js"></script>
 <script src="../nav.js"></script>
 </body>
 </html>
