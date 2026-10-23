@@ -65,6 +65,9 @@ NAV_SVC = (
     .replace('href="contact.html"', 'href="../contact.html"')
 )
 
+# Без 02, 03, 05 — мото на фото с 2ГИС
+HOME_WORKS_PHOTOS = ["01", "04", "06", "09", "11"]
+
 HOME_TILES = [
     ("repair.html", "РЕМОНТ", "06"),
     ("diagnostics.html", "ДИАГНОСТИКА", "07", " photo-pos-polish"),
@@ -262,8 +265,8 @@ def tiles_html() -> str:
 
 def works_html() -> str:
     return "\n".join(
-        f'    <a class="photo" href="gallery.html" style="background-image:url(\'{photo(f"{i:02d}")}\')"></a>'
-        for i in range(1, 6)
+        f'    <a class="photo" href="gallery.html" style="background-image:url(\'{photo(n)}\')"></a>'
+        for n in HOME_WORKS_PHOTOS
     )
 
 
