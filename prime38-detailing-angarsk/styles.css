@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#d4af37;
-  --accent-soft:rgba(212,175,55,.35);
-  --accent-hover:#e8c85a;
-  --accent-deep:#a88b28;
+  --accent:#fbeda3;
+  --accent-soft:rgba(251,237,163,.42);
+  --accent-hover:#fff1bc;
+  --accent-deep:#d4c27a;
   --accent-ink:#0a0a0a;
-  --accent-rgb:212,175,55;
+  --accent-rgb:251,237,163;
 }
 
 *{box-sizing:border-box}
@@ -1287,7 +1287,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--sdc .hero-content{max-width:720px;margin-top:auto}
 #works .photo:after{display:none}
 .hero--sdc .hero-heading h1{
-  font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0;
+  font-size:clamp(58px,8vw,116px);line-height:1.05;letter-spacing:-.075em;margin:0;
 }
 .gallery-empty{grid-column:1/-1;color:#888;padding:24px;border:1px dashed rgba(255,255,255,.15)}
 .service-list .service-row{text-decoration:none;color:inherit}

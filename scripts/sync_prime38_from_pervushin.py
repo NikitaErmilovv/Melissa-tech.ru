@@ -35,12 +35,12 @@ CFG = {
 }
 
 PRIME_ROOT = """:root{
-  --accent:#d4af37;
-  --accent-soft:rgba(212,175,55,.35);
-  --accent-hover:#e8c85a;
-  --accent-deep:#a88b28;
+  --accent:#fbeda3;
+  --accent-soft:rgba(251,237,163,.42);
+  --accent-hover:#fff1bc;
+  --accent-deep:#d4c27a;
   --accent-ink:#0a0a0a;
-  --accent-rgb:212,175,55;
+  --accent-rgb:251,237,163;
 }
 """
 
