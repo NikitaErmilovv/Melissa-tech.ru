@@ -14,42 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT / "klyaksa-tuning-noyabrsk"
 CSS_V = "91"
 
-THEME_TURQUOISE = """
-body.theme-light-turquoise{background:#f3f9fa;color:#0f1f22}
-body.theme-light-turquoise a{color:inherit}
-body.theme-light-turquoise nav{
-  background:rgba(255,255,255,.94);border-bottom:1px solid rgba(15,31,34,.08);
-  backdrop-filter:blur(10px);
-}
-body.theme-light-turquoise .logo-mark{color:#0fb5b2}
-body.theme-light-turquoise .logo-word{color:#0f1f22}
-body.theme-light-turquoise .links{color:#4a5c60}
-body.theme-light-turquoise .links a:hover{color:#0fb5b2}
-body.theme-light-turquoise .phone{border-color:rgba(15,31,34,.15);color:#0f1f22}
-body.theme-light-turquoise .phone:hover{border-color:#0fb5b2;color:#0a8f8c}
-body.theme-light-turquoise .hero{
-  background:linear-gradient(135deg,#e8f7f7 0%,#fff 45%,#dff5f4 100%);
-}
-body.theme-light-turquoise .hero:after{background:linear-gradient(90deg,#f3f9fa 0%,transparent 55%,#f3f9fa 100%)}
-body.theme-light-turquoise .heroimg{opacity:.55;filter:saturate(.9)}
-body.theme-light-turquoise .heroimg:before{background:linear-gradient(90deg,#f3f9fa 0%,rgba(243,249,250,.5) 45%,transparent 75%)}
-body.theme-light-turquoise .eyebrow{color:#0a8f8c}
-body.theme-light-turquoise h1,.theme-light-turquoise h2{color:#0f1f22}
-body.theme-light-turquoise .accent{color:#0fb5b2}
-body.theme-light-turquoise .stats{background:#fff;border-top:1px solid rgba(15,31,34,.06);border-bottom:1px solid rgba(15,31,34,.06)}
-body.theme-light-turquoise .stat b{color:#0f1f22}
-body.theme-light-turquoise .stat span{color:#5a6d71}
-body.theme-light-turquoise .section{background:transparent}
-body.theme-light-turquoise .kicker{color:#0a8f8c}
-body.theme-light-turquoise .button{background:#0fb5b2;color:#fff;border-color:#0fb5b2}
-body.theme-light-turquoise .button.dark{background:transparent;color:#0f1f22;border:1px solid rgba(15,31,34,.2)}
-body.theme-light-turquoise .photo:after{background:linear-gradient(180deg,transparent 40%,rgba(15,31,34,.75))}
-body.theme-light-turquoise .site-footer,.theme-light-turquoise .address-map{background:#0f1f22;color:#e8f0f1}
-body.theme-light-turquoise .site-footer .logo-mark{color:#5ee8e4}
-body.theme-light-turquoise :root{
-  --accent:#0fb5b2;--accent-soft:rgba(15,181,178,.35);--accent-hover:#3cc9c6;
-  --accent-deep:#0a8f8c;--accent-ink:#fff;--accent-rgb:15,181,178;
-}
+THEME_TURQUOISE_ACCENT = """
+:root{--accent:#0fb5b2;--accent-soft:rgba(15,181,178,.42);--accent-hover:#3cc9c6;--accent-deep:#0a8f8c;--accent-ink:#0a0a0a;--accent-rgb:15,181,178}
 """
 
 THEME_PRIME38 = """
@@ -81,7 +47,7 @@ SITES: list[dict] = [
         "reviews_count": "112",
         "stat_extra_b": "10+",
         "stat_extra_s": "ЛЕТ НА РЫНКЕ",
-        "theme": "turquoise",
+        "theme": "default",
         "auto_sales": True,
         "hero_lead": "Автокомплекс в Чкаловском районе: ремонт ходовой, шиномонтаж, ТО, кузовные работы и продажа проверенных автомобилей.",
         "about": "«Первушин» — автокомплекс на Новосибирской, 109/4. Ремонт подвески и ходовой, сервисное обслуживание, шины и кузовные работы. Помогаем с подбором и продажей авто.",
@@ -289,8 +255,6 @@ def nav_html(site: dict, prefix: str = "") -> str:
 
 
 def body_class(site: dict) -> str:
-    if site["theme"] == "turquoise":
-        return ' class="theme-light-turquoise"'
     return ""
 
 
@@ -580,7 +544,7 @@ def apply_theme(dest: Path, site: dict) -> None:
     css = (dest / "styles.css").read_text(encoding="utf-8")
     extra = ""
     if site["theme"] == "turquoise":
-        extra = THEME_TURQUOISE
+        extra = THEME_TURQUOISE_ACCENT
     elif site["theme"] == "prime38":
         extra = THEME_PRIME38
     elif site["theme"] == "proffkar":
@@ -588,7 +552,6 @@ def apply_theme(dest: Path, site: dict) -> None:
     auto_css = """
 .auto-sales-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:960px}
 .auto-card{padding:24px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background:rgba(255,255,255,.03)}
-.theme-light-turquoise .auto-card{background:#fff;border-color:rgba(15,31,34,.1);color:#0f1f22}
 .auto-card-photo{height:180px;border-radius:6px;background-size:cover;background-position:center;margin-bottom:16px;opacity:.85}
 .auto-card--muted{display:flex;flex-direction:column;justify-content:center;gap:12px}
 #works .photo:after{display:none}
@@ -683,17 +646,12 @@ def scaffold_one(site: dict) -> Path:
             count=1,
             flags=re.S,
         )
-        if body_class(site) and 'class="theme-light-turquoise"' not in t:
-            t = t.replace("<body>", f"<body{body_class(site)}>")
         about.write_text(t, encoding="utf-8")
 
     for name in ("gallery.html", "contact.html"):
         p = dest / name
-        if p.is_file() and body_class(site):
-            t = p.read_text(encoding="utf-8")
-            if 'class="theme-light-turquoise"' not in t:
-                t = t.replace("<body>", f"<body{body_class(site)}>")
-            p.write_text(replace_site_text(t, site), encoding="utf-8")
+        if p.is_file():
+            p.write_text(replace_site_text(p.read_text(encoding="utf-8"), site), encoding="utf-8")
 
     apply_theme(dest, site)
 

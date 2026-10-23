@@ -8,8 +8,8 @@
 
 ## Четыре новых прототипа
 
-- **Первушин** — `pervushin-avtokompleks-ekaterinburg/` — http://127.0.0.1:8124/ · бирюзово-белая тема · **Авто** (`cars.html`)
-- **Первый руль** — `pervyy-rul-masterskaya-novokuznetsk/` — http://127.0.0.1:8125/ · бирюзово-белая тема · **Авто** (`cars.html`)
+- **Первушин** — `pervushin-avtokompleks-ekaterinburg/` — http://127.0.0.1:8124/ · **Авто** (`cars.html`)
+- **Первый руль** — `pervyy-rul-masterskaya-novokuznetsk/` — http://127.0.0.1:8125/ · бирюзовый акцент · **Авто** (`cars.html`)
 - **Прайм.38** — `prime38-detailing-angarsk/` — http://127.0.0.1:8126/
 - **Проффкар** — `proffkar-avtotekhservis-tyumen/` — http://127.0.0.1:8127/
 
