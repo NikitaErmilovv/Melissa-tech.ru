@@ -45,7 +45,7 @@ PRIME_ROOT = """:root{
 """
 
 NAV_ROOT = """<nav class="site-nav">
-  <div class="logo"><a href="index.html"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></a></div>
+  <div class="logo"><a href="index.html"><span class="logo-mark">prime</span><span class="logo-word">.38</span></a></div>
   <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О НАС</a><a href="contact.html">КОНТАКТЫ</a></div>
   <div class="nav-actions">
     <a class="phone" href="tel:+79500913882">+7 (950) 091-38-82</a>
@@ -94,7 +94,7 @@ def site_bottom(prefix: str = "") -> str:
           <img class="address-map-img address-map-img--desktop" src="https://static.maps.2gis.com/1.0?s=880x450&amp;c={CFG['map_c']}&amp;z=16&amp;pt={CFG['map_c']}~k:p" alt="">
           <img class="address-map-img address-map-img--mobile" src="https://static.maps.2gis.com/1.0?s=720x720&amp;c={CFG['map_c']}&amp;z=16&amp;pt={CFG['map_c']}~k:p" alt="{CFG['map_alt']}">
           <div class="address-map-pin-label" aria-hidden="true">
-            <span class="address-map-pin-label-text"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></span>
+            <span class="address-map-pin-label-text"><span class="logo-mark">prime</span><span class="logo-word">.38</span></span>
           </div>
         </a>
         <div class="address-map-decor"></div>
@@ -103,7 +103,7 @@ def site_bottom(prefix: str = "") -> str:
         <div class="address-map-details">
           <div class="address-map-detail">
             <span class="address-map-detail-label">СТУДИЯ</span>
-            <p class="address-map-brand"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></p>
+            <p class="address-map-brand"><span class="logo-mark">prime</span><span class="logo-word">.38</span></p>
             <p class="address-map-muted">{CFG['address']}</p>
             <p class="address-map-muted-sm">{CFG['schedule']}</p>
           </div>
@@ -124,7 +124,7 @@ def site_bottom(prefix: str = "") -> str:
   <div class="footer-grid footer-desktop-only">
     <div class="footer-col footer-col--brand-hours">
       <div class="footer-brand-block">
-        <div class="footer-logo"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></div>
+        <div class="footer-logo"><span class="logo-mark">prime</span><span class="logo-word">.38</span></div>
         <div class="footer-social"><a href="https://wa.me/{CFG['wa']}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://t.me/{CFG['tg']}" target="_blank" rel="noopener noreferrer">Telegram</a><a href="{CFG['firm_url']}" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
       </div>
       <div class="footer-hours-block">
@@ -161,7 +161,7 @@ def site_bottom(prefix: str = "") -> str:
       </div>
       <div class="footer-brand-divider" aria-hidden="true"></div>
       <div class="footer-brand-block">
-        <div class="footer-logo"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></div>
+        <div class="footer-logo"><span class="logo-mark">prime</span><span class="logo-word">.38</span></div>
         <div class="footer-social"><a href="https://wa.me/{CFG['wa']}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://t.me/{CFG['tg']}" target="_blank" rel="noopener noreferrer">Telegram</a><a href="{CFG['firm_url']}" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
       </div>
       <div class="footer-hours-block">
@@ -205,6 +205,18 @@ def sync_styles() -> None:
         css,
         count=1,
     )
+    if ".hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px)}" in css:
+        css = css.replace(
+            ".hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px)}",
+            ".hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px);transform:translateY(-15px)}\n"
+            ".hero--sdc .hero-heading h1 .hero-title-main{letter-spacing:-.025em}",
+        )
+    if ".hero--sdc .hero-heading h1 .accent{display:inline}" in css:
+        css = css.replace(
+            ".hero--sdc .hero-heading h1 .accent{display:inline}",
+            ".hero--sdc .hero-heading h1 .accent{display:inline;text-transform:lowercase}\n"
+            ".site-nav .logo .logo-mark,.site-nav .logo .logo-word{text-transform:lowercase;letter-spacing:-.02em}",
+        )
     (DST / "styles.css").write_text(css, encoding="utf-8")
 
 
@@ -232,7 +244,7 @@ def write_index() -> None:
   <div class="hero-panel">
     <div class="hero-heading">
       <div class="eyebrow hero-eyebrow-city">АНГАРСК</div>
-      <h1>ДЕТЕЙЛИНГ<br>ЦЕНТР<br><span class="accent">ПРАЙМ.38</span></h1>
+      <h1><span class="hero-title-main">DETAILING<br>CENTER</span><br><span class="accent">prime.38</span></h1>
     </div>
     <div class="hero-content">
       <p>Детейлинг-центр в Ангарске: мойка, полировка, защитные покрытия, антикор и тонировка по записи.</p>
