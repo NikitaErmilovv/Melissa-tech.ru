@@ -17,7 +17,7 @@ PRIME_STATS = ROOT / "prime38-detailing-angarsk/stats.js"
 
 _CFG_BASE = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 CFG = {
-    "css_v": "115",
+    "css_v": "116",
     "phone_tel": _CFG_BASE["phone_tel"],
     "phone_display": _CFG_BASE["phone_display"],
     "wa": _CFG_BASE["wa"],
@@ -264,12 +264,12 @@ def sync_styles() -> None:
         css,
         count=1,
     )
-    extra = """
-.photo-strip--home.photo-strip--six{grid-template-columns:repeat(3,1fr)}
-@media(max-width:900px){.photo-strip--home.photo-strip--six{grid-template-columns:repeat(2,1fr)}}
-"""
-    if ".photo-strip--home.photo-strip--six" not in css:
-        css = css.rstrip() + extra
+    css = re.sub(
+        r"\n\.photo-strip--home\.photo-strip--six\{[^}]+\}\n"
+        r"@media\(max-width:900px\)\{\.photo-strip--home\.photo-strip--six\{[^}]+\}\}\n?",
+        "\n",
+        css,
+    )
     (DST / "styles.css").write_text(css, encoding="utf-8")
 
 
@@ -364,13 +364,12 @@ def write_index() -> None:
     <div><div class="kicker">01 / УСЛУГИ</div><h2>СЕРВИС<br><span class="accent">АВТОМОБИЛЯ.</span></h2></div>
     <p class="intro">Ремонт, ТО и детейлинг — финальная цена после осмотра.</p>
   </div>
-  <div class="photo-strip photo-strip--services photo-strip--home photo-strip--six">
+  <div class="photo-strip photo-strip--services photo-strip--home">
     <a class="photo" href="services/repair.html" style="background-image:url('img/works/incoming/proffkar/06-2gis.jpg')"><span class="tag">РЕМОНТ</span></a>
     <a class="photo" href="services/service.html" style="background-image:url('img/works/incoming/proffkar/07-2gis.jpg')"><span class="tag">ТО</span></a>
     <a class="photo" href="services/tires.html" style="background-image:url('img/works/incoming/proffkar/08-2gis.jpg')"><span class="tag">ШИНОМОНТАЖ</span></a>
-    <a class="photo" href="services/detailing.html" style="background-image:url('img/works/incoming/proffkar/09-2gis.jpg')"><span class="tag">ДЕТЕЙЛИНГ</span></a>
+    <a class="photo photo-pos-polish" href="services/detailing.html" style="background-image:url('img/works/incoming/proffkar/09-2gis.jpg')"><span class="tag">ДЕТЕЙЛИНГ</span></a>
     <a class="photo" href="services/diagnostics.html" style="background-image:url('img/works/incoming/proffkar/10-2gis.jpg')"><span class="tag">ДИАГНОСТИКА</span></a>
-    <a class="photo" href="services/wash.html" style="background-image:url('img/works/incoming/proffkar/11-2gis.jpg')"><span class="tag">АВТОМОЙКА</span></a>
   </div>
 </section>
 

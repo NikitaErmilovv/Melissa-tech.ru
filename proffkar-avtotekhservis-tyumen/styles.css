@@ -1339,5 +1339,3 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(max-width:640px){
   .pricelist-table th,.pricelist-table td{padding:10px 12px;font-size:13px}
 }
-.photo-strip--home.photo-strip--six{grid-template-columns:repeat(3,1fr)}
-@media(max-width:900px){.photo-strip--home.photo-strip--six{grid-template-columns:repeat(2,1fr)}}
