@@ -30,8 +30,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
   text-transform:uppercase;line-height:1;
 }
 .site-nav .logo span{color:inherit}
-.site-nav .logo .logo-mark{color:var(--accent)}
-.site-nav .logo .logo-word{color:#fff}
+.site-nav .logo a{color:#fff}
 .links{display:flex;gap:34px;font-size:13px;color:#bdbdb7}
 .links a{transition:color .2s}
 .links a:hover{color:var(--accent)}
@@ -806,7 +805,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .address-map-details{display:flex;flex-direction:column;gap:28px;margin-bottom:28px;padding-top:0;border-top:none}
 .address-map-detail-label{font-size:11px;letter-spacing:2px;color:var(--accent);opacity:.72;display:block;margin-bottom:10px}
 .address-map-brand{font-size:21px;font-weight:900;color:#fff;margin:0 0 8px;letter-spacing:-1px}
-.address-map-brand span{color:var(--accent)}
 .address-map-muted{color:#85857f;font-size:13px;line-height:1.55;margin:0}
 .address-map-muted-sm{color:#777;font-size:11px;margin:6px 0 0;line-height:1.5}
 .address-map-phone{font-size:21px;font-weight:800;color:#fff;letter-spacing:-.02em;transition:color .2s}
@@ -841,7 +839,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   color:#fff;white-space:nowrap;
   box-shadow:0 4px 14px rgba(0,0,0,.35);
 }
-.address-map-pin-label-text span{color:var(--accent)}
 .address-map-pin-label-text::after{
   content:'';position:absolute;left:50%;bottom:-4px;
   transform:translateX(-50%);
