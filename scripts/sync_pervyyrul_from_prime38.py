@@ -17,7 +17,7 @@ DATA_JSON = ROOT / "scripts/studio-data/pervyy-rul-2gis.json"
 _CFG = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 IMG = f"img/works/incoming/{_CFG['photo_dir']}"
 CFG = {
-    "css_v": "15",
+    "css_v": "14",
     **_CFG,
     "reviews": _CFG["reviews_count"],
     "map_alt": f"Карта 2ГИС — {_CFG['address']}",
@@ -268,15 +268,15 @@ def service_rows() -> str:
 
 def pervyy_hero_html() -> str:
     return f"""
-<section class="hero hero--sdc hero--pervyy">
+<section class="hero hero--sdc">
   <div class="heroimg" style="background-image:url('{photo('01')}')"></div>
   <div class="hero-panel">
     <div class="hero-heading">
       <div class="eyebrow hero-eyebrow-city">{CFG['city'].upper()}</div>
-      <h1>ПЕРВЫЙ<br><span class="accent">РУЛЬ</span></h1>
+      <h1>АВТОКОМПЛЕКС<br>ПЕРВЫЙ<br><span class="accent">РУЛЬ</span></h1>
     </div>
     <div class="hero-content">
-      <p>На Сибиряков-Гвардейцев: ремонт и диагностика, шиномонтаж, электрика и продажа автомобилей.</p>
+      <p>Автокомплекс на Сибиряков-Гвардейцев: ремонт и диагностика, шиномонтаж, электрика и продажа автомобилей.</p>
       <div class="actions">
         <a class="button" href="tel:{CFG['phone_tel']}">ЗАПИСАТЬСЯ</a>
         <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
