@@ -17,7 +17,7 @@ DATA_JSON = ROOT / "scripts/studio-data/pervyy-rul-2gis.json"
 _CFG = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 IMG = f"img/works/incoming/{_CFG['photo_dir']}"
 CFG = {
-    "css_v": "14",
+    "css_v": "15",
     **_CFG,
     "reviews": _CFG["reviews_count"],
     "map_alt": f"Карта 2ГИС — {_CFG['address']}",
