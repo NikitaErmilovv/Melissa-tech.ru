@@ -14,6 +14,10 @@ STUDIOS = (
     ("klyaksa-tuning-noyabrsk", "70000001035583613"),
     ("mir-tonirovki-tobolsk", "70000001030915203"),
     ("imperiya-avtokompleks-chelyabinsk", "70000001019425061"),
+    ("pervushin-avtokompleks-ekaterinburg", "70000001034025330"),
+    ("pervyy-rul-masterskaya-novokuznetsk", "70000001111114731"),
+    ("prime38-detailing-angarsk", "70000001061012787"),
+    ("proffkar-avtotekhservis-tyumen", "70000001080387917"),
 )
 
 
