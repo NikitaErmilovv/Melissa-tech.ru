@@ -14,18 +14,6 @@ ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT / "klyaksa-tuning-noyabrsk"
 CSS_V = "91"
 
-THEME_TURQUOISE_ACCENT = """
-:root{--accent:#0fb5b2;--accent-soft:rgba(15,181,178,.42);--accent-hover:#3cc9c6;--accent-deep:#0a8f8c;--accent-ink:#0a0a0a;--accent-rgb:15,181,178}
-"""
-
-THEME_PRIME38 = """
-:root{--accent:#d4af37;--accent-soft:rgba(212,175,55,.35);--accent-hover:#e8c85a;--accent-deep:#a88b28;--accent-ink:#0a0a0a;--accent-rgb:212,175,55}
-"""
-
-THEME_PROFFKAR = """
-:root{--accent:#4a9fd8;--accent-soft:rgba(74,159,216,.35);--accent-hover:#6eb3e3;--accent-deep:#2d7ab0;--accent-ink:#0a0a0a;--accent-rgb:74,159,216}
-"""
-
 SITES: list[dict] = [
     {
         "slug": "pervushin-avtokompleks-ekaterinburg",
@@ -569,7 +557,6 @@ def apply_theme(dest: Path, site: dict) -> None:
         block = ":root{\n" + "\n".join(f"  {k}:{v};" for k, v in vars_.items()) + "\n}"
         css = re.sub(r":root\{[^}]+\}", block, css, count=1)
     css = re.sub(r"\n:root\{--accent:[^}]+\}\n", "\n", css)
-    extra = ""
     auto_css = """
 .auto-sales-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:960px}
 .auto-card{padding:24px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background:rgba(255,255,255,.03)}
@@ -577,8 +564,9 @@ def apply_theme(dest: Path, site: dict) -> None:
 .auto-card--muted{display:flex;flex-direction:column;justify-content:center;gap:12px}
 #works .photo:after{display:none}
 """
-    if extra not in css:
-        (dest / "styles.css").write_text(css + extra + auto_css, encoding="utf-8")
+    if ".auto-sales-grid" not in css:
+        css += auto_css
+    (dest / "styles.css").write_text(css, encoding="utf-8")
 
 
 def scaffold_one(site: dict) -> Path:
