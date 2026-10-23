@@ -1291,3 +1291,32 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .auto-card-photo{height:180px;border-radius:6px;background-size:cover;background-position:center;margin-bottom:16px;opacity:.85}
 .auto-card--muted{display:flex;flex-direction:column;justify-content:center;gap:12px}
 #works .photo:after{display:none}
+
+.equipment-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:48px;
+}
+.equipment-item{margin:0;overflow:hidden;border-radius:4px;border:1px solid rgba(255,255,255,.1);background:#111;
+  aspect-ratio:3/4;
+}
+.equipment-item img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:900px){
+  .equipment-grid{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:32px}
+}
+@media(max-width:560px){
+  .equipment-grid{grid-template-columns:1fr}
+}
+
+.pricelist-page{padding-top:48px;padding-bottom:48px}
+.pricelist-page .section-head{margin-bottom:28px}
+.pricelist-table-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.1);border-radius:4px;background:rgba(255,255,255,.02)}
+.pricelist-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.45}
+.pricelist-table th,.pricelist-table td{padding:14px 18px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.pricelist-table th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;background:rgba(var(--accent-rgb),.06)}
+.pricelist-table tbody tr:last-child td{border-bottom:0}
+.pricelist-table td:last-child,.pricelist-table th:last-child{text-align:right;white-space:nowrap}
+.pricelist-table td[colspan]{text-align:right}
+.pricelist-notes{margin:20px 0 0;padding-left:1.2em;color:#9a9a94;font-size:13px;line-height:1.6}
+.pricelist-notes li{margin-bottom:6px}
+@media(max-width:640px){
+  .pricelist-table th,.pricelist-table td{padding:10px 12px;font-size:13px}
+}
