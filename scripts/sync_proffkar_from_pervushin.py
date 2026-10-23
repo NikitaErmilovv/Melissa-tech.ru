@@ -325,6 +325,7 @@ def sync_styles() -> None:
         css = css.replace(
             ".hero--sdc .hero-content{max-width:720px;margin-top:auto}\n#works .photo:after{display:none}",
             ".hero--sdc .hero-content{max-width:720px;margin-top:auto}\n"
+            ".hero--sdc .hero-heading{padding-top:4px;margin-top:-5px}\n"
             ".hero--sdc > .stats.stats--hero{\n"
             "  position:relative;z-index:1;flex-shrink:0;\n"
             "  margin:88px 0 0;width:100%;align-self:stretch;\n"
