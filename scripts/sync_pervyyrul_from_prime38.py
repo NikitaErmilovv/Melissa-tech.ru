@@ -17,7 +17,7 @@ DATA_JSON = ROOT / "scripts/studio-data/pervyy-rul-2gis.json"
 _CFG = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 IMG = f"img/works/incoming/{_CFG['photo_dir']}"
 CFG = {
-    "css_v": "14",
+    "css_v": "16",
     **_CFG,
     "reviews": _CFG["reviews_count"],
     "map_alt": f"Карта 2ГИС — {_CFG['address']}",
@@ -270,6 +270,87 @@ def works_html() -> str:
     )
 
 
+_TIRE_DIAS = ("13", "14", "15", "16", "17", "18", "19")
+
+
+def _tire_price_row(label: str, prices: list[str | None]) -> str:
+    cells = "".join(f"<td>{p if p else '—'}</td>" for p in prices)
+    return f"<tr><td>{label}</td>{cells}</tr>"
+
+
+def _tire_price_table(title: str, rows: list[tuple[str, list[str | None]]]) -> str:
+    head = "".join(f"<th>{d}&Prime;</th>" for d in _TIRE_DIAS)
+    body = "".join(_tire_price_row(label, vals) for label, vals in rows)
+    return (
+        f'<p class="pricelist-section-title">{title}</p>'
+        f'<div class="pricelist-table-wrap"><table class="pricelist-table pricelist-table--matrix">'
+        f"<thead><tr><th>Наименование услуг</th>{head}</tr></thead><tbody>{body}</tbody></table></div>"
+    )
+
+
+def tires_pricelist_html() -> str:
+    passenger = [
+        ("Снятие / установка", ["120", "130", "140", "150", "170", "180", "200"]),
+        ("Демонтаж (разбортовка)", ["120", "130", "130", "140", "150", "160", "160"]),
+        ("Монтаж (сборка)", ["120", "130", "140", "150", "150", "160", "160"]),
+        ("Балансировка", ["200", "200", "210", "220", "230", "240", "250"]),
+        ("Комплекс 4 колеса", ["2240", "2360", "2480", "2640", "2800", "2960", "3080"]),
+        (
+            "Демонтаж / монтаж RUN FLAT, профиль ≤45%",
+            [None, None, "310/310", "320/320", "330/330", "340/340", "350/350"],
+        ),
+    ]
+    suv = [
+        ("Снятие / установка", [None, "150", "150", "160", "170", "180", "190"]),
+        ("Демонтаж (разбортовка)", [None, "140", "150", "160", "170", "180", "190"]),
+        ("Монтаж (сборка)", [None, "140", "150", "160", "170", "180", "190"]),
+        ("Балансировка", [None, "250", "260", "270", "280", "290", "300"]),
+        ("Комплекс 4 колеса", [None, "2720", "2840", "3000", "3160", "3320", "3480"]),
+    ]
+    jeep = [
+        ("Снятие / установка", [None, None, "150", "160", "170", "180", "200"]),
+        ("Демонтаж (разбортовка)", [None, None, "200", "220", "230", "250", "270"]),
+        ("Монтаж (сборка)", [None, None, "200", "220", "230", "250", "270"]),
+        ("Балансировка", [None, None, "250", "260", "270", "280", "290"]),
+        ("Комплекс 4 колеса", [None, None, "3200", "3440", "3600", "3840", "4120"]),
+    ]
+    extra = [
+        ("Проверка геометрии колеса на балансировочном станке", ["200", "200", "210", "220", "230", "240", "250"]),
+        ("Чистка, обработка ступицы медной смазкой", [None, "100", "100", "100", "100", "100", "100"]),
+        ("Проверка автошины на прокол (колесо снято)", [None, "100", "100", "100", "100", "100", "100"]),
+        ("Снятие / установка вентиля", ["100", "100", "100", "100", "100", "100", "100"]),
+        ("Снятие / установка вентиля с датчиком давления", [None, "250", "250", "250", "250", "250", "250"]),
+        ("Чистка закраины обода, обработка герметиком", ["150", "160", "170", "180", "190", "200", "220"]),
+        ("Подкачка колеса", ["25", "25", "25", "25", "25", "25", "25"]),
+        ("Ремонт прокола (жгут)", ["250", "250", "250", "250", "250", "250", "250"]),
+    ]
+    tables = "".join(
+        [
+            _tire_price_table("Легковой автомобиль", passenger),
+            _tire_price_table("Лёгкий внедорожник (SUV)", suv),
+            _tire_price_table("Джип", jeep),
+            _tire_price_table("Дополнительные услуги", extra),
+        ]
+    )
+    return f"""<section class="section pricelist-page" id="shinomontazh-prices">
+  <div class="section-head">
+    <div><div class="kicker">ШИНОМОНТАЖ</div><h2>ПРАЙС<br><span class="accent">2026.</span></h2></div>
+    <p class="intro">Цены в рублях за одно колесо, если не указано иное. ООО «Первый руль», {CFG['address']}.</p>
+  </div>
+  <ul class="pricelist-notes">
+    <li>Мойка колёс перед услугой — <strong>бесплатно</strong>.</li>
+    <li>При балансировке грузы оплачиваются отдельно.</li>
+  </ul>
+  {tables}
+  <p class="pricelist-section-title">Расходные материалы</p>
+  <ul class="pricelist-notes">
+    <li>Груз самоклеящийся 10 г — 8 ₽</li>
+    <li>Груз набивной (литой диск) 5 г — 5 ₽</li>
+    <li>Вентиль — 50 ₽</li>
+  </ul>
+</section>"""
+
+
 def service_rows() -> str:
     return "\n".join(
         f'    <a class="service-row" href="services/{h}" id="svc-{i}"><div class="idx">{i}</div>'
@@ -396,6 +477,7 @@ def _write_services(v: str) -> None:
 <h1>АВТОКОМПЛЕКС<br><span class="accent">{CFG['city'].upper()}</span></h1>
 <p>Ремонт и диагностика — стоимость после осмотра автомобиля.</p></section>
 <section class="section"><div class="service-list">{service_rows()}</div></section>
+{tires_pricelist_html()}
 {site_bottom()}{scripts()}</body></html>""",
         encoding="utf-8",
     )
@@ -460,12 +542,23 @@ def _write_cars(v: str) -> None:
 
 def write_service_pages() -> None:
     v = CFG["css_v"]
+    workshop_photo = (
+        '<figure class="service-photo-block">'
+        f'<img src="../{IMG}/12-workshop-lift.png" alt="Шиномонтажный цех Первый руль" loading="lazy" decoding="async">'
+        "</figure>"
+    )
     for fname, (title, h1, lead) in SERVICE_PAGES.items():
+        body_extra = workshop_photo if fname == "tires.html" else ""
+        price_note = (
+            ' <a href="../services.html#shinomontazh-prices">Прайс на шиномонтаж →</a>'
+            if fname == "tires.html"
+            else ""
+        )
         (DST / "services" / fname).write_text(
             f"""<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title} — Первый руль</title><link rel="stylesheet" href="../styles.css?v={v}"></head><body class="page-sub">{NAV_SVC}
 <section class="subpage-hero subpage-hero--service"><div class="kicker">УСЛУГА</div><h1>{h1}</h1><p>{lead}</p></section>
-<section class="section"><p class="intro" style="max-width:720px">{lead} Стоимость: <strong>после осмотра</strong>.</p>
+<section class="section">{body_extra}<p class="intro" style="max-width:720px">{lead}{price_note}</p>
 <div class="actions" style="margin-top:28px"><a class="button" href="tel:{CFG['phone_tel']}">ЗАПИСАТЬСЯ</a>
 <a class="button dark" href="../contact.html">КОНТАКТЫ</a></div></section>
 {site_bottom('../')}{scripts('../')}</body></html>""",

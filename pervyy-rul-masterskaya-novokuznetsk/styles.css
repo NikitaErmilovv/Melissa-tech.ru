@@ -1338,7 +1338,14 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .pricelist-table th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;background:rgba(var(--accent-rgb),.06)}
 .pricelist-table tbody tr:last-child td{border-bottom:0}
 .pricelist-table td:last-child,.pricelist-table th:last-child{text-align:right;white-space:nowrap}
+.pricelist-table--matrix td:first-child,.pricelist-table--matrix th:first-child{text-align:left;min-width:min(240px,46vw)}
+.pricelist-table--matrix td:not(:first-child),.pricelist-table--matrix th:not(:first-child){text-align:center;white-space:nowrap}
+.pricelist-table--matrix td:last-child,.pricelist-table--matrix th:last-child{text-align:center}
+.pricelist-section-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:36px 0 12px}
+.pricelist-section-title:first-of-type{margin-top:8px}
 .pricelist-table td[colspan]{text-align:right}
+.service-photo-block{margin:0 0 28px;max-width:900px;border:1px solid rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
+.service-photo-block img{display:block;width:100%;height:auto;vertical-align:middle}
 .pricelist-notes{margin:20px 0 0;padding-left:1.2em;color:#9a9a94;font-size:13px;line-height:1.6}
 .pricelist-notes li{margin-bottom:6px}
 @media(max-width:640px){
