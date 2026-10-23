@@ -51,7 +51,18 @@ PRIME_ROOT = """:root{
 """
 
 BRAND = "ПРОФФКАР"
-HERO_IMG = "img/works/incoming/proffkar/hero-home.png"
+IMG_DIR = "img/works/incoming/proffkar"
+HERO_IMG = f"{IMG_DIR}/hero-home.png"
+PHOTOS = {
+    "kia": f"{IMG_DIR}/01-kia-quoris.png",
+    "paint": f"{IMG_DIR}/02-paint-bumper.png",
+    "motion": f"{IMG_DIR}/03-honda-motion.png",
+    "mini": f"{IMG_DIR}/04-mini-countryman.png",
+    "headlight": f"{IMG_DIR}/05-headlight.png",
+    "wheel": f"{IMG_DIR}/06-wheel-rim.png",
+    "mercedes": f"{IMG_DIR}/07-mercedes.png",
+    "macan": f"{IMG_DIR}/08-macan.png",
+}
 
 NAV_ROOT = f"""<nav class="site-nav">
   <div class="logo"><a href="index.html">{BRAND}</a></div>
@@ -311,6 +322,15 @@ def write_server() -> None:
         src,
         count=1,
     )
+    src = src.replace(
+        "                    if p.suffix.lower() in {\".jpg\", \".jpeg\", \".png\", \".webp\"}:\n"
+        "                        files.append(p.relative_to(ROOT).as_posix())",
+        "                    if p.suffix.lower() not in {\".jpg\", \".jpeg\", \".png\", \".webp\"}:\n"
+        "                        continue\n"
+        "                    if p.name.startswith(\"hero-\"):\n"
+        "                        continue\n"
+        "                    files.append(p.relative_to(ROOT).as_posix())",
+    )
     (DST / "server.py").write_text(src, encoding="utf-8")
 
 
@@ -376,11 +396,11 @@ def write_index() -> None:
     <p class="intro">Ремонт, ТО и детейлинг — финальная цена после осмотра.</p>
   </div>
   <div class="photo-strip photo-strip--services photo-strip--home">
-    <a class="photo" href="services/repair.html" style="background-image:url('img/works/incoming/proffkar/06-2gis.jpg')"><span class="tag">РЕМОНТ</span></a>
-    <a class="photo" href="services/service.html" style="background-image:url('img/works/incoming/proffkar/07-2gis.jpg')"><span class="tag">ТО</span></a>
-    <a class="photo" href="services/tires.html" style="background-image:url('img/works/incoming/proffkar/08-2gis.jpg')"><span class="tag">ШИНОМОНТАЖ</span></a>
-    <a class="photo photo-pos-polish" href="services/detailing.html" style="background-image:url('img/works/incoming/proffkar/09-2gis.jpg')"><span class="tag">ДЕТЕЙЛИНГ</span></a>
-    <a class="photo" href="services/diagnostics.html" style="background-image:url('img/works/incoming/proffkar/10-2gis.jpg')"><span class="tag">ДИАГНОСТИКА</span></a>
+    <a class="photo" href="services/repair.html" style="background-image:url('{PHOTOS["paint"]}')"><span class="tag">РЕМОНТ</span></a>
+    <a class="photo" href="services/service.html" style="background-image:url('{PHOTOS["kia"]}')"><span class="tag">ТО</span></a>
+    <a class="photo" href="services/tires.html" style="background-image:url('{PHOTOS["wheel"]}')"><span class="tag">ШИНОМОНТАЖ</span></a>
+    <a class="photo photo-pos-polish" href="services/detailing.html" style="background-image:url('{PHOTOS["headlight"]}')"><span class="tag">ДЕТЕЙЛИНГ</span></a>
+    <a class="photo" href="services/diagnostics.html" style="background-image:url('{PHOTOS["mini"]}')"><span class="tag">ДИАГНОСТИКА</span></a>
   </div>
 </section>
 
@@ -413,11 +433,11 @@ def write_index() -> None:
     <div><div class="kicker">02 / РАБОТЫ</div><h2>НАШИ<br><span class="accent">РАБОТЫ.</span></h2></div>
   </div>
   <div class="photo-strip photo-strip--services">
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/proffkar/01-2gis.jpg')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/proffkar/02-2gis.jpg')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/proffkar/03-2gis.jpg')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/proffkar/04-2gis.jpg')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/proffkar/05-2gis.jpg')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["kia"]}')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["paint"]}')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["mercedes"]}')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["macan"]}')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["motion"]}')"></a>
   </div>
 </section>
 

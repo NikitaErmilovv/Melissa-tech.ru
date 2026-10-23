@@ -1,3 +1,1 @@
-2GIS firm 70000001080387917
-https://2gis.ru/tyumen/firm/70000001080387917
-photos: 15
+Фото клиента: hero-home.png + 01–08 (PNG). Слайдеры до/после — отдельно в img/works/before-after/.
