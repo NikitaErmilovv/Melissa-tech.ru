@@ -152,7 +152,7 @@ SITES: list[dict] = [
         "reviews_count": "56",
         "stat_extra_b": "6+",
         "stat_extra_s": "ЛЕТ РАБОТЫ",
-        "theme": "proffkar",
+        "theme": "default",
         "auto_sales": False,
         "hero_lead": "Автотехсервис на Камчатской: ремонт и ТО, шиномонтаж, детейлинг и комплексный уход за автомобилем.",
         "about": "«Проффкар» — автотехсервис в Ленинском округе Тюмени. Ремонт, обслуживание, шины и детейлинг в одном месте.",
@@ -540,15 +540,36 @@ def write_cars(site: dict, dest: Path) -> None:
     (dest / "cars.html").write_text(html, encoding="utf-8")
 
 
+def _accent_vars(theme: str) -> dict[str, str] | None:
+    if theme == "turquoise":
+        return {
+            "--accent": "#0fb5b2",
+            "--accent-soft": "rgba(15,181,178,.42)",
+            "--accent-hover": "#3cc9c6",
+            "--accent-deep": "#0a8f8c",
+            "--accent-ink": "#0a0a0a",
+            "--accent-rgb": "15,181,178",
+        }
+    if theme == "prime38":
+        return {
+            "--accent": "#d4af37",
+            "--accent-soft": "rgba(212,175,55,.35)",
+            "--accent-hover": "#e8c85a",
+            "--accent-deep": "#a88b28",
+            "--accent-ink": "#0a0a0a",
+            "--accent-rgb": "212,175,55",
+        }
+    return None
+
+
 def apply_theme(dest: Path, site: dict) -> None:
     css = (dest / "styles.css").read_text(encoding="utf-8")
+    vars_ = _accent_vars(site["theme"])
+    if vars_:
+        block = ":root{\n" + "\n".join(f"  {k}:{v};" for k, v in vars_.items()) + "\n}"
+        css = re.sub(r":root\{[^}]+\}", block, css, count=1)
+    css = re.sub(r"\n:root\{--accent:[^}]+\}\n", "\n", css)
     extra = ""
-    if site["theme"] == "turquoise":
-        extra = THEME_TURQUOISE_ACCENT
-    elif site["theme"] == "prime38":
-        extra = THEME_PRIME38
-    elif site["theme"] == "proffkar":
-        extra = THEME_PROFFKAR
     auto_css = """
 .auto-sales-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:960px}
 .auto-card{padding:24px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background:rgba(255,255,255,.03)}

@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#fbeda3;
-  --accent-soft:rgba(251,237,163,.42);
-  --accent-hover:#fff1bc;
-  --accent-deep:#d4c27a;
+  --accent:#0fb5b2;
+  --accent-soft:rgba(15,181,178,.42);
+  --accent-hover:#3cc9c6;
+  --accent-deep:#0a8f8c;
   --accent-ink:#0a0a0a;
-  --accent-rgb:251,237,163;
+  --accent-rgb:15,181,178;
 }
 
 *{box-sizing:border-box}
@@ -1287,7 +1287,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(max-width:800px){.subpage-hero--service{min-height:auto}}
 
 
-:root{--accent:#0fb5b2;--accent-soft:rgba(15,181,178,.42);--accent-hover:#3cc9c6;--accent-deep:#0a8f8c;--accent-ink:#0a0a0a;--accent-rgb:15,181,178}
 
 .auto-sales-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:960px}
 .auto-card{padding:24px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background:rgba(255,255,255,.03)}
