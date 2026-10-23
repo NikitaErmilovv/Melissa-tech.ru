@@ -179,6 +179,9 @@ def rebuild() -> None:
 
 
 def sync_styles() -> None:
+    css_src = (SRC / "styles.css").read_text(encoding="utf-8")
+    heroimg_m = re.search(r"\.heroimg\{[^}]+\}", css_src)
+    heroimg_rule = heroimg_m.group(0) if heroimg_m else ""
     css = (DST / "styles.css").read_text(encoding="utf-8")
     css = re.sub(
         r":root\{[^}]+\}",
@@ -187,6 +190,8 @@ def sync_styles() -> None:
         count=1,
     )
     css = css.replace("incoming/prime38/", f"incoming/{_CFG['photo_dir']}/")
+    if heroimg_rule:
+        css = re.sub(r"\.heroimg\{[^}]+\}", heroimg_rule, css, count=1)
     css = css.replace(
         ".site-nav .logo .logo-word{display:none}",
         ".site-nav .logo .logo-word{color:#fff}",
@@ -261,26 +266,36 @@ def service_rows() -> str:
     )
 
 
-def prime_hero_html() -> str:
-    text = (SRC / "index.html").read_text(encoding="utf-8")
-    m = re.search(r"\n<section class=\"hero hero--sdc\">.*?</section>", text, re.DOTALL)
-    if not m:
-        raise SystemExit("Prime.38 hero block not found in index.html")
-    return m.group(0) + "\n"
-
-
-def sync_prime_hero_assets() -> None:
-    src_dir = SRC / "img/works/incoming/prime38"
-    dst_dir = DST / "img/works/incoming/prime38"
-    dst_dir.mkdir(parents=True, exist_ok=True)
-    hero_img = src_dir / "22-user-bmw-x6.png"
-    if hero_img.is_file():
-        shutil.copy2(hero_img, dst_dir / hero_img.name)
+def pervyy_hero_html() -> str:
+    return f"""
+<section class="hero hero--sdc">
+  <div class="heroimg" style="background-image:url('{photo('01')}')"></div>
+  <div class="hero-panel">
+    <div class="hero-heading">
+      <div class="eyebrow hero-eyebrow-city">{CFG['city'].upper()}</div>
+      <h1>АВТОКОМПЛЕКС<br>ПЕРВЫЙ<br><span class="accent">РУЛЬ</span></h1>
+    </div>
+    <div class="hero-content">
+      <p>Автокомплекс на Сибиряков-Гвардейцев: ремонт и диагностика, шиномонтаж, электрика и продажа автомобилей.</p>
+      <div class="actions">
+        <a class="button" href="tel:{CFG['phone_tel']}">ЗАПИСАТЬСЯ</a>
+        <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
+      </div>
+    </div>
+  </div>
+  <div class="stats stats--hero">
+    <div class="stat"><b>{CFG['years']}</b><span>ЛЕТ НА РЫНКЕ</span></div>
+    <div class="stat"><b id="stat-reviews">{CFG['reviews']}</b><span>ОЦЕНКИ · 2ГИС</span></div>
+    <div class="stat"><b id="stat-rating">{CFG['rating']}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
+    <div class="stat"><b id="stat-reviews-foot">{CFG['reviews']}</b><span>ОТЗЫВОВ</span></div>
+  </div>
+</section>
+"""
 
 
 def write_index() -> None:
     v = CFG["css_v"]
-    hero = prime_hero_html()
+    hero = pervyy_hero_html()
     (DST / "index.html").write_text(
         f"""<!doctype html>
 <html lang="ru">
