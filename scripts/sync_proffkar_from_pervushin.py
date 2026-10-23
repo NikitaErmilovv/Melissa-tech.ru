@@ -17,7 +17,7 @@ PRIME_STATS = ROOT / "prime38-detailing-angarsk/stats.js"
 
 _CFG_BASE = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 CFG = {
-    "css_v": "118",
+    "css_v": "119",
     "phone_tel": _CFG_BASE["phone_tel"],
     "phone_display": _CFG_BASE["phone_display"],
     "wa": _CFG_BASE["wa"],
@@ -286,6 +286,30 @@ def sync_styles() -> None:
         css,
         count=1,
     )
+    if ".hero--sdc > .stats.stats--hero" not in css:
+        css = css.replace(
+            ".hero--sdc{\n  min-height:760px;padding:82px 6vw 70px;align-items:stretch;\n}",
+            ".hero--sdc{\n  min-height:880px;padding:82px 6vw 0;align-items:stretch;flex-direction:column;\n}",
+        )
+        css = re.sub(
+            r"\.hero--sdc \.heroimg\{[^}]+\}",
+            ".hero--sdc .heroimg{\n  top:82px;height:calc(100% - 82px);min-height:798px;width:65%;opacity:.85;\n  background-position:62% 38%;\n}",
+            css,
+            count=1,
+        )
+        css = css.replace(
+            "flex:1;min-height:calc(760px - 152px);max-width:720px;",
+            "flex:1;min-height:0;max-width:720px;",
+        )
+        css = css.replace(
+            ".hero--sdc .hero-content{max-width:720px;margin-top:auto}\n#works .photo:after{display:none}",
+            ".hero--sdc .hero-content{max-width:720px;margin-top:auto}\n"
+            ".hero--sdc > .stats.stats--hero{\n"
+            "  position:relative;z-index:1;flex-shrink:0;\n"
+            "  margin:88px 0 0;width:100%;align-self:stretch;\n"
+            "  background:transparent;\n"
+            "}\n#works .photo:after{display:none}",
+        )
     css = re.sub(
         r"\n\.photo-strip--home\.photo-strip--six\{[^}]+\}\n"
         r"@media\(max-width:900px\)\{\.photo-strip--home\.photo-strip--six\{[^}]+\}\}\n?",
@@ -381,14 +405,13 @@ def write_index() -> None:
       </div>
     </div>
   </div>
+  <div class="stats stats--hero">
+    <div class="stat"><b id="stat-rating">{CFG['rating']}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
+    <div class="stat"><b id="stat-reviews">{CFG['reviews']}</b><span>ОЦЕНОК · 2ГИС</span></div>
+    <div class="stat"><b>{CFG['years']}</b><span>{CFG['years_label']}</span></div>
+    <div class="stat"><b>2ГИС</b><span>ОТЗЫВЫ КЛИЕНТОВ</span></div>
+  </div>
 </section>
-
-<div class="stats">
-  <div class="stat"><b id="stat-rating">{CFG['rating']}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
-  <div class="stat"><b id="stat-reviews">{CFG['reviews']}</b><span>ОЦЕНОК · 2ГИС</span></div>
-  <div class="stat"><b>{CFG['years']}</b><span>{CFG['years_label']}</span></div>
-  <div class="stat"><b>2ГИС</b><span>ОТЗЫВЫ КЛИЕНТОВ</span></div>
-</div>
 
 <section class="section" id="services">
   <div class="section-head">

@@ -1266,15 +1266,20 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--studio .hero-brand-word{font-size:clamp(42px,6vw,72px);line-height:.95;letter-spacing:-.04em}
 .hero--studio .heroimg{opacity:.75}
 .hero--sdc{
-  min-height:760px;padding:82px 6vw 70px;align-items:stretch;
+  min-height:880px;padding:82px 6vw 0;align-items:stretch;flex-direction:column;
 }
 .hero--sdc .heroimg{
-  height:678px;min-height:0;width:65%;opacity:.85;
+  top:82px;height:calc(100% - 82px);min-height:798px;width:65%;opacity:.85;
   background-position:62% 38%;
 }
 .hero--sdc .hero-panel{
   position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;
-  flex:1;min-height:calc(760px - 152px);max-width:720px;
+  flex:1;min-height:0;max-width:720px;
+}
+.hero--sdc > .stats.stats--hero{
+  position:relative;z-index:1;flex-shrink:0;
+  margin:88px 0 0;width:100%;align-self:stretch;
+  background:transparent;
 }
 .hero--sdc .hero-heading{padding-top:4px}
 .hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px)}
