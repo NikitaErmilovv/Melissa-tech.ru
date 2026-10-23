@@ -555,6 +555,9 @@ html.media-lightbox-open{overflow:hidden}
 .subpage-hero h1.page-title-solid{font-size:clamp(34px,6.4vw,84px);letter-spacing:-.045em}
 .subpage-hero h1 .accent{color:var(--accent)}
 .subpage-hero p{max-width:550px;color:#888;line-height:1.7;margin-top:20px}
+.subpage-hero .subpage-hero-lead{max-width:640px;font-size:16px;line-height:1.75;color:#9a9a94}
+.subpage-hero .subpage-hero-meta{margin-top:22px;font-size:14px}
+.subpage-hero .subpage-hero-meta a{color:var(--accent)}
 
 .service-list{margin-top:55px;border-top:1px solid rgba(255,255,255,.08)}
 .service-row{display:grid;grid-template-columns:80px 1fr 130px;gap:20px;padding:30px 0;border-bottom:1px solid rgba(255,255,255,.08);align-items:start}
