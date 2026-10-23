@@ -1,0 +1,5 @@
+site=pervyy-rul-masterskaya-novokuznetsk
+brand=Первый руль
+prod=https://melissa-tech.ru/pervyy-rul-masterskaya-novokuznetsk/
+deploy=git-push-timeweb-hook
+deploy-trigger=four-local-studios-mid-deploy-20261024

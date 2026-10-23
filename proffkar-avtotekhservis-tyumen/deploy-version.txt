@@ -1,0 +1,5 @@
+site=proffkar-avtotekhservis-tyumen
+brand=Проффкар
+prod=https://melissa-tech.ru/proffkar-avtotekhservis-tyumen/
+deploy=git-push-timeweb-hook
+deploy-trigger=four-local-studios-mid-deploy-20261024

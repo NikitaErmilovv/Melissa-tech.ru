@@ -1,0 +1,5 @@
+site=prime38-detailing-angarsk
+brand=Прайм.38
+prod=https://melissa-tech.ru/prime38-detailing-angarsk/
+deploy=git-push-timeweb-hook
+deploy-trigger=four-local-studios-mid-deploy-20261024
