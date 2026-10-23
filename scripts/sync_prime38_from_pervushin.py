@@ -195,6 +195,10 @@ def sync_styles() -> None:
         ".site-nav .logo .logo-word{display:none}",
         ".site-nav .logo .logo-word{color:#fff}",
     )
+    css = css.replace(
+        "background:url('img/works/hero-raptor.jpg?v=raptor')",
+        "background:url('img/works/incoming/prime38/01-2gis.jpg')",
+    )
     (DST / "styles.css").write_text(css, encoding="utf-8")
 
 
@@ -247,12 +251,12 @@ def write_index() -> None:
     <p class="intro">Работаем по записи — стоимость после осмотра автомобиля.</p>
   </div>
   <div class="photo-strip photo-strip--services photo-strip--home">
-    <a class="photo" href="services/wash.html" style="background-image:url('img/works/home/wash.jpg')"><span class="tag">ДЕТЕЙЛИНГ-МОЙКА</span></a>
-    <a class="photo photo-pos-polish" href="services/polish.html" style="background-image:url('img/works/home/polish.jpg')"><span class="tag">ПОЛИРОВКА</span></a>
+    <a class="photo" href="services/wash.html" style="background-image:url('img/works/incoming/prime38/06-2gis.jpg')"><span class="tag">ДЕТЕЙЛИНГ-МОЙКА</span></a>
+    <a class="photo photo-pos-polish" href="services/polish.html" style="background-image:url('img/works/incoming/prime38/07-2gis.jpg')"><span class="tag">ПОЛИРОВКА</span></a>
     <a class="photo" href="services/anticor.html" style="background-image:url('img/works/incoming/prime38/08-2gis.jpg')"><span class="tag">АНТИКОР</span></a>
-    <a class="photo" href="services/ppf.html" style="background-image:url('img/works/home/ppf.jpg')"><span class="tag">ЗАЩИТНАЯ ПЛЁНКА</span></a>
+    <a class="photo" href="services/ppf.html" style="background-image:url('img/works/incoming/prime38/09-2gis.jpg')"><span class="tag">ЗАЩИТНАЯ ПЛЁНКА</span></a>
     <a class="photo" href="services/tint.html" style="background-image:url('img/works/incoming/prime38/10-2gis.jpg')"><span class="tag">ТОНИРОВКА</span></a>
-    <a class="photo" href="services/interior.html" style="background-image:url('img/works/home/interior.jpg')"><span class="tag">ХИМЧИСТКА</span></a>
+    <a class="photo" href="services/interior.html" style="background-image:url('img/works/incoming/prime38/11-2gis.jpg')"><span class="tag">ХИМЧИСТКА</span></a>
   </div>
 </section>
 
