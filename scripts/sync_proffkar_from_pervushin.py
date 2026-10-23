@@ -69,7 +69,7 @@ HOME_SERVICE_TILES = [
     ("polish.html", "ПОЛИРОВКА", "kia", " photo-pos-polish"),
     ("repair.html", "РЕМОНТ", "macan", ""),
     ("diagnostics.html", "ДИАГНОСТИКА", "headlight", ""),
-    ("tint.html", "ТОНИРОВКА", "wheel", ""),
+    ("tint.html", "ТОНИРОВКА", "mini", ""),
 ]
 HOME_WORKS_PHOTOS = ["kia", "mercedes", "macan", "motion", "paint"]
 
