@@ -252,7 +252,7 @@ def write_index() -> None:
 
 <section class="section" id="services">
   <div class="section-head">
-    <div><div class="kicker">01 / УСЛУГИ</div><h2>ДЕТЕЙЛИНГ<br><span class="accent">И ЗАЩИТА. КУЗОВА</span></h2></div>
+    <div><div class="kicker">01 / УСЛУГИ</div><h2>ДЕТЕЙЛИНГ<br><span class="accent">И ЗАЩИТА КУЗОВА</span></h2></div>
     <p class="intro">Работаем по записи — стоимость после осмотра автомобиля.</p>
   </div>
   <div class="photo-strip photo-strip--services photo-strip--home">
