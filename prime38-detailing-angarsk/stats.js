@@ -1,6 +1,7 @@
 (function () {
   var ratingEl = document.getElementById('stat-rating');
   var reviewsEl = document.getElementById('stat-reviews');
+  var reviewsFootEl = document.getElementById('stat-reviews-foot');
   if (!ratingEl && !reviewsEl) return;
 
   function formatRating(value) {
@@ -19,9 +20,13 @@
         var formatted = formatRating(data && data.rating);
         if (formatted) ratingEl.textContent = formatted;
       }
-      if (reviewsEl && data && data.reviews != null) {
+      if (data && data.reviews != null) {
         var count = Number(data.reviews);
-        if (isFinite(count) && count > 0) reviewsEl.textContent = String(Math.round(count));
+        if (isFinite(count) && count > 0) {
+          var countStr = String(Math.round(count));
+          if (reviewsEl) reviewsEl.textContent = countStr;
+          if (reviewsFootEl) reviewsFootEl.textContent = countStr;
+        }
       }
     })
     .catch(function () {});

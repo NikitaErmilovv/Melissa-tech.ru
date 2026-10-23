@@ -23,7 +23,8 @@ body.page-sub > nav.site-nav{
 }
 body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .logo{font-size:18px;font-weight:900;letter-spacing:-.04em;white-space:nowrap}
-.logo a{display:inline-flex;align-items:baseline;gap:10px}
+.logo a{display:inline-flex;align-items:baseline;gap:0}
+.site-nav .logo a{gap:0}
 .logo-mark{color:var(--accent);font-weight:900;letter-spacing:-.04em;font-size:1em;line-height:1}
 .logo-word{
   color:#fff;font-weight:900;font-size:1em;letter-spacing:-.04em;
@@ -1269,15 +1270,19 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--studio .hero-brand-word{font-size:clamp(42px,6vw,72px);line-height:.95;letter-spacing:-.04em}
 .hero--studio .heroimg{opacity:.75}
 .hero--sdc{
-  min-height:760px;padding:82px 6vw 70px;align-items:stretch;
+  min-height:880px;padding:82px 6vw 0;align-items:stretch;flex-direction:column;
 }
 .hero--sdc .heroimg{
-  height:678px;min-height:0;width:65%;opacity:.85;
+  top:82px;height:calc(100% - 82px);min-height:798px;width:65%;opacity:.85;
   background-position:58% 42%;
 }
 .hero--sdc .hero-panel{
   position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;
-  flex:1;min-height:calc(760px - 152px);max-width:720px;
+  flex:1;min-height:0;max-width:720px;
+}
+.hero--sdc > .stats.stats--hero{
+  position:relative;z-index:1;flex-shrink:0;
+  margin:88px 0 0;width:100%;align-self:stretch;
 }
 .hero--sdc .hero-heading{padding-top:4px}
 .hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px)}

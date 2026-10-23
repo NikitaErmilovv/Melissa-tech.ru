@@ -45,7 +45,7 @@ PRIME_ROOT = """:root{
 """
 
 NAV_ROOT = """<nav class="site-nav">
-  <div class="logo"><a href="index.html"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></a></div>
+  <div class="logo"><a href="index.html"><span class="logo-mark">ПРАЙМ.</span><span class="logo-word">38</span></a></div>
   <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О НАС</a><a href="contact.html">КОНТАКТЫ</a></div>
   <div class="nav-actions">
     <a class="phone" href="tel:+79500913882">+7 (950) 091-38-82</a>
@@ -94,7 +94,7 @@ def site_bottom(prefix: str = "") -> str:
           <img class="address-map-img address-map-img--desktop" src="https://static.maps.2gis.com/1.0?s=880x450&amp;c={CFG['map_c']}&amp;z=16&amp;pt={CFG['map_c']}~k:p" alt="">
           <img class="address-map-img address-map-img--mobile" src="https://static.maps.2gis.com/1.0?s=720x720&amp;c={CFG['map_c']}&amp;z=16&amp;pt={CFG['map_c']}~k:p" alt="{CFG['map_alt']}">
           <div class="address-map-pin-label" aria-hidden="true">
-            <span class="address-map-pin-label-text"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></span>
+            <span class="address-map-pin-label-text"><span class="logo-mark">ПРАЙМ.</span><span class="logo-word">38</span></span>
           </div>
         </a>
         <div class="address-map-decor"></div>
@@ -103,7 +103,7 @@ def site_bottom(prefix: str = "") -> str:
         <div class="address-map-details">
           <div class="address-map-detail">
             <span class="address-map-detail-label">СТУДИЯ</span>
-            <p class="address-map-brand"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></p>
+            <p class="address-map-brand"><span class="logo-mark">ПРАЙМ.</span><span class="logo-word">38</span></p>
             <p class="address-map-muted">{CFG['address']}</p>
             <p class="address-map-muted-sm">{CFG['schedule']}</p>
           </div>
@@ -124,7 +124,7 @@ def site_bottom(prefix: str = "") -> str:
   <div class="footer-grid footer-desktop-only">
     <div class="footer-col footer-col--brand-hours">
       <div class="footer-brand-block">
-        <div class="footer-logo"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></div>
+        <div class="footer-logo"><span class="logo-mark">ПРАЙМ.</span><span class="logo-word">38</span></div>
         <div class="footer-social"><a href="https://wa.me/{CFG['wa']}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://t.me/{CFG['tg']}" target="_blank" rel="noopener noreferrer">Telegram</a><a href="{CFG['firm_url']}" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
       </div>
       <div class="footer-hours-block">
@@ -161,7 +161,7 @@ def site_bottom(prefix: str = "") -> str:
       </div>
       <div class="footer-brand-divider" aria-hidden="true"></div>
       <div class="footer-brand-block">
-        <div class="footer-logo"><span class="logo-mark">ПРАЙМ</span><span class="logo-word">38</span></div>
+        <div class="footer-logo"><span class="logo-mark">ПРАЙМ.</span><span class="logo-word">38</span></div>
         <div class="footer-social"><a href="https://wa.me/{CFG['wa']}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://t.me/{CFG['tg']}" target="_blank" rel="noopener noreferrer">Telegram</a><a href="{CFG['firm_url']}" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
       </div>
       <div class="footer-hours-block">
@@ -242,14 +242,13 @@ def write_index() -> None:
       </div>
     </div>
   </div>
+  <div class="stats stats--hero">
+    <div class="stat"><b>{CFG['years']}</b><span>ЛЕТ НА РЫНКЕ</span></div>
+    <div class="stat"><b id="stat-reviews">{CFG['reviews']}</b><span>ОЦЕНКИ · 2ГИС</span></div>
+    <div class="stat"><b id="stat-rating">{CFG['rating']}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
+    <div class="stat"><b id="stat-reviews-foot">{CFG['reviews']}</b><span>ОТЗЫВОВ</span></div>
+  </div>
 </section>
-
-<div class="stats">
-  <div class="stat"><b id="stat-rating">{CFG['rating']}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
-  <div class="stat"><b>{CFG['reviews']}</b><span>ОЦЕНОК · 2ГИС</span></div>
-  <div class="stat"><b>{CFG['years']}</b><span>ЛЕТ НА РЫНКЕ</span></div>
-  <div class="stat"><b>2ГИС</b><span>ОТЗЫВЫ КЛИЕНТОВ</span></div>
-</div>
 
 <section class="section" id="services">
   <div class="section-head">
