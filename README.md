@@ -16,6 +16,10 @@
 | `klyaksa-tuning-noyabrsk/` | Клякса Tuning studio, Ноябрьск (локальный прототип) |
 | `mir-tonirovki-tobolsk/` | Мир тонировки, Тобольск (локальный прототип) |
 | `imperiya-avtokompleks-chelyabinsk/` | Империя автокомплекс, Челябинск (локальный прототип) |
+| `pervushin-avtokompleks-ekaterinburg/` | Первушин автокомплекс, Екатеринбург (локальный прототип) |
+| `pervyy-rul-masterskaya-novokuznetsk/` | Первый руль, Новокузнецк (локальный прототип) |
+| `prime38-detailing-angarsk/` | Прайм.38 детейлинг, Ангарск (локальный прототип) |
+| `proffkar-avtotekhservis-tyumen/` | Проффкар автотехсервис, Тюмень (локальный прототип) |
 | `altay-toner/` | Алтай тонер, Новоалтайск — детейлинг и тонировка LLumar (HTML/CSS/JS) |
 | `brooklyn-detailing/` | Бруклин, Магнитогорск — студия детейлинга, вариант SDC (HTML/CSS/JS) |
 | `ds7/` | DS7, Нижний Новгород — детейлинг-центр (HTML/CSS/JS) |
