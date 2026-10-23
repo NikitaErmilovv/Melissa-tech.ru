@@ -31,7 +31,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 }
 .site-nav .logo span{color:inherit}
 .site-nav .logo .logo-mark{color:var(--accent)}
-.site-nav .logo .logo-word{color:#fff}
+.site-nav .logo .logo-word{display:none}
 .links{display:flex;gap:34px;font-size:13px;color:#bdbdb7}
 .links a{transition:color .2s}
 .links a:hover{color:var(--accent)}
