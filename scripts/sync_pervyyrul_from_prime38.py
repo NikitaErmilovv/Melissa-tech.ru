@@ -500,11 +500,27 @@ def _write_contact(v: str) -> None:
     (DST / "contact.html").write_text(
         f"""<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Контакты — Первый руль</title><link rel="stylesheet" href="styles.css?v={v}"></head><body class="page-sub">{NAV}
-<section class="subpage-hero"><div class="kicker">КОНТАКТЫ</div><h1>СВЯЗАТЬСЯ<br><span class="accent">С НАМИ</span></h1></section>
-<section class="section contact-box"><h2>АВТОКОМПЛЕКС<br>ПЕРВЫЙ РУЛЬ</h2>
-<p>{CFG['address']}</p><p>{CFG['schedule']}</p>
-<p><a href="tel:{CFG['phone_tel']}">{CFG['phone_display']}</a></p>
-<p><a href="https://wa.me/{CFG['wa']}">WhatsApp</a> · <a href="https://t.me/{CFG['tg']}">Telegram</a> · <a href="{CFG['firm_url']}">2ГИС</a></p></section>
+<section class="subpage-hero"><div class="kicker">04 / КОНТАКТЫ</div><h1>СВЯЗАТЬСЯ<br><span class="accent">С НАМИ</span></h1>
+<p>{CFG['city']} · {CFG['schedule']}</p></section>
+<section class="section">
+  <div class="contact-panel">
+    <div class="contact-panel-card">
+      <div class="kicker">АДРЕС</div>
+      <h2>ПЕРВЫЙ<br><span class="accent">РУЛЬ</span></h2>
+      <p class="contact-panel-lead">{CFG['address']}</p>
+      <p>{CFG['schedule']}</p>
+    </div>
+    <div class="contact-panel-card">
+      <div class="kicker">СВЯЗЬ</div>
+      <a class="contact-phone" href="tel:{CFG['phone_tel']}">{CFG['phone_display']}</a>
+      <div class="contact-chips">
+        <a href="https://wa.me/{CFG['wa']}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href="https://t.me/{CFG['tg']}" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="{CFG['firm_url']}" target="_blank" rel="noopener noreferrer">2ГИС</a>
+      </div>
+    </div>
+  </div>
+</section>
 {site_bottom()}{scripts()}</body></html>""",
         encoding="utf-8",
     )
@@ -528,14 +544,14 @@ def _write_cars(v: str) -> None:
 <title>Авто в продаже — Первый руль</title><link rel="stylesheet" href="styles.css?v={v}"></head><body class="page-sub">{NAV}
 <section class="subpage-hero"><div class="kicker">АВТОМОБИЛИ</div><h1>АВТО<br><span class="accent">В ПРОДАЖЕ.</span></h1>
 <p>Актуальный список — по телефону и в карточке 2ГИС.</p></section>
-<section class="section"><div class="auto-sales-grid">
-<article class="auto-card"><div class="auto-card-photo" style="background-image:url('{photo('01')}')"></div>
-<h3>Скоро в каталоге</h3><p>Уточняйте наличие и комплектацию по телефону.</p>
-<a class="button" href="tel:{CFG['phone_tel']}">УЗНАТЬ НАЛИЧИЕ</a></article>
-<article class="auto-card auto-card--muted"><h3>2ГИС и звонок</h3>
-<p>В карточке компании публикуют объявления о продаже и спецпредложения сервиса.</p>
-<a class="button dark" href="{CFG['firm_url']}" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ 2ГИС</a></article>
-</div></section>{scripts()}<script src="nav.js"></script></body></html>""",
+<section class="section">
+  <article class="auto-card auto-card--muted auto-card--placeholder">
+    <h3>Скоро в каталоге</h3>
+    <p>Скоро здесь появятся автомобили, которые есть в наличии.</p>
+    <a class="button" href="tel:{CFG['phone_tel']}">ПОЗВОНИТЬ</a>
+  </article>
+</section>
+{site_bottom()}{scripts()}</body></html>""",
         encoding="utf-8",
     )
 
