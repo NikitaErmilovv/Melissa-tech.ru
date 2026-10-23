@@ -17,7 +17,7 @@ PRIME_STATS = ROOT / "prime38-detailing-angarsk/stats.js"
 
 _CFG_BASE = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 CFG = {
-    "css_v": "120",
+    "css_v": "121",
     "phone_tel": _CFG_BASE["phone_tel"],
     "phone_display": _CFG_BASE["phone_display"],
     "wa": _CFG_BASE["wa"],
