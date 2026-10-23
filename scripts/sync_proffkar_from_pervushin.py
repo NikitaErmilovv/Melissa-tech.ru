@@ -67,9 +67,9 @@ PHOTOS = {
 HOME_SERVICE_TILES = [
     ("paint.html", "ПОКРАСКА", "paint", ""),
     ("polish.html", "ПОЛИРОВКА", "kia", " photo-pos-polish"),
-    ("repair.html", "РЕМОНТ", "wheel", ""),
+    ("repair.html", "РЕМОНТ", "macan", ""),
     ("diagnostics.html", "ДИАГНОСТИКА", "headlight", ""),
-    ("tint.html", "ТОНИРОВКА", "macan", ""),
+    ("tint.html", "ТОНИРОВКА", "wheel", ""),
 ]
 HOME_WORKS_PHOTOS = ["kia", "mercedes", "macan", "motion", "paint"]
 
