@@ -17,7 +17,7 @@ PRIME_STATS = ROOT / "prime38-detailing-angarsk/stats.js"
 
 _CFG_BASE = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 CFG = {
-    "css_v": "117",
+    "css_v": "118",
     "phone_tel": _CFG_BASE["phone_tel"],
     "phone_display": _CFG_BASE["phone_display"],
     "wa": _CFG_BASE["wa"],
@@ -51,6 +51,7 @@ PRIME_ROOT = """:root{
 """
 
 BRAND = "ПРОФФКАР"
+HERO_IMG = "img/works/incoming/proffkar/hero-home.png"
 
 NAV_ROOT = f"""<nav class="site-nav">
   <div class="logo"><a href="index.html">{BRAND}</a></div>
@@ -256,11 +257,17 @@ def sync_styles() -> None:
     css = css.replace(".address-map-pin-label-text span{color:var(--accent)}", "")
     css = css.replace(
         "background:url('img/works/hero-raptor.jpg?v=raptor')",
-        "background:url('img/works/incoming/proffkar/01-2gis.jpg')",
+        f"background:url('{HERO_IMG}') 62% 38% / cover no-repeat",
     )
     css = css.replace(
         "background-image:url('img/works/hero-home.jpg?v=1')",
-        "background-image:url('img/works/incoming/proffkar/01-2gis.jpg')",
+        f"background-image:url('{HERO_IMG}')",
+    )
+    css = re.sub(
+        r"(\.hero--sdc \.heroimg\{[^}]*?)background-position:[^;]+;",
+        r"\1background-position:62% 38%;",
+        css,
+        count=1,
     )
     css = re.sub(
         r"(\.hero--sdc \.hero-heading h1\{[^}]*?)line-height:\.87;",
@@ -340,7 +347,7 @@ def write_index() -> None:
 {NAV_ROOT}
 
 <section class="hero hero--sdc">
-  <div class="heroimg" style="background-image:url('img/works/incoming/proffkar/01-2gis.jpg')"></div>
+  <div class="heroimg" style="background-image:url('{HERO_IMG}')"></div>
   <div class="hero-panel">
     <div class="hero-heading">
       <div class="eyebrow hero-eyebrow-city">ТЮМЕНЬ</div>
