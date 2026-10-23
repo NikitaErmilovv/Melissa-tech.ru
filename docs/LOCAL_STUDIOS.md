@@ -11,7 +11,7 @@
 - **Первушин** — `pervushin-avtokompleks-ekaterinburg/` — http://127.0.0.1:8124/ · **Авто** (`cars.html`)
 - **Первый руль** — `pervyy-rul-masterskaya-novokuznetsk/` — http://127.0.0.1:8125/ · бирюзовый акцент · **Авто** (`cars.html`)
 - **Прайм.38** — `prime38-detailing-angarsk/` — http://127.0.0.1:8126/ · оболочка как у Первушина (без блока «оборудование», 2 слайдера до/после) · `python scripts/sync_prime38_from_pervushin.py`
-- **Проффкар** — `proffkar-avtotekhservis-tyumen/` — http://127.0.0.1:8127/
+- **Проффкар** — `proffkar-avtotekhservis-tyumen/` — http://127.0.0.1:8127/ · оболочка как у Первушина · `python scripts/sync_proffkar_from_pervushin.py`
 
 Пересобрать четыре сайта из шаблона: `python scripts/scaffold_four_local_studios.py`
 
