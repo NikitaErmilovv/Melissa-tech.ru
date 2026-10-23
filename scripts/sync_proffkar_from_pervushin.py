@@ -1,33 +1,38 @@
 #!/usr/bin/env python3
-"""Apply Pervushin D2 shell to Проффкар (autotech), proffkar/2GIS photos, 2 BA sliders."""
+"""Rebuild Проффкар: полная копия Первушина + 2ГИС Проффкар (без оборудования, 2 слайдера)."""
 
 from __future__ import annotations
 
+import json
 import re
 import shutil
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "pervushin-avtokompleks-ekaterinburg"
 DST = ROOT / "proffkar-avtotekhservis-tyumen"
+DATA_JSON = ROOT / "scripts/studio-data/proffkar-2gis.json"
+PRIME_STATS = ROOT / "prime38-detailing-angarsk/stats.js"
 
+_CFG_BASE = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 CFG = {
-    "css_v": "114",
-    "phone_tel": "+79324791212",
-    "phone_display": "+7 (932) 479-12-12",
-    "wa": "79324791212",
-    "tg": "+79324791212",
-    "address": "г. Тюмень, ул. Камчатская, 192/3",
-    "schedule": "Ежедневно · 10:00–20:00",
-    "city": "Тюмень",
-    "firm_url": "https://2gis.ru/tyumen/firm/70000001080387917",
-    "map_c": "57.155096,65.674135",
-    "map_alt": "Карта 2ГИС — г. Тюмень, ул. Камчатская, 192/3",
-    "rating": "5.0",
-    "reviews": "49",
+    "css_v": "115",
+    "phone_tel": _CFG_BASE["phone_tel"],
+    "phone_display": _CFG_BASE["phone_display"],
+    "wa": _CFG_BASE["wa"],
+    "tg": _CFG_BASE["tg"],
+    "address": _CFG_BASE["address"],
+    "schedule": _CFG_BASE["schedule"],
+    "city": _CFG_BASE["city"],
+    "firm_url": _CFG_BASE["firm_url"],
+    "map_c": _CFG_BASE["map_c"],
+    "map_alt": f"Карта 2ГИС — {_CFG_BASE['address']}",
+    "rating": _CFG_BASE["rating"],
+    "reviews": _CFG_BASE["reviews_count"],
     "years": "6+",
     "years_label": "ЛЕТ РАБОТЫ",
-    "photo_dir": "proffkar",
+    "photo_dir": _CFG_BASE["photo_dir"],
     "about_lead": (
         "«Проффкар» — автотехсервис на Камчатской в Ленинском округе Тюмени. "
         "Ремонт и техническое обслуживание, шиномонтаж, диагностика, детейлинг и мойка — "
@@ -189,19 +194,58 @@ def scripts_block(root: bool = True) -> str:
 """
 
 
-def _hero_sdc_block_from_prime38() -> str:
-    prime_css = (ROOT / "prime38-detailing-angarsk" / "styles.css").read_text(encoding="utf-8")
-    m = re.search(
-        r"\.hero--sdc\{.*?\.hero--sdc \.hero-heading h1\{[^}]+\}",
-        prime_css,
-        flags=re.S,
+def rebuild_from_pervushin_copy() -> None:
+    incoming = DST / "img/works/incoming/proffkar"
+    tmp = ROOT / ".tmp-proffkar-incoming-backup"
+    if incoming.is_dir():
+        if tmp.exists():
+            shutil.rmtree(tmp)
+        shutil.copytree(incoming, tmp)
+    if DST.exists():
+        shutil.rmtree(DST)
+    shutil.copytree(
+        SRC,
+        DST,
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
     )
-    return m.group(0) if m else ""
+    if tmp.is_dir():
+        dest = DST / "img/works/incoming/proffkar"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(tmp, dest)
+        shutil.rmtree(tmp)
+    prune_foreign_assets()
+
+
+def prune_foreign_assets() -> None:
+    for rel in (
+        "img/works/incoming/pervushin",
+        "img/works/equipment",
+        "img/works/home",
+    ):
+        p = DST / rel
+        if p.is_dir():
+            shutil.rmtree(p)
+    for name in (
+        "img/works/hero-home.jpg",
+        "img/hero.jpg",
+        "img/works/before-after/door-after.jpg",
+        "img/works/before-after/door-before.jpg",
+        "img/works/before-after/interior-after.jpg",
+        "img/works/before-after/interior-before.jpg",
+        "img/works/before-after/mini-floor-after.jpg",
+        "img/works/before-after/mini-floor-before.jpg",
+    ):
+        p = DST / name
+        if p.is_file():
+            p.unlink()
+    svc = DST / "services"
+    if svc.is_dir():
+        for f in svc.glob("*.html"):
+            f.unlink()
 
 
 def sync_styles() -> None:
-    css = (SRC / "styles.css").read_text(encoding="utf-8")
-    css = re.sub(r":root\{[^}]+\}", PRIME_ROOT.strip(), css, count=1)
+    css = (DST / "styles.css").read_text(encoding="utf-8")
     css = css.replace(
         ".site-nav .logo .logo-word{display:none}",
         ".site-nav .logo .logo-word{color:#fff}",
@@ -210,20 +254,16 @@ def sync_styles() -> None:
         "background:url('img/works/hero-raptor.jpg?v=raptor')",
         "background:url('img/works/incoming/proffkar/01-2gis.jpg')",
     )
-    hero_block = _hero_sdc_block_from_prime38()
-    if hero_block:
-        css = re.sub(
-            r"\.hero--sdc\{.*?\.hero--sdc \.hero-heading h1\{[^}]+\}",
-            hero_block,
-            css,
-            count=1,
-            flags=re.S,
-        )
-    if ".logo a{display:inline-flex;align-items:baseline;gap:10px}" in css:
-        css = css.replace(
-            ".logo a{display:inline-flex;align-items:baseline;gap:10px}",
-            ".logo a{display:inline-flex;align-items:baseline;gap:0}",
-        )
+    css = css.replace(
+        "background-image:url('img/works/hero-home.jpg?v=1')",
+        "background-image:url('img/works/incoming/proffkar/01-2gis.jpg')",
+    )
+    css = re.sub(
+        r"(\.hero--sdc \.hero-heading h1\{[^}]*?)line-height:\.87;",
+        r"\1line-height:1.05;",
+        css,
+        count=1,
+    )
     extra = """
 .photo-strip--home.photo-strip--six{grid-template-columns:repeat(3,1fr)}
 @media(max-width:900px){.photo-strip--home.photo-strip--six{grid-template-columns:repeat(2,1fr)}}
@@ -236,7 +276,49 @@ def sync_styles() -> None:
 def sync_js() -> None:
     for name in ("nav.js", "ba-slider.js", "reviews-carousel.js", "messenger-picker.js", "gallery-load.js"):
         shutil.copy2(SRC / name, DST / name)
-    shutil.copy2(ROOT / "prime38-detailing-angarsk" / "stats.js", DST / "stats.js")
+    if PRIME_STATS.is_file():
+        shutil.copy2(PRIME_STATS, DST / "stats.js")
+
+
+def write_contacts_config() -> None:
+    text = f"""window.STUDIO_MESSENGERS = {{
+  wa: "{CFG['wa']}",
+  tg: "{CFG['tg']}",
+  max: "",
+  defaultMessage: "Здравствуйте! Хочу записаться в Проффкар.",
+}};
+"""
+    (DST / "contacts-config.js").write_text(text, encoding="utf-8")
+
+
+def write_server() -> None:
+    src = (SRC / "server.py").read_text(encoding="utf-8")
+    src = re.sub(r"^PORT = \d+", f"PORT = {_CFG_BASE['port']}", src, count=1)
+    src = re.sub(
+        r'^FIRM_URL = ".*"',
+        f'FIRM_URL = "{CFG["firm_url"]}"',
+        src,
+        count=1,
+    )
+    (DST / "server.py").write_text(src, encoding="utf-8")
+
+
+def fetch_reviews() -> None:
+    out = DST / "data/reviews-2gis.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        [
+            "python3",
+            str(ROOT / "scripts/fetch_2gis_reviews.py"),
+            _CFG_BASE["firm_id"],
+            "-n",
+            "8",
+            "-o",
+            str(out),
+        ],
+        check=False,
+        cwd=ROOT,
+    )
 
 
 def write_index() -> None:
@@ -268,17 +350,18 @@ def write_index() -> None:
       </div>
     </div>
   </div>
-  <div class="stats stats--hero">
-    <div class="stat"><b>{CFG['years']}</b><span>{CFG['years_label']}</span></div>
-    <div class="stat"><b id="stat-reviews">{CFG['reviews']}</b><span>ОЦЕНКИ · 2ГИС</span></div>
-    <div class="stat"><b id="stat-rating">{CFG['rating']}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
-    <div class="stat"><b id="stat-reviews-foot">{CFG['reviews']}</b><span>ОТЗЫВОВ</span></div>
-  </div>
 </section>
+
+<div class="stats">
+  <div class="stat"><b id="stat-rating">{CFG['rating']}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
+  <div class="stat"><b id="stat-reviews">{CFG['reviews']}</b><span>ОЦЕНОК · 2ГИС</span></div>
+  <div class="stat"><b>{CFG['years']}</b><span>{CFG['years_label']}</span></div>
+  <div class="stat"><b>2ГИС</b><span>ОТЗЫВЫ КЛИЕНТОВ</span></div>
+</div>
 
 <section class="section" id="services">
   <div class="section-head">
-    <div><div class="kicker">01 / УСЛУГИ</div><h2>СЕРВИС<br><span class="accent">И УХОД.</span></h2></div>
+    <div><div class="kicker">01 / УСЛУГИ</div><h2>СЕРВИС<br><span class="accent">АВТОМОБИЛЯ.</span></h2></div>
     <p class="intro">Ремонт, ТО и детейлинг — финальная цена после осмотра.</p>
   </div>
   <div class="photo-strip photo-strip--services photo-strip--home photo-strip--six">
@@ -564,8 +647,12 @@ def write_service_pages() -> None:
 
 
 def main() -> None:
+    rebuild_from_pervushin_copy()
     sync_styles()
     sync_js()
+    write_contacts_config()
+    write_server()
+    fetch_reviews()
     (DST / "partials").mkdir(exist_ok=True)
     (DST / "partials/site-bottom-root.html").write_text(site_bottom(), encoding="utf-8")
     write_index()
@@ -574,7 +661,7 @@ def main() -> None:
     write_contact()
     write_gallery()
     write_service_pages()
-    print("Проффкар synced from Pervushin shell.")
+    print("Проффкар rebuilt from Pervushin (2ГИС сохранён).")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,21 @@
+{
+  "name": "Проффкар",
+  "slug": "proffkar-avtotekhservis-tyumen",
+  "port": 8127,
+  "photo_dir": "proffkar",
+  "firm_id": "70000001080387917",
+  "firm_url": "https://2gis.ru/tyumen/firm/70000001080387917",
+  "city": "Тюмень",
+  "city_slug": "tyumen",
+  "phone_tel": "+79324791212",
+  "phone_display": "+7 (932) 479-12-12",
+  "wa": "79324791212",
+  "tg": "+79324791212",
+  "address": "г. Тюмень, ул. Камчатская, 192/3",
+  "schedule": "Ежедневно · 10:00–20:00",
+  "map_lat": 57.155096,
+  "map_lon": 65.674135,
+  "map_c": "57.155096,65.674135",
+  "rating": "5.0",
+  "reviews_count": "49"
+}
