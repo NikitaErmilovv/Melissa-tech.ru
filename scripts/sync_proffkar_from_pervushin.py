@@ -17,7 +17,7 @@ PRIME_STATS = ROOT / "prime38-detailing-angarsk/stats.js"
 
 _CFG_BASE = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 CFG = {
-    "css_v": "119",
+    "css_v": "120",
     "phone_tel": _CFG_BASE["phone_tel"],
     "phone_display": _CFG_BASE["phone_display"],
     "wa": _CFG_BASE["wa"],
@@ -55,7 +55,7 @@ IMG_DIR = "img/works/incoming/proffkar"
 HERO_IMG = f"{IMG_DIR}/hero-home.png"
 PHOTOS = {
     "kia": f"{IMG_DIR}/01-kia-quoris.png",
-    "paint": f"{IMG_DIR}/02-paint-bumper.png",
+    "paint": f"{IMG_DIR}/09-paint-bumper.png",
     "motion": f"{IMG_DIR}/03-honda-motion.png",
     "mini": f"{IMG_DIR}/04-mini-countryman.png",
     "headlight": f"{IMG_DIR}/05-headlight.png",
@@ -63,6 +63,27 @@ PHOTOS = {
     "mercedes": f"{IMG_DIR}/07-mercedes.png",
     "macan": f"{IMG_DIR}/08-macan.png",
 }
+
+HOME_SERVICE_TILES = [
+    ("paint.html", "ПОКРАСКА", "paint", ""),
+    ("polish.html", "ПОЛИРОВКА", "kia", " photo-pos-polish"),
+    ("repair.html", "РЕМОНТ", "wheel", ""),
+    ("diagnostics.html", "ДИАГНОСТИКА", "headlight", ""),
+    ("tint.html", "ТОНИРОВКА", "macan", ""),
+]
+HOME_WORKS_PHOTOS = ["kia", "mercedes", "macan", "motion", "paint"]
+
+SERVICES_LIST = [
+    ("repair.html", "01", "Ремонт автомобилей", "Механика и агрегаты по согласованному плану."),
+    ("paint.html", "02", "Покраска", "Кузовной ремонт и подбор цвета ЛКП."),
+    ("polish.html", "03", "Полировка", "Восстановление блеска и устранение дефектов ЛКП."),
+    ("service.html", "04", "Техническое обслуживание", "Регламентные работы и замена жидкостей."),
+    ("tires.html", "05", "Шиномонтаж", "Сезонная замена и балансировка."),
+    ("diagnostics.html", "06", "Диагностика", "Компьютерная и механическая диагностика."),
+    ("tint.html", "07", "Тонировка", "Тонирование стёкол по нормам."),
+    ("detailing.html", "08", "Детейлинг", "Мойка, защита кузова и уход за салоном."),
+    ("wash.html", "09", "Автомойка", "Мойка кузова и салона."),
+]
 
 NAV_ROOT = f"""<nav class="site-nav">
   <div class="logo"><a href="index.html">{BRAND}</a></div>
@@ -376,8 +397,42 @@ def fetch_reviews() -> None:
     )
 
 
+def _home_service_tiles_html() -> str:
+    lines = []
+    for href, tag, key, extra in HOME_SERVICE_TILES:
+        lines.append(
+            f'    <a class="photo{extra}" href="services/{href}" '
+            f"style=\"background-image:url('{PHOTOS[key]}')\"><span class=\"tag\">{tag}</span></a>"
+        )
+    return "\n".join(lines)
+
+
+def _home_works_strip_html() -> str:
+    lines = []
+    for key in HOME_WORKS_PHOTOS:
+        lines.append(
+            f'    <a class="photo" href="gallery.html" '
+            f"style=\"background-image:url('{PHOTOS[key]}')\"></a>"
+        )
+    return "\n".join(lines)
+
+
+def _services_rows_html() -> str:
+    lines = []
+    for href, idx, title, lead in SERVICES_LIST:
+        lines.append(
+            f'    <a class="service-row" href="services/{href}" id="svc-{idx}">'
+            f'<div class="idx">{idx}</div><div><h3>{title}</h3>'
+            f'<div class="service-desc"><p class="service-lead">{lead}</p></div></div>'
+            f'<div class="cost">после осмотра</div></a>'
+        )
+    return "\n".join(lines)
+
+
 def write_index() -> None:
     v = CFG["css_v"]
+    home_tiles = _home_service_tiles_html()
+    works_strip = _home_works_strip_html()
     content = f"""<!doctype html>
 <html lang="ru">
 <head>
@@ -416,14 +471,10 @@ def write_index() -> None:
 <section class="section" id="services">
   <div class="section-head">
     <div><div class="kicker">01 / УСЛУГИ</div><h2>СЕРВИС<br><span class="accent">АВТОМОБИЛЯ.</span></h2></div>
-    <p class="intro">Ремонт, ТО и детейлинг — финальная цена после осмотра.</p>
+    <p class="intro">Кузов, ТО, детейлинг и уход — финальная цена после осмотра.</p>
   </div>
   <div class="photo-strip photo-strip--services photo-strip--home">
-    <a class="photo" href="services/repair.html" style="background-image:url('{PHOTOS["paint"]}')"><span class="tag">РЕМОНТ</span></a>
-    <a class="photo" href="services/service.html" style="background-image:url('{PHOTOS["kia"]}')"><span class="tag">ТО</span></a>
-    <a class="photo" href="services/tires.html" style="background-image:url('{PHOTOS["wheel"]}')"><span class="tag">ШИНОМОНТАЖ</span></a>
-    <a class="photo photo-pos-polish" href="services/detailing.html" style="background-image:url('{PHOTOS["headlight"]}')"><span class="tag">ДЕТЕЙЛИНГ</span></a>
-    <a class="photo" href="services/diagnostics.html" style="background-image:url('{PHOTOS["mini"]}')"><span class="tag">ДИАГНОСТИКА</span></a>
+{home_tiles}
   </div>
 </section>
 
@@ -456,11 +507,7 @@ def write_index() -> None:
     <div><div class="kicker">02 / РАБОТЫ</div><h2>НАШИ<br><span class="accent">РАБОТЫ.</span></h2></div>
   </div>
   <div class="photo-strip photo-strip--services">
-    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["kia"]}')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["paint"]}')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["mercedes"]}')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["macan"]}')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('{PHOTOS["motion"]}')"></a>
+{works_strip}
   </div>
 </section>
 
@@ -499,12 +546,7 @@ def write_index() -> None:
 
 def write_services_page() -> None:
     v = CFG["css_v"]
-    rows = """    <a class="service-row" href="services/repair.html" id="svc-01"><div class="idx">01</div><div><h3>Ремонт автомобилей</h3><div class="service-desc"><p class="service-lead">Механика и агрегаты по согласованному плану.</p></div></div><div class="cost">после осмотра</div></a>
-    <a class="service-row" href="services/service.html" id="svc-02"><div class="idx">02</div><div><h3>Техническое обслуживание</h3><div class="service-desc"><p class="service-lead">Регламентные работы и замена жидкостей.</p></div></div><div class="cost">после осмотра</div></a>
-    <a class="service-row" href="services/tires.html" id="svc-03"><div class="idx">03</div><div><h3>Шиномонтаж</h3><div class="service-desc"><p class="service-lead">Сезонная замена и балансировка.</p></div></div><div class="cost">после осмотра</div></a>
-    <a class="service-row" href="services/detailing.html" id="svc-04"><div class="idx">04</div><div><h3>Детейлинг</h3><div class="service-desc"><p class="service-lead">Мойка, полировка и защита кузова.</p></div></div><div class="cost">после осмотра</div></a>
-    <a class="service-row" href="services/diagnostics.html" id="svc-05"><div class="idx">05</div><div><h3>Диагностика</h3><div class="service-desc"><p class="service-lead">Компьютерная и механическая диагностика.</p></div></div><div class="cost">после осмотра</div></a>
-    <a class="service-row" href="services/wash.html" id="svc-06"><div class="idx">06</div><div><h3>Автомойка</h3><div class="service-desc"><p class="service-lead">Мойка кузова и салона.</p></div></div><div class="cost">после осмотра</div></a>"""
+    rows = _services_rows_html()
     html = f"""<!doctype html>
 <html lang="ru">
 <head>
@@ -520,7 +562,7 @@ def write_services_page() -> None:
 <section class="subpage-hero">
   <div class="kicker">01 / УСЛУГИ</div>
   <h1>АВТОТЕХСЕРВИС<br><span class="accent">ТЮМЕНЬ</span></h1>
-  <p>Ремонт, ТО и детейлинг — стоимость после осмотра.</p>
+  <p>Кузов, ТО, детейлинг и сервис — стоимость после осмотра.</p>
 </section>
 
 <section class="section">
@@ -654,10 +696,13 @@ def write_gallery() -> None:
 
 SERVICE_PAGES = {
     "repair.html": ("Ремонт автомобилей", "РЕМОНТ АВТОМОБИЛЕЙ", "Механика и агрегаты по согласованному плану."),
+    "paint.html": ("Покраска", "ПОКРАСКА", "Кузовной ремонт и подбор цвета ЛКП."),
+    "polish.html": ("Полировка", "ПОЛИРОВКА", "Восстановление блеска и устранение дефектов ЛКП."),
     "service.html": ("Техническое обслуживание", "ТЕХНИЧЕСКОЕ ОБСЛУЖИВАНИЕ", "Регламентные работы и замена жидкостей."),
     "tires.html": ("Шиномонтаж", "ШИНОМОНТАЖ", "Сезонная замена и балансировка."),
-    "detailing.html": ("Детейлинг", "ДЕТЕЙЛИНГ", "Мойка, полировка и защита кузова."),
     "diagnostics.html": ("Диагностика", "ДИАГНОСТИКА", "Компьютерная и механическая диагностика."),
+    "tint.html": ("Тонировка", "ТОНИРОВКА", "Тонирование стёкол по нормам."),
+    "detailing.html": ("Детейлинг", "ДЕТЕЙЛИНГ", "Мойка, защита кузова и уход за салоном."),
     "wash.html": ("Автомойка", "АВТОМОЙКА", "Мойка кузова и салона."),
 }
 
