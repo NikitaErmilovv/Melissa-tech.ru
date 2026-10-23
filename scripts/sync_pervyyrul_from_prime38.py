@@ -268,15 +268,15 @@ def service_rows() -> str:
 
 def pervyy_hero_html() -> str:
     return f"""
-<section class="hero hero--sdc">
+<section class="hero hero--sdc hero--pervyy">
   <div class="heroimg" style="background-image:url('{photo('01')}')"></div>
   <div class="hero-panel">
     <div class="hero-heading">
       <div class="eyebrow hero-eyebrow-city">{CFG['city'].upper()}</div>
-      <h1>АВТОКОМПЛЕКС<br>ПЕРВЫЙ<br><span class="accent">РУЛЬ</span></h1>
+      <h1>ПЕРВЫЙ<br><span class="accent">РУЛЬ</span></h1>
     </div>
     <div class="hero-content">
-      <p>Автокомплекс на Сибиряков-Гвардейцев: ремонт и диагностика, шиномонтаж, электрика и продажа автомобилей.</p>
+      <p>На Сибиряков-Гвардейцев: ремонт и диагностика, шиномонтаж, электрика и продажа автомобилей.</p>
       <div class="actions">
         <a class="button" href="tel:{CFG['phone_tel']}">ЗАПИСАТЬСЯ</a>
         <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
