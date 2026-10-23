@@ -95,8 +95,11 @@ class SiteHandler(SimpleHTTPRequestHandler):
             files = []
             if sub and base.is_dir():
                 for p in sorted(base.iterdir()):
-                    if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
-                        files.append(p.relative_to(ROOT).as_posix())
+                    if p.suffix.lower() not in {".jpg", ".jpeg", ".png", ".webp"}:
+                        continue
+                    if p.name.startswith("hero-"):
+                        continue
+                    files.append(p.relative_to(ROOT).as_posix())
             body = json.dumps({"files": files}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

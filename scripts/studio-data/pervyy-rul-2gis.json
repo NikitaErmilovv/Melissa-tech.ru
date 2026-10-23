@@ -1,0 +1,21 @@
+{
+  "name": "Первый руль",
+  "slug": "pervyy-rul-masterskaya-novokuznetsk",
+  "port": 8125,
+  "photo_dir": "pervyy-rul",
+  "firm_id": "70000001111114731",
+  "firm_url": "https://2gis.ru/novokuznetsk/firm/70000001111114731",
+  "city": "Новокузнецк",
+  "city_slug": "novokuznetsk",
+  "phone_tel": "+79993251337",
+  "phone_display": "+7 (999) 325-13-37",
+  "wa": "79993251337",
+  "tg": "+79993251337",
+  "address": "г. Новокузнецк, ул. Сибиряков-Гвардейцев, 1Б",
+  "schedule": "Ежедневно · 10:00–20:00",
+  "map_lat": 53.750664,
+  "map_lon": 87.105381,
+  "map_c": "53.750664,87.105381",
+  "rating": "4.6",
+  "reviews_count": "71"
+}

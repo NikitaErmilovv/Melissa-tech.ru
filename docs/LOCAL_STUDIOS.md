@@ -9,7 +9,7 @@
 ## Четыре новых прототипа
 
 - **Первушин** — `pervushin-avtokompleks-ekaterinburg/` — http://127.0.0.1:8124/ · **Авто** (`cars.html`)
-- **Первый руль** — `pervyy-rul-masterskaya-novokuznetsk/` — http://127.0.0.1:8125/ · бирюзовый акцент · **Авто** (`cars.html`)
+- **Первый руль** — `pervyy-rul-masterskaya-novokuznetsk/` — http://127.0.0.1:8125/ · копия Prime.38 + бирюза · 2ГИС: `scripts/studio-data/pervyy-rul-2gis.json` · **Авто** (`cars.html`) · `python scripts/sync_pervyyrul_from_prime38.py`
 - **Прайм.38** — `prime38-detailing-angarsk/` — http://127.0.0.1:8126/ · оболочка как у Первушина (без блока «оборудование», 2 слайдера до/после) · `python scripts/sync_prime38_from_pervushin.py`
 - **Проффкар** — `proffkar-avtotekhservis-tyumen/` — http://127.0.0.1:8127/ · копия Первушина (без оборудования, 2 слайдера) · 2ГИС: `scripts/studio-data/proffkar-2gis.json` · `python scripts/sync_proffkar_from_pervushin.py`
 
