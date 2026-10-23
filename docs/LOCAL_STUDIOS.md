@@ -14,3 +14,5 @@
 - **Проффкар** — `proffkar-avtotekhservis-tyumen/` — http://127.0.0.1:8127/
 
 Пересобрать четыре сайта из шаблона: `python scripts/scaffold_four_local_studios.py`
+
+Скачать фото из альбома 2ГИС (API + разметка страницы): `python scripts/fetch_2gis_firm_photos.py`
