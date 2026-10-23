@@ -17,7 +17,7 @@ DATA_JSON = ROOT / "scripts/studio-data/pervyy-rul-2gis.json"
 _CFG = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 IMG = f"img/works/incoming/{_CFG['photo_dir']}"
 CFG = {
-    "css_v": "12",
+    "css_v": "13",
     **_CFG,
     "reviews": _CFG["reviews_count"],
     "map_alt": f"Карта 2ГИС — {_CFG['address']}",
@@ -277,15 +277,15 @@ def write_index() -> None:
 </head>
 <body>
 {NAV}
-<section class="hero hero--sdc hero--brand-inline">
+<section class="hero hero--sdc">
   <div class="heroimg" style="background-image:url('{photo('01')}')"></div>
   <div class="hero-panel">
     <div class="hero-heading">
       <div class="eyebrow hero-eyebrow-city">{CFG['city'].upper()}</div>
-      <h1 class="hero-title-stack"><span class="hero-title-lead">АВТОКОМПЛЕКС</span> <span class="accent hero-title-brand">ПЕРВЫЙ РУЛЬ</span></h1>
+      <h1>ДЕТЕЙЛИНГ<br>ЦЕНТР<br><span class="accent">ПЕРВЫЙ РУЛЬ</span></h1>
     </div>
     <div class="hero-content">
-      <p>Автокомплекс на Сибиряков-Гвардейцев: ремонт и диагностика, шиномонтаж, электрика и продажа автомобилей.</p>
+      <p>Мастерская на Сибиряков-Гвардейцев: ремонт и диагностика, шиномонтаж, электрика и продажа автомобилей.</p>
       <div class="actions">
         <a class="button" href="tel:{CFG['phone_tel']}">ЗАПИСАТЬСЯ</a>
         <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
