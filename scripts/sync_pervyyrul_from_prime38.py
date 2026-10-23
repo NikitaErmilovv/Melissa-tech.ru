@@ -273,7 +273,7 @@ def pervyy_hero_html() -> str:
   <div class="hero-panel">
     <div class="hero-heading">
       <div class="eyebrow hero-eyebrow-city">{CFG['city'].upper()}</div>
-      <h1>АВТОКОМПЛЕКС<br>ПЕРВЫЙ<br><span class="accent">РУЛЬ</span></h1>
+      <h1>ПЕРВЫЙ<br><span class="accent">РУЛЬ</span></h1>
     </div>
     <div class="hero-content">
       <p>Автокомплекс на Сибиряков-Гвардейцев: ремонт и диагностика, шиномонтаж, электрика и продажа автомобилей.</p>
