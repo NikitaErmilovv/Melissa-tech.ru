@@ -191,6 +191,10 @@ def sync_styles() -> None:
     )
     css = css.replace("incoming/prime38/", f"incoming/{_CFG['photo_dir']}/")
     if heroimg_rule:
+        heroimg_rule = heroimg_rule.replace(
+            "incoming/prime38/",
+            f"incoming/{_CFG['photo_dir']}/",
+        )
         css = re.sub(r"\.heroimg\{[^}]+\}", heroimg_rule, css, count=1)
     css = css.replace(
         ".site-nav .logo .logo-word{display:none}",
@@ -227,6 +231,12 @@ def write_config() -> None:
         "                    files.append(p.relative_to(ROOT).as_posix())",
     )
     (DST / "server.py").write_text(srv, encoding="utf-8")
+
+
+def sync_site_bottom_partial() -> None:
+    partial_dir = DST / "partials"
+    partial_dir.mkdir(parents=True, exist_ok=True)
+    (partial_dir / "site-bottom-root.html").write_text(site_bottom(""), encoding="utf-8")
 
 
 def fetch_reviews() -> None:
@@ -467,6 +477,7 @@ def main() -> None:
     write_config()
     fetch_reviews()
     write_index()
+    sync_site_bottom_partial()
     write_subpages()
     write_service_pages()
     (DST / "README.md").write_text(
