@@ -450,7 +450,7 @@ def write_index() -> None:
   <div class="hero-panel">
     <div class="hero-heading">
       <div class="eyebrow hero-eyebrow-city">ТЮМЕНЬ</div>
-      <h1>АВТО<br>ТЕХСЕРВИС<br>{BRAND}</h1>
+      <h1>АВТО<br>ТЕХСЕРВИС<br><span class="accent">{BRAND}</span></h1>
     </div>
     <div class="hero-content">
       <p>Автотехсервис на Камчатской: ремонт и ТО, шиномонтаж, детейлинг и комплексный уход за автомобилем.</p>
