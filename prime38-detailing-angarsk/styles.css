@@ -1280,10 +1280,8 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   flex:1;min-height:calc(760px - 152px);max-width:720px;
 }
 .hero--sdc .hero-heading{padding-top:4px}
-.hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px);transform:translateY(-15px)}
-.hero--sdc .hero-heading h1 .hero-title-main{letter-spacing:-.025em}
-.hero--sdc .hero-heading h1 .accent{display:inline;text-transform:lowercase}
-.site-nav .logo .logo-mark,.site-nav .logo .logo-word{text-transform:lowercase;letter-spacing:-.02em}
+.hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px)}
+.hero--sdc .hero-heading h1 .accent{display:inline}
 .photo-pos-balancing{background-position:center 35%}
 .hero--sdc .hero-eyebrow-spacer{visibility:hidden}
 .hero--sdc .hero-content{max-width:720px;margin-top:auto}
