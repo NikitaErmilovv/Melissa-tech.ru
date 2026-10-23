@@ -1281,7 +1281,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   margin:88px 0 0;width:100%;align-self:stretch;
   background:transparent;
 }
-.hero--sdc .hero-heading{padding-top:4px}
+.hero--sdc .hero-heading{padding-top:4px;margin-top:-5px}
 .hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px)}
 .hero--sdc .hero-heading h1 .accent{display:inline}
 .photo-pos-balancing{background-position:center 35%}
