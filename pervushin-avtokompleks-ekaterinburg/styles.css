@@ -17,6 +17,11 @@ html{scroll-behavior:smooth}
 html.page-works{scroll-behavior:auto}
 
 nav{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;position:absolute;width:100%;z-index:2;border-bottom:1px solid rgba(255,255,255,.09)}
+body.page-sub > nav.site-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(10,10,10,.9);backdrop-filter:saturate(1.15) blur(12px);
+}
+body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .logo{font-size:18px;font-weight:900;letter-spacing:-.04em;white-space:nowrap}
 .logo a{display:inline-flex;align-items:baseline;gap:10px}
 .logo-mark{color:var(--accent);font-weight:900;letter-spacing:-.04em;font-size:1em;line-height:1}
