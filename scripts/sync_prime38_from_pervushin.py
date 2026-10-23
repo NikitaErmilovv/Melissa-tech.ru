@@ -24,7 +24,7 @@ CFG = {
     "map_c": "52.494004,103.847366",
     "map_alt": "Карта 2ГИС — г. Ангарск, 253-й квартал, стр. 19",
     "rating": "5.0",
-    "reviews": "49",
+    "reviews": "45",
     "years": "5+",
     "photo_dir": "prime38",
     "about_lead": (
@@ -198,6 +198,12 @@ def sync_styles() -> None:
     css = css.replace(
         "background:url('img/works/hero-raptor.jpg?v=raptor')",
         "background:url('img/works/incoming/prime38/01-2gis.jpg')",
+    )
+    css = re.sub(
+        r"(\.hero--sdc \.hero-heading h1\{[^}]*?)line-height:\.87;",
+        r"\1line-height:1.05;",
+        css,
+        count=1,
     )
     (DST / "styles.css").write_text(css, encoding="utf-8")
 
