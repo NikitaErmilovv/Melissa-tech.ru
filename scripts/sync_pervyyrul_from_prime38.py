@@ -17,7 +17,7 @@ DATA_JSON = ROOT / "scripts/studio-data/pervyy-rul-2gis.json"
 _CFG = json.loads(DATA_JSON.read_text(encoding="utf-8"))
 IMG = f"img/works/incoming/{_CFG['photo_dir']}"
 CFG = {
-    "css_v": "13",
+    "css_v": "14",
     **_CFG,
     "reviews": _CFG["reviews_count"],
     "map_alt": f"Карта 2ГИС — {_CFG['address']}",
@@ -174,9 +174,6 @@ def rebuild() -> None:
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree(tmp, dest)
         shutil.rmtree(tmp)
-    prime_inc = DST / "img/works/incoming/prime38"
-    if prime_inc.is_dir():
-        shutil.rmtree(prime_inc)
     for f in (DST / "services").glob("*.html"):
         f.unlink()
 
@@ -264,42 +261,38 @@ def service_rows() -> str:
     )
 
 
+def prime_hero_html() -> str:
+    text = (SRC / "index.html").read_text(encoding="utf-8")
+    m = re.search(r"\n<section class=\"hero hero--sdc\">.*?</section>", text, re.DOTALL)
+    if not m:
+        raise SystemExit("Prime.38 hero block not found in index.html")
+    return m.group(0) + "\n"
+
+
+def sync_prime_hero_assets() -> None:
+    src_dir = SRC / "img/works/incoming/prime38"
+    dst_dir = DST / "img/works/incoming/prime38"
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    hero_img = src_dir / "22-user-bmw-x6.png"
+    if hero_img.is_file():
+        shutil.copy2(hero_img, dst_dir / hero_img.name)
+
+
 def write_index() -> None:
     v = CFG["css_v"]
+    hero = prime_hero_html()
     (DST / "index.html").write_text(
         f"""<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Первый руль — автокомплекс Новокузнецк</title>
+<title>Первый руль — Новокузнецк</title>
 <link rel="stylesheet" href="styles.css?v={v}">
 </head>
 <body>
 {NAV}
-<section class="hero hero--sdc">
-  <div class="heroimg" style="background-image:url('{photo('01')}')"></div>
-  <div class="hero-panel">
-    <div class="hero-heading">
-      <div class="eyebrow hero-eyebrow-city">{CFG['city'].upper()}</div>
-      <h1>ДЕТЕЙЛИНГ<br>ЦЕНТР<br><span class="accent">ПЕРВЫЙ РУЛЬ</span></h1>
-    </div>
-    <div class="hero-content">
-      <p>Мастерская на Сибиряков-Гвардейцев: ремонт и диагностика, шиномонтаж, электрика и продажа автомобилей.</p>
-      <div class="actions">
-        <a class="button" href="tel:{CFG['phone_tel']}">ЗАПИСАТЬСЯ</a>
-        <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
-      </div>
-    </div>
-  </div>
-  <div class="stats stats--hero">
-    <div class="stat"><b>{CFG['years']}</b><span>ЛЕТ НА РЫНКЕ</span></div>
-    <div class="stat"><b id="stat-reviews">{CFG['reviews']}</b><span>ОЦЕНКИ · 2ГИС</span></div>
-    <div class="stat"><b id="stat-rating">{CFG['rating']}</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
-    <div class="stat"><b id="stat-reviews-foot">{CFG['reviews']}</b><span>ОТЗЫВОВ</span></div>
-  </div>
-</section>
-<section class="section" id="services">
+{hero}<section class="section" id="services">
   <div class="section-head">
     <div><div class="kicker">01 / УСЛУГИ</div><h2>ДЕТЕЙЛИНГ<br><span class="accent">И ЗАЩИТА КУЗОВА</span></h2></div>
     <p class="intro">Ремонт, диагностика и автомобили в продаже — уточняйте по телефону.</p>
