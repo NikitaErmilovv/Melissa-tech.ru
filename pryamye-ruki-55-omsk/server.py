@@ -91,10 +91,19 @@ class SiteHandler(SimpleHTTPRequestHandler):
 
             q = parse_qs(urlparse(self.path).query)
             sub = (q.get("dir") or [""])[0]
+            if not sub:
+                return super().do_GET()
+
+            skip_names = {"hero-home.jpg", "tint-home.jpg"}
             base = ROOT / "img" / "works" / "incoming" / sub
             files = []
-            if sub and base.is_dir():
+            if base.is_dir():
                 for p in sorted(base.iterdir()):
+                    if not p.is_file():
+                        continue
+                    low = p.name.lower()
+                    if low in skip_names or low.endswith("-client.jpg"):
+                        continue
                     if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
                         files.append(p.relative_to(ROOT).as_posix())
             body = json.dumps({"files": files}, ensure_ascii=False).encode("utf-8")

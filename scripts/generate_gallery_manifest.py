@@ -11,6 +11,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 IMAGE_EXT = {".jpg", ".jpeg", ".png", ".webp"}
 SKIP_NAMES = {"source.txt", "readme.txt", ".gitkeep"}
+GALLERY_SKIP_FILENAMES = {"hero-home.jpg", "tint-home.jpg"}
+
+
+def include_in_gallery_album(path: Path) -> bool:
+    if not path.is_file():
+        return False
+    name = path.name.lower()
+    if name in SKIP_NAMES or name in GALLERY_SKIP_FILENAMES:
+        return False
+    if name.endswith("-client.jpg"):
+        return False
+    return path.suffix.lower() in IMAGE_EXT
 
 
 def photo_dir_from_gallery(site_dir: Path) -> str | None:
@@ -28,11 +40,7 @@ def collect_files(site_dir: Path, sub: str) -> list[str]:
         return []
     paths: list[str] = []
     for p in sorted(incoming.iterdir()):
-        if not p.is_file():
-            continue
-        if p.name.lower() in SKIP_NAMES:
-            continue
-        if p.suffix.lower() not in IMAGE_EXT:
+        if not include_in_gallery_album(p):
             continue
         paths.append(p.relative_to(site_dir).as_posix())
     return paths
