@@ -1,19 +1,7 @@
 (function () {
   var grid = document.getElementById('gallery-grid');
   if (!grid) return;
-  var FALLBACK_FILES = [
-  "img/works/incoming/inavto/01-2gis.jpg",
-  "img/works/incoming/inavto/02-2gis.jpg",
-  "img/works/incoming/inavto/03-2gis.jpg",
-  "img/works/incoming/inavto/04-2gis.jpg",
-  "img/works/incoming/inavto/05-2gis.jpg",
-  "img/works/incoming/inavto/06-2gis.jpg",
-  "img/works/incoming/inavto/07-2gis.jpg",
-  "img/works/incoming/inavto/08-2gis.jpg",
-  "img/works/incoming/inavto/09-2gis.jpg",
-  "img/works/incoming/inavto/10-2gis.jpg",
-  "img/works/incoming/inavto/11-2gis.jpg"
-];
+  var FALLBACK_FILES = [];
   var manifestUrl = 'data/gallery-manifest.json';
 
   function render(files) {
@@ -54,4 +42,3 @@
       load(FALLBACK_FILES);
     });
 })();
-

@@ -90,25 +90,40 @@
       autoplay = setInterval(stepAuto, 4500);
     }
 
-    if (prev)
-      prev.addEventListener("click", function () {
-        go(index - 1, true);
-        startAutoplay();
+    function bindNav() {
+      if (prev)
+        prev.addEventListener("click", function () {
+          go(index - 1, true);
+          startAutoplay();
+        });
+      if (next)
+        next.addEventListener("click", function () {
+          go(index + 1, true);
+          startAutoplay();
+        });
+      window.addEventListener("resize", function () {
+        go(index, false);
       });
-    if (next)
-      next.addEventListener("click", function () {
-        go(index + 1, true);
-        startAutoplay();
+      root.addEventListener("pointerenter", function () {
+        paused = true;
       });
-    window.addEventListener("resize", function () {
-      go(index, false);
-    });
-    root.addEventListener("pointerenter", function () {
-      paused = true;
-    });
-    root.addEventListener("pointerleave", function () {
-      paused = false;
-    });
+      root.addEventListener("pointerleave", function () {
+        paused = false;
+      });
+    }
+
+    if (root.hasAttribute("data-reviews-static")) {
+      slides = Array.prototype.slice.call(track.querySelectorAll(".review"));
+      if (slides.length) {
+        index = 0;
+        go(0, false);
+        startAutoplay();
+        bindNav();
+        return;
+      }
+    }
+
+    bindNav();
 
     var urls = root.getAttribute("data-reviews-src")
       ? [root.getAttribute("data-reviews-src")]
