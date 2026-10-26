@@ -16,8 +16,7 @@
   "img/works/incoming/pryamye-ruki/12-2gis.jpg",
   "img/works/incoming/pryamye-ruki/13-2gis.jpg",
   "img/works/incoming/pryamye-ruki/14-2gis.jpg",
-  "img/works/incoming/pryamye-ruki/15-2gis.jpg",
-  "img/works/incoming/pryamye-ruki/16-2gis.jpg"
+  "img/works/incoming/pryamye-ruki/15-2gis.jpg"
 ];
   var manifestUrl = 'data/gallery-manifest.json';
 
