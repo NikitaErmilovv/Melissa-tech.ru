@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#c0783a;
-  --accent-soft:rgba(192, 120, 58, .45);
-  --accent-hover:#d49252;
-  --accent-deep:#8f4e28;
+  --accent:#fbeda3;
+  --accent-soft:rgba(251,237,163,.42);
+  --accent-hover:#fff1bc;
+  --accent-deep:#d4c27a;
   --accent-ink:#0a0a0a;
-  --accent-rgb:192, 120, 58;
+  --accent-rgb:251,237,163;
 }
 
 *{box-sizing:border-box}
@@ -39,7 +39,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .phone{border:1px solid rgba(255,255,255,.19);padding:13px 20px;border-radius:3px;font-size:12px;font-weight:600;white-space:nowrap;transition:border-color .2s,color .2s}
 .phone:hover{border-color:var(--accent-soft);color:var(--accent)}
 
-.hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:stretch;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#3d2a1c 0,#1a120d 22%,#0a0a0a 55%)}
+.hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:stretch;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#3a3626 0,#1a1810 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
 .heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/works/incoming/pryamye-ruki/01-2gis.jpg') 72% 48% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
@@ -1294,6 +1294,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--sdc .hero-heading h1{
   font-size:clamp(58px,8vw,116px);line-height:1.05;letter-spacing:-.075em;margin:0;
 }
+.hero--pryamye .hero-content{padding-top:40px}
 .gallery-empty{grid-column:1/-1;color:#888;padding:24px;border:1px dashed rgba(255,255,255,.15)}
 .service-list .service-row{text-decoration:none;color:inherit}
 .gallery--portfolio{
