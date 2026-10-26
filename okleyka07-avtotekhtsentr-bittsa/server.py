@@ -15,16 +15,7 @@ PORT = 8130
 FIRM_URL = "https://2gis.ru/moscow/firm/70000001040721221"
 CACHE_TTL = 3600
 ROOT = Path(__file__).resolve().parent
-GALLERY_SKIP = frozenset(
-    {
-        "02-2gis.jpg",
-        "03-2gis.jpg",
-        "04-2gis.jpg",
-        "05-2gis.jpg",
-        "06-2gis.jpg",
-        "07-2gis.jpg",
-    }
-)
+GALLERY_SKIP = frozenset({"02-2gis.jpg", "06-2gis.jpg", "07-2gis.jpg"})
 
 _cache: dict[str, object] = {"ts": 0.0}
 
