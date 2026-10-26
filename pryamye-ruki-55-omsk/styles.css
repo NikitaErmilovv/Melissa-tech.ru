@@ -33,7 +33,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .logo .logo-mark + .logo-mark{margin-left:0}
 .site-nav .logo span{color:inherit}
 .site-nav .logo .logo-mark{color:var(--accent)}
-.site-nav .logo .logo-word{color:#fff}
+.site-nav .logo .logo-word{color:#fff;margin-left:.22em}
 .footer-logo .logo-mark,.address-map-brand .logo-mark,.address-map-pin-label-text .logo-mark{color:var(--accent)}
 .footer-logo .logo-word,.address-map-brand .logo-word,.address-map-pin-label-text .logo-word{color:#fff}
 .links{display:flex;gap:34px;font-size:13px;color:#bdbdb7}
