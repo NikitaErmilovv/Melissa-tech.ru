@@ -1305,6 +1305,10 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 
 .service-list a.service-row{display:grid}
 .subpage-hero--service{min-height:min(72vh,640px);display:flex;flex-direction:column;justify-content:flex-end}
+.subpage-hero--service-photo{
+  background-image:linear-gradient(180deg,rgba(10,10,10,.55) 0%,rgba(10,10,10,.92) 72%),var(--service-photo);
+  background-size:cover;background-position:center 35%;
+}
 @media(max-width:800px){.subpage-hero--service{min-height:auto}}
 
 .auto-sales-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:960px}
