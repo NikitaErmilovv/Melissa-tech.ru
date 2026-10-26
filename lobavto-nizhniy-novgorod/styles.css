@@ -41,7 +41,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 
 .hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:stretch;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#1c2d42 0,#101820 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/works/services/windshield-replace.jpg') 50% 42% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.9}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/works/services/windshield-replace.jpg') 50% 35% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.9}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-stack{
   position:relative;z-index:1;width:100%;
