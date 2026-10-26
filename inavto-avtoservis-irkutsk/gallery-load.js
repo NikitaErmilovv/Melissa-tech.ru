@@ -4,8 +4,14 @@
   var FALLBACK_FILES = [];
   var manifestUrl = 'data/gallery-manifest.json';
 
+  var EMPTY_HTML =
+    '<p class="gallery-empty">Фотографии пока не добавлены.</p>';
+
   function render(files) {
-    if (!files.length) return;
+    if (!files.length) {
+      grid.innerHTML = EMPTY_HTML;
+      return;
+    }
     grid.innerHTML = '';
     files.forEach(function (src) {
       var a = document.createElement('a');
