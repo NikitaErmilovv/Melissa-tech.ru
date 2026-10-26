@@ -30,9 +30,12 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
   color:#fff;font-weight:900;font-size:1em;letter-spacing:-.04em;
   text-transform:uppercase;line-height:1;
 }
+.logo .logo-mark + .logo-mark{margin-left:0}
 .site-nav .logo span{color:inherit}
 .site-nav .logo .logo-mark{color:var(--accent)}
 .site-nav .logo .logo-word{color:#fff}
+.footer-logo .logo-mark,.address-map-brand .logo-mark,.address-map-pin-label-text .logo-mark{color:var(--accent)}
+.footer-logo .logo-word,.address-map-brand .logo-word,.address-map-pin-label-text .logo-word{color:#fff}
 .links{display:flex;gap:34px;font-size:13px;color:#bdbdb7}
 .links a{transition:color .2s}
 .links a:hover{color:var(--accent)}
@@ -1295,6 +1298,11 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   font-size:clamp(58px,8vw,116px);line-height:1.05;letter-spacing:-.075em;margin:0;
 }
 .hero--pryamye .hero-content{padding-top:40px}
+.hero--pryamye .hero-brand-accent,
+.subpage-hero .hero-brand-accent{color:var(--accent)}
+.hero--pryamye .hero-brand-num,
+.subpage-hero .hero-brand-num{color:#fff}
+.hero--pryamye .hero-heading h1 .hero-brand-num{font-weight:800}
 .gallery-empty{grid-column:1/-1;color:#888;padding:24px;border:1px dashed rgba(255,255,255,.15)}
 .service-list .service-row{text-decoration:none;color:inherit}
 .gallery--portfolio{
