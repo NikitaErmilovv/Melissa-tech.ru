@@ -1,0 +1,32 @@
+# Резервный деплой на VPS (Caddy), если хук Timeweb не обновляет файлы.
+# Secrets: DEPLOY_HOST (например root@185.84.163.45), DEPLOY_PATH, DEPLOY_SSH_KEY (приватный ключ).
+name: Deploy melissa-tech.ru (rsync)
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  rsync:
+    if: ${{ secrets.DEPLOY_SSH_KEY != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SSH key
+        run: |
+          install -m 600 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${DEPLOY_HOST#*@}" >> ~/.ssh/known_hosts 2>/dev/null || true
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      - name: Rsync site to server
+        run: |
+          rsync -az --delete --exclude '.git' --exclude '.github' \
+            -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes" \
+            ./ "${DEPLOY_HOST}:${DEPLOY_PATH}/"
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
