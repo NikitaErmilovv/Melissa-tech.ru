@@ -13,6 +13,7 @@ SLUGS=(
   lobavto-nizhniy-novgorod
   konkretika-detailing-omsk
   pryamye-ruki-55-omsk
+  okleyka07-avtotekhtsentr-bittsa
 )
 
 "${RSYNC[@]}" "$ROOT/deploy-version.txt" "$HOST:$REMOTE/deploy-version.txt"
@@ -25,3 +26,4 @@ echo "Prod:"
 echo "  https://melissa-tech.ru/lobavto-nizhniy-novgorod/"
 echo "  https://melissa-tech.ru/konkretika-detailing-omsk/"
 echo "  https://melissa-tech.ru/pryamye-ruki-55-omsk/"
+echo "  https://melissa-tech.ru/okleyka07-avtotekhtsentr-bittsa/"
