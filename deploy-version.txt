@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=rp-contacts-logo-20261026T1025Z
+deploy-trigger=rp-contacts-accent-logo-20261026T1030Z
