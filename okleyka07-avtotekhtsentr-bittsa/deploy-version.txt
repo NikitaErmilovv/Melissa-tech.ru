@@ -2,4 +2,4 @@ site=okleyka07-avtotekhtsentr-bittsa
 brand=Оклейка07
 prod=https://melissa-tech.ru/okleyka07-avtotekhtsentr-bittsa/
 deploy=git-push-timeweb-hook
-deploy-trigger=okleyka07-sdc-home-20261026
+deploy-trigger=okleyka07-alvion-services-works-gallery-20261026

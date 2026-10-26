@@ -256,6 +256,25 @@ a.card{display:block;color:inherit;text-decoration:none}
 .quote{margin-top:80px;padding:55px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);font-size:clamp(28px,4vw,58px);line-height:1.05;letter-spacing:-.05em;max-width:1000px}
 .quote span{color:var(--accent)}
 .quote + .photo-strip{margin-top:48px}
+.quote-gallery-strip{
+  grid-template-columns:1.35fr .8fr .8fr;
+  margin-top:48px;
+}
+.quote-gallery-strip .photo.big{
+  grid-row:span 2;
+  min-height:540px;
+}
+.quote-gallery-strip .photo:not(.big){
+  min-height:260px;
+}
+.quote-gallery-strip a.photo{
+  display:block;
+  color:inherit;
+  text-decoration:none;
+  transition:transform .25s ease,border-color .2s;
+}
+.quote-gallery-strip a.photo:hover{transform:scale(1.015)}
+.quote-gallery-strip a.photo:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 .brand-story{padding:120px 6vw;border-top:1px solid rgba(255,255,255,.08)}
 .brand-story--hidden{display:none!important}
@@ -1061,7 +1080,9 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .award-panel{grid-template-columns:1fr;padding:28px 22px;gap:24px}
   .founder-panel{grid-template-columns:1fr;padding:28px 22px;gap:32px}
   .founder-visual,.founder-visual-placeholder{min-height:320px}
-  .ba-grid,.photo-strip:not(.photo-strip--services),.price-grid,.reviews,.contact-box{grid-template-columns:1fr}
+  .ba-grid,.photo-strip:not(.photo-strip--services):not(.quote-gallery-strip),.price-grid,.reviews,.contact-box{grid-template-columns:1fr}
+  .quote-gallery-strip{grid-template-columns:1fr}
+  .quote-gallery-strip .photo.big{grid-row:span 1;min-height:340px}
   .ba-grid{margin-top:40px}
   .photo-strip{margin-top:40px}
   .photo-strip--services{grid-template-columns:repeat(2,1fr)}
