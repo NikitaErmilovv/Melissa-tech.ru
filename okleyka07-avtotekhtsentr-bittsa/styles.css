@@ -1308,7 +1308,8 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 .hero--sdc .hero-heading{padding-top:4px}
 .hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px)}
-.hero--sdc .hero-heading h1 .accent{display:inline}
+.hero--sdc .hero-heading h1 .accent{display:inline;color:var(--accent)}
+.hero--sdc .hero-heading h1 .hero-brand-num{color:#fff;font-weight:800;letter-spacing:-.06em}
 .photo-pos-balancing{background-position:center 35%}
 .hero--sdc .hero-eyebrow-spacer{visibility:hidden}
 .hero--sdc .hero-content{max-width:720px;margin-top:auto}

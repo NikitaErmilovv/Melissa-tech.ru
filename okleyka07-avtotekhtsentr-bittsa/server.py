@@ -15,6 +15,7 @@ PORT = 8130
 FIRM_URL = "https://2gis.ru/moscow/firm/70000001040721221"
 CACHE_TTL = 3600
 ROOT = Path(__file__).resolve().parent
+GALLERY_SKIP = frozenset({"06-2gis.jpg", "07-2gis.jpg"})
 
 _cache: dict[str, object] = {"ts": 0.0}
 
@@ -95,6 +96,8 @@ class SiteHandler(SimpleHTTPRequestHandler):
             files = []
             if sub and base.is_dir():
                 for p in sorted(base.iterdir()):
+                    if p.name in GALLERY_SKIP:
+                        continue
                     if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
                         files.append(p.relative_to(ROOT).as_posix())
             body = json.dumps({"files": files}, ensure_ascii=False).encode("utf-8")

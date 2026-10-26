@@ -6,9 +6,7 @@
   "img/works/incoming/okleyka07/02-2gis.jpg",
   "img/works/incoming/okleyka07/03-2gis.jpg",
   "img/works/incoming/okleyka07/04-2gis.jpg",
-  "img/works/incoming/okleyka07/05-2gis.jpg",
-  "img/works/incoming/okleyka07/06-2gis.jpg",
-  "img/works/incoming/okleyka07/07-2gis.jpg"
+  "img/works/incoming/okleyka07/05-2gis.jpg"
 ];
   var manifestUrl = 'data/gallery-manifest.json';
 
