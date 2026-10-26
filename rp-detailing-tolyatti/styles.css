@@ -1300,8 +1300,8 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 .hero--rp.hero--sdc .hero-brand-logo{
   display:block;
-  width:min(280px,76vw);
-  max-width:100%;
+  width:min(560px,92vw);
+  max-width:none;
   height:auto;
   margin:0;
 }
