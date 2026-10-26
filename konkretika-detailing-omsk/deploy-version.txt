@@ -2,4 +2,4 @@ site=konkretika-detailing-omsk
 brand=Конкретика
 prod=https://melissa-tech.ru/konkretika-detailing-omsk/
 deploy=git-push-timeweb-hook
-deploy-trigger=four-local-studios-mid-deploy-20261024
+deploy-trigger=studio-batch1-lobavto-konkretika-pryamye-20261026
