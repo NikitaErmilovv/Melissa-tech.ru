@@ -1,0 +1,5 @@
+site=inavto-avtoservis-irkutsk
+brand=Инавто
+prod=https://melissa-tech.ru/inavto-avtoservis-irkutsk/
+deploy=git-push-timeweb-hook
+deploy-trigger=four-local-studios-mid-deploy-20261024

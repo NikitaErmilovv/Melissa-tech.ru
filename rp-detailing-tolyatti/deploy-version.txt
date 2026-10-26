@@ -1,0 +1,5 @@
+site=rp-detailing-tolyatti
+brand=РП
+prod=https://melissa-tech.ru/rp-detailing-tolyatti/
+deploy=git-push-timeweb-hook
+deploy-trigger=four-local-studios-mid-deploy-20261024
