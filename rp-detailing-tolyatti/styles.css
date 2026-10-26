@@ -1294,6 +1294,17 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--sdc .hero-heading h1{
   font-size:clamp(58px,8vw,116px);line-height:1.05;letter-spacing:-.075em;margin:0;
 }
+.hero--rp.hero--sdc .hero-heading--logo{
+  padding-top:clamp(20px,4vw,48px);
+  margin:0;
+}
+.hero--rp.hero--sdc .hero-brand-logo{
+  display:block;
+  width:min(280px,76vw);
+  max-width:100%;
+  height:auto;
+  margin:0;
+}
 .gallery-empty{grid-column:1/-1;color:#888;padding:24px;border:1px dashed rgba(255,255,255,.15)}
 .service-list .service-row{text-decoration:none;color:inherit}
 .gallery--portfolio{
