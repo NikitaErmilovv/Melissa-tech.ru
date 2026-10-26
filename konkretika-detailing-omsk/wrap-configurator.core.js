@@ -10,7 +10,9 @@ import {OutlinePass} from 'three/addons/postprocessing/OutlinePass.js';
 import {OutputPass} from 'three/addons/postprocessing/OutputPass.js';
 
 const MODEL_NAMES={mercedes:'Легковой автомобиль',mazda:'Кроссовер'};
-const MODEL_URLS={mercedes:'models/mercedes.glb?v=5',mazda:'models/mazda.glb?v=5'};
+const MODEL_URLS={mercedes:'models/mercedes.glb?v=1',mazda:'models/mazda.glb?v=1'};
+const WRAP_ACCENT=0xfbeda3;
+const WRAP_ACCENT_DIM=0x3a3620;
 function prefetchMazdaModel(){if(window.__mzPrefetch)return;window.__mzPrefetch=1;fetch(MODEL_URLS.mazda,{priority:'low'}).catch(()=>{})}
 const DEFAULT_ZONE_DEFS={
  hood:['Капот',21600],roof:['Крыша',18500],bumperFront:['Бампер передний',18900],bumperRear:['Бампер задний',18900],
@@ -51,8 +53,8 @@ const app=document.getElementById('canvas'), scene=new THREE.Scene();
 scene.background=new THREE.Color(0x080a0e);
 const camera=new THREE.PerspectiveCamera(35,1,.01,100);camera.position.set(4.8,2.2,6.2);
 const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance',preserveDrawingBuffer:false});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.physicallyCorrectLights=true;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.2;app.appendChild(renderer.domElement);
-const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:4}));composer.addPass(new RenderPass(scene,camera));const outline=new OutlinePass(new THREE.Vector2(1,1),scene,camera);outline.visibleEdgeColor.set(0xff2a3c);outline.hiddenEdgeColor.set(0x3a0a12);outline.edgeStrength=5;outline.edgeThickness=1.4;outline.edgeGlow=.4;composer.addPass(outline);composer.addPass(new OutputPass());
-const hlMat=new THREE.MeshBasicMaterial({color:0xff2a3c,transparent:true,opacity:.11,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});const lightMat=hlMat.clone();lightMat.opacity=.04;let hlMeshes=[];
+const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,samples:4}));composer.addPass(new RenderPass(scene,camera));const outline=new OutlinePass(new THREE.Vector2(1,1),scene,camera);outline.visibleEdgeColor.set(WRAP_ACCENT);outline.hiddenEdgeColor.set(WRAP_ACCENT_DIM);outline.edgeStrength=5;outline.edgeThickness=1.4;outline.edgeGlow=.4;composer.addPass(outline);composer.addPass(new OutputPass());
+const hlMat=new THREE.MeshBasicMaterial({color:WRAP_ACCENT,transparent:true,opacity:.14,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});const lightMat=hlMat.clone();lightMat.opacity=.05;let hlMeshes=[];
 scene.add(new THREE.HemisphereLight(0xffffff,0x111522,2.2));
 const key=new THREE.DirectionalLight(0xffffff,4.5);key.position.set(4,7,6);scene.add(key);const fill=new THREE.DirectionalLight(0x8bb8ff,1.8);fill.position.set(-5,3,-4);scene.add(fill);
 let envReady=false;function ensureEnv(){if(envReady)return;envReady=true;const pmrem=new THREE.PMREMGenerator(renderer);const envScene=new RoomEnvironment();scene.environment=pmrem.fromScene(envScene,.04).texture;envScene.dispose();pmrem.dispose()}

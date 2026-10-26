@@ -1,4 +1,4 @@
-const CORE_URL = './wrap-configurator.core.js?v=1';
+const CORE_URL = './wrap-configurator.core.js?v=2';
 const MERCEDES_URL = './models/mercedes.glb?v=1';
 const MAZDA_URL = './models/mazda.glb?v=1';
 
