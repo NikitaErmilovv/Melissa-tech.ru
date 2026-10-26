@@ -2,4 +2,4 @@ site=rp-detailing-tolyatti
 brand=РП
 prod=https://melissa-tech.ru/rp-detailing-tolyatti/
 deploy=git-push-timeweb-hook
-deploy-trigger=rp-hero-logo-20261026
+deploy-trigger=rp-deploy-20261026T1010Z
