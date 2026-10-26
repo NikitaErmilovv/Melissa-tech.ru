@@ -157,21 +157,6 @@ def build_about(site_dir: Path, site: dict, org: dict) -> str:
 """
 
 
-def patch_accent_css(site_dir: Path) -> None:
-    css_path = site_dir / "styles.css"
-    text = css_path.read_text(encoding="utf-8")
-    new_root = """:root{
-  --accent:#6db8ff;
-  --accent-soft:rgba(109, 184, 255, .55);
-  --accent-hover:#8ac9ff;
-  --accent-deep:#4a9ef5;
-  --accent-ink:#03060c;
-  --accent-rgb:109, 184, 255;
-}"""
-    text = re.sub(r":root\{[^}]+\}", new_root, text, count=1)
-    css_path.write_text(text, encoding="utf-8")
-
-
 def main() -> None:
     for raw in SITES:
         site = enrich_site(raw)
@@ -179,8 +164,7 @@ def main() -> None:
         site_dir = ROOT / site["slug"]
         html = build_about(site_dir, site, org)
         (site_dir / "about.html").write_text(html, encoding="utf-8")
-        patch_accent_css(site_dir)
-        print("about + accent", site["slug"])
+        print("about", site["slug"])
 
 
 if __name__ == "__main__":
