@@ -161,12 +161,12 @@ def patch_accent_css(site_dir: Path) -> None:
     css_path = site_dir / "styles.css"
     text = css_path.read_text(encoding="utf-8")
     new_root = """:root{
-  --accent:#5294ff;
-  --accent-soft:rgba(82, 148, 255, .48);
-  --accent-hover:#6ba8ff;
-  --accent-deep:#3a78eb;
-  --accent-ink:#040810;
-  --accent-rgb:82, 148, 255;
+  --accent:#6db8ff;
+  --accent-soft:rgba(109, 184, 255, .55);
+  --accent-hover:#8ac9ff;
+  --accent-deep:#4a9ef5;
+  --accent-ink:#03060c;
+  --accent-rgb:109, 184, 255;
 }"""
     text = re.sub(r":root\{[^}]+\}", new_root, text, count=1)
     css_path.write_text(text, encoding="utf-8")
