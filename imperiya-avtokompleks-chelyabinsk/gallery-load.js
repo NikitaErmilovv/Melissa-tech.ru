@@ -2,7 +2,7 @@
   var grid = document.getElementById('gallery-grid');
   if (!grid) return;
   var dir = grid.getAttribute('data-photo-dir');
-  var manifestUrl = 'data/gallery-manifest.json?dir=' + encodeURIComponent(dir || '');
+  var manifestUrl = 'data/gallery-manifest.json';
   fetch(manifestUrl)
     .then(function (r) { return r.json(); })
     .then(function (data) {
