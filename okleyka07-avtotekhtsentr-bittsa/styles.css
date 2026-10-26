@@ -275,6 +275,8 @@ a.card{display:block;color:inherit;text-decoration:none}
 }
 .quote-gallery-strip a.photo:hover{transform:scale(1.015)}
 .quote-gallery-strip a.photo:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.quote-gallery-strip--single{grid-template-columns:1fr}
+.quote-gallery-strip--single .photo.big{grid-row:span 1;min-height:min(52vh,520px)}
 
 .brand-story{padding:120px 6vw;border-top:1px solid rgba(255,255,255,.08)}
 .brand-story--hidden{display:none!important}

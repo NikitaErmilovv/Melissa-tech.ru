@@ -2,11 +2,7 @@
   var grid = document.getElementById('gallery-grid');
   if (!grid) return;
   var FALLBACK_FILES = [
-  "img/works/incoming/okleyka07/01-2gis.jpg",
-  "img/works/incoming/okleyka07/02-2gis.jpg",
-  "img/works/incoming/okleyka07/03-2gis.jpg",
-  "img/works/incoming/okleyka07/04-2gis.jpg",
-  "img/works/incoming/okleyka07/05-2gis.jpg"
+  "img/works/incoming/okleyka07/01-2gis.jpg"
 ];
   var manifestUrl = 'data/gallery-manifest.json';
 
@@ -48,4 +44,3 @@
       load(FALLBACK_FILES);
     });
 })();
-
