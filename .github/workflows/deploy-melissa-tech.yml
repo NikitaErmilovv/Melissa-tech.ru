@@ -16,6 +16,11 @@ jobs:
       DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
     steps:
       - uses: actions/checkout@v4
+      - name: Require deploy secrets
+        if: env.DEPLOY_SSH_KEY == ''
+        run: |
+          echo "::error::Добавьте в Settings → Secrets → Actions: DEPLOY_SSH_KEY, DEPLOY_HOST, DEPLOY_PATH"
+          exit 1
       - name: Install SSH key
         if: env.DEPLOY_SSH_KEY != ''
         run: |
