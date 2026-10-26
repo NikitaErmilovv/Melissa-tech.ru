@@ -467,6 +467,11 @@ def scaffold_one(raw: dict) -> None:
         f"Шаблон: prime38-detailing-angarsk. Фото альбома: {n} из 2ГИС.\n",
         encoding="utf-8",
     )
+    from patch_six_org_labels_2gis import ORG_TYPES, patch_file
+
+    org = ORG_TYPES[site["slug"]]
+    for path in dest.rglob("*.html"):
+        patch_file(path, site, org)
     print("  photos", n, "port", site["port"])
 
 
