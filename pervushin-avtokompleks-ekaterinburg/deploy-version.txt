@@ -2,4 +2,4 @@ site=pervushin-avtokompleks-ekaterinburg
 brand=Первушин
 prod=https://melissa-tech.ru/pervushin-avtokompleks-ekaterinburg/
 deploy=git-push-timeweb-hook
-deploy-trigger=pervushin-services-copy-20261028
+deploy-trigger=pervushin-prod-sync-20261028T1815Z

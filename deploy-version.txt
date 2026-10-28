@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=pervushin-full-deploy-20261028T1109Z
+deploy-trigger=pervushin-prod-sync-20261028T1815Z
