@@ -108,8 +108,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .button.dark{background:rgba(255,255,255,.04);color:#eee;border:1px solid rgba(255,255,255,.13);transition:background .2s,border-color .2s,color .2s}
 .button.dark:hover{border-color:var(--accent-soft);color:var(--accent);background:rgba(var(--accent-rgb),.08)}
 
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.09);margin:0 6vw}
-.stats--maps{grid-template-columns:repeat(5,1fr)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.09);margin:0 6vw}
 .stats--hero{margin:88px 0 0;width:100%}
 .stat{padding:27px 20px 27px 0;border-right:1px solid rgba(255,255,255,.09)}
 .stat:last-child{border:0}
@@ -1049,7 +1048,7 @@ div.address-map-frame:hover img{transform:none}
     width:100%;text-align:center;box-sizing:border-box;padding:14px 18px;
   }
   .stats{margin:0 5vw;grid-template-columns:1fr 1fr}
-  .stats--maps{grid-template-columns:1fr 1fr}
+  .stats .stat:last-child{grid-column:1/-1}
   .stats.stats--hero{margin:28px 0 0;width:100%}
   .stat{padding:14px 12px 14px 0}
   .stat b{font-size:20px}
