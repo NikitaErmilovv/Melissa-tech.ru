@@ -1,5 +1,7 @@
 # Деплой на VPS (Caddy) после push в master.
-# Secrets (optional if .github/vps-deploy-key exists): DEPLOY_SSH_KEY, DEPLOY_HOST, DEPLOY_PATH
+# Repository secret: DEPLOY_SSH_KEY = приватный OpenSSH-ключ для root@185.84.163.45
+# (не путать с Deploy keys репозитория для git clone).
+# Опционально: DEPLOY_SSH_KEY_B64 (тот же ключ в base64 одной строкой), DEPLOY_HOST, DEPLOY_PATH
 name: Deploy melissa-tech.ru (rsync)
 
 on:
@@ -10,40 +12,58 @@ on:
 jobs:
   rsync:
     runs-on: ubuntu-latest
-    env:
-      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY || secrets.SSH_PRIVATE_KEY || secrets.SSH_KEY }}
-      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
     steps:
       - uses: actions/checkout@v4
-      - name: Resolve deploy target
-        id: target
+
+      - name: Resolve deploy target and install SSH key
+        id: setup
+        env:
+          SEC_DEPLOY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SEC_SSH: ${{ secrets.SSH_PRIVATE_KEY }}
+          SEC_KEY: ${{ secrets.SSH_KEY }}
+          SEC_VPS: ${{ secrets.VPS_SSH_KEY }}
+          SEC_B64: ${{ secrets.DEPLOY_SSH_KEY_B64 }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           set -euo pipefail
           HOST="${DEPLOY_HOST:-root@185.84.163.45}"
           REMOTE="${DEPLOY_PATH:-/var/www/melissa-tech.ru}"
           echo "host=$HOST" >> "$GITHUB_OUTPUT"
           echo "remote=$REMOTE" >> "$GITHUB_OUTPUT"
-          if [ -z "${DEPLOY_SSH_KEY:-}" ] && [ ! -f .github/vps-deploy-key ]; then
-            echo "::error::Нужен Actions secret DEPLOY_SSH_KEY (приватный SSH-ключ VPS) или файл .github/vps-deploy-key в репозитории."
+
+          install -m 700 -d ~/.ssh
+          KEY=""
+          for candidate in "$SEC_DEPLOY" "$SEC_SSH" "$SEC_KEY" "$SEC_VPS"; do
+            if [ -n "$candidate" ]; then
+              KEY="$candidate"
+              break
+            fi
+          done
+
+          if [ -n "${SEC_B64:-}" ]; then
+            printf '%s' "$SEC_B64" | tr -d '\n' | base64 -d > ~/.ssh/deploy_key
+          elif [ -n "$KEY" ]; then
+            printf '%s\n' "$KEY" > ~/.ssh/deploy_key
+          elif [ -f .github/vps-deploy-key ]; then
+            cp .github/vps-deploy-key ~/.ssh/deploy_key
+          else
+            echo "::error::Нет ключа для VPS. Добавьте в Settings → Secrets and variables → Actions секрет DEPLOY_SSH_KEY (приватный SSH-ключ сервера, целиком с BEGIN/END). Deploy key репозитория для git — не подходит."
             exit 1
           fi
-      - name: Install SSH key
-        run: |
-          install -m 700 -d ~/.ssh
-          if [ -n "${DEPLOY_SSH_KEY:-}" ]; then
-            printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
-          else
-            cp .github/vps-deploy-key ~/.ssh/deploy_key
-          fi
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "${{ steps.target.outputs.host }}" >> ~/.ssh/known_hosts 2>/dev/null || true
+          H="${HOST#*@}"
+          ssh-keyscan -H "$H" >> ~/.ssh/known_hosts 2>/dev/null || true
+
       - name: Rsync site to server
         run: |
           rsync -az --delete --exclude '.git' --exclude '.github' \
-            -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes" \
-            ./ "${{ steps.target.outputs.host }}:${{ steps.target.outputs.remote }}/"
-      - name: Verify aliento deploy marker
+            -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
+            ./ "${{ steps.setup.outputs.host }}:${{ steps.setup.outputs.remote }}/"
+
+      - name: Verify deploy markers on server
         run: |
-          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "${{ steps.target.outputs.host }}" \
-            "head -4 '${{ steps.target.outputs.remote }}/aliento/deploy-version.txt'"
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new \
+            "${{ steps.setup.outputs.host }}" \
+            "head -4 '${{ steps.setup.outputs.remote }}/pervushin-avtokompleks-ekaterinburg/deploy-version.txt' && \
+             python3 -c \"import json; print('pervushin gallery', len(json.load(open('${{ steps.setup.outputs.remote }}/pervushin-avtokompleks-ekaterinburg/data/gallery-manifest.json'))['files']))\""
