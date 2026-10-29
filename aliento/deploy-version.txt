@@ -1,4 +1,4 @@
 site=aliento
 path=/aliento/
-deploy=git-push-master
+deploy=git-push-timeweb-hook
 deploy-trigger=aliento-export-20261029-153613
