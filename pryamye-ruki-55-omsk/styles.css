@@ -360,8 +360,20 @@ html.media-lightbox-open{overflow:hidden}
 .media-lightbox-nav:disabled{opacity:.25;cursor:default}
 .media-lightbox-prev{left:12px}
 .media-lightbox-next{right:12px}
-.address-map-phones{display:flex;flex-direction:column;gap:8px}
+.address-map-phones{display:flex;flex-direction:column;gap:14px}
+.address-map-phone-entry{display:flex;flex-direction:column;gap:2px}
+.address-map-phone-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#888}
 .footer-col.footer-col--phones{display:flex;flex-direction:column;gap:10px}
+.footer-phone-stack{display:flex;flex-direction:column;gap:8px;font-size:13px;color:#aaa;line-height:1.45}
+.footer-phone-line{display:block}
+.footer-phone-line b{color:#ddd;font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.nav-phones{display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:min(42vw,320px)}
+.nav-phone{color:#fff;text-decoration:none;font-weight:700;font-size:12px;line-height:1.25;text-align:right;white-space:nowrap}
+.nav-phone-label{display:block;font-size:9px;font-weight:500;color:#888;letter-spacing:.04em;text-transform:uppercase;margin-bottom:1px;white-space:normal;max-width:280px}
+.phone--nav-mobile{display:none}
+.contact-phone-line{margin:0 0 14px;font-size:14px;line-height:1.5;color:#aaa}
+.contact-phone-line span{display:block;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#888;margin-bottom:4px}
+.contact-phone-line .contact-phone{font-size:22px;margin:0}
 
 .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:50px}
 .review{border:1px solid rgba(255,255,255,.08);padding:30px;min-height:220px;background:#101010}
@@ -959,6 +971,10 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .nav-burger{display:none}
 .nav-mobile-menu{display:none}
 
+@media(max-width:1100px){
+  .nav-phones--desktop{display:none}
+  .phone--nav-mobile{display:inline-flex}
+}
 @media(max-width:800px){
   .site-nav{
     position:absolute;height:auto;min-height:72px;padding:14px 5vw;
