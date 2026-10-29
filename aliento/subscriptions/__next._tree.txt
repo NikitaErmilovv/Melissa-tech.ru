@@ -5,4 +5,4 @@
 :HL["/aliento/_next/static/css/9e2138118427d5c0.css","style"]
 :HL["https://static.maps.2gis.com/1.0?s=880x450&c=54.99141,82.9087&z=17&pt=54.99141,82.9087~k:p","image"]
 :HL["https://static.maps.2gis.com/1.0?s=720x720&c=54.99141,82.9087&z=17&pt=54.99141,82.9087~k:p","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"subscriptions","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"H1WKgD2dJvVfZCXtg8tpf"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"subscriptions","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"cyhzjrM-AzWXVG8WeK_aA"}

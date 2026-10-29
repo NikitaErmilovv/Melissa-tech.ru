@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=aliento-export-20261029-154112
+deploy-trigger=aliento-assets-20261029-160027
