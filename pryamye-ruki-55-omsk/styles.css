@@ -389,7 +389,10 @@ html.media-lightbox-open{overflow:hidden}
 .hero-shield-logo{display:block;width:min(240px,72vw);height:auto;margin:0 0 8px}
 .hero-heading-logo{margin:0;line-height:0}
 .hero-heading--logo-left{align-self:flex-start;text-align:left;width:100%}
-.hero--pryamye .hero-heading--logo-left .hero-shield-logo{margin-left:0;margin-right:auto}
+.hero--pryamye .hero-heading--logo-left .hero-shield-logo{
+  margin-left:0;margin-right:auto;
+  transform:translateY(25px);
+}
 nav.site-nav{overflow:visible;z-index:100}
 .visually-hidden{
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;

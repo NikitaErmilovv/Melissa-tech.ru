@@ -2,4 +2,4 @@ site=pryamye-ruki-55-omsk
 brand=Прямые руки 55
 prod=https://melissa-tech.ru/pryamye-ruki-55-omsk/
 deploy=git-push-timeweb-hook
-deploy-trigger=pryamye-hero-phone-fix-20261029T2020Z
+deploy-trigger=pryamye-hero-logo-down25-20261029T2030Z
