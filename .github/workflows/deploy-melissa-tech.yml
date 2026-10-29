@@ -1,7 +1,5 @@
 # Деплой на VPS (Caddy) после push в master.
-# Repository secret: DEPLOY_SSH_KEY = приватный OpenSSH-ключ для root@185.84.163.45
-# (не путать с Deploy keys репозитория для git clone).
-# Опционально: DEPLOY_SSH_KEY_B64 (тот же ключ в base64 одной строкой), DEPLOY_HOST, DEPLOY_PATH
+# Repository secret: DEPLOY_SSH_KEY (или DEPLOY_SSHK) — приватный OpenSSH для root@185.84.163.45
 name: Deploy melissa-tech.ru (rsync)
 
 on:
@@ -19,6 +17,7 @@ jobs:
         id: setup
         env:
           SEC_DEPLOY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SEC_DEPLOYSHK: ${{ secrets.DEPLOY_SSHK }}
           SEC_SSH: ${{ secrets.SSH_PRIVATE_KEY }}
           SEC_KEY: ${{ secrets.SSH_KEY }}
           SEC_VPS: ${{ secrets.VPS_SSH_KEY }}
@@ -34,30 +33,33 @@ jobs:
 
           install -m 700 -d ~/.ssh
           KEY=""
-          for candidate in "$SEC_DEPLOY" "$SEC_SSH" "$SEC_KEY" "$SEC_VPS"; do
+          for candidate in "$SEC_DEPLOY" "$SEC_DEPLOYSHK" "$SEC_SSH" "$SEC_KEY" "$SEC_VPS"; do
             if [ -n "$candidate" ]; then
               KEY="$candidate"
               break
             fi
           done
 
-          if [ -n "${SEC_B64:-}" ]; then
-            printf '%s' "$SEC_B64" | tr -d '\n' | base64 -d > ~/.ssh/deploy_key
-          elif [ -n "$KEY" ]; then
-            printf '%s\n' "$KEY" > ~/.ssh/deploy_key
+          if [ -n "$KEY" ]; then
+            printf '%s\n' "$KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          elif [ -n "${SEC_B64:-}" ]; then
+            printf '%s' "$SEC_B64" | tr -d '\n\r' | base64 -d > ~/.ssh/deploy_key
           elif [ -f .github/vps-deploy-key ]; then
             cp .github/vps-deploy-key ~/.ssh/deploy_key
           else
-            echo "Проверка секретов (только длина, без значений):"
-            for name in SEC_DEPLOY SEC_SSH SEC_KEY SEC_VPS SEC_B64; do
+            echo "Проверка секретов (только длина):"
+            for name in SEC_DEPLOY SEC_DEPLOYSHK SEC_SSH SEC_KEY SEC_VPS SEC_B64; do
               eval "v=\${$name:-}"
               if [ -n "$v" ]; then echo "  $name: задан (${#v} символов)"; else echo "  $name: пусто"; fi
             done
-            if [ -f .github/vps-deploy-key ]; then echo "  .github/vps-deploy-key: есть"; else echo "  .github/vps-deploy-key: нет"; fi
-            echo "::error::Нет ключа для VPS. Repository secret DEPLOY_SSH_KEY = приватный OpenSSH-ключ для root@185.84.163.45 (BEGIN/END). Deploy key репозитория (git) — не подходит. Org secrets: разрешите доступ репозиторию Melissa-tech.ru."
+            echo "::error::Actions не видит ключ. Repository secret: имя DEPLOY_SSH_KEY (или DEPLOY_SSHK), значение — приватный ключ BEGIN/END для root@185.84.163.45. Org secret — включите доступ репозиторию Melissa-tech.ru."
             exit 1
           fi
           chmod 600 ~/.ssh/deploy_key
+          if ! ssh-keygen -y -f ~/.ssh/deploy_key >/dev/null 2>&1; then
+            echo "::error::Секрет не похож на приватный OpenSSH-ключ (проверьте BEGIN/END и переносы строк)."
+            exit 1
+          fi
           H="${HOST#*@}"
           ssh-keyscan -H "$H" >> ~/.ssh/known_hosts 2>/dev/null || true
 
@@ -72,4 +74,4 @@ jobs:
           REMOTE="${{ steps.setup.outputs.remote }}"
           ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new \
             "${{ steps.setup.outputs.host }}" \
-            "head -4 '$REMOTE/pervushin-avtokompleks-ekaterinburg/deploy-version.txt'; grep -c '\"files\"' '$REMOTE/pervushin-avtokompleks-ekaterinburg/data/gallery-manifest.json' || true"
+            "grep deploy-trigger '$REMOTE/pryamye-ruki-55-omsk/deploy-version.txt' | tail -1"
