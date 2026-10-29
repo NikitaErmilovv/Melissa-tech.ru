@@ -6,20 +6,18 @@
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Работы — Прямые руки 55</title>
-<link rel="stylesheet" href="styles.css?v=134">
+<link rel="stylesheet" href="styles.css?v=135">
 </head>
 <body class="page-sub">
 <nav class="site-nav">
   <div class="logo"><a href="index.html"><span class="logo-mark">ПРЯМЫЕ</span><span class="logo-mark">РУКИ</span><span class="logo-word">55</span></a></div>
   <div class="links"><a href="services.html">УСЛУГИ</a><a href="gallery.html">РАБОТЫ</a><a href="about.html">О НАС</a><a href="contact.html">КОНТАКТЫ</a></div>
   <div class="nav-actions">
-    <div class="nav-phones nav-phones--desktop">
-      <a class="nav-phone" href="tel:+79136273852"><span class="nav-phone-label">Автосигнализации · Сергей</span>+7 (913) 627-38-52</a>
-      <a class="nav-phone" href="tel:+79087939563"><span class="nav-phone-label">Бронирование / тонирование · Артём</span>+7 (908) 793-95-63</a>
-      <a class="nav-phone" href="tel:+79681022224"><span class="nav-phone-label">Автосвет · Анатолий</span>+7 (968) 102-22-24</a>
+    <div class="phone-picker" data-phone-picker>
+      <button type="button" class="button button--nav-call phone-picker__toggle" aria-expanded="false" aria-haspopup="true">Позвонить</button>
+      <div class="phone-picker__menu" hidden></div>
     </div>
-    <a class="phone phone--nav-mobile" href="tel:+79087939563">+7 (908) 793-95-63</a>
-    <button class="nav-burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+<button class="nav-burger" type="button" aria-label="Открыть меню" aria-expanded="false">
       <span class="nav-burger-line"></span>
       <span class="nav-burger-line"></span>
       <span class="nav-burger-line"></span>
@@ -30,9 +28,6 @@
     <a href="gallery.html">РАБОТЫ</a>
     <a href="about.html">О НАС</a>
     <a href="contact.html">КОНТАКТЫ</a>
-    <a href="tel:+79136273852">Автосигнализации · +7 (913) 627-38-52</a>
-    <a href="tel:+79087939563">Бронирование / тонирование · +7 (908) 793-95-63</a>
-    <a href="tel:+79681022224">Автосвет · +7 (968) 102-22-24</a>
   </div>
 </nav>
 
@@ -176,6 +171,8 @@
 </div>
 
 <script src="contacts-config.js"></script>
+<script src="phone-picker.js"></script>
+
 <script src="nav.js"></script>
 <script src="stats.js"></script>
 <script src="messenger-picker.js"></script>
