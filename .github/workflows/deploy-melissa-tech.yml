@@ -48,7 +48,13 @@ jobs:
           elif [ -f .github/vps-deploy-key ]; then
             cp .github/vps-deploy-key ~/.ssh/deploy_key
           else
-            echo "::error::Нет ключа для VPS. Добавьте в Settings → Secrets and variables → Actions секрет DEPLOY_SSH_KEY (приватный SSH-ключ сервера, целиком с BEGIN/END). Deploy key репозитория для git — не подходит."
+            echo "Проверка секретов (только длина, без значений):"
+            for name in SEC_DEPLOY SEC_SSH SEC_KEY SEC_VPS SEC_B64; do
+              eval "v=\${$name:-}"
+              if [ -n "$v" ]; then echo "  $name: задан (${#v} символов)"; else echo "  $name: пусто"; fi
+            done
+            if [ -f .github/vps-deploy-key ]; then echo "  .github/vps-deploy-key: есть"; else echo "  .github/vps-deploy-key: нет"; fi
+            echo "::error::Нет ключа для VPS. Repository secret DEPLOY_SSH_KEY = приватный OpenSSH-ключ для root@185.84.163.45 (BEGIN/END). Deploy key репозитория (git) — не подходит. Org secrets: разрешите доступ репозиторию Melissa-tech.ru."
             exit 1
           fi
           chmod 600 ~/.ssh/deploy_key
@@ -63,7 +69,7 @@ jobs:
 
       - name: Verify deploy markers on server
         run: |
+          REMOTE="${{ steps.setup.outputs.remote }}"
           ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new \
             "${{ steps.setup.outputs.host }}" \
-            "head -4 '${{ steps.setup.outputs.remote }}/pervushin-avtokompleks-ekaterinburg/deploy-version.txt' && \
-             python3 -c \"import json; print('pervushin gallery', len(json.load(open('${{ steps.setup.outputs.remote }}/pervushin-avtokompleks-ekaterinburg/data/gallery-manifest.json'))['files']))\""
+            "head -4 '$REMOTE/pervushin-avtokompleks-ekaterinburg/deploy-version.txt'; grep -c '\"files\"' '$REMOTE/pervushin-avtokompleks-ekaterinburg/data/gallery-manifest.json' || true"
