@@ -3,6 +3,13 @@
   var phones = contacts.phones || [];
   if (!phones.length) return;
 
+  function telHref(raw) {
+    if (!raw) return "#";
+    var n = String(raw).trim();
+    if (n.indexOf("tel:") === 0) return n;
+    return "tel:" + n.replace(/\s/g, "");
+  }
+
   document.querySelectorAll("[data-phone-picker]").forEach(function (root) {
     var btn = root.querySelector(".phone-picker__toggle");
     var menu = root.querySelector(".phone-picker__menu");
@@ -13,10 +20,10 @@
         var label = (p.label || "") + (p.name ? " · " + p.name : "");
         return (
           '<a class="phone-picker__item" href="' +
-          (p.tel || "") +
+          telHref(p.tel) +
           '"><span class="phone-picker__label">' +
           label +
-          "</span><span class="phone-picker__number">" +
+          '</span><span class="phone-picker__number">' +
           (p.display || p.tel || "") +
           "</span></a>"
         );
@@ -34,18 +41,19 @@
     }
 
     btn.addEventListener("click", function (e) {
+      e.preventDefault();
       e.stopPropagation();
       if (menu.hidden) open();
       else close();
     });
 
-    document.addEventListener("click", function () {
-      if (!menu.hidden) close();
-    });
-
-    root.addEventListener("click", function (e) {
-      e.stopPropagation();
-    });
+    document.addEventListener(
+      "click",
+      function (e) {
+        if (!root.contains(e.target)) close();
+      },
+      true
+    );
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") close();

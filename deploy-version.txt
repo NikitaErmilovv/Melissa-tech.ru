@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=pryamye-rsync-deploy-20261029T2010Z
+deploy-trigger=pryamye-hero-phone-fix-20261029T2020Z
