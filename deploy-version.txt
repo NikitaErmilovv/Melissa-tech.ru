@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=d2-mercedes-glb-prefetch-20261029
+deploy-trigger=d2-mercedes-glb-prefetch-20261029T1236Z
