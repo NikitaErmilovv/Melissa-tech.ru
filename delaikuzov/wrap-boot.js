@@ -1,5 +1,11 @@
-﻿const CORE_URL = new URL('./wrap-configurator.core.js?v=prices6', import.meta.url).href;
-const MERCEDES_URL = new URL('./models/mercedes.glb?v=5', import.meta.url).href;
+﻿import {
+  mercedesGlbHref,
+  prefetchMercedesGlb,
+  scheduleMercedesGlbPrefetch,
+} from './models-prefetch-mercedes.js?v=1';
+
+const CORE_URL = new URL('./wrap-configurator.core.js?v=prices6', import.meta.url).href;
+const MERCEDES_URL = mercedesGlbHref(import.meta.url);
 const MAZDA_URL = new URL('./models/mazda.glb?v=5', import.meta.url).href;
 
 let started = false;
@@ -7,16 +13,10 @@ let started = false;
 window.__wrapGlb = window.__wrapGlb || {};
 
 function loadMercedes() {
-  if (window.__wrapGlb.mercedes || window.__wrapMercedesFetch) return window.__wrapMercedesFetch;
-  window.__wrapMercedesFetch = fetch(MERCEDES_URL, { priority: 'low' })
-    .then((r) => r.arrayBuffer())
-    .then((buf) => {
-      window.__wrapGlb.mercedes = buf;
-      return buf;
-    })
-    .catch(() => undefined);
-  return window.__wrapMercedesFetch;
+  return prefetchMercedesGlb(MERCEDES_URL);
 }
+
+scheduleMercedesGlbPrefetch(MERCEDES_URL);
 
 export function startConfigurator() {
   if (started) return;
@@ -40,7 +40,6 @@ if (wrap && 'IntersectionObserver' in window) {
 }
 
 if (location.hash === '#wrap') startConfigurator();
-startConfigurator();
 
 function prefetchMazda() {
   if (window.__wrapGlb.mazda || window.__mzPrefetch) return;
