@@ -9,6 +9,6 @@
 
 Шаблон: prime38-detailing-angarsk. Фото альбома: 16 из 2ГИС.
 
-## Деплой на melissa-tech.ru
+## Деплой
 
-Код в **master** есть; домен отдаёт **VPS** (Caddy). Обновление — Action **Deploy melissa-tech.ru (rsync)** или `scripts/deploy-pryamye-rsync.sh` с вашего ПК. Нужен секрет **`DEPLOY_SSH_KEY`** (приватный ключ `root@185.84.163.45`) в GitHub → Settings → Secrets → Actions. Без него каждый push падает на rsync, Timeweb-hook прод не подтягивает.
+`git push origin master` (или `deploy-push.bat`) — Timeweb подтягивает `master` на melissa-tech.ru.
