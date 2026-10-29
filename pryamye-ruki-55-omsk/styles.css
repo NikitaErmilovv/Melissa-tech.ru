@@ -360,8 +360,8 @@ html.media-lightbox-open{overflow:hidden}
 .media-lightbox-nav:disabled{opacity:.25;cursor:default}
 .media-lightbox-prev{left:12px}
 .media-lightbox-next{right:12px}
-.address-map-phones{display:flex;flex-direction:column;gap:22px}
-.address-map-phone-entry{display:flex;flex-direction:column;gap:6px;margin-bottom:4px}
+.address-map-phones{display:flex;flex-direction:column;gap:32px}
+.address-map-phone-entry{display:flex;flex-direction:column;gap:8px}
 .address-map-phone-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#888}
 .footer-col.footer-col--phones{display:flex;flex-direction:column;gap:10px}
 .footer-phone-stack{display:flex;flex-direction:column;gap:8px;font-size:13px;color:#aaa;line-height:1.45}
