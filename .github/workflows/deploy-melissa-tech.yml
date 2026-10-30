@@ -1,6 +1,6 @@
-# Деплой на VPS (Caddy) после push в master.
-# Repository secret: DEPLOY_SSH_KEY (или DEPLOY_SSHK) — приватный OpenSSH для root@185.84.163.45
-name: Deploy melissa-tech.ru (rsync)
+# НЕ основной деплой melissa-tech.ru. Сайты — статика в репо; прод обновляет Timeweb (git pull master).
+# Этот workflow — только опциональный rsync, если настроен DEPLOY_SSH_KEY.
+name: Deploy melissa-tech.ru (rsync, optional)
 
 on:
   push:
