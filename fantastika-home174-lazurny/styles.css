@@ -1362,7 +1362,9 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   font-size:clamp(58px,8vw,116px);line-height:1.05;letter-spacing:-.075em;margin:0;
 }
 .hero--fantastika.hero--sdc .hero-heading--title{padding-top:4px;margin:0}
-.hero--fantastika.hero--sdc .hero-heading--title h1{margin:0;text-align:left}
+.hero--fantastika.hero--sdc .hero-heading--title h1{
+  margin:0;text-align:left;font-size:1rem;line-height:1;letter-spacing:0;
+}
 .hero--fantastika.hero--sdc .hero-title-brand{margin-bottom:28px}
 .hero--fantastika.hero--sdc .hero-content{
   margin-top:auto;
