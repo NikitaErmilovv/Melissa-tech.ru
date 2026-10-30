@@ -74,4 +74,4 @@ jobs:
           REMOTE="${{ steps.setup.outputs.remote }}"
           ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new \
             "${{ steps.setup.outputs.host }}" \
-            "grep deploy-trigger '$REMOTE/pryamye-ruki-55-omsk/deploy-version.txt' | tail -1"
+            "grep deploy-trigger '$REMOTE/fantastika-home174-lazurny/deploy-version.txt' | tail -1"
