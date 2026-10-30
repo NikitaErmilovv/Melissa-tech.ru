@@ -15,10 +15,9 @@ LOGO_MAP = LOGO_COMPACT.replace("--compact", "--map")
 OLD_LOGO = '<span class="logo-mark">HOME</span><span class="logo-word">174</span>'
 
 HERO_H1 = """<h1><span class="hero-title-brand">
-        <span class="hero-brand-inter">FANTASTIKA</span>
-        <span class="brand-stack brand-stack--hero brand-stack--hero-sub">
-          <span class="brand-stack__base">Home</span>
-          <span class="brand-stack__script">174</span>
+        <span class="brand-stack brand-stack--section brand-stack--hero-home brand-stack--hero-main">
+          <span class="brand-stack__base">Fantastika</span>
+          <span class="brand-stack__script">home 174</span>
         </span>
       </span></h1>"""
 
