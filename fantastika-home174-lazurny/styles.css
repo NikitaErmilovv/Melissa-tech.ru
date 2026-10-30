@@ -882,14 +882,19 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .address-map-line{width:40px;height:1px;background:var(--accent);flex-shrink:0}
 .address-map-kicker .kicker{color:var(--accent);margin:0}
 .address-map-title{
-  font-size:clamp(38px,5vw,70px);font-weight:800;line-height:.95;color:#fff;
-  margin:0 0 28px;letter-spacing:-.06em;text-transform:uppercase;
+  font-weight:400;line-height:.95;color:#fff;
+  margin:0 0 28px;letter-spacing:0;text-transform:none;
 }
-.address-map-title span{color:var(--accent)}
+.address-map-title .title-kino-line{font-size:clamp(38px,5vw,70px);margin-bottom:.06em}
+.address-map-detail-label{
+  display:block;margin-bottom:10px;
+  font-family:'Great Vibes',cursive;font-weight:400;
+  font-size:clamp(22px,2.4vw,30px);letter-spacing:0;line-height:1;
+  color:var(--accent);opacity:1;text-transform:none;
+}
 .address-map-text{color:#8f8f89;font-size:14px;line-height:1.7;margin:0 0 44px;max-width:380px}
 .address-map-divider{height:1px;background:rgba(255,255,255,.08);margin:0 0 32px}
 .address-map-details{display:flex;flex-direction:column;gap:28px;margin-bottom:28px;padding-top:0;border-top:none}
-.address-map-detail-label{font-size:11px;letter-spacing:2px;color:var(--accent);opacity:.72;display:block;margin-bottom:10px}
 .address-map-brand{margin:0 0 8px}
 .address-map-muted{color:#85857f;font-size:13px;line-height:1.55;margin:0}
 .address-map-muted-sm{color:#777;font-size:11px;margin:6px 0 0;line-height:1.5}
