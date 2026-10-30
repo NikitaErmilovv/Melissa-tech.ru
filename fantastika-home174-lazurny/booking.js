@@ -2,6 +2,13 @@
   var form = document.getElementById('booking-form');
   if (!form) return;
   var error = document.getElementById('booking-error');
+  var telegram = (window.STUDIO_MESSENGERS && window.STUDIO_MESSENGERS.tg) || '+79191213344';
+
+  function formatDate(iso) {
+    var parts = String(iso || '').split('-');
+    if (parts.length !== 3) return iso;
+    return parts[2] + '.' + parts[1] + '.' + parts[0];
+  }
 
   form.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -11,7 +18,6 @@
     var arrive = String(data.get('arrive') || '');
     var depart = String(data.get('depart') || '');
     var guests = String(data.get('guests') || '').trim();
-    var channel = String(data.get('channel') || 'WhatsApp');
     var comment = String(data.get('comment') || '').trim();
 
     if (!name || !phone || !arrive || !depart || !guests) {
@@ -26,24 +32,16 @@
 
     var lines = [
       'Здравствуйте! Хочу забронировать Fantastika home 174, пос. Лазурный.',
+      '',
       'Имя: ' + name,
       'Телефон: ' + phone,
-      'Заезд: ' + arrive,
-      'Выезд: ' + depart,
-      'Гостей: ' + guests,
-      'Удобнее связаться: ' + channel
+      'Заезд: ' + formatDate(arrive),
+      'Выезд: ' + formatDate(depart),
+      'Гостей: ' + guests
     ];
     if (comment) lines.push('Комментарий: ' + comment);
     var text = encodeURIComponent(lines.join('\n'));
-
-    if (channel === 'Telegram') {
-      window.open('https://t.me/+79191213344?text=' + text, '_blank', 'noopener');
-      return;
-    }
-    if (channel === 'Звонок') {
-      window.location.href = 'tel:+79191213344';
-      return;
-    }
-    window.open('https://wa.me/79191213344?text=' + text, '_blank', 'noopener');
+    var phonePath = telegram.charAt(0) === '+' ? telegram : '+' + telegram;
+    window.open('https://t.me/' + phonePath + '?text=' + text, '_blank', 'noopener');
   });
 })();
