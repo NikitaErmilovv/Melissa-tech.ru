@@ -1,3 +1,4 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=pryamye-hero-logo-down25-20261029T2030Z
+deploy-trigger=pryamye-hero-logo-down25fix-20261029T2040Z
+deploy-trigger=fantastika-cottage-scaffold-20261030T1435Z
