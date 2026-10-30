@@ -87,6 +87,10 @@ class SiteHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
+    def end_headers(self) -> None:
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
     def do_GET(self) -> None:
         if self.path.split("?", 1)[0] == "/data/gallery-manifest.json":
             from urllib.parse import urlparse, parse_qs
