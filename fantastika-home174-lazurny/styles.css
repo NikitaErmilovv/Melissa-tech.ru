@@ -100,7 +100,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 
 .hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:stretch;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#3a3626 0,#1a1810 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/works/incoming/fantastika/01-2gis.jpg') 50% 45% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('photoHouse/2d5efc4c-f792-4f57-bb8a-4b1698f697f6.jpg') 50% 42% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-stack{
   position:relative;z-index:1;width:100%;
@@ -1449,4 +1449,33 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .pricelist-notes li{margin-bottom:6px}
 @media(max-width:640px){
   .pricelist-table th,.pricelist-table td{padding:10px 12px;font-size:13px}
+}
+
+.photo-strip--services.photo-strip--quad{grid-template-columns:repeat(4,1fr)}
+.photo-strip--services.photo-strip--chan{grid-template-columns:repeat(3,1fr);margin-top:28px}
+@media(max-width:1100px){
+  .photo-strip--services.photo-strip--quad,
+  .photo-strip--services.photo-strip--chan{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:720px){
+  .photo-strip--services.photo-strip--quad,
+  .photo-strip--services.photo-strip--chan{grid-template-columns:1fr}
+}
+
+.booking-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:start}
+.booking-copy{max-width:460px}
+.booking-copy p{color:#9a9a94;line-height:1.7;margin:18px 0 0}
+.booking-form{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+.booking-form label{display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.06em;color:#b7b7b0}
+.booking-form .span-2{grid-column:1 / -1}
+.booking-form input,.booking-form textarea,.booking-form select{
+  width:100%;background:#181818;border:1px solid rgba(255,255,255,.08);color:#eee;
+  padding:14px 16px;font:inherit;color-scheme:dark;
+}
+.booking-form input:focus,.booking-form textarea:focus,.booking-form select:focus{outline:none;border-color:var(--accent-soft)}
+.booking-form textarea{min-height:110px;resize:vertical}
+.booking-form button.button{font-family:inherit;letter-spacing:.06em}
+.booking-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+@media(max-width:900px){
+  .booking-grid,.booking-form{grid-template-columns:1fr}
 }
