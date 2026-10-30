@@ -34,12 +34,7 @@ body.page-sub > nav.site-nav{
 }
 body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .logo{font-size:18px;font-weight:400;letter-spacing:0;white-space:nowrap;line-height:1}
-.logo a{display:inline-flex;align-items:baseline;gap:clamp(8px,1.4vw,16px)}
-.nav-place{
-  font-family:'Great Vibes',cursive;font-weight:400;
-  font-size:clamp(17px,1.9vw,23px);line-height:1;color:var(--accent);
-  flex-shrink:0;
-}
+.logo a{display:inline-flex;align-items:center;gap:0}
 .site-nav .logo .brand-stack--compact{font-size:clamp(19px,2.2vw,22px)}
 
 .brand-stack{
@@ -1316,9 +1311,10 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   color:#f5f5f2!important;
 }
 .nav-mobile-menu a:last-child{color:var(--accent)}
-.process .step b{color:#6f6f6a}
-@media (max-width:1024px){.process .step b{color:#6f6f6a}}
-@media (max-width:768px){.process .step b{color:#6f6f6a}}
+.process .kicker,
+.step b{color:#6f6f6a}
+@media (max-width:1024px){.process .kicker,.step b{color:#6f6f6a}}
+@media (max-width:768px){.process .kicker,.step b{color:#6f6f6a}}
 
 
 .service-stages-lead,.service-stages-result{
