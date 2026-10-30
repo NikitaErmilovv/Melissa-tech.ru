@@ -130,7 +130,41 @@ class SiteHandler(SimpleHTTPRequestHandler):
         return super().do_GET()
 
 
+def _lan_urls(port: int) -> list[str]:
+    import socket
+
+    urls = [f"http://127.0.0.1:{port}/"]
+    seen: set[str] = set()
+    try:
+        for info in socket.getaddrinfo(socket.gethostname(), None, socket.AF_INET):
+            ip = info[4][0]
+            if ip.startswith(("127.", "169.254.")) or ip in seen:
+                continue
+            seen.add(ip)
+            urls.append(f"http://{ip}:{port}/")
+    except OSError:
+        pass
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+            s.connect(("8.8.8.8", 80))
+            ip = s.getsockname()[0]
+            if ip not in seen and not ip.startswith("127."):
+                seen.add(ip)
+                urls.append(f"http://{ip}:{port}/")
+    except OSError:
+        pass
+    return urls
+
+
 if __name__ == "__main__":
-    with ThreadingHTTPServer(("", PORT), SiteHandler) as httpd:
-        print(f"Serving {ROOT} on http://127.0.0.1:{PORT}/")
+    host = "0.0.0.0"
+    with ThreadingHTTPServer((host, PORT), SiteHandler) as httpd:
+        print(f"Serving {ROOT}")
+        print(f"  This machine: http://127.0.0.1:{PORT}/")
+        print("  Phone on same Wi‑Fi / hotspot (open on laptop, not cloud agent):")
+        for url in _lan_urls(PORT)[1:]:
+            print(f"    {url}")
+        if len(_lan_urls(PORT)) <= 1:
+            print("    (LAN IP not detected — run ipconfig / ifconfig on your laptop)")
+        print("  Stop: Ctrl+C")
         httpd.serve_forever()
