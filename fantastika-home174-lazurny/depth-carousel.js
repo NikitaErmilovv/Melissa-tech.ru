@@ -1,15 +1,15 @@
 (function () {
   var DEFAULTS = {
-    cardWidth: 300,
-    cardHeight: 380,
+    cardWidth: 480,
+    cardHeight: 620,
     radius: 18,
     tint: '#05060a',
     depth: 220,
-    spread: 90,
+    spread: 72,
     tilt: 22,
     tiltDirection: 'right',
     perspective: 1400,
-    visibleCards: 4,
+    visibleCards: 3,
     falloff: 0.2,
     blur: 6,
     duration: 700,
@@ -145,11 +145,11 @@
 
   DepthCarousel.prototype.metrics = function () {
     var opts = this.opts;
-    var available = Math.max(180, (this.viewport ? this.viewport.clientWidth : opts.cardWidth) - 8);
-    var visible = Math.max(1, opts.visibleCards);
-    var needed = opts.cardWidth + opts.spread * (visible - 1);
-    var scale = needed > available ? available / needed : 1;
-    var cardWidth = Math.max(168, opts.cardWidth * scale);
+    var available = Math.max(160, (this.viewport ? this.viewport.clientWidth : opts.cardWidth) - 4);
+    var visible = Math.max(1, Math.min(opts.visibleCards, this.items.length || 1));
+    var stackFactor = 1 + (opts.spread / opts.cardWidth) * (visible - 1);
+    var cardWidth = available / stackFactor;
+    cardWidth = Math.min(cardWidth, 560);
     var cardHeight = opts.cardHeight * (cardWidth / opts.cardWidth);
     var spread = opts.spread * (cardWidth / opts.cardWidth);
     var depth = opts.depth * (cardWidth / opts.cardWidth);
