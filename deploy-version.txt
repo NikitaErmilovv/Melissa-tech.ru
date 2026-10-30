@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=fantastika-typography-v139-20261030T1545Z
+deploy-trigger=fantastika-timeweb-pull-20261030T1550Z

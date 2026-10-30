@@ -1,6 +1,9 @@
 @echo off
-cd /d "%~dp0.."
-git add fantastika-home174-lazurny deploy-version.txt
-git commit -m "Fantastika: deploy trigger" 2>nul
+setlocal
+cd /d "%~dp0\.."
+git add deploy-version.txt fantastika-home174-lazurny
+git status --short
+git commit -m "Fantastika: выкладка на melissa-tech.ru (Timeweb pull master)"
 git push origin master
-echo Push done. Timeweb should pull master, or run scripts\deploy-fantastika-rsync.sh with DEPLOY_SSH_KEY.
+git log -1 --oneline
+pause
