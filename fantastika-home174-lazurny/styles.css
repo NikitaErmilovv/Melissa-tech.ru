@@ -68,6 +68,12 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .brand-stack--map .brand-stack__script{font-size:.82em;transform:translate(-50%,34%)}
 
 .brand-stack--hero-home{display:block;margin-top:.04em}
+.brand-stack--hero-main .brand-stack__base{
+  font-size:clamp(42px,6.8vw,88px);letter-spacing:.04em;line-height:.9;
+}
+.brand-stack--hero-main .brand-stack__script{
+  font-size:clamp(28px,4.6vw,52px);transform:translate(-50%,32%);
+}
 
 .hero-title-brand{
   display:flex;flex-direction:column;align-items:flex-start;
@@ -76,7 +82,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .hero-brand-inter{
   display:block;font-family:Inter,Arial,sans-serif;font-weight:800;
   font-size:clamp(46px,7.5vw,102px);line-height:1.02;letter-spacing:-.06em;
-  color:var(--accent);
+  color:var(--accent);text-transform:uppercase;
 }
 .hero--fantastika .hero-heading--title h1{
   font-family:inherit;font-weight:400;letter-spacing:0;
@@ -1368,7 +1374,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--fantastika.hero--sdc .hero-heading--title h1{
   margin:0;text-align:left;font-size:1rem;line-height:1;letter-spacing:0;
 }
-.hero--fantastika.hero--sdc .hero-title-brand{margin-bottom:28px}
+.hero--fantastika.hero--sdc .hero-title-brand{margin-bottom:28px;gap:0}
 .hero--fantastika.hero--sdc .hero-content{
   margin-top:auto;
   flex-shrink:0;
