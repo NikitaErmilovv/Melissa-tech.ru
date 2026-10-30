@@ -1364,6 +1364,29 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 .hero--sdc .hero-heading{padding-top:4px}
 .hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px)}
+.hero-eyebrow-triple{
+  display:flex;align-items:baseline;flex-wrap:wrap;
+  gap:clamp(14px,2.4vw,32px);margin-bottom:25px;
+}
+.hero-eyebrow-triple .hero-eyebrow-word{
+  display:inline-block;color:var(--accent);opacity:.92;
+}
+.hero-eyebrow-word--sans{
+  font-family:Inter,Arial,sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+}
+.hero-eyebrow-word--kino{
+  font-family:'Kino 1909',Georgia,serif;font-size:clamp(15px,1.9vw,22px);
+  font-weight:400;letter-spacing:.1em;text-transform:uppercase;line-height:1;
+}
+.hero-eyebrow-word--script{
+  font-family:'Great Vibes',cursive;font-size:clamp(24px,3.2vw,36px);
+  font-weight:400;letter-spacing:0;text-transform:none;line-height:.85;
+}
+@media (max-width:800px){
+  .hero-eyebrow-triple{gap:10px 16px}
+  .hero-eyebrow-word--script{font-size:clamp(20px,6vw,28px)}
+}
 .hero--sdc .hero-heading h1 .accent{display:inline}
 .photo-pos-balancing{background-position:center 35%}
 .hero--sdc .hero-eyebrow-spacer{visibility:hidden}
