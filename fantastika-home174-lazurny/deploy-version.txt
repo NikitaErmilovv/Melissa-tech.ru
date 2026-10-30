@@ -2,4 +2,4 @@ site=fantastika-home174-lazurny
 brand=Fantastika_home174
 prod=https://melissa-tech.ru/fantastika-home174-lazurny/
 deploy=git-push-timeweb-hook
-deploy-trigger=fantastika-prod-rollout-20261030T1525Z
+deploy-trigger=fantastika-typography-v138-ca4d0fd-20261030T1535Z
