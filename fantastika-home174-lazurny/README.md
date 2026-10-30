@@ -6,4 +6,4 @@
 
 2ГИС: https://2gis.ru/chelyabinsk/geo/70000001098642477
 
-Шаблон: копия `rp-detailing-tolyatti` (структура и палитра без изменений).
+Отзывы и фото — из карточки 2ГИС (`data/reviews-2gis.json`, `img/works/incoming/fantastika/`).
