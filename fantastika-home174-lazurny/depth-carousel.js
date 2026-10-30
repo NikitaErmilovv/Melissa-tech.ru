@@ -219,7 +219,30 @@
         dot.setAttribute('aria-current', on ? 'true' : 'false');
       });
     }
+    this.placeArrows();
     if (typeof this.onChange === 'function') this.onChange(this.index, this.items[this.index]);
+  };
+
+  DepthCarousel.prototype.placeArrows = function () {
+    if (!this.prevBtn || !this.nextBtn) return;
+    var card = this.root.querySelector('.depth-card.is-active');
+    if (!card) return;
+    var rootBox = this.root.getBoundingClientRect();
+    var cardBox = card.getBoundingClientRect();
+    var gap = 14;
+    var arrowW = this.prevBtn.offsetWidth || 42;
+    var prevLeft = cardBox.left - rootBox.left - gap - arrowW;
+    var nextLeft = cardBox.right - rootBox.left + gap;
+    var maxLeft = Math.max(0, this.root.clientWidth - arrowW);
+    prevLeft = Math.max(0, Math.min(maxLeft, prevLeft));
+    nextLeft = Math.max(0, Math.min(maxLeft, nextLeft));
+    var mid = ((cardBox.top + cardBox.bottom) / 2) - rootBox.top;
+    this.prevBtn.style.left = prevLeft + 'px';
+    this.prevBtn.style.right = 'auto';
+    this.prevBtn.style.top = mid + 'px';
+    this.nextBtn.style.left = nextLeft + 'px';
+    this.nextBtn.style.right = 'auto';
+    this.nextBtn.style.top = mid + 'px';
   };
 
   DepthCarousel.prototype.go = function (next) {

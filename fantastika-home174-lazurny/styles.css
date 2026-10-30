@@ -92,8 +92,11 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
   color:#fff;font-weight:900;font-size:1em;letter-spacing:-.04em;
   text-transform:uppercase;line-height:1;
 }
-.links{display:flex;gap:34px;font-size:13px;color:#bdbdb7}
-.links a{transition:color .2s}
+.links{display:flex;gap:22px;align-items:center;font-size:16px;color:#f5f5f2}
+.links a{
+  font-family:'Kino 1909',Georgia,serif;font-weight:400;
+  letter-spacing:.06em;text-transform:uppercase;transition:color .2s;
+}
 .links a:hover{color:var(--accent)}
 .phone{border:1px solid rgba(255,255,255,.19);padding:13px 20px;border-radius:3px;font-size:12px;font-weight:600;white-space:nowrap;transition:border-color .2s,color .2s}
 .phone:hover{border-color:var(--accent-soft);color:var(--accent)}
@@ -180,6 +183,17 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .stat:last-child{border:0}
 .stat b{font-size:27px;color:var(--accent)}
 .stat span{display:block;color:#777;font-size:11px;margin-top:6px}
+.stats--hero .stat{display:flex;flex-direction:column;justify-content:flex-end}
+.stats--hero .stat span{
+  font-family:'Great Vibes',cursive;font-weight:400;
+  font-size:clamp(22px,2.6vw,34px);line-height:1;letter-spacing:0;
+  text-transform:none;color:var(--accent);margin:0 0 8px;
+}
+.stats--hero .stat b{
+  font-family:'Kino 1909',Georgia,serif;font-weight:400;
+  font-size:clamp(34px,3.6vw,52px);letter-spacing:.04em;line-height:.92;
+  color:#fff;text-transform:uppercase;
+}
 
 .section{padding:120px 6vw}
 .section-head{display:flex;justify-content:space-between;gap:30px;margin-bottom:55px}
@@ -1084,12 +1098,13 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
     transition:max-height .3s ease,opacity .25s ease,border-color .25s ease,padding .25s ease;
   }
   .nav-mobile-menu.is-open{
-    max-height:320px;opacity:1;padding:8px 5vw 12px;
+    max-height:480px;opacity:1;padding:8px 5vw 12px;
     border-top-color:rgba(255,255,255,.09);
   }
   .nav-mobile-menu a{
-    padding:14px 0;font-size:13px;letter-spacing:1px;
-    color:#bdbdb7;border-bottom:1px solid rgba(255,255,255,.06);
+    padding:14px 0;font-family:'Kino 1909',Georgia,serif;font-size:22px;
+    letter-spacing:.06em;text-transform:uppercase;
+    color:#f5f5f2;border-bottom:1px solid rgba(255,255,255,.06);
   }
   .nav-mobile-menu a:last-child{border-bottom:0;color:var(--accent)}
   body.nav-open{overflow:hidden}
@@ -1142,6 +1157,8 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .stats.stats--hero{margin:28px 0 0;width:100%}
   .stat{padding:14px 12px 14px 0}
   .stat b{font-size:20px}
+  .stats--hero .stat span{font-size:clamp(20px,6vw,28px)}
+  .stats--hero .stat b{font-size:clamp(28px,8vw,40px)}
   .section{padding:72px 5vw}
   .section-head{display:block;margin-bottom:36px}
   .intro{margin-top:20px;max-width:none}
@@ -1478,14 +1495,9 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .booking-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(320px,1.08fr);gap:48px 64px;align-items:start}
 .booking-copy{max-width:460px}
 .booking-copy p{color:#9a9a94;line-height:1.7;margin:18px 0 0}
-.booking-aside{
-  margin:28px 0 0;
-  font-family:'Kino 1909',Georgia,serif;
-  font-size:clamp(28px,3vw,40px);
-  letter-spacing:.04em;
-  color:var(--accent);
-  line-height:1;
-}
+.house-lead{max-width:640px;margin:22px 0 0;color:#9a9a94;font-size:16px;line-height:1.75}
+#services .section-head,#works .section-head{margin-bottom:0}
+#services.section,#works.section{padding-bottom:64px}
 .booking-form{
   display:grid;grid-template-columns:1fr 1fr;gap:16px;
   padding:28px;
@@ -1566,7 +1578,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .depth-card img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none}
 .depth-card__tint{position:absolute;inset:0;background:var(--tint, #05060a);opacity:0;pointer-events:none}
 .depth-carousel__arrow{
-  position:absolute;top:calc(var(--card-h, 380px) / 2);transform:translateY(-50%);
+  position:absolute;top:50%;transform:translateY(-50%);
   width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.16);
   background:rgba(10,10,10,.55);color:#f4f4f0;font:inherit;font-size:22px;line-height:1;
   cursor:pointer;z-index:3;
