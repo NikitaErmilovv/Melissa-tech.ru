@@ -24,8 +24,18 @@
       error.textContent = 'Заполните имя, телефон, даты и число гостей.';
       return;
     }
-    if (depart < arrive) {
-      error.textContent = 'Дата выезда должна быть не раньше заезда.';
+    var arriveMs = Date.parse(arrive + 'T00:00:00Z');
+    var departMs = Date.parse(depart + 'T00:00:00Z');
+    var nights = (Number.isFinite(arriveMs) && Number.isFinite(departMs))
+      ? Math.round((departMs - arriveMs) / 86400000)
+      : 0;
+    var guestCount = parseInt(guests, 10);
+    if (!Number.isFinite(guestCount) || guestCount < 1 || guestCount > 10) {
+      error.textContent = 'В доме десять спальных мест.';
+      return;
+    }
+    if (nights < 2) {
+      error.textContent = 'Бронируем от двух суток. Выберите выезд хотя бы через два дня после заезда.';
       return;
     }
     error.textContent = '';
@@ -37,6 +47,7 @@
       'Телефон: ' + phone,
       'Заезд: ' + formatDate(arrive),
       'Выезд: ' + formatDate(depart),
+      'Суток: ' + nights,
       'Гостей: ' + guests
     ];
     if (comment) lines.push('Комментарий: ' + comment);
