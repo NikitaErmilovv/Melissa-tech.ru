@@ -69,10 +69,10 @@
       showIndicators: root.dataset.showIndicators !== 'false'
     };
     this.onChange = null;
+    this.armed = false;
     this.build();
     this.bind();
-    this.layout(false);
-    if (this.opts.autoplay && !this.reduced && this.items.length > 1) this.play();
+    this.metrics();
   }
 
   DepthCarousel.prototype.build = function () {
@@ -93,7 +93,6 @@
     stage.className = 'depth-carousel__stage';
     viewport.appendChild(stage);
 
-    var eager = Math.min(3, this.items.length);
     this.cards = this.items.map(function (item, i) {
       var card = document.createElement('article');
       card.className = 'depth-card';
@@ -101,8 +100,7 @@
       img.alt = item.alt || '';
       img.draggable = false;
       img.decoding = 'async';
-      if (i < eager) img.src = item.image;
-      else img.dataset.src = item.image;
+      img.dataset.src = item.image;
       var shade = document.createElement('span');
       shade.className = 'depth-card__tint';
       card.appendChild(img);
@@ -173,7 +171,7 @@
       z: -metrics.depth * step,
       rotateY: -dir * opts.tilt * step,
       opacity: hidden ? 0 : 1,
-      blur: this.reduced ? 0 : (hidden ? opts.blur : opts.blur * depthT),
+      blur: (this.reduced || hidden) ? 0 : opts.blur * depthT,
       tint: hidden ? 0.92 : Math.min(0.86, fall),
       zIndex: hidden ? 0 : 40 - step,
       hidden: hidden
@@ -190,7 +188,7 @@
   };
 
   DepthCarousel.prototype.layout = function (animate) {
-    if (!window.gsap || !this.cards.length) return;
+    if (!this.armed || !window.gsap || !this.cards.length) return;
     this.ensureLoaded(Math.min(3, this.opts.visibleCards || 3));
     var metrics = this.metrics();
     var n = this.cards.length;
@@ -217,7 +215,7 @@
         z: pose.z,
         rotateY: pose.rotateY,
         opacity: pose.opacity,
-        filter: 'blur(' + pose.blur.toFixed(2) + 'px)',
+        filter: pose.blur < 0.15 ? 'none' : 'blur(' + pose.blur.toFixed(2) + 'px)',
         duration: duration,
         ease: self.opts.ease,
         overwrite: 'auto'
@@ -321,36 +319,23 @@
         if (self.opts.autoplay && !self.reduced && !self.root.contains(document.activeElement)) self.play();
       }, 0);
     });
-    window.addEventListener('resize', function () { self.layout(false); });
+    window.addEventListener('resize', function () {
+      self.metrics();
+      if (self.armed) self.layout(false);
+    });
   };
 
-  var fillQueue = [];
-  var filling = 0;
-
-  function pump() {
-    while (filling < 2 && fillQueue.length) {
-      var img = fillQueue.shift();
-      if (img.getAttribute('src')) continue;
-      filling += 1;
-      (function (image) {
-        var done = function () {
-          filling -= 1;
-          image.removeEventListener('load', done);
-          image.removeEventListener('error', done);
-          pump();
-        };
-        image.addEventListener('load', done);
-        image.addEventListener('error', done);
-        image.src = image.dataset.src;
-      })(img);
+  function whenNear(el, fn) {
+    if (!('IntersectionObserver' in window)) {
+      fn();
+      return;
     }
-  }
-
-  function enqueueRest() {
-    document.querySelectorAll('.depth-card img').forEach(function (img) {
-      if (!img.getAttribute('src') && img.dataset.src) fillQueue.push(img);
-    });
-    pump();
+    var obs = new IntersectionObserver(function (entries) {
+      if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+      obs.disconnect();
+      fn();
+    }, { rootMargin: '160px 0px' });
+    obs.observe(el);
   }
 
   function boot() {
@@ -358,13 +343,20 @@
     document.querySelectorAll('[data-depth-carousel]').forEach(function (root) {
       var carousel = new DepthCarousel(root);
       root.depthCarousel = carousel;
+      whenNear(root, function () {
+        carousel.armed = true;
+        carousel.layout(false);
+        if (carousel.opts.autoplay && !carousel.reduced && carousel.items.length > 1) carousel.play();
+      });
     });
-    if (document.readyState === 'complete') window.setTimeout(enqueueRest, 0);
-    else window.addEventListener('load', enqueueRest);
-    window.addEventListener('load', function () {
-      document.querySelectorAll('[data-bg]').forEach(function (el) {
-        if (!el.dataset.bg) return;
-        el.style.backgroundImage = 'url("' + el.dataset.bg + '")';
+    document.querySelectorAll('section').forEach(function (section) {
+      if (!section.querySelector('[data-bg]')) return;
+      whenNear(section, function () {
+        section.querySelectorAll('[data-bg]').forEach(function (el) {
+          if (!el.dataset.bg || el.dataset.bgOn) return;
+          el.dataset.bgOn = '1';
+          el.style.backgroundImage = 'url("' + el.dataset.bg + '")';
+        });
       });
     });
   }

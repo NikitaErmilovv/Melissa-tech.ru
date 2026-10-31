@@ -132,5 +132,16 @@
     })(0);
   }
 
-  roots.forEach(init);
+  roots.forEach(function (root) {
+    if (!("IntersectionObserver" in window)) {
+      init(root);
+      return;
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+      obs.disconnect();
+      init(root);
+    }, { rootMargin: "160px 0px" });
+    obs.observe(root);
+  });
 })();
