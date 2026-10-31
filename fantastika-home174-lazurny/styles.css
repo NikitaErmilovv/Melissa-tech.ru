@@ -917,6 +917,11 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   font-size:clamp(22px,2.4vw,30px);letter-spacing:0;line-height:1;
   color:var(--accent);opacity:1;text-transform:none;
 }
+.address-map-detail-label--brand{
+  font-family:'Kino 1909',Georgia,'Times New Roman',serif;
+  font-weight:400;text-transform:uppercase;color:#fff;
+  letter-spacing:.04em;font-size:21px;line-height:1;
+}
 .address-map-text{color:#8f8f89;font-size:14px;line-height:1.7;margin:0 0 44px;max-width:380px}
 .address-map-divider{height:1px;background:rgba(255,255,255,.08);margin:0 0 32px}
 .address-map-details{display:flex;flex-direction:column;gap:28px;margin-bottom:28px;padding-top:0;border-top:none}
