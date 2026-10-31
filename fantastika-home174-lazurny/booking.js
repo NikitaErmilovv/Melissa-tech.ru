@@ -2,6 +2,9 @@
   var form = document.getElementById('booking-form');
   if (!form) return;
   var error = document.getElementById('booking-error');
+  var send = document.getElementById('booking-send');
+  var tgLink = document.getElementById('booking-send-tg');
+  var maxLink = document.getElementById('booking-send-max');
   var telegram = (window.STUDIO_MESSENGERS && window.STUDIO_MESSENGERS.tg) || '+79191213344';
 
   function formatDate(iso) {
@@ -22,6 +25,7 @@
 
     if (!name || !phone || !arrive || !depart || !guests) {
       error.textContent = 'Заполните имя, телефон, даты и число гостей.';
+      if (send) send.hidden = true;
       return;
     }
     var arriveMs = Date.parse(arrive + 'T00:00:00Z');
@@ -32,10 +36,12 @@
     var guestCount = parseInt(guests, 10);
     if (!Number.isFinite(guestCount) || guestCount < 1 || guestCount > 10) {
       error.textContent = 'Дом рассчитан на 10 человек.';
+      if (send) send.hidden = true;
       return;
     }
     if (nights < 2) {
       error.textContent = 'Бронируем от двух суток. Выберите выезд хотя бы через два дня после заезда.';
+      if (send) send.hidden = true;
       return;
     }
     error.textContent = '';
@@ -53,6 +59,8 @@
     if (comment) lines.push('Комментарий: ' + comment);
     var text = encodeURIComponent(lines.join('\n'));
     var phonePath = telegram.charAt(0) === '+' ? telegram : '+' + telegram;
-    window.open('https://t.me/' + phonePath + '?text=' + text, '_blank', 'noopener');
+    if (tgLink) tgLink.href = 'https://t.me/' + phonePath + '?text=' + text;
+    if (maxLink) maxLink.href = 'https://max.ru/:share?text=' + text;
+    if (send) send.hidden = false;
   });
 })();

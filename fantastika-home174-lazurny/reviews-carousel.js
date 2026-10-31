@@ -51,7 +51,7 @@
       });
       if (!list.length) {
         track.innerHTML =
-          '<div class="review"><div class="stars">★★★★★</div><p>Отзывы загружаются…</p><small>2ГИС</small></div>';
+          '<div class="review"><div class="stars">★★★★★</div><p>Отзывы загружаются…</p></div>';
         return;
       }
       slides = list;
@@ -69,8 +69,8 @@
             text +
             "»</p>" +
             "<small>" +
-            escapeHtml(it.name || "Клиент") +
-            " · 2ГИС</small>" +
+            escapeHtml(it.name || "Гость") +
+            "</small>" +
             "</article>"
           );
         })
@@ -117,7 +117,7 @@
     (function loadNext(i) {
       if (i >= urls.length) {
         track.innerHTML =
-          '<div class="review"><p>Не удалось загрузить отзывы 2ГИС.</p><small><a href="https://2gis.ru/chelyabinsk/geo/70000001098642477" target="_blank" rel="noopener">Открыть на 2ГИС</a></small></div>';
+          '<div class="review"><p>Не удалось загрузить отзывы.</p><small><a href="https://2gis.ru/chelyabinsk/geo/70000001098642477" target="_blank" rel="noopener">Открыть отзывы</a></small></div>';
         return;
       }
       fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=r2")
