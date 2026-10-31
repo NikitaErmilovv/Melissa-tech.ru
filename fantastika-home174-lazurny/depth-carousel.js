@@ -235,19 +235,26 @@
   };
 
   DepthCarousel.prototype.placeArrows = function () {
-    if (!this.prevBtn || !this.nextBtn) return;
-    var card = this.root.querySelector('.depth-card.is-active');
-    if (!card) return;
-    var rootBox = this.root.getBoundingClientRect();
-    var cardBox = card.getBoundingClientRect();
+    if (!this.prevBtn || !this.nextBtn || !this.stage) return;
     var gap = 14;
     var arrowW = this.prevBtn.offsetWidth || 42;
-    var prevLeft = cardBox.left - rootBox.left - gap - arrowW;
-    var nextLeft = cardBox.right - rootBox.left + gap;
+    var cardW = parseFloat(this.root.style.getPropertyValue('--card-w')) || 0;
+    if (!cardW) return;
+    var originLeft = 0;
+    var originTop = 0;
+    var node = this.stage;
+    while (node && node !== this.root) {
+      originLeft += node.offsetLeft;
+      originTop += node.offsetTop;
+      node = node.offsetParent;
+    }
+    var cardLeft = this.opts.tiltDirection === 'left'
+      ? originLeft + this.stage.clientWidth - cardW
+      : originLeft;
     var maxLeft = Math.max(0, this.root.clientWidth - arrowW);
-    prevLeft = Math.max(0, Math.min(maxLeft, prevLeft));
-    nextLeft = Math.max(0, Math.min(maxLeft, nextLeft));
-    var mid = ((cardBox.top + cardBox.bottom) / 2) - rootBox.top;
+    var prevLeft = Math.max(0, Math.min(maxLeft, cardLeft - gap - arrowW));
+    var nextLeft = Math.max(0, Math.min(maxLeft, cardLeft + cardW + gap));
+    var mid = originTop + this.stage.clientHeight / 2;
     this.prevBtn.style.left = prevLeft + 'px';
     this.prevBtn.style.right = 'auto';
     this.prevBtn.style.top = mid + 'px';
