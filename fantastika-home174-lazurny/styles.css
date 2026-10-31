@@ -1572,14 +1572,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   font-size:clamp(28px,2.6vw,40px);line-height:1.15;letter-spacing:0;
   text-transform:none;white-space:normal;
 }
-.album-script-a{
-  font-family:'Kino 1909',Georgia,serif;
-  font-weight:400;
-  font-size:.78em;
-  letter-spacing:.03em;
-  color:inherit;
-  line-height:1;
-}
 .subpage-hero .album-script{font-size:clamp(36px,4.8vw,64px);line-height:1.1;letter-spacing:0;text-transform:none}
 @media(max-width:700px){
   .subpage-hero .album-script{font-size:clamp(32px,8.5vw,44px);line-height:1.3}
