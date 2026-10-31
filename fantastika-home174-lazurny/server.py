@@ -88,7 +88,12 @@ class SiteHandler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
     def end_headers(self) -> None:
-        self.send_header("Cache-Control", "no-store")
+        if not getattr(self, "_cache_chosen", False):
+            path = self.path.split("?", 1)[0].lower()
+            if path.endswith((".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif", ".woff2", ".woff", ".ttf")):
+                self.send_header("Cache-Control", "public, max-age=604800")
+            else:
+                self.send_header("Cache-Control", "no-store")
         super().end_headers()
 
     def do_GET(self) -> None:
@@ -106,6 +111,7 @@ class SiteHandler(SimpleHTTPRequestHandler):
             body = json.dumps({"files": files}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._cache_chosen = True
             self.send_header("Cache-Control", "no-store")
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
@@ -118,6 +124,7 @@ class SiteHandler(SimpleHTTPRequestHandler):
                 body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json; charset=utf-8")
+                self._cache_chosen = True
                 self.send_header("Cache-Control", "public, max-age=300")
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers()
@@ -126,6 +133,8 @@ class SiteHandler(SimpleHTTPRequestHandler):
                 body = json.dumps({"error": str(exc)}, ensure_ascii=False).encode("utf-8")
                 self.send_response(502)
                 self.send_header("Content-Type", "application/json; charset=utf-8")
+                self._cache_chosen = True
+                self.send_header("Cache-Control", "no-store")
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers()
                 self.wfile.write(body)
