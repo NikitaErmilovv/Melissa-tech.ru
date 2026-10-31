@@ -631,7 +631,7 @@ html.media-lightbox-open{overflow:hidden}
   color:var(--accent);
   transition:color .2s,border-color .2s,background .2s;
 }
-.footer-social a:hover{color:var(--accent-ink);border-color:var(--accent);background:var(--accent)}
+.footer-col .footer-social a:hover{color:var(--accent-ink);border-color:var(--accent);background:var(--accent)}
 .footer-col{display:flex;flex-direction:column;gap:14px}
 .footer-col b{font-family:'Kino 1909',Georgia,serif;font-size:22px;font-weight:400;letter-spacing:.08em;color:var(--accent);opacity:1;margin-bottom:4px;align-self:flex-start;padding-bottom:8px;border-bottom:1px solid rgba(251,237,163,.4)}
 .footer-phones-block b,.footer-hours-block b{align-self:flex-start;padding-bottom:8px;border-bottom:1px solid rgba(251,237,163,.4)}
