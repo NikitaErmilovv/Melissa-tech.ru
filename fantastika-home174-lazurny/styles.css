@@ -1493,9 +1493,10 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .booking-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(320px,1.08fr);gap:48px 64px;align-items:start}
 .booking-copy{max-width:460px}
 .booking-copy p{color:#9a9a94;line-height:1.7;margin:18px 0 0}
-.house-lead{max-width:640px;margin:22px 0 0;color:#9a9a94;font-size:16px;line-height:1.75}
-#services .section-head,#works .section-head{margin-bottom:0}
-#services.section,#works.section{padding-bottom:64px}
+.house-lead{max-width:720px;margin:28px 0 0;color:#9a9a94;font-size:16px;line-height:1.75}
+.house-lead p{margin:0 0 16px}
+.house-lead p:last-child{margin-bottom:0}
+#works .section-head{margin-bottom:0}
 .booking-form{
   display:grid;grid-template-columns:1fr 1fr;gap:16px;
   padding:28px;
