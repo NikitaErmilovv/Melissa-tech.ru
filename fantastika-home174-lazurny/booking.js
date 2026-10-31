@@ -31,7 +31,7 @@
       : 0;
     var guestCount = parseInt(guests, 10);
     if (!Number.isFinite(guestCount) || guestCount < 1 || guestCount > 10) {
-      error.textContent = 'В доме десять спальных мест.';
+      error.textContent = 'Дом рассчитан на 10 человек.';
       return;
     }
     if (nights < 2) {

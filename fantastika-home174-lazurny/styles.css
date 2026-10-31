@@ -418,7 +418,9 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
   background:rgba(0,0,0,.55);padding:6px 10px;pointer-events:none;
 }
 .gallery--client-reviews{margin-top:36px;margin-bottom:8px}
-.gallery--portfolio .g--media img{width:100%;height:auto;aspect-ratio:3/4;display:block;vertical-align:middle;background:#111}
+.gallery--portfolio .g--media img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:center;display:block;vertical-align:middle;background:#111}
+.gallery--portfolio .g--natural{grid-column:1 / -1;justify-self:center;width:min(100%,920px)}
+.gallery--portfolio .g--natural img{aspect-ratio:auto;width:100%;height:auto;object-fit:contain}
 .gallery--portfolio .g--loop video,.gallery--portfolio .g--video video{width:100%;height:auto;max-height:min(75vh,640px);object-fit:contain;display:block;background:#0a0a0a;vertical-align:middle}
 .gallery--portfolio .wide,.gallery--portfolio .tall{grid-column:auto;grid-row:auto}
 .work-block{scroll-margin-top:110px}
@@ -1439,7 +1441,8 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));
   grid-auto-rows:auto;align-items:start;
 }
-.gallery--portfolio .g--media img{width:100%;height:auto;display:block}
+.gallery--portfolio .g--media img{width:100%;height:auto;object-fit:cover;display:block}
+.gallery--portfolio .g--natural img{aspect-ratio:auto;object-fit:contain;height:auto}
 .service-list a.service-row{display:grid}
 
 .service-list a.service-row{display:grid}
@@ -1498,11 +1501,25 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .booking-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(320px,1.08fr);gap:48px 64px;align-items:start}
 .booking-copy{max-width:460px}
 .booking-copy p{color:#9a9a94;line-height:1.7;margin:18px 0 0}
-.booking-rates{display:flex;flex-wrap:wrap;gap:22px 36px;margin-top:28px}
-.booking-rates div{display:flex;flex-direction:column;gap:6px}
-.booking-rates span{font-family:'Great Vibes',cursive;font-size:28px;line-height:1;color:var(--accent)}
-.booking-rates b{font-family:'Kino 1909',Georgia,serif;font-weight:400;font-size:32px;letter-spacing:.04em;color:#fff}
-.booking-note{margin-top:14px}
+.booking-rates{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
+.booking-rate{
+  display:flex;flex-direction:column;gap:4px;
+  padding:14px 16px 13px;border-radius:12px;
+  background:#0c0c0c;border:1px solid rgba(255,255,255,.12);
+}
+.booking-rate span{font-family:'Great Vibes',cursive;font-size:22px;line-height:1;color:var(--accent)}
+.booking-rate b{font-family:'Kino 1909',Georgia,serif;font-weight:400;font-size:26px;letter-spacing:.03em;color:#fff}
+.booking-rate small{color:#8a8a84;font-size:12px;line-height:1.4}
+.album-script{
+  display:block;margin-top:.18em;
+  font-family:'Great Vibes',cursive;font-weight:400;color:var(--accent);
+  font-size:clamp(28px,2.6vw,40px);line-height:1.15;letter-spacing:0;
+  text-transform:none;white-space:normal;
+}
+.subpage-hero .album-script{font-size:clamp(36px,4.8vw,64px);line-height:1.1;letter-spacing:0;text-transform:none}
+@media(max-width:700px){
+  .subpage-hero .album-script{font-size:clamp(32px,8.5vw,44px);line-height:1.3}
+}
 .house-lead{max-width:720px;margin:28px 0 0;color:#9a9a94;font-size:16px;line-height:1.75}
 .house-lead p{margin:0 0 16px}
 .house-lead p:last-child{margin-bottom:0}
@@ -1549,7 +1566,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .booking-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding-top:4px}
 .booking-error{min-height:1.3em;margin:0;color:#e7b4b4;font-size:14px}
 @media(max-width:900px){
-  .booking-grid,.booking-form{grid-template-columns:1fr}
+  .booking-grid,.booking-form,.booking-rates{grid-template-columns:1fr}
   .booking-form{padding:20px}
 }
 
