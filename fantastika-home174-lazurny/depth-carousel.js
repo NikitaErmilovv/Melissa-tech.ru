@@ -144,19 +144,30 @@
     return btn;
   };
 
+  DepthCarousel.prototype.isNarrow = function () {
+    return window.matchMedia('(max-width: 900px)').matches;
+  };
+
   DepthCarousel.prototype.metrics = function () {
     var opts = this.opts;
     var available = Math.max(160, (this.viewport ? this.viewport.clientWidth : opts.cardWidth) - 4);
     var visible = Math.max(1, Math.min(opts.visibleCards, this.items.length || 1));
     var stackFactor = 1 + (opts.spread / opts.cardWidth) * (visible - 1);
     var cardWidth = available / stackFactor;
-    cardWidth = Math.min(cardWidth, 560);
-    var cardHeight = opts.cardHeight * (cardWidth / opts.cardWidth);
     var spread = opts.spread * (cardWidth / opts.cardWidth);
     var depth = opts.depth * (cardWidth / opts.cardWidth);
+    if (this.isNarrow()) {
+      visible = Math.min(2, this.items.length || 1);
+      spread = Math.round(available * 0.11);
+      cardWidth = available - (visible > 1 ? spread * 0.55 : 0);
+      cardWidth = Math.min(cardWidth, 420);
+      depth = Math.round(opts.depth * (cardWidth / opts.cardWidth) * 0.65);
+    }
+    cardWidth = Math.min(cardWidth, 560);
+    var cardHeight = opts.cardHeight * (cardWidth / opts.cardWidth);
     this.root.style.setProperty('--card-w', cardWidth + 'px');
     this.root.style.setProperty('--card-h', cardHeight + 'px');
-    return { cardWidth: cardWidth, spread: spread, depth: depth, visible: visible };
+    return { cardWidth: cardWidth, spread: spread, depth: depth, visible: visible, centered: this.isNarrow() };
   };
 
   DepthCarousel.prototype.pose = function (offset, metrics) {
@@ -194,7 +205,8 @@
     var n = this.cards.length;
     var duration = (!animate || this.reduced) ? 0 : this.opts.duration / 1000;
     var self = this;
-    this.stage.style.transformOrigin = this.opts.tiltDirection === 'left' ? 'right center' : 'left center';
+    var centered = !!metrics.centered;
+    this.stage.style.transformOrigin = centered ? 'center center' : (this.opts.tiltDirection === 'left' ? 'right center' : 'left center');
     this.cards.forEach(function (card, i) {
       var offset = (i - self.index + n) % n;
       var pose = self.pose(offset, metrics);
@@ -202,7 +214,12 @@
       card.style.pointerEvents = offset === 0 ? 'auto' : 'none';
       card.classList.toggle('is-active', offset === 0);
       card.setAttribute('aria-hidden', offset === 0 ? 'false' : 'true');
-      if (self.opts.tiltDirection === 'left') {
+      var shiftX = pose.x;
+      if (centered) {
+        card.style.right = 'auto';
+        card.style.left = '50%';
+        shiftX = Math.abs(pose.x) - metrics.cardWidth / 2;
+      } else if (self.opts.tiltDirection === 'left') {
         card.style.left = 'auto';
         card.style.right = '0px';
       } else {
@@ -210,7 +227,7 @@
         card.style.left = '0px';
       }
       gsap.to(card, {
-        x: pose.x,
+        x: shiftX,
         yPercent: -50,
         z: pose.z,
         rotateY: pose.rotateY,
@@ -248,9 +265,12 @@
       originTop += node.offsetTop;
       node = node.offsetParent;
     }
-    var cardLeft = this.opts.tiltDirection === 'left'
-      ? originLeft + this.stage.clientWidth - cardW
-      : originLeft;
+    var centered = this.isNarrow();
+    var cardLeft = centered
+      ? originLeft + (this.stage.clientWidth - cardW) / 2
+      : (this.opts.tiltDirection === 'left'
+        ? originLeft + this.stage.clientWidth - cardW
+        : originLeft);
     var maxLeft = Math.max(0, this.root.clientWidth - arrowW);
     var prevLeft = Math.max(0, Math.min(maxLeft, cardLeft - gap - arrowW));
     var nextLeft = Math.max(0, Math.min(maxLeft, cardLeft + cardW + gap));

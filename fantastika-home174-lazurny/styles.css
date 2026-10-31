@@ -462,10 +462,26 @@ html.media-lightbox-open{overflow:hidden}
 .footer-col.footer-col--phones{display:flex;flex-direction:column;gap:10px}
 
 .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:50px}
-.review{border:1px solid rgba(255,255,255,.08);padding:30px;min-height:220px;background:#101010}
-.review .stars{letter-spacing:4px;font-size:10px;color:var(--accent)}
-.review p{font-size:15px;line-height:1.55;color:#b0b0aa}
-.review small{color:#666}
+.review{
+  border:1px solid rgba(251,237,163,.28);
+  border-radius:18px;
+  padding:26px 24px 22px;
+  min-height:0;
+  background:
+    linear-gradient(180deg, rgba(251,237,163,.09), rgba(255,255,255,.02) 36%, rgba(8,8,8,.2)),
+    #121210;
+  box-shadow:0 18px 44px rgba(0,0,0,.28);
+}
+.review .stars{letter-spacing:3px;font-size:14px;color:var(--accent);line-height:1}
+.review p{font-size:15px;line-height:1.65;color:#c9c9c3;margin:0}
+.review small{
+  margin-top:auto;
+  font-family:'Great Vibes',cursive;
+  font-size:24px;
+  line-height:1;
+  color:var(--accent);
+  letter-spacing:0;
+}
 .reviews-carousel{
   position:relative;margin-top:28px;
   display:grid;grid-template-columns:auto 1fr auto;
@@ -482,8 +498,9 @@ html.media-lightbox-open{overflow:hidden}
   overflow:hidden;
 }
 .reviews-nav{
-  width:40px;height:40px;border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.04);color:#f5f5f2;font-size:24px;line-height:1;
+  width:42px;height:42px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(10,10,10,.55);color:#f4f4f0;font-size:22px;line-height:1;
   cursor:pointer;transition:border-color .2s,background .2s,color .2s;
 }
 .reviews-nav:hover:not(:disabled){border-color:var(--accent-soft);color:var(--accent)}
@@ -1243,6 +1260,34 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media (max-width:768px){
   .heroimg{opacity:.45;width:100%;min-height:0}
 }
+@media (max-width:800px){
+  .hero--sdc .heroimg{
+    left:0;right:0;width:100%;
+    top:82px;height:calc(100% - 82px);min-height:0;
+    opacity:1;clip-path:none;
+  }
+  .hero--sdc .heroimg:before{
+    background:linear-gradient(180deg, rgba(10,10,10,.58) 0%, rgba(10,10,10,.2) 34%, rgba(10,10,10,.14) 58%, rgba(10,10,10,.78) 100%);
+  }
+  .hero--sdc:after{content:none}
+  .hero--fantastika.hero--sdc .hero-content{
+    position:relative;z-index:2;transform:translateY(44px);
+  }
+}
+.address-map-frame::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:48.75%;
+  width:28px;height:36px;
+  transform:translate(-50%,-100%);
+  z-index:3;pointer-events:none;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 42'><path fill='%23111111' d='M16 41.2C16 41.2 2.2 24.4 2.2 15.2a13.8 13.8 0 1 1 27.6 0C29.8 24.4 16 41.2 16 41.2z'/><circle cx='16' cy='15.2' r='5.2' fill='%23fbeda3'/></svg>") center / contain no-repeat;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));
+}
+@media(min-width:801px){
+  .address-map-frame::before{top:50.67%;width:24px;height:32px}
+}
 
 /* hero accent */
 .quote{color:#f5f5f2}
@@ -1501,7 +1546,8 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .booking-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(320px,1.08fr);gap:48px 64px;align-items:start}
 .booking-copy{max-width:460px}
 .booking-copy p{color:#9a9a94;line-height:1.7;margin:18px 0 0}
-.booking-rates{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
+.booking-rates{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0 0}
+.booking-copy .booking-rates{max-width:460px}
 .booking-rate{
   display:flex;flex-direction:column;gap:4px;
   padding:14px 16px 13px;border-radius:12px;
@@ -1568,7 +1614,8 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .booking-error{min-height:1.3em;margin:0;color:#e7b4b4;font-size:14px}
 @media(max-width:900px){
   .booking-grid,.booking-form,.booking-rates{grid-template-columns:1fr}
-  .booking-form{padding:20px}
+  .booking-copy .booking-rates{max-width:none;margin-top:22px}
+  .booking-form{padding:20px;margin-top:22px}
   .booking-actions{flex-direction:column;align-items:stretch}
   .booking-form .booking-actions .button{width:100%;min-width:0;box-sizing:border-box}
 }
@@ -1626,6 +1673,28 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .album-row{grid-template-columns:1fr;gap:56px}
   .album-row--flip .album-copy{order:0}
   .album-row .depth-carousel{order:-1}
-  .depth-carousel{padding:12px 46px 20px}
+  .depth-carousel{padding:12px 40px 20px}
   .album-copy .actions{margin-top:32px}
+}
+@media (max-width:800px){
+  .hero--sdc .heroimg{
+    left:0;right:auto;width:100%;
+    top:82px;height:calc(100% - 82px);min-height:0;
+    opacity:1;clip-path:none;
+  }
+  .hero--sdc .heroimg:before{
+    background:linear-gradient(180deg, rgba(10,10,10,.5) 0%, rgba(10,10,10,.12) 26%, rgba(10,10,10,.32) 60%, rgba(10,10,10,.9) 100%);
+  }
+  .hero--sdc:after{content:none}
+  .hero--fantastika.hero--sdc .hero-content{
+    position:relative;z-index:2;transform:translateY(44px);
+  }
+  .hero--fantastika.hero--sdc .hero-content p{color:#ecece6;text-shadow:0 1px 10px rgba(0,0,0,.55)}
+  .hero--fantastika.hero--sdc .hero-content .button.dark{
+    background:rgba(10,10,10,.78);border-color:rgba(255,255,255,.28);color:#f5f5f2;
+  }
+}
+.address-map-pin-label{top:48.75%;transform:translate(-50%,calc(-100% - 42px))}
+@media(min-width:801px){
+  .address-map-pin-label{top:50.67%;transform:translate(-50%,calc(-100% - 38px))}
 }
