@@ -1,0 +1,5 @@
+site=toner-plus-nsk
+brand=Тонер Плюс
+prod=https://melissa-tech.ru/toner-plus-nsk/
+deploy=git-push-timeweb-hook
+deploy-trigger=toner-plus-nsk-20261102T1345Z

@@ -1,0 +1,5 @@
+site=ar-detailing-biysk
+brand=AR-Detailing
+prod=https://melissa-tech.ru/ar-detailing-biysk/
+deploy=git-push-timeweb-hook
+deploy-trigger=ar-detailing-biysk-20261102T1345Z

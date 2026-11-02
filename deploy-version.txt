@@ -1,3 +1,3 @@
 site=melissa-tech.ru
 deploy=git-push-timeweb-hook
-deploy-trigger=fantastika-timeweb-pull-20261101T0942Z
+deploy-trigger=toner-ar-sites-20261102T1345Z
