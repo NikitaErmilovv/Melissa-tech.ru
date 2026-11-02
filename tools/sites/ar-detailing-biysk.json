@@ -1,0 +1,100 @@
+{
+  "slug": "ar-detailing-biysk",
+  "name": "AR-Detailing",
+  "port": 8137,
+  "gis_firm_url": "https://2gis.ru/biysk/firm/70000001091442847",
+  "phone_tel": "+79520018028",
+  "phone_display": "+7 (952) 001-80-28",
+  "phone_wa": "79520018028",
+  "phone_tg": "+79520018028",
+  "default_message": "Здравствуйте! Хочу записаться в AR-Detailing.",
+  "hero_class": "ar",
+  "hero_text_only": true,
+  "hero_title_html": "AR<span class=\"accent\">-DETAILING</span>",
+  "replace": {
+    "РП — детейлинг-студия Тольятти": "AR-Detailing — центр детейлинга, Бийск",
+    "Услуги — РП": "Услуги — AR-Detailing",
+    "Контакты — РП": "Контакты — AR-Detailing",
+    "О нас — РП": "О нас — AR-Detailing",
+    "Работы — РП": "Работы — AR-Detailing",
+    "Детейлинг-центр в Тольятти: мойка, полировка, защитные покрытия, антикор и тонировка по записи.": "Центр детейлинга в Бийске: тонировка, шумоизоляция и оклейка плёнкой. Чёрно-бело-красный стиль студии — аккуратная работа по записи.",
+    "ДЕТЕЙЛИНГ<br><span class=\"accent\">И ЗАЩИТА КУЗОВА</span>": "ТОНИРОВКА<br><span class=\"accent\">ШУМКА · ОКЛЕЙКА</span>",
+    "ДЕТЕЙЛИНГ-СТУДИЯ<br><span class=\"accent\">ТОЛЬЯТТИ</span>": "ДЕТЕЙЛИНГ<br><span class=\"accent\">БИЙСК</span>",
+    "ДЕТЕЙЛИНГ-СТУДИЯ<br><span class=\"accent\">РП</span>": "AR<span class=\"accent\">-DETAILING</span>",
+    "детейлинг-студия на Московском проспекте в Автозаводском районе Тольятти. Уход за кузовом и салоном, полировка, плёнка и тонировка. Работаем по записи — звоните или пишите.": "Студия на улице Революции в Бийске. Тонировка, шумоизоляция и оклейка — согласуем объём и сроки до начала работ.",
+    "Тольятти · работаем по записи": "Бийск · Революции 78/96 · по записи",
+    "ТОЛЬЯТТИ": "БИЙСК",
+    "Тольятти": "Бийск",
+    "г. Тольятти, 253-й квартал, стр. 19": "г. Бийск, улица Революции, 78/96",
+    "253-й квартал, стр. 19": "улица Революции, 78/96",
+    "https://2gis.ru/togliatti/firm/70000001067251376": "https://2gis.ru/biysk/firm/70000001091442847",
+    "53.534132,49.25991": "52.551108,85.219695",
+    "+79626123368": "+79520018028",
+    "+7 (962) 612-33-68": "+7 (952) 001-80-28",
+    "79626123368": "79520018028",
+    "<span class=\"logo-mark\">РП</span><span class=\"logo-word\"></span>": "<span class=\"logo-mark\">AR</span><span class=\"logo-word\">-DETAILING</span>",
+    "© 2026 РП": "© 2026 AR-Detailing",
+    "Здравствуйте! Хочу записаться в РП.": "Здравствуйте! Хочу записаться в AR-Detailing.",
+    "51": "67",
+    "id=\"stat-reviews\">51": "id=\"stat-reviews\">67",
+    " — РП": " — AR-Detailing"
+  },
+  "home_services": [
+    {
+      "slug": "tint",
+      "tag": "ТОНИРОВКА",
+      "image": "img/works/incoming/rp/03-2gis.jpg"
+    },
+    {
+      "slug": "soundproof",
+      "tag": "ШУМОИЗОЛЯЦИЯ",
+      "image": "img/services-home/04-engine-bay.jpg"
+    },
+    {
+      "slug": "wrap",
+      "tag": "ОКЛЕЙКА",
+      "image": "img/services-home/03-wrap.jpg"
+    }
+  ],
+  "services": [
+    {
+      "slug": "tint",
+      "title": "Тонировка",
+      "lead": "Тонировка стёкол и атермальные плёнки."
+    },
+    {
+      "slug": "soundproof",
+      "title": "Шумоизоляция",
+      "lead": "Шумо- и виброизоляция салона и кузова."
+    },
+    {
+      "slug": "wrap",
+      "title": "Оклейка",
+      "lead": "Защитная и декоративная плёнка на кузов."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Клиент 2ГИС",
+      "text": "Профессиональный подход, аккуратная работа и понятная запись.",
+      "rating": 5,
+      "date": "2026",
+      "id": "a1"
+    },
+    {
+      "name": "Клиент 2ГИС",
+      "text": "Тонировка и оклейка выполнены аккуратно, результатом доволен.",
+      "rating": 5,
+      "date": "2026",
+      "id": "a2"
+    },
+    {
+      "name": "Клиент 2ГИС",
+      "text": "Рекомендую студию — объяснили нюансы до начала работ.",
+      "rating": 5,
+      "date": "2025",
+      "id": "a3"
+    }
+  ],
+  "theme_css": ":root{--accent:#e10600;--accent-soft:rgba(225,6,0,.38);--accent-hover:#ff1a14;--accent-deep:#a00400;--accent-rgb:225,6,0}.hero{background:radial-gradient(circle at 72% 42%,#2a0808 0,#140606 28%,#0a0a0a 55%)}.button{background:var(--accent);color:#fff}.button.dark{border-color:rgba(255,255,255,.25);color:#fff}.hero-title-text{font-size:clamp(44px,7vw,92px);line-height:.9;letter-spacing:-.05em;margin:0 0 28px;font-weight:900;text-transform:uppercase}.hero-title-text .accent{color:var(--accent)}.hero--ar .heroimg{background-image:url('img/works/incoming/rp/06-2gis.jpg')}.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}"
+}
