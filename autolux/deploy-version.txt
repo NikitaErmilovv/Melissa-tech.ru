@@ -1,5 +1,5 @@
 site=autolux
-brand=AutoLux
+brand=Avto LuX
 prod=https://melissa-tech.ru/autolux/
 deploy=git-push-timeweb-hook
-deploy-trigger=autolux-timeweb-20261108T1136Z
+deploy-trigger=autolux-magnitogorsk-20261108T1148Z

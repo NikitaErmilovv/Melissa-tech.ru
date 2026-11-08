@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#c8f542;
-  --accent-soft:rgba(200,245,66,.42);
-  --accent-hover:#d6ff72;
-  --accent-deep:#8fb82a;
+  --accent:#feca32;
+  --accent-soft:rgba(254,202,50,.42);
+  --accent-hover:#ffd65c;
+  --accent-deep:#d4a820;
   --accent-ink:#0a0a0a;
-  --accent-rgb:200,245,66;
+  --accent-rgb:254,202,50;
 }
 
 *{box-sizing:border-box}
@@ -41,7 +41,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 
 .hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:stretch;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#3a3626 0,#1a1810 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/hero-home.jpg') 72% 48% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/hero-home.jpg') 52% 42% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-stack{
   position:relative;z-index:1;width:100%;
@@ -1387,8 +1387,3 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(max-width:640px){
   .pricelist-table th,.pricelist-table td{padding:10px 12px;font-size:13px}
 }
-
-.hero--rp.hero--sdc .hero-logo-spacer{visibility:visible}
-.hero--rp.hero--sdc .hero-brand-logo{display:none}
-.hero--rp.hero--sdc .hero-logo-spacer{font-size:clamp(40px,5.4vw,78px)}
-.ba-grid .ba-still{width:100%;height:auto;display:block;aspect-ratio:16/10;object-fit:cover}
