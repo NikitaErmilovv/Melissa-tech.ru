@@ -1,7 +1,7 @@
 window.STUDIO_MESSENGERS = {
   wa: "79502047798",
   tg: "+79502047798",
-  max: "",
+  max: "https://max.ru/:share?text=Здравствуйте! Хочу записаться в Первушин.",
   defaultMessage: "Здравствуйте! Хочу записаться в Первушин.",
 };
 

@@ -1,19 +1,13 @@
 {
   "files": [
-    "img/works/incoming/pervushin/01-2gis.jpg",
-    "img/works/incoming/pervushin/02-2gis.jpg",
     "img/works/incoming/pervushin/03-2gis.jpg",
     "img/works/incoming/pervushin/04-2gis.jpg",
-    "img/works/incoming/pervushin/05-2gis.jpg",
-    "img/works/incoming/pervushin/06-2gis.jpg",
     "img/works/incoming/pervushin/07-2gis.jpg",
     "img/works/incoming/pervushin/08-2gis.jpg",
     "img/works/incoming/pervushin/09-2gis.jpg",
     "img/works/incoming/pervushin/10-2gis.jpg",
     "img/works/incoming/pervushin/11-2gis.jpg",
-    "img/works/incoming/pervushin/12-2gis.jpg",
     "img/works/incoming/pervushin/13-2gis.jpg",
-    "img/works/incoming/pervushin/14-2gis.jpg",
     "img/works/incoming/pervushin/15-2gis.jpg",
     "img/works/incoming/pervushin/16-2gis.jpg",
     "img/works/incoming/pervushin/17-yandex.jpg",
@@ -23,7 +17,6 @@
     "img/works/incoming/pervushin/21-yandex.jpg",
     "img/works/incoming/pervushin/22-yandex.jpg",
     "img/works/incoming/pervushin/23-yandex.jpg",
-    "img/works/incoming/pervushin/24-yandex.jpg",
     "img/works/incoming/pervushin/25-yandex.jpg",
     "img/works/incoming/pervushin/26-yandex.jpg",
     "img/works/incoming/pervushin/27-yandex.jpg",
@@ -52,7 +45,6 @@
     "img/works/incoming/pervushin/53-yandex.jpg",
     "img/works/incoming/pervushin/54-yandex.jpg",
     "img/works/incoming/pervushin/55-yandex.jpg",
-    "img/works/incoming/pervushin/56-yandex.jpg",
     "img/works/incoming/pervushin/57-yandex.jpg",
     "img/works/incoming/pervushin/58-yandex.jpg",
     "img/works/incoming/pervushin/59-yandex.jpg",
@@ -62,6 +54,13 @@
     "img/works/incoming/pervushin/63-yandex.jpg",
     "img/works/incoming/pervushin/64-yandex.jpg",
     "img/works/incoming/pervushin/65-yandex.jpg",
-    "img/works/incoming/pervushin/66-yandex.jpg"
+    "img/works/incoming/pervushin/66-yandex.jpg",
+    "img/works/incoming/pervushin/67-user-touareg-wash.jpg",
+    "img/works/incoming/pervushin/68-user-lancer.jpg",
+    "img/works/incoming/pervushin/69-user-infiniti.jpg",
+    "img/works/incoming/pervushin/70-user-porsche-tires.jpg",
+    "img/works/incoming/pervushin/71-user-headlights.jpg",
+    "img/works/incoming/pervushin/72-user-bmw-alignment.jpg",
+    "img/works/incoming/pervushin/73-user-engine-bay.jpg"
   ]
 }

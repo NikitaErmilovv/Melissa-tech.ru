@@ -19,7 +19,20 @@
   "img/works/incoming/pervushin/15-2gis.jpg",
   "img/works/incoming/pervushin/16-2gis.jpg"
 ];
-  var manifestUrl = 'data/gallery-manifest.json';
+  var GALLERY_EXCLUDE = new Set([
+    "img/works/incoming/pervushin/01-2gis.jpg",
+    "img/works/incoming/pervushin/02-2gis.jpg",
+    "img/works/incoming/pervushin/05-2gis.jpg",
+    "img/works/incoming/pervushin/06-2gis.jpg",
+    "img/works/incoming/pervushin/12-2gis.jpg",
+    "img/works/incoming/pervushin/14-2gis.jpg",
+    "img/works/incoming/pervushin/24-yandex.jpg",
+    "img/works/incoming/pervushin/56-yandex.jpg"
+  ]);
+  var photoDir = grid.getAttribute('data-photo-dir') || '';
+  var manifestUrl = photoDir
+    ? 'data/gallery-manifest.json?dir=' + encodeURIComponent(photoDir)
+    : 'data/gallery-manifest.json';
 
   function render(files) {
     if (!files.length) return;
@@ -40,7 +53,8 @@
   }
 
   function load(files) {
-    render(files || []);
+    var list = (files || []).filter(function (src) { return !GALLERY_EXCLUDE.has(src); });
+    render(list);
   }
 
   fetch(manifestUrl)
