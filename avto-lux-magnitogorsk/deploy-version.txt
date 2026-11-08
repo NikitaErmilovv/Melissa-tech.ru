@@ -1,5 +1,0 @@
-site=avto-lux-magnitogorsk
-brand=Avto LuX
-prod=https://melissa-tech.ru/avto-lux-magnitogorsk/
-deploy=git-push-timeweb-hook
-deploy-trigger=avto-lux-magnitogorsk-20261108T1150Z

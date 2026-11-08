@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "rp-detailing-tolyatti"
-DEST = ROOT / "avto-lux-magnitogorsk"
+DEST = ROOT / "avtolux-magnitogorsk"
 ASSETS = Path("/home/ubuntu/.cursor/projects/workspace/assets")
 
 LAT, LON = "58.978295", "53.378026"
