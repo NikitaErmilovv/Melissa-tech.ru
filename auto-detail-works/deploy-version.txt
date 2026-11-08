@@ -1,0 +1,5 @@
+site=auto-detail-works
+brand=Auto Detail Works
+prod=https://melissa-tech.ru/auto-detail-works/
+deploy=git-push-timeweb-hook
+deploy-trigger=auto-detail-works-timeweb-20261108T1136Z

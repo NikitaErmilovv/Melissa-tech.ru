@@ -2,4 +2,4 @@ site=autolife
 brand=Autolife
 prod=https://melissa-tech.ru/autolife/
 deploy=git-push-timeweb-hook
-deploy-trigger=autolife-timeweb-20261108T1115Z
+deploy-trigger=autolife-timeweb-20261108T1136Z
