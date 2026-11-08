@@ -138,6 +138,7 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .award-panel-copy h2 .accent{color:var(--accent)}
 .award-panel-copy p{color:#8f8f89;font-size:14px;line-height:1.7;margin:0;max-width:520px}
 
+.founder-panel:has(.founder-visual[hidden]){grid-template-columns:1fr}
 .founder-panel{
   display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;align-items:start;
   padding:48px;border:1px solid rgba(255,255,255,.08);background:#0e0e0e;

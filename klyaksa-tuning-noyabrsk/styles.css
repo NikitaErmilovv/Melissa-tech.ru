@@ -1016,6 +1016,27 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
     background-position:72% 48%;background-size:cover;
     clip-path:none;
   }
+  .hero.hero--sdc{
+    padding:96px 5vw 48px;
+  }
+  .hero.hero--sdc .hero-panel{
+    min-height:0;
+    flex:1 1 auto;
+  }
+  .hero.hero--sdc .heroimg{
+    width:100%;
+    left:0;
+    right:0;
+    top:72px;
+    height:calc(100% - 72px);
+    min-height:0;
+    opacity:.45;
+    clip-path:none;
+  }
+  .hero.hero--sdc .heroimg:before{display:none}
+  .hero.hero--sdc:after{
+    background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);
+  }
   .hero-content{margin-top:0}
   .hero h1{font-size:clamp(40px,11vw,65px);margin-bottom:24px;min-height:0}
   .hero-brand-word{font-size:clamp(10px,2.8vw,13px);letter-spacing:.34em;text-indent:.34em}
@@ -1106,16 +1127,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero:after{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.35) 34%,transparent 52%,rgba(10,10,10,.28) 100%)}
 @media (max-width:768px){
   .heroimg{opacity:.45;width:100%;min-height:0}
-  .hero.hero--sdc .heroimg{
-    clip-path:none;
-    opacity:.58;
-  }
-  .hero.hero--sdc .heroimg:before{
-    background:linear-gradient(180deg,rgba(10,10,10,.72) 0%,rgba(10,10,10,.15) 36%,transparent 62%,rgba(10,10,10,.2) 100%);
-  }
-  .hero.hero--sdc:after{
-    background:linear-gradient(180deg,rgba(10,10,10,.5) 0%,transparent 40%,transparent 100%);
-  }
 }
 
 /* D2_detailing — акцент в тон кузова BMW на hero */
