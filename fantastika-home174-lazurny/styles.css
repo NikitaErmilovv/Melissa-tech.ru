@@ -419,7 +419,8 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
   background:rgba(0,0,0,.55);padding:6px 10px;pointer-events:none;
 }
 .gallery--client-reviews{margin-top:36px;margin-bottom:8px}
-.gallery--portfolio .g--media img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:center;display:block;vertical-align:middle;background:#111}
+.gallery--portfolio .g--media img,.gallery--portfolio .g--media video{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:center;display:block;vertical-align:middle;background:#111}
+.gallery--portfolio .g--media:has(video){cursor:auto}
 .gallery--portfolio .g--natural{grid-column:1 / -1;justify-self:center;width:min(100%,920px)}
 .gallery--portfolio .g--natural img{aspect-ratio:auto;width:100%;height:auto;object-fit:contain}
 .gallery--portfolio .g--loop video,.gallery--portfolio .g--video video{width:100%;height:auto;max-height:min(75vh,640px);object-fit:contain;display:block;background:#0a0a0a;vertical-align:middle}

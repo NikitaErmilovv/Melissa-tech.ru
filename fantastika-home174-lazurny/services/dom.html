@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Дом — Fantastika_home174</title>
-<link rel="stylesheet" href="../styles.css?v=165">
+<link rel="stylesheet" href="../styles.css?v=166">
 </head>
 <body class="page-sub">
 <nav class="site-nav">
@@ -51,9 +51,9 @@
     <a class="g g--media" href="../photoHouse/Дом/guest-07.jpg"><img data-src="../photoHouse/Дом/guest-07.jpg" alt="Столовая" loading="lazy" decoding="async"></a>
     <a class="g g--media" href="../photoHouse/Дом/guest-08.jpg"><img data-src="../photoHouse/Дом/guest-08.jpg" alt="Вход зимой" loading="lazy" decoding="async"></a>
     <a class="g g--media" href="../photoHouse/Дом/guest-09.jpg"><img data-src="../photoHouse/Дом/guest-09.jpg" alt="Дом зимой" loading="lazy" decoding="async"></a>
-    <a class="g g--media" href="../photoHouse/Дом/guest-video-01.gif"><img data-src="../photoHouse/Дом/guest-video-01.gif" alt="" loading="lazy" decoding="async"></a>
-    <a class="g g--media" href="../photoHouse/Дом/guest-video-02.gif"><img data-src="../photoHouse/Дом/guest-video-02.gif" alt="" loading="lazy" decoding="async"></a>
-    <a class="g g--media" href="../photoHouse/Дом/guest-video-03.gif"><img data-src="../photoHouse/Дом/guest-video-03.gif" alt="" loading="lazy" decoding="async"></a>
+    <div class="g g--media"><video src="../photoHouse/Дом/guest-video-01.mp4" muted loop autoplay playsinline controls preload="metadata" aria-label="Видео дома"></video></div>
+    <div class="g g--media"><video src="../photoHouse/Дом/guest-video-02.mp4" muted loop autoplay playsinline controls preload="metadata" aria-label="Видео дома"></video></div>
+    <div class="g g--media"><video src="../photoHouse/Дом/guest-video-03.mp4" muted loop autoplay playsinline controls preload="metadata" aria-label="Видео дома"></video></div>
   </div>
 </section>
 <section class="section section--album-crosslinks">
@@ -123,6 +123,27 @@
 </footer>
 </div>
 
+<script>
+(function () {
+  var videos = document.querySelectorAll('.gallery video');
+  if (!videos.length) return;
+  function start(video) {
+    var play = video.play();
+    if (play && play.catch) play.catch(function () {});
+  }
+  if (!('IntersectionObserver' in window)) {
+    videos.forEach(start);
+    return;
+  }
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) start(entry.target);
+      else entry.target.pause();
+    });
+  }, { threshold: 0.25 });
+  videos.forEach(function (video) { obs.observe(video); });
+})();
+</script>
 <script src="../contacts-config.js"></script>
 <script src="../nav.js"></script>
 <script src="../stats.js"></script>
