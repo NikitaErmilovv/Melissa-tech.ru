@@ -1389,13 +1389,13 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 
 .hero--avtolux-mg.hero--rp.hero--sdc .hero-brand-logo{
-  width:min(330px,80vw);
+  width:min(368px,84vw);
   left:0;
-  transform:translate(0,-50%) scale(1.06);
+  transform:translate(0,-50%) scale(1.14);
 }
 @media (max-width:800px){
   .hero--avtolux-mg.hero--rp.hero--sdc .hero-brand-logo{
-    width:min(252px,72vw);
-    transform:translate(0,-50%) scale(1.02);
+    width:min(278px,76vw);
+    transform:translate(0,-50%) scale(1.08);
   }
 }
