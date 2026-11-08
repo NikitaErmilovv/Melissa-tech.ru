@@ -1106,6 +1106,16 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero:after{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.35) 34%,transparent 52%,rgba(10,10,10,.28) 100%)}
 @media (max-width:768px){
   .heroimg{opacity:.45;width:100%;min-height:0}
+  .hero.hero--sdc .heroimg{
+    clip-path:none;
+    opacity:.58;
+  }
+  .hero.hero--sdc .heroimg:before{
+    background:linear-gradient(180deg,rgba(10,10,10,.72) 0%,rgba(10,10,10,.15) 36%,transparent 62%,rgba(10,10,10,.2) 100%);
+  }
+  .hero.hero--sdc:after{
+    background:linear-gradient(180deg,rgba(10,10,10,.5) 0%,transparent 40%,transparent 100%);
+  }
 }
 
 /* D2_detailing — акцент в тон кузова BMW на hero */
