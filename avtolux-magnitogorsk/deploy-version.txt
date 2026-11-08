@@ -2,4 +2,4 @@ site=avtolux-magnitogorsk
 brand=Avto LuX
 prod=https://melissa-tech.ru/avtolux-magnitogorsk/
 deploy=git-push-timeweb-hook
-deploy-trigger=avtolux-magnitogorsk-timeweb-20261108T1600Z
+deploy-trigger=avtolux-magnitogorsk-timeweb-20261108T1612Z
