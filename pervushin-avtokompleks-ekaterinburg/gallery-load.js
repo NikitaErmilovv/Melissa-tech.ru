@@ -9,14 +9,18 @@
     "img/works/incoming/pervushin/70-user-porsche-tires.jpg",
     "img/works/incoming/pervushin/71-user-headlights.jpg",
     "img/works/incoming/pervushin/72-user-bmw-alignment.jpg",
-    "img/works/incoming/pervushin/73-user-engine-bay.jpg"
+    "img/works/incoming/pervushin/73-user-engine-bay.jpg",
+    "img/works/home/tires.jpg?v=1",
+    "img/works/home/polish.jpg?v=1",
+    "img/works/home/sound.jpg?v=1",
+    "img/works/home/balancing.jpg?v=1"
   ];
 
   grid.innerHTML = "";
   FILES.forEach(function (src) {
     var a = document.createElement("a");
     a.className = "g g--media";
-    a.href = src;
+    a.href = src.split("?")[0];
     a.setAttribute("data-lightbox", "work");
     var img = document.createElement("img");
     img.src = src;
