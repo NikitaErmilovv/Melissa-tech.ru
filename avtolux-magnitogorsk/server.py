@@ -129,6 +129,7 @@ class SiteHandler(SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    with ThreadingHTTPServer(("", PORT), SiteHandler) as httpd:
+    with ThreadingHTTPServer(("0.0.0.0", PORT), SiteHandler) as httpd:
         print(f"Serving {ROOT} on http://127.0.0.1:{PORT}/")
+        print(f"LAN bind: http://0.0.0.0:{PORT}/")
         httpd.serve_forever()
