@@ -64,7 +64,7 @@
     var head = document.createElement('div');
     head.className = 'album-more-head';
     head.innerHTML =
-      '<div class="kicker">Ещё фото</div><h2 class="album-more-heading">Другие <span class="title-kino-line">альбомы</span></h2>';
+      '<div class="kicker">Ещё фото</div><h2 class="album-more-heading">Другие альбомы</h2>';
     root.appendChild(head);
 
     var grid = document.createElement('div');

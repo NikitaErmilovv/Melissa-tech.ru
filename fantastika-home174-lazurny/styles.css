@@ -435,7 +435,11 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .section--album-gallery{padding-bottom:48px}
 .album-more{margin:0;padding:0;border:0}
 .album-more-head{margin-bottom:28px}
-.album-more-heading{margin:10px 0 0;font-size:clamp(22px,3vw,32px);line-height:1.1;letter-spacing:-.03em}
+.section--album-crosslinks .album-more-heading{
+  margin:10px 0 0;font-size:clamp(22px,3vw,32px);line-height:1.1;
+  font-family:'Kino 1909',Georgia,serif;font-weight:400;font-style:normal;
+  letter-spacing:.05em;text-transform:uppercase;color:#fff;
+}
 .album-more-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:14px;width:100%}
 .album-more-card{
   display:flex;flex-direction:column;gap:0;text-decoration:none;color:inherit;cursor:pointer;
