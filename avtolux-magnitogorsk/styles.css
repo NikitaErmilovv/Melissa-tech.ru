@@ -1399,3 +1399,17 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
     transform:translate(0,-50%) scale(1.08);
   }
 }
+
+/* Подпись над фактической меткой 2ГИС на скрине карты (1061×701) */
+.address-map-pin-label{
+  left:56.5%;
+  top:58%;
+  transform:translate(-50%,calc(-100% - 10px));
+}
+@media (min-width:801px){
+  .address-map-pin-label{
+    left:54.2%;
+    top:61%;
+    transform:translate(-50%,calc(-100% - 12px));
+  }
+}
