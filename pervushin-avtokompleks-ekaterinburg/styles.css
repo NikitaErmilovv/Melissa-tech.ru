@@ -582,6 +582,8 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   margin-top:10px;
 }
 .service-row .service-desc p:last-child{margin-bottom:0}
+.gallery-works-services{margin-top:50px}
+.photo-strip--gallery .photo:after{display:none}
 .photo-strip--gallery{margin-top:0;margin-bottom:8px}
 .section--gallery-overview{padding-top:48px;padding-bottom:24px}
 .service-catalog-head{margin-bottom:8px}

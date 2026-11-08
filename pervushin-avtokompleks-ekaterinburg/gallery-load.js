@@ -1,33 +1,28 @@
 (function () {
-  var grid = document.getElementById('gallery-grid');
+  var grid = document.getElementById("gallery-grid");
   if (!grid) return;
 
-  var FILES = [
-    "img/works/incoming/pervushin/67-user-touareg-wash.jpg",
-    "img/works/incoming/pervushin/68-user-lancer.jpg",
-    "img/works/incoming/pervushin/69-user-infiniti.jpg",
-    "img/works/incoming/pervushin/70-user-porsche-tires.jpg",
-    "img/works/incoming/pervushin/71-user-headlights.jpg",
-    "img/works/incoming/pervushin/72-user-bmw-alignment.jpg",
-    "img/works/incoming/pervushin/73-user-engine-bay.jpg",
-    "img/works/home/tires.jpg?v=1",
-    "img/works/home/polish.jpg?v=1",
-    "img/works/home/sound.jpg?v=1",
-    "img/works/home/balancing.jpg?v=1"
+  var ITEMS = [
+    { src: "img/works/incoming/pervushin/67-user-touareg-wash.jpg", pos: "center 42%" },
+    { src: "img/works/incoming/pervushin/68-user-lancer.jpg", pos: "center 40%" },
+    { src: "img/works/incoming/pervushin/69-user-infiniti.jpg", pos: "center 38%" },
+    { src: "img/works/incoming/pervushin/70-user-porsche-tires.jpg", pos: "center 45%" },
+    { src: "img/works/incoming/pervushin/71-user-headlights.jpg", pos: "center 40%" },
+    { src: "img/works/incoming/pervushin/72-user-bmw-alignment.jpg", pos: "center 42%" },
+    { src: "img/works/incoming/pervushin/73-user-engine-bay.jpg", pos: "center 50%" },
+    { src: "img/works/home/tires.jpg?v=1", pos: "center 40%" },
+    { src: "img/works/home/polish.jpg?v=1", pos: "center 38%" },
+    { src: "img/works/home/sound.jpg?v=1", pos: "center 42%" },
+    { src: "img/works/home/balancing.jpg?v=1", pos: "center 45%" },
   ];
 
   grid.innerHTML = "";
-  FILES.forEach(function (src) {
-    var a = document.createElement("a");
-    a.className = "g g--media";
-    a.href = src.split("?")[0];
-    a.setAttribute("data-lightbox", "work");
-    var img = document.createElement("img");
-    img.src = src;
-    img.alt = "";
-    img.loading = "lazy";
-    img.decoding = "async";
-    a.appendChild(img);
-    grid.appendChild(a);
+  ITEMS.forEach(function (item) {
+    var el = document.createElement("div");
+    el.className = "photo";
+    el.setAttribute("role", "img");
+    el.style.backgroundImage = "url('" + item.src + "')";
+    el.style.backgroundPosition = item.pos || "center";
+    grid.appendChild(el);
   });
 })();
