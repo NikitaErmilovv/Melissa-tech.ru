@@ -1,0 +1,5 @@
+site=autoremont-krd
+brand=AUTOREMONTKRD
+prod=https://melissa-tech.ru/autoremont-krd/
+deploy=git-push-timeweb-hook
+deploy-trigger=autoremont-krd-timeweb-20261108T1115Z
