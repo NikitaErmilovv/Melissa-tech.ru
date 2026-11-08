@@ -8,7 +8,7 @@
 
 2ГИС: https://2gis.ru/chelyabinsk/geo/70000001098642477
 
-Отзывы и фото — из карточки 2ГИС (`data/reviews-2gis.json`, `img/works/incoming/fantastika/`).
+Отзывы — из карточки 2ГИС (`data/reviews-2gis.json`). Фото альбомов — в `photoHouse/`.
 
 ## Прод и выкладка (Timeweb)
 

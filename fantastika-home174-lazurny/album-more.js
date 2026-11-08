@@ -50,13 +50,16 @@
       .replace(/"/g, '&quot;');
   }
 
-  document.querySelectorAll('[data-album-more]').forEach(function (root) {
-    var current = root.getAttribute('data-album-current');
+  document.querySelectorAll('[data-album-more-slot]').forEach(function (slot) {
+    var current = slot.getAttribute('data-album-current');
     if (!current) return;
     var others = ALBUMS.filter(function (a) {
       return a.id !== current;
     });
     if (!others.length) return;
+
+    var root = document.createElement('div');
+    root.className = 'album-more';
 
     var head = document.createElement('div');
     head.className = 'album-more-head';
@@ -70,10 +73,11 @@
       var a = document.createElement('a');
       a.className = 'album-more-card';
       a.href = album.href;
+      a.setAttribute('aria-label', 'Открыть альбом: ' + album.title);
       a.innerHTML =
-        '<span class="album-more-thumb"><img src="' +
-        escapeHtml(album.preview) +
-        '" alt="" loading="lazy" decoding="async"></span>' +
+        '<span class="album-more-thumb" style="background-image:url(\'' +
+        escapeHtml(album.preview).replace(/'/g, '%27') +
+        '\')"></span>' +
         '<span class="album-more-meta">' +
         '<span class="kicker">' +
         escapeHtml(album.kicker) +
@@ -88,5 +92,6 @@
       grid.appendChild(a);
     });
     root.appendChild(grid);
+    slot.appendChild(root);
   });
 })();
