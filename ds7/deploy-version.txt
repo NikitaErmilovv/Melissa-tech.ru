@@ -1,6 +1,6 @@
 ﻿site=ds7
 prod=https://melissa-tech.ru/ds7/
 city=Нижний Новгород
-updated=2026-10-12
+updated=2026-11-08
 deploy=git-push-timeweb-hook
-deploy-trigger=28c4538-ds7-red-3
+deploy-trigger=ds7-timeweb-20261108T1818Z

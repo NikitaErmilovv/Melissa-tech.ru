@@ -5,6 +5,7 @@
   --accent-soft:rgba(229,57,53,.22);
   --accent-hover:rgba(229,57,53,.9);
   --accent-ink:#ffffff;
+  --accent-rgb:229,57,53;
 }
 
 *{box-sizing:border-box}
@@ -30,6 +31,14 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);opacity:.88;margin-bottom:25px}
 .hero h1{font-size:clamp(58px,8vw,116px);line-height:.87;letter-spacing:-.075em;margin:0 0 34px;font-weight:800}
 .hero h1 .accent{color:var(--accent)}
+.visually-hidden{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+.hero .hero-brand-logo{
+  display:block;width:min(420px,78vw);height:auto;margin:0 0 28px;
+  filter:drop-shadow(0 12px 40px rgba(0,0,0,.45));
+}
 .hero p{max-width:470px;color:#aaa9a3;line-height:1.65;font-size:15px}
 .actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
 .button{background:var(--accent);color:var(--accent-ink);padding:17px 25px;font-weight:700;font-size:12px;display:inline-block;border:0;cursor:pointer;transition:background .2s}
@@ -91,6 +100,27 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .photo .tag{position:absolute;left:22px;bottom:20px;z-index:1;font-size:10px;letter-spacing:2px;color:var(--accent)}
 .photo.big{min-height:540px}
 .photo.big.photo-pos-polish{background-position:center 38%}
+.photo-strip--services{
+  grid-template-columns:repeat(4,1fr);
+  margin-top:48px;
+}
+.photo-strip--home{margin-top:50px}
+#services .photo-strip--home{margin-top:48px}
+.photo-strip--services .photo{
+  min-height:0;
+  aspect-ratio:3/4;
+}
+.tag-split span + span{margin-left:.4em}
+.photo-strip--home a.photo{display:block;color:inherit;text-decoration:none;transition:transform .25s ease}
+.photo-strip--home a.photo:hover{transform:scale(1.015)}
+.photo-strip--home a.photo:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.photo-strip--shine{margin-top:48px}
+@media (max-width:1100px){
+  .photo-strip--services{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:720px){
+  .photo-strip--services{grid-template-columns:repeat(2,1fr)}
+}
 
 .quote{margin-top:80px;padding:55px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);font-size:clamp(28px,4vw,58px);line-height:1.05;letter-spacing:-.05em;max-width:1000px}
 .quote span{color:var(--accent)}
@@ -102,6 +132,8 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .price strong{font-size:28px;color:var(--accent)}
 .price p{color:#777;font-size:12px;line-height:1.6}
 
+.gallery-works-services{margin-top:50px}
+.photo-strip--gallery .photo:after{display:none}
 .gallery{display:grid;grid-template-columns:1.1fr .9fr .9fr;grid-auto-rows:260px;gap:12px;margin-top:50px}
 .gallery .g{background-size:cover;background-position:center;position:relative}
 .gallery .wide{grid-column:span 2}
@@ -238,7 +270,10 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
 .subpage-hero p{max-width:550px;color:#888;line-height:1.7;margin-top:20px}
 
 .service-list{margin-top:55px;border-top:1px solid rgba(255,255,255,.08)}
+.service-list--ds7 a.service-row{text-decoration:none;color:inherit;transition:background .2s}
+.service-list--ds7 a.service-row:hover{background:rgba(255,255,255,.02)}
 .service-row{display:grid;grid-template-columns:80px 1fr 260px 130px;gap:20px;padding:30px 0;border-bottom:1px solid rgba(255,255,255,.08);align-items:start}
+.service-list--ds7 .service-row{grid-template-columns:56px 1fr 160px}
 .service-row .idx{color:var(--accent);font-size:11px;opacity:.75}
 .service-row h3{margin:0;font-size:25px}
 .service-row p{margin:7px 0 0;color:#777;font-size:12px;line-height:1.5}
@@ -481,7 +516,8 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .step{min-height:auto;padding:22px 18px 28px}
   .services-process .steps-track{margin-top:0;overflow:visible}
   .services-process .steps{margin-top:36px;min-width:0}
-  .photo-strip,.price-grid,.reviews,.contact-box{grid-template-columns:1fr}
+  .photo-strip:not(.photo-strip--services):not(.photo-strip--shine),.price-grid,.reviews,.contact-box{grid-template-columns:1fr}
+  .photo-strip--services{grid-template-columns:repeat(2,1fr)}
   .photo-strip{margin-top:40px}
   .photo.big{min-height:340px}
   .photo{min-height:260px}
@@ -524,4 +560,49 @@ nav{height:82px;display:flex;align-items:center;justify-content:space-between;pa
   .footer-col--brand-hours{gap:24px}
   .address-map-phone{font-size:18px}
   .address-map-brand{font-size:19px}
+}
+
+.pricelist-page{padding-top:48px;padding-bottom:48px}
+.pricelist-table-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.1);border-radius:4px;background:rgba(255,255,255,.02);margin-top:8px}
+.pricelist-table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.45;min-width:720px}
+.pricelist-table th,.pricelist-table td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.pricelist-table th{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;background:rgba(var(--accent-rgb),.08)}
+.pricelist-table tbody tr:last-child td{border-bottom:0}
+.pricelist-table--matrix td:not(:first-child){text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pricelist-table--matrix tbody td:not(:first-child){transform:translateX(-12mm)}
+.pricelist-table tbody tr[id]{scroll-margin-top:100px}
+.pricelist-notes{margin:20px 0 0;padding-left:1.2em;color:#9a9a94;font-size:13px;line-height:1.6}
+.pricelist-notes li{margin-bottom:6px}
+.pricelist-vehicle-key{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#777;margin-bottom:12px}
+.pricelist-class-sil-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:16px 12px;
+  margin:0 0 20px;
+}
+.pricelist-class-sil{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.pricelist-class-sil img{width:56px;height:56px;object-fit:contain;opacity:.95}
+.pricelist-class-sil span{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9a9a94;font-weight:600}
+.pricelist-th-class{vertical-align:bottom;text-align:center!important}
+.pricelist-th-class img{display:block;margin:0 auto 6px;object-fit:contain;opacity:.92}
+.pricelist-th-class span{display:block;font-size:10px;line-height:1.2;white-space:normal}
+.ds7-promo{padding-top:48px;padding-bottom:32px}
+.ds7-promo-card{
+  max-width:720px;border:1px solid rgba(229,57,53,.35);background:linear-gradient(135deg,#141414 0%,#0c0c0c 55%);
+  padding:32px 36px;border-radius:6px;
+}
+.ds7-promo-title{font-size:clamp(28px,4vw,42px);line-height:1;margin:8px 0 16px;letter-spacing:-.04em}
+.ds7-promo-lead{color:#b0b0aa;font-size:15px;line-height:1.6;margin:0 0 18px;max-width:560px}
+.ds7-promo-list{margin:0 0 20px;padding-left:1.1em;color:#d8d8d2;font-size:14px;line-height:1.7}
+.ds7-promo-prices{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;margin-bottom:22px}
+.ds7-promo-was{color:#777;font-size:14px;text-decoration:line-through}
+.ds7-promo-now{font-size:28px;color:var(--accent)}
+.ds7-promo-note{flex:1 1 100%;color:#777;font-size:12px;line-height:1.5}
+@media(max-width:900px){
+  .pricelist-class-sil-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:560px){
+  .pricelist-class-sil-grid{grid-template-columns:repeat(2,1fr)}
+  .ds7-promo-card{padding:24px 22px}
+}
+@media(max-width:640px){
+  .pricelist-table th,.pricelist-table td{padding:8px 10px;font-size:12px}
 }
