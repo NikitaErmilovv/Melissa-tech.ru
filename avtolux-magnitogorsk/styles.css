@@ -1387,3 +1387,15 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(max-width:640px){
   .pricelist-table th,.pricelist-table td{padding:10px 12px;font-size:13px}
 }
+
+.hero--avtolux-mg.hero--rp.hero--sdc .hero-brand-logo{
+  width:min(330px,80vw);
+  left:0;
+  transform:translate(0,-50%) scale(1.06);
+}
+@media (max-width:800px){
+  .hero--avtolux-mg.hero--rp.hero--sdc .hero-brand-logo{
+    width:min(252px,72vw);
+    transform:translate(0,-50%) scale(1.02);
+  }
+}
