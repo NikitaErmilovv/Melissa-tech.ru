@@ -1,0 +1,39 @@
+{
+  "accounts": [
+    {
+      "id": "u1",
+      "name": "Владислав Петров",
+      "email": "vlad@avtoblesk.ru",
+      "password": "AvtoAdmin",
+      "role": "Администратор"
+    },
+    {
+      "id": "u2",
+      "name": "Сергей Ковалёв",
+      "email": "kovalev@avtoblesk.ru",
+      "password": "AvtoTeacher",
+      "role": "Преподаватель"
+    },
+    {
+      "id": "u3",
+      "name": "Артём Гуськов",
+      "email": "guskov@avtoblesk.ru",
+      "password": "AvtoTeacher",
+      "role": "Преподаватель"
+    },
+    {
+      "id": "u4",
+      "name": "Мария Лаптева",
+      "email": "lapteva@avtoblesk.ru",
+      "password": "AvtoManager",
+      "role": "Менеджер"
+    },
+    {
+      "id": "u5",
+      "name": "Игорь Дёмин",
+      "email": "demin@avtoblesk.ru",
+      "password": "AvtoIntern",
+      "role": "Стажёр"
+    }
+  ]
+}

@@ -20,6 +20,8 @@ CMS_DIR = ROOT / "cms"
 CMS_CONTENT = CMS_DIR / "content.json"
 CMS_CONFIG = CMS_DIR / "config.local.json"
 CMS_CONFIG_EXAMPLE = CMS_DIR / "config.example.json"
+CMS_STAFF = CMS_DIR / "staff.json"
+CMS_STAFF_EXAMPLE = CMS_DIR / "staff.example.json"
 CMS_UPLOADS = ROOT / "img" / "cms" / "uploads"
 CMS_UPLOADS.mkdir(parents=True, exist_ok=True)
 WRAP_ZONES = ROOT / "data" / "wrap-zones.json"
@@ -47,17 +49,49 @@ def cms_password() -> str:
     return ""
 
 
-def cms_check_token(header: str | None) -> bool:
+def load_staff() -> list[dict]:
+    for path in (CMS_STAFF, CMS_STAFF_EXAMPLE):
+        if not path.is_file():
+            continue
+        try:
+            data = json.loads(path.read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        accounts = data.get("accounts") if isinstance(data, dict) else None
+        if isinstance(accounts, list) and accounts:
+            return [row for row in accounts if isinstance(row, dict)]
+    return []
+
+
+def cms_session(header: str | None) -> dict | None:
     if not header or not header.startswith("Bearer "):
-        return False
+        return None
     token = header[7:].strip()
-    exp = _cms_tokens.get(token)
-    if exp is None:
-        return False
-    if time.time() > exp:
+    row = _cms_tokens.get(token)
+    if row is None:
+        return None
+    if isinstance(row, (int, float)):
+        if time.time() > float(row):
+            _cms_tokens.pop(token, None)
+            return None
+        return {"exp": float(row), "role": "Администратор", "name": "Редактор", "email": "", "id": ""}
+    if not isinstance(row, dict) or time.time() > float(row.get("exp") or 0):
         _cms_tokens.pop(token, None)
-        return False
-    return True
+        return None
+    return row
+
+
+def cms_check_token(header: str | None) -> bool:
+    return cms_session(header) is not None
+
+
+def cms_require_roles(header: str | None, roles: set[str]) -> dict | None:
+    user = cms_session(header)
+    if not user:
+        return None
+    if str(user.get("role") or "") not in roles:
+        return {"forbidden": True, "user": user}
+    return user
 
 
 def cms_read_content() -> dict:
@@ -162,6 +196,16 @@ class SiteHandler(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(out)
 
+    def require_roles(self, roles: set[str]) -> dict | None:
+        user = cms_session(self.headers.get("Authorization"))
+        if not user:
+            self.send_json(401, {"error": "Unauthorized"})
+            return None
+        if str(user.get("role") or "") not in roles:
+            self.send_json(403, {"error": "Forbidden"})
+            return None
+        return user
+
     def do_OPTIONS(self) -> None:
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -229,18 +273,35 @@ class SiteHandler(SimpleHTTPRequestHandler):
             except json.JSONDecodeError:
                 payload = {}
             pwd = str(payload.get("password", "")).strip()
-            expected = cms_password()
-            if not expected or len(pwd) != len(expected) or not secrets.compare_digest(pwd, expected):
+            email = str(payload.get("email", "")).strip().lower()
+            account = None
+            if email:
+                for row in load_staff():
+                    row_email = str(row.get("email", "")).strip().lower()
+                    row_pwd = str(row.get("password", ""))
+                    if row_email == email and row_pwd and secrets.compare_digest(row_pwd, pwd):
+                        account = row
+                        break
+            else:
+                expected = cms_password()
+                if expected and secrets.compare_digest(expected, pwd):
+                    account = {"id": "", "name": "Редактор", "email": "", "role": "Администратор"}
+            if not account:
                 self.send_json(401, {"error": "Unauthorized"})
                 return
             token = secrets.token_urlsafe(32)
-            _cms_tokens[token] = time.time() + CMS_TOKEN_TTL
-            self.send_json(200, {"token": token})
+            user = {
+                "id": str(account.get("id") or ""),
+                "name": str(account.get("name") or ""),
+                "email": str(account.get("email") or ""),
+                "role": str(account.get("role") or "Стажёр"),
+            }
+            _cms_tokens[token] = {**user, "exp": time.time() + CMS_TOKEN_TTL}
+            self.send_json(200, {"token": token, "user": user})
             return
 
         if path == "/api/cms/save":
-            if not cms_check_token(self.headers.get("Authorization")):
-                self.send_json(401, {"error": "Unauthorized"})
+            if not self.require_roles({"Администратор"}):
                 return
             length = int(self.headers.get("Content-Length", "0"))
             body = self.rfile.read(length)
@@ -267,8 +328,7 @@ class SiteHandler(SimpleHTTPRequestHandler):
             return
 
         if path == "/api/wrap-zones/save":
-            if not cms_check_token(self.headers.get("Authorization")):
-                self.send_json(401, {"error": "Unauthorized"})
+            if not self.require_roles({"Администратор"}):
                 return
             length = int(self.headers.get("Content-Length", "0"))
             body = self.rfile.read(length)
@@ -289,8 +349,8 @@ class SiteHandler(SimpleHTTPRequestHandler):
             return
 
         if path == "/api/training/save":
-            if not cms_check_token(self.headers.get("Authorization")):
-                self.send_json(401, {"error": "Unauthorized"})
+            actor = self.require_roles({"Администратор", "Преподаватель", "Менеджер"})
+            if not actor:
                 return
             length = int(self.headers.get("Content-Length", "0"))
             body = self.rfile.read(length)
@@ -302,6 +362,14 @@ class SiteHandler(SimpleHTTPRequestHandler):
             if not isinstance(payload, dict) or not isinstance(payload.get("students"), list):
                 self.send_json(400, {"error": "Missing students"})
                 return
+            if str(actor.get("role") or "") != "Администратор" and TRAINING_JSON.is_file():
+                try:
+                    existing = json.loads(TRAINING_JSON.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError):
+                    existing = {}
+                if isinstance(existing, dict):
+                    payload["users"] = existing.get("users") or []
+                    payload["settings"] = existing.get("settings") or {}
             TRAINING_JSON.parent.mkdir(parents=True, exist_ok=True)
             TRAINING_JSON.write_text(
                 json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
@@ -311,8 +379,7 @@ class SiteHandler(SimpleHTTPRequestHandler):
             return
 
         if path == "/api/cms/upload":
-            if not cms_check_token(self.headers.get("Authorization")):
-                self.send_json(401, {"error": "Unauthorized"})
+            if not self.require_roles({"Администратор"}):
                 return
             ctype = self.headers.get("Content-Type", "")
             if "multipart/form-data" not in ctype:

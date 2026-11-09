@@ -1,10 +1,10 @@
 <IfModule mod_authz_core.c>
-  <FilesMatch "^(config\.local\.json|config\.example\.json|_sessions\.json)$">
+  <FilesMatch "^(config\.local\.json|config\.example\.json|staff\.json|staff\.example\.json|_sessions\.json)$">
     Require all denied
   </FilesMatch>
 </IfModule>
 <IfModule !mod_authz_core.c>
-  <FilesMatch "^(config\.local\.json|config\.example\.json|_sessions\.json)$">
+  <FilesMatch "^(config\.local\.json|config\.example\.json|staff\.json|staff\.example\.json|_sessions\.json)$">
     Order allow,deny
     Deny from all
   </FilesMatch>
