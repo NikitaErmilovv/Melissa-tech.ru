@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Контакты Тепло Сибири: телефон, WhatsApp, заявка на дрова с доставкой.">
+<title>Контакты — Тепло Сибири</title>
+<link rel="stylesheet" href="styles.css?v=1">
+<link rel="stylesheet" href="teplo-theme.css?v=1">
+<script src="site-config.js"></script>
+</head>
+<body class="page-sub">
+<nav class="site-nav">
+  <div class="logo"><a href="index.html"><span class="logo-mark">ТС</span><span class="logo-word">ТЕПЛО СИБИРИ</span></a></div>
+  <div class="links">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+  <div class="nav-actions">
+    <a class="phone" data-teplo-phone href="tel:+79039001234">+7 (903) 900-12-34</a>
+    <button class="nav-burger" type="button" aria-label="Меню" aria-expanded="false">
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+</nav>
+
+<section class="subpage-hero">
+  <div class="kicker">КОНТАКТЫ</div>
+  <h1>СВЯЗАТЬСЯ<br><span class="accent">С НАМИ</span></h1>
+  <p data-teplo-city>Новосибирск и область</p>
+</section>
+
+<section class="section">
+  <div class="contact-panel">
+    <div class="contact-panel-card">
+      <div class="kicker">ТЕЛЕФОН</div>
+      <a class="contact-phone" data-teplo-phone href="tel:+79039001234">+7 (903) 900-12-34</a>
+      <p data-teplo-hours>Ежедневно 8:00–20:00</p>
+      <div class="contact-chips">
+        <a data-teplo-wa href="https://wa.me/79039001234" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a data-teplo-tg href="https://t.me/+79039001234" target="_blank" rel="noopener noreferrer">Telegram</a>
+      </div>
+    </div>
+    <div class="contact-panel-card">
+      <div class="kicker">АДРЕС</div>
+      <p data-teplo-address>Склад — адрес сообщаем при подтверждении заказа</p>
+      <p class="intro"><a href="index.html#order">Калькулятор и заявка на главной →</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="teplo-panel" style="max-width:520px">
+    <h3 style="margin:0 0 16px">Короткая заявка</h3>
+    <form id="teplo-order-form">
+      <input type="hidden" name="volume" value="">
+      <div class="teplo-field">
+        <label for="c-name">Имя</label>
+        <input id="c-name" name="name" required autocomplete="name">
+      </div>
+      <div class="teplo-field">
+        <label for="c-phone">Телефон</label>
+        <input id="c-phone" name="phone" required type="tel" autocomplete="tel">
+      </div>
+      <div class="teplo-field">
+        <label for="c-comment">Что нужно</label>
+        <textarea id="c-comment" name="comment" placeholder="Объём, адрес доставки"></textarea>
+      </div>
+      <button type="submit" class="button" style="width:100%;border:0;cursor:pointer">ОТПРАВИТЬ</button>
+      <p class="teplo-form-status" id="teplo-order-status"></p>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-bottom"><span>© 2026 Тепло Сибири</span></div>
+</footer>
+<script src="contacts-config.js"></script>
+<script src="nav.js"></script>
+<script src="order-form.js"></script>
+<script>
+(function () {
+  var s = window.TEPLO_SITE || {};
+  document.querySelectorAll("[data-teplo-phone]").forEach(function (a) {
+    if (s.phone) a.href = "tel:" + s.phone.replace(/\s/g, "");
+    if (s.phoneDisplay) a.textContent = s.phoneDisplay;
+  });
+  if (s.city) document.querySelectorAll("[data-teplo-city]").forEach(function (el) { el.textContent = s.city; });
+  if (s.address) document.querySelectorAll("[data-teplo-address]").forEach(function (el) { el.textContent = s.address; });
+  if (s.hours) document.querySelectorAll("[data-teplo-hours]").forEach(function (el) { el.textContent = s.hours; });
+  var wa = document.querySelector("[data-teplo-wa]");
+  if (wa && s.wa) wa.href = "https://wa.me/" + String(s.wa).replace(/\D/g, "");
+  var tg = document.querySelector("[data-teplo-tg]");
+  if (tg && s.tg) tg.href = "https://t.me/" + encodeURIComponent(String(s.tg).replace(/\s/g, ""));
+})();
+</script>
+</body>
+</html>

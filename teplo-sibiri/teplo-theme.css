@@ -1,0 +1,32 @@
+:root{
+  --accent:#feca32;
+  --accent-soft:rgba(254,202,50,.38);
+  --accent-hover:#ffe07a;
+  --accent-deep:#c9a020;
+  --accent-ink:#0a0a0a;
+  --accent-rgb:254,202,50;
+}
+.hero{min-height:720px;background:radial-gradient(circle at 70% 40%,#3d2e14 0,#1a1408 28%,#0a0a0a 58%)}
+.heroimg{background-image:url('img/photos/01-bundles.jpg');background-position:60% 45%}
+.logo-mark{font-size:15px}
+.teplo-calc-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:start}
+@media (max-width:900px){.teplo-calc-grid{grid-template-columns:1fr}}
+.teplo-panel{background:#12120f;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:28px}
+.teplo-field{margin-bottom:18px}
+.teplo-field label{display:block;font-size:12px;letter-spacing:.08em;color:#bdbdb7;margin-bottom:8px;text-transform:uppercase}
+.teplo-field input,.teplo-field select,.teplo-field textarea{
+  width:100%;box-sizing:border-box;background:#0a0a0a;border:1px solid rgba(255,255,255,.14);
+  color:#f5f5f2;padding:14px 16px;border-radius:4px;font:inherit;font-size:15px;
+}
+.teplo-field textarea{min-height:96px;resize:vertical}
+.teplo-calc-sum{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1)}
+.teplo-calc-sum div{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;font-size:15px}
+.teplo-calc-sum b{font-size:20px;color:var(--accent)}
+.teplo-form-status{margin-top:14px;font-size:14px;color:#bdbdb7;line-height:1.5}
+.teplo-form-status.is-ok{color:#9be49b}
+.teplo-form-status.is-error{color:#ff9b9b}
+.photo-strip--teplo .photo{min-height:280px}
+.product-list{display:flex;flex-direction:column;gap:14px}
+.product-row{display:grid;grid-template-columns:56px 1fr auto;gap:18px;align-items:center;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.product-row .idx{font-size:28px;font-weight:800;color:var(--accent);opacity:.7}
+.seo-block{max-width:720px;color:#c8c8c2;line-height:1.65;font-size:15px}

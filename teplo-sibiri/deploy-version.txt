@@ -1,0 +1,4 @@
+site=teplo-sibiri
+path=/teplo-sibiri/
+deploy=git-push-master
+deploy-trigger=teplo-sibiri-20261110T0435Z

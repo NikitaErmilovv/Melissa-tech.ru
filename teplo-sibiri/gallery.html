@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Фото склада и продукции Тепло Сибири: дрова, горбыль, отгрузка.">
+<title>Фото склада — Тепло Сибири</title>
+<link rel="stylesheet" href="styles.css?v=1">
+<link rel="stylesheet" href="teplo-theme.css?v=1">
+<script src="site-config.js"></script>
+</head>
+<body class="page-sub">
+<nav class="site-nav">
+  <div class="logo"><a href="index.html"><span class="logo-mark">ТС</span><span class="logo-word">ТЕПЛО СИБИРИ</span></a></div>
+  <div class="links">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+  <div class="nav-actions">
+    <a class="phone" data-teplo-phone href="tel:+79039001234">+7 (903) 900-12-34</a>
+    <button class="nav-burger" type="button" aria-label="Меню" aria-expanded="false">
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+</nav>
+
+<section class="subpage-hero">
+  <div class="kicker">ФОТО</div>
+  <h1>СКЛАД<br><span class="accent">И ПРОДУКЦИЯ</span></h1>
+</section>
+
+<section class="section">
+  <div class="photo-strip photo-strip--services photo-strip--teplo" style="grid-template-columns:1fr 1fr">
+    <figure class="photo" style="background-image:url('img/photos/01-bundles.jpg');min-height:320px" role="img" aria-label="Связки дров на складе"></figure>
+    <figure class="photo" style="background-image:url('img/photos/02-gorbyl.jpg');min-height:320px" role="img" aria-label="Горбыль на площадке"></figure>
+  </div>
+  <p class="intro" style="margin-top:24px">Больше фото добавим по мере отгрузок. Нужны кадры с вашей машины — пришлите, разместим в галерее.</p>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-bottom"><span>© 2026 Тепло Сибири</span></div>
+</footer>
+<script src="nav.js"></script>
+<script>
+(function () {
+  var s = window.TEPLO_SITE || {};
+  document.querySelectorAll("[data-teplo-phone]").forEach(function (a) {
+    if (s.phone) a.href = "tel:" + s.phone.replace(/\s/g, "");
+    if (s.phoneDisplay) a.textContent = s.phoneDisplay;
+  });
+})();
+</script>
+</body>
+</html>
