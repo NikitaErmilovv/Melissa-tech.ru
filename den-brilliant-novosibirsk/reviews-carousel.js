@@ -51,7 +51,7 @@
       });
       if (!list.length) {
         track.innerHTML =
-          '<div class="review"><div class="stars">★★★★★</div><p>Отзывы загружаются…</p><small>2ГИС</small></div>';
+          '<div class="review"><div class="stars">★★★★★</div><p>Свежие отзывы — в карточке студии.</p><small><a href="https://yandex.ru/maps/org/denbrilliant/187792613331/reviews/" target="_blank" rel="noopener">Яндекс Карты</a></small></div>';
         return;
       }
       slides = list;
@@ -70,7 +70,7 @@
             "»</p>" +
             "<small>" +
             escapeHtml(it.name || "Клиент") +
-            " · 2ГИС</small>" +
+            " · Яндекс Карты</small>" +
             "</article>"
           );
         })
@@ -117,7 +117,7 @@
     (function loadNext(i) {
       if (i >= urls.length) {
         track.innerHTML =
-          '<div class="review"><p>Не удалось загрузить отзывы 2ГИС.</p><small><a href="https://2gis.ru/ekaterinburg/firm/70000001034025330/tab/reviews" target="_blank" rel="noopener">Открыть на 2ГИС</a></small></div>';
+          '<div class="review"><p>Не удалось загрузить отзывы.</p><small><a href="https://yandex.ru/maps/org/denbrilliant/187792613331/reviews/" target="_blank" rel="noopener">Открыть в Яндекс Картах</a></small></div>';
         return;
       }
       fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=r2")

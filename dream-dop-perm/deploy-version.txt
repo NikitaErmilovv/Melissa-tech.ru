@@ -2,4 +2,4 @@ site=dream-dop-perm
 brand=Dream Dop
 prod=https://melissa-tech.ru/dream-dop-perm/
 deploy=git-push-timeweb-hook
-deploy-trigger=dream-dop-perm-20261111T0915Z
+deploy-trigger=dream-dop-perm-20261111T1005Z

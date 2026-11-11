@@ -2,7 +2,6 @@
   var grid = document.getElementById('gallery-grid');
   if (!grid) return;
   var FALLBACK_FILES = [
-  "img/works/incoming/den-brilliant/01-2gis.jpg",
   "img/works/incoming/den-brilliant/02-2gis.jpg",
   "img/works/incoming/den-brilliant/03-2gis.jpg",
   "img/works/incoming/den-brilliant/04-2gis.jpg",
@@ -13,11 +12,7 @@
   "img/works/incoming/den-brilliant/09-2gis.jpg",
   "img/works/incoming/den-brilliant/10-2gis.jpg",
   "img/works/incoming/den-brilliant/11-2gis.jpg",
-  "img/works/incoming/den-brilliant/12-2gis.jpg",
-  "img/works/incoming/den-brilliant/13-2gis.jpg",
-  "img/works/incoming/den-brilliant/14-2gis.jpg",
-  "img/works/incoming/den-brilliant/15-2gis.jpg",
-  "img/works/incoming/den-brilliant/16-2gis.jpg"
+  "img/works/incoming/den-brilliant/12-2gis.jpg"
 ];
   var manifestUrl = 'data/gallery-manifest.json';
 
@@ -59,4 +54,3 @@
       load(FALLBACK_FILES);
     });
 })();
-

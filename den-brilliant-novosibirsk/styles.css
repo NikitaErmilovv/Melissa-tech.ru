@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#9ec8ff;
-  --accent-soft:rgba(158,200,255,.4);
-  --accent-hover:#bdd9ff;
-  --accent-deep:#6fa8e8;
+  --accent:#f5f5f2;
+  --accent-soft:rgba(255,255,255,.28);
+  --accent-hover:#ffffff;
+  --accent-deep:#bdbdb7;
   --accent-ink:#0a0a0a;
-  --accent-rgb:158,200,255;
+  --accent-rgb:245,245,242;
 }
 
 *{box-sizing:border-box}
@@ -39,9 +39,9 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .phone{border:1px solid rgba(255,255,255,.19);padding:13px 20px;border-radius:3px;font-size:12px;font-weight:600;white-space:nowrap;transition:border-color .2s,color .2s}
 .phone:hover{border-color:var(--accent-soft);color:var(--accent)}
 
-.hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:stretch;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#1e2a3a 0,#121820 28%,#0a0a0a 58%)}
+.hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:stretch;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#3a3626 0,#1a1810 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/works/incoming/den-brilliant/01-2gis.jpg') 72% 48% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/hero/hero-frame-02.jpg') 72% 48% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-stack{
   position:relative;z-index:1;width:100%;
@@ -182,6 +182,13 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 }
 .ba-handle span:before{right:55%;border-right-color:var(--accent-ink)}
 .ba-handle span:after{left:55%;border-left-color:var(--accent-ink)}
+.ba-label{
+  position:absolute;bottom:14px;z-index:4;pointer-events:none;
+  font-size:10px;font-weight:700;letter-spacing:.2em;
+  color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.75);
+}
+.ba-label--before{left:16px}
+.ba-label--after{right:16px}
 
 .photo-strip{display:grid;grid-template-columns:1.35fr .8fr .8fr;gap:12px;margin-top:70px}
 .photo{min-height:430px;background-size:cover;background-position:center;position:relative;overflow:hidden}
@@ -1389,169 +1396,66 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 
 
-.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
-  visibility:visible;position:static;transform:none;
-  margin:6px 0 18px;font-size:clamp(34px,4.8vw,62px);
-  line-height:.98;letter-spacing:-.05em;font-weight:800;color:#fff;
+.logo--img .logo-img{display:block;height:42px;width:auto;max-width:min(160px,42vw)}
+.logo-toner{color:#fff;font-weight:900;letter-spacing:-.04em;line-height:1;text-transform:none}
+.logo-plus{
+  color:#fff;font-weight:900;letter-spacing:0;line-height:1;text-transform:none;
+  display:inline-block;margin-left:2px;font-size:1.12em;transform:translateY(-.04em);
 }
-.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display .hero-title-sub{
-  display:block;margin-top:.08em;font-size:inherit;font-weight:inherit;
-  letter-spacing:inherit;line-height:.98;color:#fff;
+.site-nav .logo .logo-toner{color:#fff}
+.site-nav .logo .logo-plus{color:#fff}
+.footer-logo .logo-toner,.address-map-brand .logo-toner,.address-map-pin-label-text .logo-toner{color:#f5f5f2}
+.footer-logo .logo-plus,.address-map-brand .logo-plus,.address-map-pin-label-text .logo-plus{color:#fff}
+.hero--toner.hero--sdc .hero-heading{margin-top:-20px}
+.hero--toner .hero-brand-logo{
+  display:block;width:min(380px,86vw);height:auto;margin:0 0 12px;
+  filter:drop-shadow(0 12px 40px rgba(0,0,0,.45));
 }
-.hero--den-brilliant .heroimg{opacity:.88}
+/* Как RP: фото заливает маску (cover), сдвиг только через background-position */
+.hero--toner.hero--sdc .heroimg{
+  background-image:url('img/hero/hero-frame-02.jpg');
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:52% 72%;
+  opacity:.85;
+  filter:brightness(1.15);
+}
+.hero--toner.hero--sdc .heroimg:before{
+  background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.34) 40%,rgba(10,10,10,.08) 70%,transparent 85%);
+}
+@media (max-width:800px){
+  .hero--toner.hero--sdc .heroimg{
+    background-size:cover;
+    background-position:50% 68%;
+    filter:brightness(1.15);
+  }
+}
+.button{background:#fff;color:#0a0a0a}
+.button:hover{background:var(--accent-hover);color:#0a0a0a}
+.button.dark{color:#fff;border-color:rgba(255,255,255,.32)}
+.button.dark:hover{color:#fff;border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.08)}
+.photo-strip--tint-quad{grid-template-columns:repeat(4,1fr)}
+@media (max-width:1024px){.photo-strip--tint-quad{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.photo-strip--tint-quad .photo{aspect-ratio:4/3}}
+.pricelist-sheet-note{max-width:640px;margin:0 0 8px}
+.pricelist-page .section-head{margin-bottom:24px}
+.pricelist-page + .pricelist-page{border-top:1px solid rgba(255,255,255,.08);padding-top:56px;margin-top:8px}
+.pricelist-table td:first-child{max-width:420px}
+.pricelist-table td:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
 
-/* Den Brilliant — split layout, same palette, different structure */
-body.theme-den{
-  background:#07090c;
+.logo-plus.logo-plus--word{
+  font-size:1em;transform:none;margin-left:.32em;letter-spacing:-.04em;
 }
-body.theme-den nav.site-nav{
-  border-bottom-color:rgba(158,200,255,.14);
+.hero--toner .hero-brand-logo{
+  width:min(420px,88vw);
 }
-body.theme-den .logo a{
-  flex-direction:column;align-items:flex-start;gap:2px;line-height:1;
+.hero--toner.hero--sdc .heroimg{
+  background-image:url('img/works/incoming/den-brilliant/03-2gis.jpg');
+  background-position:48% 58%;
 }
-body.theme-den .logo-mark{
-  font-size:11px;letter-spacing:.32em;font-weight:700;
-}
-body.theme-den .logo-word{
-  font-size:20px;letter-spacing:-.05em;
-}
-body.theme-den .subpage-hero{
-  background:radial-gradient(circle at 78% 38%,#1e2a3a 0,#07090c 52%);
-}
-body.theme-den .process{
-  background:#10161e;color:#f5f5f2;
-}
-body.theme-den .process .kicker{color:var(--accent)}
-body.theme-den .process h2 .accent{color:var(--accent)}
-body.theme-den .steps{background:rgba(158,200,255,.16)}
-body.theme-den .step{background:#0c1118}
-body.theme-den .step b{color:var(--accent)}
-body.theme-den .step h3{color:#f5f5f2}
-body.theme-den .step p{color:#8a9098}
-body.theme-den .process .faq details{border-top-color:rgba(255,255,255,.1)}
-body.theme-den .process .faq details:last-child{border-bottom-color:rgba(255,255,255,.1)}
-body.theme-den .process .faq summary,
-body.theme-den .process .faq summary:hover,
-body.theme-den .process .faq details[open] summary{color:#f5f5f2}
-body.theme-den .process .faq p{color:#8a9098}
-
-.den-hero{
-  min-height:100vh;padding-top:82px;
-  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);
-  background:#07090c;
-}
-.den-hero-media{
-  position:relative;min-height:calc(100vh - 82px);
-  background-size:cover;background-position:center 40%;
-}
-.den-hero-media:after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent 55%,rgba(7,9,12,.55) 100%),
-    linear-gradient(180deg,transparent 58%,rgba(7,9,12,.72) 100%);
-}
-.den-hero-stats{
-  position:absolute;left:28px;right:28px;bottom:28px;z-index:1;
-  display:flex;flex-wrap:wrap;gap:10px;
-}
-.den-chip{
-  padding:12px 16px;background:rgba(7,9,12,.72);
-  border:1px solid rgba(158,200,255,.28);backdrop-filter:blur(10px);
-  min-width:110px;
-}
-.den-chip b{display:block;color:var(--accent);font-size:22px;letter-spacing:-.04em}
-.den-chip span{display:block;margin-top:4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#c5c9cf}
-.den-hero-copy{
-  display:flex;flex-direction:column;justify-content:center;
-  padding:56px 6vw 56px 48px;
-  background:linear-gradient(180deg,#121820 0%,#07090c 100%);
-  border-left:1px solid rgba(158,200,255,.16);
-}
-.den-kicker{
-  margin:0 0 22px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);
-}
-.den-hero-copy h1{margin:0 0 22px}
-.den-name{
-  display:block;font-size:clamp(42px,5.4vw,72px);line-height:.92;
-  letter-spacing:-.06em;font-weight:800;
-}
-.den-role{
-  display:block;margin-top:10px;font-size:clamp(18px,2vw,28px);
-  font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
-}
-.den-lead{max-width:420px;color:#b0b6be;line-height:1.7;font-size:15px;margin:0}
-.den-hero-copy .actions{margin-top:28px}
-.den-hero-copy .button{text-transform:uppercase;letter-spacing:.04em}
-
-.den-block{padding:110px 6vw;background:#07090c}
-.den-block--works{padding-top:40px}
-.den-head{display:flex;justify-content:space-between;gap:30px;margin-bottom:48px;align-items:flex-end}
-.den-head h2{font-size:clamp(36px,4.6vw,64px);line-height:.95;letter-spacing:-.06em;margin:10px 0 0}
-
-.den-svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.den-svc{
-  display:grid;grid-template-columns:140px 1fr;min-height:160px;
-  border:1px solid rgba(255,255,255,.08);background:#0e141c;overflow:hidden;
-  transition:border-color .2s,transform .2s;
-}
-.den-svc:hover{border-color:rgba(158,200,255,.35);transform:translateY(-2px)}
-.den-svc-img{display:block;background-size:cover;background-position:center;min-height:160px}
-.den-svc-body{padding:22px 22px 20px;display:flex;flex-direction:column;justify-content:center}
-.den-svc-body .num{color:var(--accent);font-size:11px;letter-spacing:.16em}
-.den-svc-body h3{margin:8px 0 8px;font-size:22px;letter-spacing:-.04em}
-.den-svc-body p{margin:0;color:#8a9098;font-size:13px;line-height:1.55}
-
-.den-masonry{
-  display:grid;grid-template-columns:1.35fr 1fr 1fr;grid-template-rows:220px 220px;gap:12px;
-}
-.den-shot{
-  display:block;background-size:cover;background-position:center;
-  border:1px solid rgba(255,255,255,.08);min-height:180px;
-  transition:transform .35s,border-color .2s;
-}
-.den-shot:hover{transform:scale(1.01);border-color:rgba(158,200,255,.35)}
-.den-shot--tall{grid-row:span 2;min-height:452px}
-
-.den-process{
-  padding:110px 6vw;background:#10161e;color:#f5f5f2;
-  border-top:1px solid rgba(158,200,255,.12);
-  border-bottom:1px solid rgba(158,200,255,.12);
-}
-.den-process h2{font-size:clamp(36px,4.6vw,64px);line-height:.95;letter-spacing:-.06em;margin:12px 0 0}
-.den-timeline{
-  list-style:none;margin:56px 0 0;padding:0;
-  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
-  counter-reset:none;
-  position:relative;
-}
-.den-timeline:before{
-  content:"";position:absolute;left:0;right:0;top:18px;height:1px;
-  background:linear-gradient(90deg,var(--accent),rgba(158,200,255,.12));
-}
-.den-timeline li{padding:0 22px 0 0;position:relative}
-.den-timeline b{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:36px;height:36px;border-radius:50%;
-  background:#07090c;border:1px solid var(--accent);color:var(--accent);
-  font-size:11px;letter-spacing:.08em;position:relative;z-index:1;
-}
-.den-timeline h3{margin:22px 0 10px;font-size:22px;letter-spacing:-.04em}
-.den-timeline p{margin:0;color:#8a9098;font-size:13px;line-height:1.6}
-
-@media (max-width:980px){
-  .den-hero{grid-template-columns:1fr;min-height:0}
-  .den-hero-media{min-height:58vh}
-  .den-hero-copy{padding:36px 5vw 48px;border-left:0;border-top:1px solid rgba(158,200,255,.16)}
-  .den-svc-grid{grid-template-columns:1fr}
-  .den-masonry{grid-template-columns:1fr 1fr;grid-template-rows:auto}
-  .den-shot--tall{grid-row:auto;grid-column:1 / -1;min-height:280px;aspect-ratio:16/9}
-  .den-timeline{grid-template-columns:1fr 1fr;gap:28px 18px}
-  .den-timeline:before{display:none}
-}
-@media (max-width:720px){
-  .den-svc{grid-template-columns:1fr}
-  .den-svc-img{min-height:180px}
-  .den-masonry{grid-template-columns:1fr}
-  .den-timeline{grid-template-columns:1fr}
-  .den-head{flex-direction:column;align-items:flex-start}
+.subpage-hero h1 .logo-toner,
+.subpage-hero h1 .logo-plus,
+.contact-panel-card h2 .logo-toner,
+.contact-panel-card h2 .logo-plus{
+  font-size:inherit;letter-spacing:inherit;font-weight:inherit;color:inherit;
 }
