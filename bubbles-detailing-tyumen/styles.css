@@ -1323,6 +1323,22 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   transform:translate(calc(-56px - 3vw),-50%) scale(1.28);
   transform-origin:left center;
 }
+.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
+  visibility:visible;
+  pointer-events:auto;
+  user-select:text;
+  position:absolute;
+  left:0;
+  top:50%;
+  margin:0;
+  transform:translate(calc(-56px - 3vw),-50%) scale(1.28);
+  transform-origin:left center;
+  font-weight:800;
+  color:#fff;
+}
+.hero--rp.hero--sdc .hero-logo-wrap:has(.hero-logo-display){
+  min-height:clamp(120px,22vw,200px);
+}
 .hero--rp.hero--sdc .hero-content{
   margin-top:auto;
   flex-shrink:0;
@@ -1334,6 +1350,9 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   }
   .hero--rp.hero--sdc .hero-brand-logo{
     width:min(300px,78vw);
+    transform:translate(calc(-36px - 4vw),-50%) scale(1.18);
+  }
+  .hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
     transform:translate(calc(-36px - 4vw),-50%) scale(1.18);
   }
 }

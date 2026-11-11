@@ -86,7 +86,7 @@ SITES: list[dict] = [
         "slug": "bubbles-detailing-tyumen",
         "photo_folder": "bubbles",
         "brand": "Bubbles",
-        "logo_mark": "Bubbles",
+        "logo_mark": "BUBBLES",
         "logo_word": "",
         "hero_accent": "BUBBLES",
         "photo_limit": 40,
@@ -225,10 +225,8 @@ def patch_files(dest: Path, site: dict) -> None:
         html,
         count=1,
     )
-    html = html.replace(
-        'class="hero-logo-spacer" aria-hidden="true"',
-        'class="hero-logo-spacer"',
-    )
+    html = html.replace('class="hero-logo-spacer"', 'class="hero-logo-spacer hero-logo-display"', 1)
+    html = html.replace('class="hero-logo-spacer" aria-hidden="true"', 'class="hero-logo-spacer hero-logo-display"', 1)
     idx.write_text(html, encoding="utf-8")
 
     contacts = f"""window.STUDIO_MESSENGERS = {{
@@ -239,9 +237,6 @@ def patch_files(dest: Path, site: dict) -> None:
 }};
 """
     (dest / "contacts-config.js").write_text(contacts, encoding="utf-8")
-
-    if site.get("neutral_theme"):
-        apply_bubbles_neutral(dest, site)
 
     try:
         reviews = fetch_branch_reviews(site["firm_id"], limit=8)
