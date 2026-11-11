@@ -2,4 +2,4 @@ site=bunker-box-omsk
 brand=Bunker Box
 prod=https://melissa-tech.ru/bunker-box-omsk/
 deploy=git-push-timeweb-hook
-deploy-trigger=bunker-box-omsk-hero-20261111T0538Z
+deploy-trigger=bunker-box-hero-20261111T0542Z
