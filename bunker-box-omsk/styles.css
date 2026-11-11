@@ -1323,6 +1323,30 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   transform:translate(calc(-56px - 3vw),-50%) scale(1.28);
   transform-origin:left center;
 }
+.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
+  visibility:visible;
+  position:static;
+  transform:none;
+  pointer-events:auto;
+  user-select:text;
+  margin:6px 0 18px;
+  font-size:clamp(34px,4.8vw,62px);
+  line-height:0.98;
+  letter-spacing:-.05em;
+  font-weight:800;
+  color:#fff;
+}
+.hero--rp.hero--sdc .hero-logo-wrap:has(.hero-logo-display){
+  min-height:0;
+}
+.hero--rp.hero--sdc .hero-heading--logo .hero-eyebrow-city{
+  margin-top:clamp(20px,3.5vw,42px);
+  margin-bottom:2px;
+}
+.hero--bunker-box .heroimg{
+  background-size:85% auto !important;
+  background-position:55% 42% !important;
+}
 .hero--rp.hero--sdc .hero-content{
   margin-top:auto;
   flex-shrink:0;
@@ -1335,6 +1359,13 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .hero--rp.hero--sdc .hero-brand-logo{
     width:min(300px,78vw);
     transform:translate(calc(-36px - 4vw),-50%) scale(1.18);
+  }
+  .hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
+    font-size:clamp(28px,8.5vw,44px);
+    margin:4px 0 14px;
+  }
+  .hero--bunker-box .heroimg{
+    background-size:90% auto !important;
   }
 }
 .gallery-empty{grid-column:1/-1;color:#888;padding:24px;border:1px dashed rgba(255,255,255,.15)}
