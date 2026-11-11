@@ -2,4 +2,4 @@ site=den-brilliant-novosibirsk
 brand=Den Brilliant
 prod=https://melissa-tech.ru/den-brilliant-novosibirsk/
 deploy=git-push-timeweb-hook
-deploy-trigger=den-brilliant-novosibirsk-20261111T1035Z
+deploy-trigger=den-brilliant-novosibirsk-20261111T104706Z
