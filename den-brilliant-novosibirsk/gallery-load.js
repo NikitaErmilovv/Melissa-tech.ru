@@ -5,7 +5,6 @@
   "img/works/incoming/den-brilliant/02-2gis.jpg",
   "img/works/incoming/den-brilliant/03-2gis.jpg",
   "img/works/incoming/den-brilliant/04-2gis.jpg",
-  "img/works/incoming/den-brilliant/05-2gis.jpg",
   "img/works/incoming/den-brilliant/06-2gis.jpg",
   "img/works/incoming/den-brilliant/07-2gis.jpg",
   "img/works/incoming/den-brilliant/08-2gis.jpg",
@@ -26,7 +25,7 @@
       a.setAttribute('data-lightbox', 'work');
       var img = document.createElement('img');
       img.src = src;
-      img.alt = '';
+      img.alt = 'Работа Den Brilliant';
       img.loading = 'lazy';
       img.decoding = 'async';
       a.appendChild(img);

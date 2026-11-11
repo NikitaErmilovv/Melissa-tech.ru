@@ -51,7 +51,7 @@
       });
       if (!list.length) {
         track.innerHTML =
-          '<div class="review"><div class="stars">★★★★★</div><p>Свежие отзывы — в карточке студии.</p><small><a href="https://yandex.ru/maps/org/denbrilliant/187792613331/reviews/" target="_blank" rel="noopener">Яндекс Карты</a></small></div>';
+          '<div class="review"><div class="stars">★★★★★</div><p>Свежие отзывы — в карточке студии.</p><small><a href="https://2gis.ru/novosibirsk/firm/70000001020637363/tab/reviews" target="_blank" rel="noopener">2ГИС</a></small></div>';
         return;
       }
       slides = list;
@@ -70,7 +70,7 @@
             "»</p>" +
             "<small>" +
             escapeHtml(it.name || "Клиент") +
-            " · Яндекс Карты</small>" +
+            " · 2ГИС</small>" +
             "</article>"
           );
         })
@@ -117,10 +117,10 @@
     (function loadNext(i) {
       if (i >= urls.length) {
         track.innerHTML =
-          '<div class="review"><p>Не удалось загрузить отзывы.</p><small><a href="https://yandex.ru/maps/org/denbrilliant/187792613331/reviews/" target="_blank" rel="noopener">Открыть в Яндекс Картах</a></small></div>';
+          '<div class="review"><p>Не удалось загрузить отзывы.</p><small><a href="https://2gis.ru/novosibirsk/firm/70000001020637363/tab/reviews" target="_blank" rel="noopener">Открыть в 2ГИС</a></small></div>';
         return;
       }
-      fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=r2")
+      fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=r3")
         .then(function (r) {
           if (!r.ok) throw new Error("fail");
           return r.json();

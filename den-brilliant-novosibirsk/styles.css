@@ -1406,7 +1406,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .site-nav .logo .logo-plus{color:#fff}
 .footer-logo .logo-toner,.address-map-brand .logo-toner,.address-map-pin-label-text .logo-toner{color:#f5f5f2}
 .footer-logo .logo-plus,.address-map-brand .logo-plus,.address-map-pin-label-text .logo-plus{color:#fff}
-.hero--toner.hero--sdc .hero-heading{margin-top:-20px}
+.hero--toner.hero--sdc .hero-heading{margin-top:8px}
 .hero--toner .hero-brand-logo{
   display:block;width:min(380px,86vw);height:auto;margin:0 0 12px;
   filter:drop-shadow(0 12px 40px rgba(0,0,0,.45));
