@@ -88,8 +88,7 @@ SITES: list[dict] = [
         "brand": "Bubbles",
         "logo_mark": "Bubbles",
         "logo_word": "",
-        "hero_accent": "Bubbles",
-        "neutral_theme": True,
+        "hero_accent": "BUBBLES",
         "photo_limit": 40,
         "city": "Тюмень",
         "city_upper": "ТЮМЕНЬ",
@@ -118,47 +117,6 @@ SITES: list[dict] = [
         ),
     },
 ]
-
-
-NEUTRAL_CSS_ROOT = """:root{
-  --accent:#e8e8e4;
-  --accent-soft:rgba(255,255,255,.18);
-  --accent-hover:#f5f5f2;
-  --accent-deep:#b8b8b4;
-  --accent-ink:#0a0a0a;
-  --accent-rgb:232,232,228;
-}"""
-
-LOGO_SINGLE = '<span class="logo-mark logo-mark--single">Bubbles</span>'
-
-
-def apply_bubbles_neutral(dest: Path, site: dict) -> None:
-    old_logo = '<span class="logo-mark">BUB</span><span class="logo-word">BLES</span>'
-    for p in dest.rglob("*.html"):
-        t = p.read_text(encoding="utf-8")
-        t = t.replace(
-            f'<span class="logo-mark">{site["logo_mark"]}</span><span class="logo-word">{site["logo_word"]}</span>',
-            LOGO_SINGLE,
-        )
-        t = t.replace(old_logo, LOGO_SINGLE)
-        t = t.replace("BUBBLES<br><span class=\"accent\">", "Bubbles<br>")
-        t = t.replace(f'{site["hero_accent"]}<br><span class="accent">{site["city_upper"]}</span>', f'Bubbles<br>{site["city"]}')
-        t = re.sub(r'<span class="accent">([^<]+)</span>', r"\1", t)
-        t = t.replace("<span>BUBBLES · ", "<span>Bubbles · ")
-        p.write_text(t, encoding="utf-8")
-    css = (dest / "styles.css").read_text(encoding="utf-8")
-    css = re.sub(r":root\{[^}]+\}", NEUTRAL_CSS_ROOT, css, count=1)
-    css = css.replace(
-        "background:radial-gradient(circle at 72% 42%,#3a3626 0,#1a1810 22%,#0a0a0a 55%)",
-        "background:radial-gradient(circle at 72% 42%,#2a2a2a 0,#141414 22%,#0a0a0a 55%)",
-    )
-    if ".logo-mark--single" not in css:
-        css = css.replace(
-            ".logo-mark{color:",
-            ".logo-mark--single{text-transform:none;letter-spacing:-.03em}\n.logo-mark{color:",
-            1,
-        )
-    (dest / "styles.css").write_text(css, encoding="utf-8")
 
 
 def map_urls(site: dict) -> tuple[str, str]:
