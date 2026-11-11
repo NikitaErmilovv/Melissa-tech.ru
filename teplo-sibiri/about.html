@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Тепло Сибири — поставщик дров и пиловочника. Склад, честная кубатура, доставка по Новосибирску и области.">
+<title>О компании — Тепло Сибири</title>
+<link rel="stylesheet" href="styles.css?v=1">
+<link rel="stylesheet" href="teplo-theme.css?v=1">
+<script src="site-config.js"></script>
+</head>
+<body class="page-sub">
+<nav class="site-nav">
+  <div class="logo"><a href="index.html"><span class="logo-mark">ТС</span><span class="logo-word">ТЕПЛО СИБИРИ</span></a></div>
+  <div class="links">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+  <div class="nav-actions">
+    <a class="phone" data-teplo-phone href="tel:+79039001234">+7 (903) 900-12-34</a>
+    <button class="nav-burger" type="button" aria-label="Меню" aria-expanded="false">
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+</nav>
+
+<section class="subpage-hero">
+  <div class="kicker">О КОМПАНИИ</div>
+  <h1>ТЕПЛО<br><span class="accent">СИБИРИ</span></h1>
+  <p>Дрова и материал · честный объём</p>
+</section>
+
+<section class="section">
+  <div class="seo-block">
+    <p>
+      <strong>«Тепло Сибири»</strong> специализируется на отгрузке дров и побочных продуктов лесопиления.
+      Мы не «перепродаём с рук» — работаем со своей площадки: клиент видит связки, штабель и погрузку.
+    </p>
+    <p style="margin-top:18px">
+      Для частных домовладельцев возим <strong>колотые дрова</strong> и <strong>горбыль</strong>, для бань и котельных —
+      подбираем фракцию и влажность. Для постоянных заказчиков фиксируем цену в договорённости и напоминаем о сезоне заготовки.
+    </p>
+    <p style="margin-top:18px">
+      На сайте — калькулятор кубов и заявка: вы сразу понимаете порядок суммы, а мы звоним и подтверждаем логистику.
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-bottom"><span>© 2026 Тепло Сибири</span></div>
+</footer>
+<script src="nav.js"></script>
+<script>
+(function () {
+  var s = window.TEPLO_SITE || {};
+  document.querySelectorAll("[data-teplo-phone]").forEach(function (a) {
+    if (s.phone) a.href = "tel:" + s.phone.replace(/\s/g, "");
+    if (s.phoneDisplay) a.textContent = s.phoneDisplay;
+  });
+})();
+</script>
+</body>
+</html>

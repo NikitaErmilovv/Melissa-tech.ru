@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Тепло Сибири — дрова колотые, горбыль и пиловочник с доставкой по Новосибирску и области. Склад, нарезка, калькулятор объёма и заявка онлайн.">
+<meta name="keywords" content="дрова с доставкой, купить дрова Новосибирск, горбыль, колотые дрова, дрова в кубах, Тепло Сибири">
+<title>Тепло Сибири — дрова и пиломатериалы с доставкой</title>
+<link rel="stylesheet" href="styles.css?v=1">
+<link rel="stylesheet" href="teplo-theme.css?v=1">
+<script src="site-config.js"></script>
+</head>
+<body>
+<nav class="site-nav">
+  <div class="logo"><a href="index.html"><span class="logo-mark">ТС</span><span class="logo-word">ТЕПЛО СИБИРИ</span></a></div>
+  <div class="links">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+  <div class="nav-actions">
+    <a class="phone" data-teplo-phone href="tel:+79039001234">+7 (903) 900-12-34</a>
+    <button class="nav-burger" type="button" aria-label="Открыть меню" aria-expanded="false">
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+</nav>
+
+<section class="hero hero--rp">
+  <div class="heroimg"></div>
+  <div class="hero-panel">
+    <div class="hero-heading">
+      <div class="eyebrow hero-eyebrow-city">СИБИРЬ · ДОСТАВКА ДРОВ</div>
+      <h1>ДРОВА<br>И <span class="accent">ПИЛОМАТЕРИАЛЫ</span></h1>
+    </div>
+    <div class="hero-content">
+      <p><strong>Тепло Сибири</strong> — склад и отгрузка колотых дров, горбыля и обрезков. Поможем рассчитать кубатуру, подберём фуру или газель, доставим в срок.</p>
+      <div class="actions">
+        <a class="button" href="#order">РАССЧИТАТЬ ЗАКАЗ</a>
+        <a class="button dark" href="tel:+79039001234" data-teplo-phone>ПОЗВОНИТЬ</a>
+      </div>
+    </div>
+  </div>
+  <div class="stats stats--hero">
+    <div class="stat"><b>3+</b><span>вида продукции</span></div>
+    <div class="stat"><b>24ч</b><span>отгрузка со склада</span></div>
+    <div class="stat"><b>м³</b><span>прозрачный расчёт</span></div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="section-head">
+    <div><div class="kicker">01 / ПРОДУКЦИЯ</div><h2>ТОПЛИВО<br><span class="accent">ДЛЯ ДОМА И БАНИ</span></h2></div>
+    <p class="intro">Сухие и естественной влажности партии. Уточняем породу (сосна, лиственница) при заказе.</p>
+  </div>
+  <div class="photo-strip photo-strip--services photo-strip--teplo">
+    <a class="photo" href="services.html" style="background-image:url('img/photos/01-bundles.jpg')"><span class="tag">ДРОВА В УПАКОВКЕ</span></a>
+    <a class="photo" href="services.html" style="background-image:url('img/photos/02-gorbyl.jpg')"><span class="tag">ГОРБЫЛЬ</span></a>
+    <a class="photo" href="services.html" style="background-image:url('img/hero-home.jpg');opacity:.35"><span class="tag">КОЛОТЫЕ ДРОВА</span></a>
+  </div>
+</section>
+
+<section class="section" id="order">
+  <div class="section-head">
+    <div><div class="kicker">02 / КАЛЬКУЛЯТОР</div><h2>ПОСЧИТАТЬ<br><span class="accent">ОБЪЁМ И ЦЕНУ</span></h2></div>
+    <p class="intro">Ориентир по прайсу. Точную стоимость подтвердим после уточнения адреса и влажности.</p>
+  </div>
+  <div class="teplo-calc-grid" id="teplo-calc">
+    <div class="teplo-panel">
+      <div class="teplo-field">
+        <label for="calc-type">Вид дров / материала</label>
+        <select id="calc-type" data-calc="type">
+          <option value="kolotye">Колотые дрова (поленья)</option>
+          <option value="drova">Дрова рубленые, смешанная длина</option>
+          <option value="gorbyl">Горбыль (обзол)</option>
+          <option value="obrez">Обрезки / технические отходы</option>
+        </select>
+      </div>
+      <div class="teplo-field">
+        <label for="calc-vol">Объём, м³</label>
+        <input id="calc-vol" type="number" min="0" step="0.5" value="6" data-calc="volume" inputmode="decimal">
+      </div>
+      <div class="teplo-field">
+        <label for="calc-km">Доставка, км от склада (0 — самовывоз)</label>
+        <input id="calc-km" type="number" min="0" step="1" value="0" data-calc="km" inputmode="numeric">
+      </div>
+      <div class="teplo-calc-sum">
+        <div><span>Материал</span><strong data-calc="out-wood">—</strong></div>
+        <div><span>Доставка</span><strong data-calc="out-delivery">—</strong></div>
+        <div><span>Итого ориентир</span><b data-calc="out-total">—</b></div>
+      </div>
+      <p class="intro" style="margin-top:14px" data-calc="hint"></p>
+    </div>
+    <div class="teplo-panel" aria-labelledby="order-form-title">
+      <div class="kicker">ЗАЯВКА</div>
+      <h3 id="order-form-title" style="margin:0 0 18px;font-size:22px">Оставить <span class="accent">заказ</span></h3>
+      <form id="teplo-order-form">
+        <input type="hidden" name="volume" value="">
+        <div class="teplo-field">
+          <label for="ord-name">Имя</label>
+          <input id="ord-name" name="name" required autocomplete="name" placeholder="Как к вам обращаться">
+        </div>
+        <div class="teplo-field">
+          <label for="ord-phone">Телефон</label>
+          <input id="ord-phone" name="phone" required type="tel" autocomplete="tel" placeholder="+7 …">
+        </div>
+        <div class="teplo-field">
+          <label for="ord-comment">Адрес или комментарий</label>
+          <textarea id="ord-comment" name="comment" placeholder="Населённый пункт, улица, желаемая дата"></textarea>
+        </div>
+        <button type="submit" class="button" style="width:100%;border:0;cursor:pointer">ОТПРАВИТЬ ЗАЯВКУ</button>
+        <p class="teplo-form-status" id="teplo-order-status">Сейчас заявка уходит в WhatsApp. Позже настроим автоотправку на наш номер.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div><div class="kicker">03 / ПОЧЕМУ МЫ</div><h2>НАДЁЖНО<br><span class="accent">И ПО-СИБИРСКИ ЧЕСТНО</span></h2></div>
+  </div>
+  <div class="steps">
+    <div class="step"><b>01</b><h3>Склад</h3><p>Отгрузка с площадки — видите, что грузим в машину.</p></div>
+    <div class="step"><b>02</b><h3>Кубатура</h3><p>Считаем в м³, без «лоскутной» наценки.</p></div>
+    <div class="step"><b>03</b><h3>Доставка</h3><p>Газель, борт, манипулятор — по согласованию.</p></div>
+    <div class="step"><b>04</b><h3>Связь</h3><p>Один менеджер ведёт заказ от заявки до разгрузки.</p></div>
+  </div>
+  <div class="seo-block" style="margin-top:36px">
+    <p>Ищете <strong>дрова с доставкой по Новосибирску и области</strong>? «Тепло Сибири» поставляет <strong>колотые дрова</strong> для частного дома, бани и котельной, а также <strong>горбыль</strong> для хозяйственных нужд. На сайте — калькулятор кубов и форма заявки: укажите объём, мы перезвоним и забронируем партию на складе.</p>
+  </div>
+</section>
+
+<footer class="site-footer" style="margin-top:48px">
+  <div class="footer-bottom">
+    <span>© 2026 Тепло Сибири</span>
+    <span data-teplo-city>Новосибирск и область</span>
+  </div>
+</footer>
+
+<script src="contacts-config.js"></script>
+<script src="nav.js"></script>
+<script src="order-calculator.js"></script>
+<script src="order-form.js"></script>
+<script>
+(function () {
+  var s = window.TEPLO_SITE || {};
+  document.querySelectorAll("[data-teplo-phone]").forEach(function (a) {
+    if (s.phone) a.setAttribute("href", "tel:" + s.phone.replace(/\s/g, ""));
+    if (s.phoneDisplay) a.textContent = s.phoneDisplay;
+  });
+  document.querySelectorAll("[data-teplo-city]").forEach(function (el) {
+    if (s.city) el.textContent = s.city;
+  });
+})();
+</script>
+</body>
+</html>

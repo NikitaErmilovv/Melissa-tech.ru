@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Продукция Тепло Сибири: колотые дрова, горбыль, обрезки. Цены за м³, условия доставки по Сибири.">
+<title>Продукция — Тепло Сибири</title>
+<link rel="stylesheet" href="styles.css?v=1">
+<link rel="stylesheet" href="teplo-theme.css?v=1">
+<script src="site-config.js"></script>
+</head>
+<body class="page-sub">
+<nav class="site-nav">
+  <div class="logo"><a href="index.html"><span class="logo-mark">ТС</span><span class="logo-word">ТЕПЛО СИБИРИ</span></a></div>
+  <div class="links">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+  <div class="nav-actions">
+    <a class="phone" data-teplo-phone href="tel:+79039001234">+7 (903) 900-12-34</a>
+    <button class="nav-burger" type="button" aria-label="Меню" aria-expanded="false">
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+      <span class="nav-burger-line"></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu">
+    <a href="services.html">ПРОДУКЦИЯ</a>
+    <a href="gallery.html">ФОТО</a>
+    <a href="about.html">О КОМПАНИИ</a>
+    <a href="contact.html">КОНТАКТЫ</a>
+  </div>
+</nav>
+
+<section class="subpage-hero">
+  <div class="kicker">ПРОДУКЦИЯ</div>
+  <h1>ДРОВА<br><span class="accent">И МАТЕРИАЛ</span></h1>
+  <p>Работаем кубами · отгрузка со склада</p>
+</section>
+
+<section class="section">
+  <div class="product-list">
+    <div class="product-row">
+      <div class="idx">01</div>
+      <div>
+        <h3 style="margin:0 0 6px">Колотые дрова</h3>
+        <p class="intro" style="margin:0">Поленья 25–33 см, смешанная или хвойная порода. Для печи, камина, бани.</p>
+      </div>
+      <div>от 4 200 ₽/м³</div>
+    </div>
+    <div class="product-row">
+      <div class="idx">02</div>
+      <div>
+        <h3 style="margin:0 0 6px">Горбыль (обзол)</h3>
+        <p class="intro" style="margin:0">Обрезки с пилорамы, связки. Экономный вариант для длительного топления.</p>
+      </div>
+      <div>от 1 600 ₽/м³</div>
+    </div>
+    <div class="product-row">
+      <div class="idx">03</div>
+      <div>
+        <h3 style="margin:0 0 6px">Дрова рубленые</h3>
+        <p class="intro" style="margin:0">Рубка под ваш заказ, укладка в штабель или в машину.</p>
+      </div>
+      <div>от 4 500 ₽/м³</div>
+    </div>
+    <div class="product-row">
+      <div class="idx">04</div>
+      <div>
+        <h3 style="margin:0 0 6px">Обрезки / отходы</h3>
+        <p class="intro" style="margin:0">Для растопки, котельных, хозяйственных построек.</p>
+      </div>
+      <div>от 1 200 ₽/м³</div>
+    </div>
+  </div>
+  <p class="seo-block" style="margin-top:32px">
+    Заказать <strong>дрова оптом</strong> или малым объёмом можно через
+    <a href="index.html#order">калькулятор на главной</a>.
+  </p>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-bottom"><span>© 2026 Тепло Сибири</span></div>
+</footer>
+<script src="nav.js"></script>
+<script>
+(function () {
+  var s = window.TEPLO_SITE || {};
+  document.querySelectorAll("[data-teplo-phone]").forEach(function (a) {
+    if (s.phone) a.href = "tel:" + s.phone.replace(/\s/g, "");
+    if (s.phoneDisplay) a.textContent = s.phoneDisplay;
+  });
+})();
+</script>
+</body>
+</html>
