@@ -1343,12 +1343,18 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   margin-top:clamp(20px,3.5vw,42px);
   margin-bottom:2px;
 }
-.hero--rp.hero--sdc .hero-eyebrow-type{
-  margin:0 0 10px;
-  font-size:11px;
-  letter-spacing:.28em;
-  text-indent:.28em;
-  opacity:.92;
+.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display .hero-title-sub{
+  display:block;
+  margin-top:.06em;
+  font-size:inherit;
+  font-weight:inherit;
+  letter-spacing:inherit;
+  line-height:.98;
+  color:#fff;
+}
+.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display .accent,
+.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display .hero-title-sub{
+  color:#fff;
 }
 .hero--rp.hero--sdc .hero-content{
   margin-top:auto;
