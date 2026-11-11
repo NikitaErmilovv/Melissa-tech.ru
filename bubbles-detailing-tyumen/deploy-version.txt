@@ -1,5 +1,5 @@
-site=rp-detailing-tolyatti
+site=bubbles-detailing-tyumen
 brand=Bubbles
-prod=https://melissa-tech.ru/rp-detailing-tolyatti/
+prod=https://melissa-tech.ru/bubbles-detailing-tyumen/
 deploy=git-push-timeweb-hook
-deploy-trigger=rp-timeweb-push-20261026T1018Z
+deploy-trigger=bubbles-tyumen-20261111T0525Z
