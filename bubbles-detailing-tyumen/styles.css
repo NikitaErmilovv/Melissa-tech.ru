@@ -1287,6 +1287,9 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   position:relative;z-index:1;flex-shrink:0;
   margin:88px 0 0;width:100%;align-self:stretch;
 }
+.hero--bubbles > .stats.stats--hero .stat:last-child{
+  transform:translateX(-30px);
+}
 .hero--sdc .hero-heading{padding-top:4px}
 .hero--sdc .hero-eyebrow-city{margin-top:clamp(28px,4.5vw,56px)}
 .hero--sdc .hero-heading h1 .accent{display:inline}
