@@ -65,21 +65,21 @@ SITE = {
 }
 
 HOME_SERVICES = [
-    {"slug": "wrap", "tag": "ОКЛЕЙКА", "image": "img/services-home/03-wrap.jpg"},
+    {"slug": "wrap", "tag": "ОКЛЕЙКА", "image": "img/services-home/01.jpg"},
     {
         "slug": "ppf",
         "tag_html": '<span class="tag tag-split"><span>ЗОНЫ</span><span>РИСКА</span></span>',
-        "image": "img/services-home/02-ppf.jpg",
+        "image": "img/services-home/02.jpg",
     },
-    {"slug": "armor", "tag": "БРОНИРОВАНИЕ", "image": "img/services-home/02-ppf.jpg"},
-    {"slug": "polish", "tag": "ПОЛИРОВКА", "image": "img/services-home/01-polish.jpg"},
-    {"slug": "ceramic", "tag": "КЕРАМИКА", "image": "img/services-home/03-wrap.jpg"},
-    {"slug": "antichrome", "tag": "АНТИХРОМ", "image": "img/services-home/03-wrap.jpg"},
-    {"slug": "sound", "tag": "ШУМКА", "image": "img/services-home/05-wash.jpg"},
+    {"slug": "armor", "tag": "БРОНИРОВАНИЕ", "image": "img/services-home/03.jpg"},
+    {"slug": "polish", "tag": "ПОЛИРОВКА", "image": "img/services-home/04.jpg"},
+    {"slug": "ceramic", "tag": "КЕРАМИКА", "image": "img/services-home/05.jpg"},
+    {"slug": "antichrome", "tag": "АНТИХРОМ", "image": "img/services-home/06.jpg"},
+    {"slug": "sound", "tag": "ШУМКА", "image": "img/services-home/07.jpg"},
     {
         "slug": "wash",
         "tag_html": '<span class="tag tag-split"><span>DETAILING</span><span>МОЙКА</span></span>',
-        "image": "img/services-home/05-wash.jpg",
+        "image": "img/services-home/08.jpg",
     },
 ]
 
