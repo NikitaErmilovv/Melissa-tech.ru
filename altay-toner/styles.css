@@ -378,28 +378,6 @@ html.media-lightbox-open{overflow:hidden}
   transform:translateX(-50%);
   border:4px solid transparent;border-top-color:rgba(26,26,26,.94);
 }
-.address-map-pin-stack{
-  position:absolute;left:50%;top:50%;
-  transform:translate(-50%,-58%);
-  display:flex;flex-direction:column;align-items:center;
-  pointer-events:none;z-index:2;
-}
-.address-map-pin-stack .address-map-pin-label{
-  position:static;transform:none;margin-bottom:4px;
-}
-.address-map-house-no{
-  font-size:12px;font-weight:800;line-height:1;
-  color:var(--accent);
-  text-shadow:0 1px 0 #0a0a0a,0 0 8px rgba(0,0,0,.85);
-  letter-spacing:.02em;
-}
-.address-map-pin-arrow{
-  display:block;width:8px;height:8px;margin-top:2px;
-  border-right:2px solid var(--accent);
-  border-bottom:2px solid var(--accent);
-  transform:rotate(45deg);
-  filter:drop-shadow(0 1px 1px rgba(0,0,0,.8));
-}
 .address-map-decor{
   position:absolute;inset:12px -12px -12px 12px;
   border:1px solid var(--accent-soft);border-radius:12px;transform:rotate(1.5deg);z-index:-1;
@@ -487,9 +465,10 @@ html.media-lightbox-open{overflow:hidden}
   .address-map-details{margin-top:0;margin-bottom:24px;gap:24px}
   .address-map-img--desktop{display:block}
   .address-map-img--mobile{display:none}
-  .address-map-pin-stack{
+  .address-map-pin-label{
+    left:50%;
     top:50%;
-    transform:translate(-50%,-62%);
+    transform:translate(-50%,calc(-100% - 32px));
   }
   .address-map-pin-label-text{
     font-size:8px;
@@ -607,7 +586,7 @@ html.media-lightbox-open{overflow:hidden}
   .address-map-title{margin-bottom:20px}
   .address-map-details{gap:22px;margin-bottom:24px}
   .address-map-btn{width:100%;align-self:stretch}
-  .address-map-pin-stack{transform:translate(-50%,-56%)}
+  .address-map-pin-label{transform:translate(-50%,calc(-100% - 18px))}
   .address-map-pin-label-text{font-size:7px;padding:3px 6px 2px;white-space:nowrap}
 }
 
