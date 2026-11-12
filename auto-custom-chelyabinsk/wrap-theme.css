@@ -1,9 +1,9 @@
 /* Control chrome only. The car, camera, and scene background stay as they are. */
 
 #wrap-cfg {
-  --accent: #ffd84d;
-  --accent-soft: rgba(255, 216, 77, 0.55);
-  --accent-hover: #ffe875;
+  --accent: #fff490;
+  --accent-soft: rgba(255, 244, 144, 0.55);
+  --accent-hover: #ffffb8;
   --accent-ink: #0a0a0a;
   --wrap-line: rgba(255, 255, 255, 0.12);
   --wrap-muted: #c8c8c2;
@@ -94,8 +94,8 @@
 #wrap-cfg .tool.active::before,
 #wrap-cfg .finish button.active::before,
 #wrap-cfg .zone.active::before {
-  border-color: #ffd84d;
-  background: radial-gradient(circle, #ffd84d 0 5px, transparent 6px);
+  border-color: var(--accent);
+  background: radial-gradient(circle, var(--accent) 0 5px, transparent 6px);
 }
 
 #wrap-cfg .tool:hover,
@@ -114,7 +114,7 @@
 #wrap-cfg .zone.active,
 #wrap-cfg .preset.active,
 #wrap-cfg .part.active {
-  border-color: #ffd84d;
+  border-color: var(--accent);
   background: rgba(255, 216, 77, 0.1);
   color: #fff;
   box-shadow: none;
@@ -174,7 +174,7 @@
   padding: 0;
 }
 #wrap-cfg .swatch.active {
-  outline: 2px solid #ffd84d;
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -211,7 +211,7 @@
 
 #wrap-cfg .cta {
   border-radius: 999px;
-  background: #ffd84d;
+  background: var(--accent);
   color: #0a0a0a;
   padding: 14px 18px;
   font-weight: 600;
@@ -224,11 +224,11 @@
 #wrap-cfg .cta:hover { background: #ffe875; color: #0a0a0a; }
 
 #wrap-cfg .pin:before {
-  border-top-color: #ffd84d;
+  border-top-color: var(--accent);
   filter: drop-shadow(0 0 5px rgba(255, 216, 77, 0.75));
 }
 #wrap-cfg .pin:after {
-  background: #ffd84d;
+  background: var(--accent);
   box-shadow: 0 0 0 4px rgba(255, 216, 77, 0.25);
 }
 
