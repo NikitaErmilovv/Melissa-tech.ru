@@ -1429,7 +1429,18 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   color:var(--accent);
 }
 .hero--auto-custom .hero-logo-spacer .accent{color:var(--accent)}
-/* Auto Custom: только ДЕТЕЙЛИНГ / СТУДИЯ — крупнее */
+.hero--auto-custom .hero-brand-line{
+  display:block;
+  margin-top:0.35em;
+  font-size:clamp(18px,2.2vw,28px);
+  font-weight:700;
+  letter-spacing:-.02em;
+  line-height:1;
+  color:#c8c8c8;
+  white-space:nowrap;
+}
+.hero--auto-custom .hero-brand-line .accent{color:var(--accent)}
+/* Auto Custom: ДЕТЕЙЛИНГ / СТУДИЯ — крупнее */
 .hero--auto-custom.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
   font-size:clamp(44px,6.2vw,88px);
   line-height:0.94;

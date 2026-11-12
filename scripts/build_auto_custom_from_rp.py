@@ -31,7 +31,10 @@ SITE = {
     "brand": "Auto Custom",
     "logo_mark": "Auto",
     "logo_word": "Custom",
-    "hero_html": "ДЕТЕЙЛИНГ<br>СТУДИЯ",
+    "hero_html": (
+        'ДЕТЕЙЛИНГ<br>СТУДИЯ<br>'
+        '<span class="hero-brand-line">Auto<span class="accent">Custom</span></span>'
+    ),
     "city": "Челябинск",
     "city_upper": "ЧЕЛЯБИНСК",
     "city_slug": "chelyabinsk",
