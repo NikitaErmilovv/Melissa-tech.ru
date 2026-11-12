@@ -260,13 +260,16 @@ def patch_services_catalog() -> None:
 def fix_hero_block() -> None:
     idx = DEST / "index.html"
     html = idx.read_text(encoding="utf-8")
+    html = html.replace("hero--rp ", "")
     html = re.sub(
-        r'<div class="hero-logo-wrap">.*?</div>\s*</div>\s*<div class="hero-content">',
-        (
-            '<div class="hero-logo-wrap">\n'
-            f'        <h1 class="hero-logo-spacer hero-logo-display">{SITE["hero_html"]}</h1>\n'
-            "      </div>\n    </div>\n    <div class=\"hero-content\">"
-        ),
+        r'<div class="heroimg"[^>]*>',
+        '<div class="heroimg">',
+        html,
+        count=1,
+    )
+    html = re.sub(
+        r'<div class="hero-logo-wrap">.*?</div>\s*',
+        '<h1 class="hero-wordmark">Auto <span class="accent">Custom</span></h1>\n    ',
         html,
         count=1,
         flags=re.S,
