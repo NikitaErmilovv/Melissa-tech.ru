@@ -175,12 +175,12 @@ WRAP_BAND = """<section class="wrap-band section" id="wrap">
 
 def apply_auto_custom_theme(css: str) -> str:
     accent = """:root{
-  --accent:#d4a82b;
-  --accent-soft:rgba(212,168,43,.38);
-  --accent-hover:#e8bb3a;
-  --accent-deep:#a8841f;
+  --accent:#ffd84d;
+  --accent-soft:rgba(255,216,77,.42);
+  --accent-hover:#ffe875;
+  --accent-deep:#e6bc2a;
   --accent-ink:#0a0a0a;
-  --accent-rgb:212,168,43;
+  --accent-rgb:255,216,77;
 }"""
     css = re.sub(r":root\{[^}]+\}", accent, css, count=1)
     css = css.replace(".logo-mark{color:var(--accent)", ".logo-mark{color:#c8c8c8", 1)

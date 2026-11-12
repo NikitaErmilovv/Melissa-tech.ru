@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --accent:#d4a82b;
-  --accent-soft:rgba(212,168,43,.38);
-  --accent-hover:#e8bb3a;
-  --accent-deep:#a8841f;
+  --accent:#ffd84d;
+  --accent-soft:rgba(255,216,77,.42);
+  --accent-hover:#ffe875;
+  --accent-deep:#e6bc2a;
   --accent-ink:#0a0a0a;
-  --accent-rgb:212,168,43;
+  --accent-rgb:255,216,77;
 }
 
 *{box-sizing:border-box}
@@ -1431,13 +1431,14 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero--auto-custom .hero-logo-spacer .accent{color:var(--accent)}
 .hero--auto-custom .hero-brand-line{
   display:block;
-  margin-top:0.35em;
-  font-size:clamp(18px,2.2vw,28px);
-  font-weight:700;
-  letter-spacing:-.02em;
-  line-height:1;
-  color:#c8c8c8;
+  margin-top:0.1em;
+  font-size:inherit;
+  font-weight:inherit;
+  letter-spacing:inherit;
+  line-height:0.94;
+  color:#fff;
   white-space:nowrap;
+  text-transform:none;
 }
 .hero--auto-custom .hero-brand-line .accent{color:var(--accent)}
 /* Auto Custom: ДЕТЕЙЛИНГ / СТУДИЯ — крупнее */
