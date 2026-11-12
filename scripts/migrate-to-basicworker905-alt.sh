@@ -9,7 +9,7 @@ EXPORT_ROOT="${EXPORT_ROOT:-/tmp/basicworker905-alt-exports}"
 # Edit repo names to match repositories you created on GitHub.
 declare -A MAP=(
   ["fantastika-home174-lazurny"]="Dmitry-Fantastika-home"
-  ["klyaksa-tuning-noyabrsk"]="Klyaksa"
+  ["klyaksa-tuning-noyabrsk"]="Rita-Klyaksa"
   ["pervushin-avtokompleks-ekaterinburg"]="Pervushin"
   ["ds7"]="DS7"
 )
