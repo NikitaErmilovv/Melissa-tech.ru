@@ -1456,6 +1456,9 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   color:var(--accent);
 }
 .hero--auto-custom .hero-logo-spacer .accent{color:var(--accent)}
+.hero--auto-custom.hero--sdc .hero-heading.hero-heading--logo{
+  transform:translateY(10mm);
+}
 .hero--auto-custom.hero--sdc .hero-heading--logo .hero-eyebrow-city{
   position:relative;
   transform:translateY(-5mm);
