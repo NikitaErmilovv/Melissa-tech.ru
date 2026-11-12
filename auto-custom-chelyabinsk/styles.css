@@ -1,16 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-@font-face{
-  font-family:'Kino 1909';
-  src:url('fonts/Kino1909.woff2') format('woff2');
-  font-weight:400;font-style:normal;font-display:swap;
-}
-@font-face{
-  font-family:'Great Vibes';
-  src:url('fonts/GreatVibes-Regular.woff2') format('woff2');
-  font-weight:400;font-style:normal;font-display:swap;
-}
-
 :root{
   --accent:#ecc42f;
   --accent-soft:rgba(236,196,47,.42);
@@ -133,21 +122,6 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .kicker{font-size:11px;letter-spacing:2px;color:var(--accent)}
 .section h2{font-size:clamp(38px,5vw,70px);line-height:.95;letter-spacing:-.06em;margin:12px 0 0}
 .section h2 .accent,.subpage-hero h1 .accent,.contact-box h2 .accent,.process h2 .accent{color:var(--accent)}
-.section h2 .accent,
-.subpage-hero h1 .accent,
-.contact-box h2 .accent,
-.process h2 .accent,
-.contact-panel-card h2 .accent,
-.award-panel-copy h2 .accent,
-.founder-copy h2 .accent{
-  font-family:'Great Vibes',cursive;
-  font-weight:400;
-  letter-spacing:0;
-  line-height:1.02;
-  font-size:clamp(34px,4.8vw,64px);
-  text-transform:none;
-  -webkit-font-smoothing:antialiased;
-}
 .accent{color:var(--accent)}
 .intro{max-width:380px;color:#8f8f89;line-height:1.7;font-size:14px}
 
@@ -1463,7 +1437,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   position:relative;
   transform:translateY(-5mm);
 }
-/* Auto Custom: ДЕТЕЙЛИНГ / СТУДИЯ — крупнее */
+/* AutoCustom: ДЕТЕЙЛИНГ / СТУДИЯ — крупнее */
 .hero--auto-custom.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
   font-size:clamp(44px,6.2vw,88px);
   line-height:0.94;
