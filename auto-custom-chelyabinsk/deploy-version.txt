@@ -4,4 +4,4 @@ template=rp-detailing-tolyatti
 wrap-config=d2-detailing-copy
 local=http://127.0.0.1:8114/
 2gis=https://2gis.ru/chelyabinsk/firm/70000001034460339
-deploy-trigger=auto-custom-hero-studio-20261112
+deploy-trigger=auto-custom-hero-clarity-20261112

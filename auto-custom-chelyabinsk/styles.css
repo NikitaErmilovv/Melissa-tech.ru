@@ -41,8 +41,9 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 
 .hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:stretch;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#3a3626 0,#1a1810 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/hero-home.jpg?v=ac-hero-3') 52% 38% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
-.heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.93;overflow:hidden}
+.heroimg img{width:100%;height:100%;object-fit:cover;object-position:52% 38%;display:block;transform:translateZ(0)}
+.heroimg:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.36) 40%,transparent 70%)}
 .hero-stack{
   position:relative;z-index:1;width:100%;
   display:flex;flex-direction:column;justify-content:flex-end;
@@ -1031,9 +1032,8 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
     to{transform:translateY(0);opacity:1}
   }
   .heroimg{
-    width:100%;opacity:.45;top:72px;
+    width:100%;opacity:.52;top:72px;
     height:min(48vh,380px);min-height:240px;
-    background-position:72% 48%;background-size:cover;
     clip-path:none;
   }
   .hero-content{margin-top:0}
@@ -1121,11 +1121,12 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 
 /* clone-site-tweaks */
-.heroimg{opacity:.96}
-.heroimg:before{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.22) 28%,transparent 52%)}
-.hero:after{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.35) 34%,transparent 52%,rgba(10,10,10,.28) 100%)}
+.heroimg{opacity:1}
+.heroimg:before{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.2) 28%,transparent 52%)}
+.hero:after{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.32) 34%,transparent 52%,rgba(10,10,10,.25) 100%)}
 @media (max-width:768px){
-  .heroimg{opacity:.45;width:100%;min-height:0}
+  .heroimg{opacity:.52;width:100%;min-height:0}
+  .heroimg img{object-position:72% 48%}
 }
 
 /* D2_detailing — акцент в тон кузова BMW на hero */
@@ -1280,9 +1281,9 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   min-height:880px;padding:82px 6vw 0;align-items:stretch;flex-direction:column;
 }
 .hero--sdc .heroimg{
-  top:82px;height:calc(100% - 82px);min-height:798px;width:65%;opacity:.85;
-  background-position:58% 42%;
+  top:82px;height:calc(100% - 82px);min-height:798px;width:65%;opacity:.97;
 }
+.hero--sdc .heroimg img{object-position:52% 38%}
 .hero--sdc .hero-panel{
   position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;
   flex:1;min-height:0;max-width:720px;
