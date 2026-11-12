@@ -1,9 +1,9 @@
 /* Control chrome only. The car, camera, and scene background stay as they are. */
 
 #wrap-cfg {
-  --accent: #fff490;
-  --accent-soft: rgba(255, 244, 144, 0.55);
-  --accent-hover: #ffffb8;
+  --accent: #ecc42f;
+  --accent-soft: rgba(236, 196, 47, 0.55);
+  --accent-hover: #f8db62;
   --accent-ink: #0a0a0a;
   --wrap-line: rgba(255, 255, 255, 0.12);
   --wrap-muted: #c8c8c2;
