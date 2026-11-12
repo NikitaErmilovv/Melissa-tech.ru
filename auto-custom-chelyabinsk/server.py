@@ -32,7 +32,7 @@ def fetch_2gis_rating() -> dict[str, object]:
 
     req = urllib.request.Request(
         FIRM_URL,
-        headers={"User-Agent": "Mozilla/5.0 (compatible; AutoCustomSite/1.0)"},
+        headers={"User-Agent": "Mozilla/5.0 (compatible; D2DetailingSite/1.0)"},
     )
     with urllib.request.urlopen(req, timeout=20) as resp:
         html = resp.read().decode("utf-8", "ignore")
@@ -86,6 +86,26 @@ class SiteHandler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
     def do_GET(self) -> None:
+        if self.path.split("?", 1)[0] == "/data/gallery-manifest.json":
+            from urllib.parse import urlparse, parse_qs
+
+            q = parse_qs(urlparse(self.path).query)
+            sub = (q.get("dir") or [""])[0]
+            base = ROOT / "img" / "works" / "incoming" / sub
+            files = []
+            if sub and base.is_dir():
+                for p in sorted(base.iterdir()):
+                    if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
+                        files.append(p.relative_to(ROOT).as_posix())
+            body = json.dumps({"files": files}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+
         if self.path.split("?", 1)[0] == "/api/2gis-rating.json":
             try:
                 payload = fetch_2gis_rating()

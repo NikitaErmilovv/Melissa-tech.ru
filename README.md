@@ -13,7 +13,7 @@
 | `rtg-wrapzz/` | RTG Wrapzz, Arizona — оклейка, chrome delete, PPF (HTML/CSS/JS) |
 | `restyle-surgut/` | Restyle, Сургут — детейлинг (HTML/CSS/JS) |
 | `delaikuzov/` | D2 Detailing, Новосибирск — детейлинг и кузов (HTML/CSS/JS) |
-| `auto-custom-chelyabinsk/` | Auto Custom, Челябинск — детейлинг и оклейка, 3D-конфигуратор на главной (HTML/CSS/JS) |
+| `auto-custom-chelyabinsk/` | Auto Custom, Челябинск — на шаблоне RP, 3D-оклейка с D2 (копия), 8 услуг (HTML/CSS/JS) |
 | `klyaksa-tuning-noyabrsk/` | Клякса Tuning studio, Ноябрьск (локальный прототип) |
 | `mir-tonirovki-tobolsk/` | Мир тонировки, Тобольск (локальный прототип) |
 | `imperiya-avtokompleks-chelyabinsk/` | Империя автокомплекс, Челябинск (локальный прототип) |

@@ -15,24 +15,6 @@
       .replace(/"/g, "&quot;");
   }
 
-  function reviewSortKey(it) {
-    if (it && it.dateIso) {
-      var t = Date.parse(it.dateIso);
-      if (!isNaN(t)) return -t;
-    }
-    var d = String((it && it.date) || "");
-    var m = d.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
-    if (m) return -Date.UTC(+m[3], +m[2] - 1, +m[1]);
-    var id = parseInt(it && it.id, 10);
-    return isNaN(id) ? 0 : -id;
-  }
-
-  function sortReviewsNewestFirst(items) {
-    return (items || []).slice().sort(function (a, b) {
-      return reviewSortKey(a) - reviewSortKey(b);
-    });
-  }
-
   function init(root) {
     var track = root.querySelector(".reviews-track");
     var prev = root.querySelector(".reviews-nav--prev");
@@ -64,8 +46,8 @@
     }
 
     function render(items) {
-      var list = sortReviewsNewestFirst(items).filter(function (it) {
-        return it && String(it.text || "").trim();
+      var list = (items || []).filter(function (it) {
+        return it && (it.text || it.rating);
       });
       if (!list.length) {
         track.innerHTML =
@@ -135,10 +117,10 @@
     (function loadNext(i) {
       if (i >= urls.length) {
         track.innerHTML =
-          '<div class="review"><p>Не удалось загрузить отзывы 2ГИС.</p><small><a href="https://2gis.ru/chelyabinsk/firm/70000001034460339/tab/reviews" target="_blank" rel="noopener">Открыть на 2ГИС</a></small></div>';
+          '<div class="review"><p>Не удалось загрузить отзывы 2ГИС.</p><small><a href="https://2gis.ru/ekaterinburg/firm/70000001034025330/tab/reviews" target="_blank" rel="noopener">Открыть на 2ГИС</a></small></div>';
         return;
       }
-      fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=" + encodeURIComponent(Date.now()))
+      fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=r2")
         .then(function (r) {
           if (!r.ok) throw new Error("fail");
           return r.json();

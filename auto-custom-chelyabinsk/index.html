@@ -4,11 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta name="site-build" content="d2-schedule-warranty-2026-10-22">
-<title>Auto Custom — детейлинг, Челябинск</title>
-<link rel="stylesheet" href="styles.css?v=78">
-<link rel="stylesheet" href="wrap-configurator.css?v=prices8">
+<title>Auto Custom — Челябинск</title>
+<link rel="stylesheet" href="wrap-configurator.css?v=1">
+<link rel="stylesheet" href="styles.css?v=128">
 </head>
 <body>
 <nav class="site-nav">
@@ -22,7 +20,7 @@
       <span class="nav-burger-line"></span>
     </button>
   </div>
-    <div class="nav-mobile-menu">
+  <div class="nav-mobile-menu">
     <a href="services.html">УСЛУГИ</a>
     <a href="gallery.html">РАБОТЫ</a>
     <a href="about.html">О НАС</a>
@@ -30,40 +28,42 @@
   </div>
 </nav>
 
-<section class="hero">
-  <div class="heroimg"></div>
-  <div class="hero-stack">
-    <h1 class="hero-brand">
-      <span class="visually-hidden">Auto Custom</span>
-      <span class="hero-logo-text" aria-hidden="true"><span class="hero-logo-auto">Auto</span><span class="hero-logo-custom">Custom</span></span>
-    </h1>
+<section class="hero hero--sdc hero--rp hero--auto-custom">
+  <div class="heroimg" style="background-image:url('img/hero-home.jpg');background-position:52% 42%"></div>
+  <div class="hero-panel">
+    <div class="hero-heading hero-heading--logo">
+      <div class="eyebrow hero-eyebrow-city">ЧЕЛЯБИНСК</div>
+      <div class="hero-logo-wrap">
+        <h1 class="hero-logo-spacer hero-logo-display">AUTO<br><span class="accent">CUSTOM</span><br><span class="hero-title-sub">ДЕТЕЙЛИНГ<br>СТУДИЯ</span></h1>
+      </div>
+    </div>
     <div class="hero-content">
-      <p>Auto Custom в Челябинске: оклейка плёнкой, PPF, керамика, полировка и детейлинг. На главной — 3D-конфигуратор оклейки: соберите вариант и получите ориентир по стоимости.</p>
-      <div class="actions"><a class="button" href="tel:+79000623277">ЗАПИСАТЬСЯ</a><a class="button dark" href="#wrap">СОБРАТЬ ОКЛЕЙКУ</a></div>
+      <p>Детейлинг в Челябинске: оклейка плёнкой, PPF, керамика, полировка и защита кузова. На главной — 3D-конфигуратор оклейки: соберите вариант и позвоните для расчёта.</p>
+      <div class="actions">
+        <a class="button" href="tel:+79000623277">ЗАПИСАТЬСЯ</a>
+        <a class="button dark" href="#wrap">СОБРАТЬ ОКЛЕЙКУ</a>
+      </div>
     </div>
-    <div class="stats stats--hero">
-      <div class="stat"><b>5.0</b><span>РЕЙТИНГ · 2ГИС</span></div>
-      <div class="stat"><b id="stat-ratings-count">262</b><span>ОЦЕНКИ · 2ГИС</span></div>
-      <div class="stat"><b id="stat-rating">5.0</b><span>СРЕДНЯЯ ОЦЕНКА · 2ГИС</span></div>
-      <div class="stat"><b id="stat-reviews-count">230</b><span>ОТЗЫВОВ</span></div>
-    </div>
+  </div>
+  <div class="stats stats--hero">
+    <div class="stat"><b>5+</b><span>ЛЕТ НА РЫНКЕ</span></div>
+    <div class="stat"><b id="stat-reviews">230</b><span>ОТЗЫВОВ</span></div>
+    <div class="stat"><b id="stat-rating">5.0</b><span>СРЕДНЯЯ ОЦЕНКА</span></div>
   </div>
 </section>
 
-<section class="wrap-band" id="wrap">
+<section class="wrap-band section" id="wrap">
   <div class="section-head">
     <div>
       <div class="kicker">КОНФИГУРАТОР</div>
       <h2>СОБЕРИТЕ<br><span class="accent">ОКЛЕЙКУ.</span></h2>
     </div>
-    <p class="intro">Выберите автомобиль, детали и финиш. Цифра на карточке — ориентир, точный расчёт даст студия.</p>
+    <p class="intro">Выберите автомобиль, детали и финиш. Сумма на экране — ориентир; точный расчёт — после осмотра.</p>
   </div>
   <div id="wrap-cfg">
     <section class="wrap-viewer">
       <div id="canvas" class="canvas"></div>
-      <div class="wrap-hero">
-        <h3>Оклейка <span>плёнкой</span></h3>
-      </div>
+      <div class="wrap-hero"><h3>Оклейка <span>плёнкой</span></h3></div>
       <div class="wrap-badge"><b id="status">Загрузка модели</b></div>
       <div class="wrap-view-actions">
         <button id="rotate" class="tool active" type="button">↻ Автовращение</button>
@@ -89,10 +89,7 @@
           <button class="preset" data-preset="3" type="button"><i style="background:#f5f5f2"></i><span>Pearl White<small>Глянец · Металлик</small></span></button>
         </div>
       </div>
-      <div class="wrap-block" hidden>
-        <div class="label">Зоны кузова</div>
-        <div class="zones" id="zones"></div>
-      </div>
+      <div class="wrap-block" hidden><div class="label">Зоны кузова</div><div class="zones" id="zones"></div></div>
       <div class="wrap-block">
         <div class="label">Выбранная деталь</div>
         <div id="selectedInfo" class="selectedInfo">Нажмите на деталь автомобиля</div>
@@ -105,10 +102,7 @@
           <button class="tool" data-tool="remove" type="button">Отмена</button>
         </div>
       </div>
-      <div class="wrap-block">
-        <div class="label">Цвет плёнки</div>
-        <div id="swatches" class="swatches"></div>
-      </div>
+      <div class="wrap-block"><div class="label">Цвет плёнки</div><div id="swatches" class="swatches"></div></div>
       <div class="wrap-block">
         <div class="label">Финиш</div>
         <div class="finish">
@@ -125,17 +119,11 @@
           <button data-effect="pearl" type="button">Перламутр</button>
         </div>
       </div>
-      <div class="wrap-block" hidden>
-        <div class="label">Детали</div>
-        <div id="parts" class="parts"></div>
-      </div>
+      <div class="wrap-block" hidden><div class="label">Детали</div><div id="parts" class="parts"></div></div>
     </aside>
     <div class="summary">
       <div class="summary-row">
-        <div>
-          <div class="sumlabel">Ваш подбор</div>
-          <div id="total" class="total">0 ₽</div>
-        </div>
+        <div><div class="sumlabel">Ваш подбор</div><div id="total" class="total">0 ₽</div></div>
         <a class="cta" id="quote" href="tel:+79000623277">ПОЛУЧИТЬ РАСЧЁТ</a>
       </div>
     </div>
@@ -144,18 +132,18 @@
 
 <section class="section" id="services">
   <div class="section-head">
-    <div><div class="kicker">01 / УСЛУГИ</div><h2>УСЛУГИ<br><span class="accent">СТУДИИ.</span></h2></div>
-    <p class="intro">Оклейка, зоны риска, бронирование, полировка, керамика, антихром, шумка и детейлинг-мойка — в одной студии Auto Custom.</p>
+    <div><div class="kicker">01 / УСЛУГИ</div><h2>УСЛУГИ<br><span class="accent">СТУДИИ</span></h2></div>
+    <p class="intro">Оклейка, зоны риска, бронирование, полировка, керамика, антихром, шумка и детейлинг-мойка — в одной студии.</p>
   </div>
   <div class="photo-strip photo-strip--services photo-strip--home">
-    <a class="photo" href="services/wrap.html" style="background-image:url('img/works/d2/d2-08.jpg')"><span class="tag">ОКЛЕЙКА</span></a>
-    <a class="photo" href="services/risk.html" style="background-image:url('img/works/d2/d2-02.jpg')"><span class="tag tag-split"><span>ЗОНЫ</span><span>РИСКА</span></span></a>
-    <a class="photo" href="services/armor.html" style="background-image:url('img/works/services/windshield-thermal/01.jpg')"><span class="tag">БРОНИРОВАНИЕ</span></a>
-    <a class="photo photo-pos-polish" href="services/polish.html" style="background-image:url('img/works/d2/d2-09.jpg')"><span class="tag">ПОЛИРОВКА</span></a>
-    <a class="photo" href="services/ceramic.html" style="background-image:url('img/works/d2/d2-18.jpg')"><span class="tag">КЕРАМИКА</span></a>
-    <a class="photo" href="services/antichrome.html" style="background-image:url('img/works/services/color-change/01.jpg')"><span class="tag">АНТИХРОМ</span></a>
-    <a class="photo" href="services/sound.html" style="background-image:url('img/works/d2/d2-11.jpg')"><span class="tag">ШУМКА</span></a>
-    <a class="photo" href="services/wash.html" style="background-image:url('img/works/d2/d2-07.jpg')"><span class="tag tag-split"><span>DETAILING</span><span>МОЙКА</span></span></a>
+    <a class="photo" href="services/wrap.html" style="background-image:url('img/services-home/03-wrap.jpg')"><span class="tag">ОКЛЕЙКА</span></a>
+    <a class="photo" href="services/ppf.html" style="background-image:url('img/services-home/02-ppf.jpg')"><span class="tag tag-split"><span>ЗОНЫ</span><span>РИСКА</span></span></a>
+    <a class="photo" href="services/armor.html" style="background-image:url('img/services-home/02-ppf.jpg')"><span class="tag">БРОНИРОВАНИЕ</span></a>
+    <a class="photo" href="services/polish.html" style="background-image:url('img/services-home/01-polish.jpg')"><span class="tag">ПОЛИРОВКА</span></a>
+    <a class="photo" href="services/ceramic.html" style="background-image:url('img/services-home/03-wrap.jpg')"><span class="tag">КЕРАМИКА</span></a>
+    <a class="photo" href="services/antichrome.html" style="background-image:url('img/services-home/03-wrap.jpg')"><span class="tag">АНТИХРОМ</span></a>
+    <a class="photo" href="services/sound.html" style="background-image:url('img/services-home/05-wash.jpg')"><span class="tag">ШУМКА</span></a>
+    <a class="photo" href="services/wash.html" style="background-image:url('img/services-home/05-wash.jpg')"><span class="tag tag-split"><span>DETAILING</span><span>МОЙКА</span></span></a>
   </div>
 </section>
 
@@ -166,23 +154,19 @@
   <div class="ba-grid">
     <figure class="ba-item">
       <div class="ba-slider" data-ba>
-        <img class="ba-after" src="img/works/before-after/hood-after.jpg" alt="После — полировка кузова">
-        <div class="ba-before-wrap">
-          <img class="ba-before" src="img/works/before-after/hood-before.jpg" alt="До — полировка кузова">
-        </div>
+        <img class="ba-after" src="img/works/before-after/hood-after.jpg" alt="">
+        <div class="ba-before-wrap"><img class="ba-before" src="img/works/before-after/hood-before.jpg" alt=""></div>
         <div class="ba-handle" aria-hidden="true"><span></span></div>
       </div>
-      <figcaption>Полировка кузова</figcaption>
+      <figcaption>Работа с кузовом</figcaption>
     </figure>
     <figure class="ba-item">
       <div class="ba-slider" data-ba>
-        <img class="ba-after" src="img/works/before-after/headlight-after.jpg" alt="После — восстановление фар">
-        <div class="ba-before-wrap">
-          <img class="ba-before" src="img/works/before-after/headlight-before.jpg" alt="До — восстановление фар">
-        </div>
+        <img class="ba-after" src="img/works/before-after/headlight-after.jpg" alt="">
+        <div class="ba-before-wrap"><img class="ba-before" src="img/works/before-after/headlight-before.jpg" alt=""></div>
         <div class="ba-handle" aria-hidden="true"><span></span></div>
       </div>
-      <figcaption>Восстановление фар</figcaption>
+      <figcaption>Оптика и детали</figcaption>
     </figure>
   </div>
 </section>
@@ -190,14 +174,13 @@
 <section class="section" id="works">
   <div class="section-head">
     <div><div class="kicker">02 / РАБОТЫ</div><h2>НАШИ<br><span class="accent">РАБОТЫ.</span></h2></div>
-    
   </div>
   <div class="photo-strip photo-strip--services">
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/d2/d2-17.jpg')"><span class="tag">ПОКРАСКА</span></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/d2/d2-18.jpg')"><span class="tag">ПОЛИРОВКА</span></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/d2/d2-01.jpg')"><span class="tag">ОПТИКА</span></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/d2/d2-02.jpg')"><span class="tag">ОКЛЕЙКА</span></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/d2/d2-03.jpg')"><span class="tag">КУЗОВ</span></a>
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/auto-custom/01-2gis.jpg')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/auto-custom/02-2gis.jpg')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/auto-custom/03-2gis.jpg')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/auto-custom/04-2gis.jpg')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/auto-custom/05-2gis.jpg')"></a>
   </div>
 </section>
 
@@ -205,10 +188,10 @@
   <div class="kicker">03 / ПРОЦЕСС</div>
   <h2>КАК МЫ<br><span class="accent">РАБОТАЕМ.</span></h2>
   <div class="steps">
-    <div class="step"><b>01</b><h3>Заявка</h3><p>Звоните или пишите в WhatsApp — обсудим задачу и запишем на осмотр.</p></div>
-    <div class="step"><b>02</b><h3>Осмотр</h3><p>Оцениваем состояние кузова и согласуем объём: оклейка, полировка, керамика или мойка.</p></div>
-    <div class="step"><b>03</b><h3>Работа</h3><p>Выполняем услугу по согласованному плану в студии на Градском Прииске.</p></div>
-    <div class="step"><b>04</b><h3>Выдача</h3><p>Показываем результат, даём рекомендации по уходу и передаём автомобиль.</p></div>
+    <div class="step"><b>01</b><h3>Заявка</h3><p>Звоните или пишите — уточняем задачу и удобное время.</p></div>
+    <div class="step"><b>02</b><h3>Осмотр</h3><p>Оцениваем автомобиль и согласуем объём работ.</p></div>
+    <div class="step"><b>03</b><h3>Работа</h3><p>Выполняем сервис по согласованному плану.</p></div>
+    <div class="step"><b>04</b><h3>Выдача</h3><p>Показываем результат и отвечаем на вопросы.</p></div>
   </div>
 </section>
 
@@ -218,37 +201,10 @@
   </div>
   <div class="reviews-carousel" data-reviews-carousel data-reviews-src="data/reviews-2gis.json">
     <button type="button" class="reviews-nav reviews-nav--prev" aria-label="Предыдущие отзывы">‹</button>
-    <div class="reviews-viewport">
-      <div class="reviews-track"></div>
-    </div>
+    <div class="reviews-viewport"><div class="reviews-track"></div></div>
     <button type="button" class="reviews-nav reviews-nav--next" aria-label="Следующие отзывы">›</button>
   </div>
-</section>
-
-<section class="brand-story brand-story--hidden" id="story" hidden aria-hidden="true">
-  <div class="brand-story-inner">
-    <div class="founder-panel">
-      <div class="founder-copy">
-        <div class="kicker">ОСНОВАТЕЛЬ</div>
-        <h2><span class="accent">Auto Custom</span></h2>
-        <p class="founder-lead">Auto Custom — центр кузовного ремонта в Челябинске: покраска, рихтовка, сварка и полировка.</p>
-        <div class="founder-story">
-          <p>Работаем с кузовом легковых автомобилей: от царапины на крыле до замены порогов, арок и бамперов.</p>
-          <p>Клиенты чаще всего отмечают попадание в цвет, сроки и то, что после ремонта следов работ не видно.</p>
-          <p>На связи в WhatsApp, Telegram и по телефону: можно прислать фото и получить ориентир по стоимости до визита.</p>
-        </div>
-      </div>
-      <div class="founder-visual">
-        <div class="founder-visual-placeholder" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="8" r="4.25"/>
-            <path d="M5 20.5c0-3.866 3.134-7 7-7s7 3.134 7 7"/>
-          </svg>
-        </div>
-        <span class="founder-visual-caption">Auto Custom · ЧЕЛЯБИНСК</span>
-      </div>
-    </div>
-</div>
+  <p class="intro" style="margin-top:24px"><a href="https://2gis.ru/chelyabinsk/firm/70000001034460339" target="_blank" rel="noopener noreferrer">Все отзывы в 2ГИС →</a></p>
 </section>
 
 <div class="site-bottom">
@@ -270,8 +226,8 @@
       </div>
       <div class="address-map-visual">
         <a href="https://2gis.ru/chelyabinsk/firm/70000001034460339" class="address-map-frame" target="_blank" rel="noopener noreferrer">
-          <img class="address-map-img address-map-img--desktop" src="https://static.maps.2gis.com/1.0?s=880x450&amp;c=55.184049,61.263874&amp;z=18&amp;pt=55.184049,61.263874~k:p" alt="">
-          <img class="address-map-img address-map-img--mobile" src="https://static.maps.2gis.com/1.0?s=720x720&amp;c=55.184049,61.263874&amp;z=18&amp;pt=55.184049,61.263874~k:p" alt="Карта 2ГИС — Градский Прииск пос., Курчатовский район, Челябинск">
+          <img class="address-map-img address-map-img--desktop" src="https://static.maps.2gis.com/1.0?s=880x450&amp;c=55.184049,61.263874&amp;z=17&amp;pt=55.184049,61.263874~k:p" alt="">
+          <img class="address-map-img address-map-img--mobile" src="https://static.maps.2gis.com/1.0?s=720x720&amp;c=55.184049,61.263874&amp;z=17&amp;pt=55.184049,61.263874~k:p" alt="Карта 2ГИС — Градский Прииск пос., Курчатовский район, Челябинск, 454100">
           <div class="address-map-pin-label" aria-hidden="true">
             <span class="address-map-pin-label-text"><span class="logo-mark">Auto</span><span class="logo-word">Custom</span></span>
           </div>
@@ -281,16 +237,17 @@
       <div class="address-map-details-wrap">
         <div class="address-map-details">
           <div class="address-map-detail">
-            <span class="address-map-detail-label">СЕРВИС</span>
+            <span class="address-map-detail-label">СТУДИЯ</span>
             <p class="address-map-brand"><span class="logo-mark">Auto</span><span class="logo-word">Custom</span></p>
-            <p class="address-map-muted">Градский Прииск пос., Курчатовский район, Челябинск</p>
-            <p class="address-map-muted-sm">Пн–пт с 10:00 до 20:00 · сб с 10:00 до 18:00 · вс выходной</p>
+            <p class="address-map-muted">Градский Прииск пос., Курчатовский район, Челябинск, 454100</p>
+            <p class="address-map-muted-sm">По записи · уточняйте по телефону</p>
           </div>
           <div class="address-map-detail">
             <span class="address-map-detail-label">ТЕЛЕФОН</span>
             <div class="address-map-phones">
-            <a href="tel:+79000623277" class="address-map-phone">+7 (900) 062-32-77</a>
-                        </div>
+              <a href="tel:+79000623277" class="address-map-phone">+7 (900) 062-32-77</a>
+              <a href="tel:+79000623277" class="address-map-phone">+7 (900) 062-32-77</a>
+            </div>
           </div>
         </div>
         <a href="https://2gis.ru/chelyabinsk/firm/70000001034460339" class="address-map-btn" target="_blank" rel="noopener noreferrer">Как добраться</a>
@@ -304,11 +261,11 @@
     <div class="footer-col footer-col--brand-hours">
       <div class="footer-brand-block">
         <div class="footer-logo"><span class="logo-mark">Auto</span><span class="logo-word">Custom</span></div>
-        <div class="footer-social"><a href="https://wa.me/79000623277" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:auto.custom174@gmail.com" target="_blank" rel="noopener noreferrer">Email</a><a href="https://2gis.ru/chelyabinsk/firm/70000001034460339" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
+        <div class="footer-social"><a href="https://wa.me/79000623277" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://t.me/+79000623277" target="_blank" rel="noopener noreferrer">Telegram</a><a href="https://2gis.ru/chelyabinsk/firm/70000001034460339" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
       </div>
       <div class="footer-hours-block">
         <b>РЕЖИМ РАБОТЫ</b>
-        <span>Пн–пт с 10:00 до 20:00 · сб с 10:00 до 18:00 · вс выходной</span>
+        <span>По записи · уточняйте по телефону</span>
       </div>
     </div>
     <div class="footer-col">
@@ -322,7 +279,7 @@
     <div class="footer-col footer-col--phones">
       <b>КОНТАКТЫ</b>
       <a class="footer-phone-inline" href="tel:+79000623277">+7 (900) 062-32-77</a>
-            </div>
+    </div>
   </div>
   <div class="footer-grid footer-mobile-only">
     <div class="footer-col">
@@ -337,31 +294,33 @@
       <div class="footer-phones-block">
         <b>КОНТАКТЫ</b>
         <a class="footer-phone-inline" href="tel:+79000623277">+7 (900) 062-32-77</a>
-                </div>
+      </div>
       <div class="footer-brand-divider" aria-hidden="true"></div>
       <div class="footer-brand-block">
         <div class="footer-logo"><span class="logo-mark">Auto</span><span class="logo-word">Custom</span></div>
-        <div class="footer-social"><a href="https://wa.me/79000623277" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="mailto:auto.custom174@gmail.com" target="_blank" rel="noopener noreferrer">Email</a><a href="https://2gis.ru/chelyabinsk/firm/70000001034460339" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
+        <div class="footer-social"><a href="https://wa.me/79000623277" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://t.me/+79000623277" target="_blank" rel="noopener noreferrer">Telegram</a><a href="https://2gis.ru/chelyabinsk/firm/70000001034460339" target="_blank" rel="noopener noreferrer">2ГИС</a></div>
       </div>
       <div class="footer-hours-block">
         <b>РЕЖИМ РАБОТЫ</b>
-        <span>Пн–пт с 10:00 до 20:00 · сб с 10:00 до 18:00 · вс выходной</span>
+        <span>По записи · уточняйте по телефону</span>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 Auto Custom</span>
-    <span>ДЕТЕЙЛИНГ · ЧЕЛЯБИНСК</span>
+    <span>ДЕТЕЙЛИНГ-СТУДИЯ · ЧЕЛЯБИНСК</span>
   </div>
 </footer>
 </div>
-<script src="nav.js?v=book16"></script>
-<script type="module" src="index-glb-prefetch.js?v=1"></script>
-<script src="stats.js?v=2gis4"></script>
+
+<script src="contacts-config.js"></script>
+<script src="nav.js"></script>
+<script src="stats.js"></script>
+<script src="messenger-picker.js"></script>
+
 <script src="ba-slider.js"></script>
-<script src="reviews-carousel.js?v=2gis4"></script>
+<script src="reviews-carousel.js"></script>
 <script type="importmap">{"imports":{"three":"vendor/three/build/three.module.js","three/addons/":"vendor/three/examples/jsm/"}}</script>
-<script type="module" src="wrap-boot.js?v=prices8"></script>
+<script type="module" src="wrap-boot.js?v=1"></script>
 </body>
 </html>
-
