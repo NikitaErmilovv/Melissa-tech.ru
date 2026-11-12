@@ -41,7 +41,7 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 
 .hero{min-height:880px;padding:82px 6vw 0;display:flex;align-items:stretch;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 42%,#3a3626 0,#1a1810 22%,#0a0a0a 55%)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,transparent 55%,#0a0a0a 100%);pointer-events:none}
-.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:#101010;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
+.heroimg{position:absolute;right:0;top:82px;width:65%;height:calc(100% - 82px);min-height:798px;background:url('img/hero-home.jpg') 55% 40% / cover no-repeat;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);opacity:.85}
 .heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.4) 40%,transparent 70%)}
 .hero-stack{
   position:relative;z-index:1;width:100%;
@@ -1393,32 +1393,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 
 
+.hero--auto-custom .heroimg{opacity:.9}
+.hero--auto-custom .hero-logo-spacer .accent{color:var(--accent)}
 .site-nav .logo .logo-word{color:var(--accent)}
-.hero--auto-custom.hero--sdc .hero-heading{margin-top:8px}
-.hero--auto-custom .hero-wordmark{
-  margin:0 0 12px;
-  font-size:clamp(44px,6.4vw,92px);
-  line-height:.92;
-  font-weight:900;
-  letter-spacing:-.05em;
-  color:#c8c8c8;
-  text-transform:none;
-}
-.hero--auto-custom .hero-wordmark .accent{color:var(--accent)}
-/* Как Den / RP: фото в маске справа, cover + position */
-.hero--auto-custom.hero--sdc .heroimg{
-  background-image:url('img/hero-home.jpg');
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-position:52% 42%;
-  opacity:.85;
-}
-.hero--auto-custom.hero--sdc .heroimg:before{
-  background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.34) 40%,rgba(10,10,10,.08) 70%,transparent 85%);
-}
-@media (max-width:800px){
-  .hero--auto-custom.hero--sdc .heroimg{
-    background-size:cover;
-    background-position:50% 40%;
-  }
-}
