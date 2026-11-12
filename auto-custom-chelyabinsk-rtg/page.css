@@ -62,10 +62,9 @@ button { font-family: inherit; }
   cursor: pointer;
 }
 .ig, .btn-fill {
-  background: #ffd84d;
+  background: #fff;
   color: #111;
 }
-.ig:hover, .btn-fill:hover { background: #ffe875; }
 .btn-ghost {
   background: transparent;
   color: #fff;

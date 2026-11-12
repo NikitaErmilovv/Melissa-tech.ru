@@ -1,16 +1,17 @@
 import { mountFlexCarousel } from './FlexCarousel.js?v=fc2';
 
+/** Hero carousel — largest / most detailed shots only */
 const carouselFiles = [
-  { file: 'rtg-01.jpg', title: 'Студия' },
-  { file: 'rtg-06.jpg', title: 'Оклейка' },
-  { file: 'rtg-07.jpg', title: 'Кузов' },
-  { file: 'rtg-09.jpg', title: 'PPF' },
-  { file: 'rtg-10.jpg', title: 'Полировка' },
-  { file: 'rtg-11.jpg', title: 'Керамика' },
-  { file: 'rtg-12.jpg', title: 'Антихром' },
-  { file: 'rtg-05.jpg', title: 'Детейлинг' },
-  { file: 'rtg-08.jpg', title: 'Работа' },
-  { file: 'rtg-04.jpg', title: 'Защита' },
+  { file: 'rtg-11.jpg', title: 'Full wrap' },
+  { file: 'rtg-30.jpg', title: 'Color change' },
+  { file: 'rtg-15.jpg', title: 'Satin finish' },
+  { file: 'rtg-16.jpg', title: 'Chrome delete' },
+  { file: 'rtg-12.jpg', title: 'Partial wrap' },
+  { file: 'rtg-33.jpg', title: 'PPF' },
+  { file: 'rtg-32.jpg', title: 'Truck' },
+  { file: 'rtg-35.jpg', title: 'Custom decals' },
+  { file: 'rtg-09.jpg', title: 'Detail' },
+  { file: 'rtg-08.jpg', title: 'Bay finish' },
 ];
 
 const items = carouselFiles.map(({ file, title }, i) => ({

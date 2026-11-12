@@ -1,8 +1,8 @@
 /* Control chrome only. The car, camera, and scene background stay as they are. */
 
 #wrap-cfg {
-  --accent: #ffd84d;
-  --accent-soft: rgba(255, 216, 77, 0.55);
+  --accent: #48ec90;
+  --accent-soft: rgba(72, 236, 144, 0.55);
   --accent-hover: #7af5b0;
   --wrap-line: rgba(255, 255, 255, 0.12);
   --wrap-muted: #c8c8c2;
@@ -19,7 +19,7 @@
 #wrap-cfg .wrap-viewer {
   background: radial-gradient(circle at 48% 42%, #1c1c1c 0, #0a0a0a 55%);
 }
-#wrap-cfg .wrap-hero h3 span { color: #ffd84d; }
+#wrap-cfg .wrap-hero { display: none; }
 
 #wrap-cfg .side-title {
   font-size: 26px;
@@ -93,8 +93,8 @@
 #wrap-cfg .tool.active::before,
 #wrap-cfg .finish button.active::before,
 #wrap-cfg .zone.active::before {
-  border-color: #ffd84d;
-  background: radial-gradient(circle, #ffd84d 0 5px, transparent 6px);
+  border-color: #48ec90;
+  background: radial-gradient(circle, #48ec90 0 5px, transparent 6px);
 }
 
 #wrap-cfg .tool:hover,
@@ -102,7 +102,7 @@
 #wrap-cfg .zone:hover,
 #wrap-cfg .preset:hover,
 #wrap-cfg .part:hover {
-  border-color: rgba(255, 216, 77, 0.7);
+  border-color: rgba(72, 236, 144, 0.7);
   color: #fff;
   background: rgba(255, 255, 255, 0.04);
 }
@@ -113,8 +113,8 @@
 #wrap-cfg .zone.active,
 #wrap-cfg .preset.active,
 #wrap-cfg .part.active {
-  border-color: #ffd84d;
-  background: rgba(255, 216, 77, 0.1);
+  border-color: #48ec90;
+  background: rgba(72, 236, 144, 0.1);
   color: #fff;
   box-shadow: none;
 }
@@ -173,7 +173,7 @@
   padding: 0;
 }
 #wrap-cfg .swatch.active {
-  outline: 2px solid #ffd84d;
+  outline: 2px solid #48ec90;
   outline-offset: 3px;
 }
 
@@ -210,7 +210,7 @@
 
 #wrap-cfg .cta {
   border-radius: 999px;
-  background: #ffd84d;
+  background: #48ec90;
   color: #07140d;
   padding: 14px 18px;
   font-weight: 600;
@@ -219,12 +219,12 @@
 #wrap-cfg .cta:hover { background: #7af5b0; color: #07140d; }
 
 #wrap-cfg .pin:before {
-  border-top-color: #ffd84d;
-  filter: drop-shadow(0 0 5px rgba(255, 216, 77, 0.75));
+  border-top-color: #48ec90;
+  filter: drop-shadow(0 0 5px rgba(72, 236, 144, 0.75));
 }
 #wrap-cfg .pin:after {
-  background: #ffd84d;
-  box-shadow: 0 0 0 4px rgba(255, 216, 77, 0.25);
+  background: #48ec90;
+  box-shadow: 0 0 0 4px rgba(72, 236, 144, 0.25);
 }
 
 @media (max-width: 1024px) {

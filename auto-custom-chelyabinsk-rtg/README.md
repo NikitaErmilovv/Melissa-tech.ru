@@ -1,11 +1,10 @@
-# Auto Custom — RTG Wrapzz skin (preview)
+# Auto Custom on RTG Wrapzz template
 
-Копия шаблона `rtg-wrapzz` в монорепозитории Melissa-tech.ru с данными **Auto Custom** (Челябинск).
+Exact copy of `rtg-wrapzz/` in this repo: same layout, green slats, English UI.
 
-Локально из этой папки:
+Only changed:
 
-```bash
-python3 server.py
-```
+- `img/work/rtg-*.jpg` — Auto Custom photos
+- Brand, phone, address, 2GIS / email in `index.html` (see `scripts/patch_rtg_auto_custom.py`)
 
-По умолчанию порт смотри в `server.py` (часто 8765).
+Local: `PORT=8116 python3 server.py`

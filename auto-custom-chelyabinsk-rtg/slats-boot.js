@@ -4,9 +4,9 @@ const root = document.getElementById('micro-slats');
 if (root) {
   mountMicroSlats(root, {
     preset: 'swell',
-    color: '#ffd84d',
-    glintColor: '#fff6cc',
-    backgroundColor: '#14110a',
+    color: '#48ec90',
+    glintColor: '#ffffff',
+    backgroundColor: '#120f17',
     slatWidth: 10,
     slatHeight: 25,
     gap: 3,
