@@ -195,6 +195,13 @@ def apply_auto_custom_theme(css: str) -> str:
 .hero--auto-custom .hero-logo-spacer .accent{color:var(--accent)}
 .site-nav .logo .logo-word{color:var(--accent)}
 """
+    if ".photo-strip--home-four" not in css:
+        css += """
+.photo-strip--home-four{grid-template-columns:repeat(4,1fr)!important}
+@media (max-width:900px){
+  .photo-strip--home-four{grid-template-columns:repeat(2,1fr)!important}
+}
+"""
     return css
 
 
@@ -297,10 +304,14 @@ def patch_index() -> None:
         )
     if 'id="wrap"' not in html:
         html = html.replace(
-            '<section class="section" id="services">',
-            WRAP_BAND + '\n\n<section class="section" id="services">',
+            '</section>\n\n<section class="section" id="compare">',
+            '</section>\n\n' + WRAP_BAND + '\n\n<section class="section" id="compare">',
             1,
         )
+    html = html.replace(
+        "photo-strip--services photo-strip--home",
+        "photo-strip--services photo-strip--home photo-strip--home-four",
+    )
     hero_actions = html
     if 'href="#wrap"' not in hero_actions:
         html = re.sub(

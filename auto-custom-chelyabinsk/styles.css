@@ -202,6 +202,10 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .service-feature-photo{margin:0;border:1px solid rgba(255,255,255,.1);overflow:hidden;background:#101010}
 .service-feature-photo img{display:block;width:100%;max-height:min(52vh,520px);object-fit:cover;object-position:center}
 #services .photo-strip--home{margin-top:48px}
+.photo-strip--home-four{grid-template-columns:repeat(4,1fr)!important}
+@media (max-width:900px){
+  .photo-strip--home-four{grid-template-columns:repeat(2,1fr)!important}
+}
 .photo-strip--services .photo{
   min-height:0;
   aspect-ratio:3/4;
