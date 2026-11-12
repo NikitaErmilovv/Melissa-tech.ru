@@ -1430,23 +1430,14 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   color:var(--accent);
 }
 .hero--auto-custom .hero-logo-spacer .accent{color:var(--accent)}
-.hero--auto-custom .hero-brand-line{
-  display:block;
-  margin-top:0.1em;
-  font-size:inherit;
-  font-weight:inherit;
-  letter-spacing:inherit;
-  line-height:0.94;
-  color:#fff;
-  white-space:nowrap;
-  text-transform:none;
+.hero--auto-custom.hero--sdc .hero-heading.hero-heading--logo{
+  transform:translateY(10mm);
 }
-.hero--auto-custom .hero-brand-line .accent{color:var(--accent)}
 .hero--auto-custom.hero--sdc .hero-heading--logo .hero-eyebrow-city{
   position:relative;
   transform:translateY(-5mm);
 }
-/* Auto Custom: ДЕТЕЙЛИНГ / СТУДИЯ — крупнее */
+/* AutoCustom: ДЕТЕЙЛИНГ / СТУДИЯ — крупнее */
 .hero--auto-custom.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
   font-size:clamp(44px,6.2vw,88px);
   line-height:0.94;

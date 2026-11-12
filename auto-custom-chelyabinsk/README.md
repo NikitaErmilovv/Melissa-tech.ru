@@ -1,4 +1,4 @@
-# Auto Custom — Челябинск
+# AutoCustom — Челябинск
 
 Шаблон: `rp-detailing-tolyatti`. 3D-конфигуратор оклейки — копия из `d2-detailing` (сам D2 не меняется).
 
