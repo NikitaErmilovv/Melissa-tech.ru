@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Auto Custom — Челябинск</title>
-<link rel="stylesheet" href="wrap-configurator.css?v=1">
-<link rel="stylesheet" href="styles.css?v=134">
+<link rel="stylesheet" href="wrap-configurator.css?v=rtg2">
+<link rel="stylesheet" href="wrap-theme.css?v=1">
+<link rel="stylesheet" href="styles.css?v=135">
 </head>
 <body>
 <nav class="site-nav">
@@ -81,18 +82,18 @@
     <section class="wrap-viewer">
       <div id="canvas" class="canvas"></div>
       <div class="wrap-hero"><h3>Оклейка <span>плёнкой</span></h3></div>
-      <div class="wrap-badge"><b id="status">Загрузка модели</b></div>
+      <div class="wrap-badge"><b id="status">Подготовка 3D…</b></div>
       <div class="wrap-view-actions">
-        <button id="rotate" class="tool active" type="button">↻ Автовращение</button>
-        <button id="reset" class="tool" type="button">⟲ Сброс</button>
+        <button id="rotate" class="tool active" type="button">Автоповорот</button>
+        <button id="reset" class="tool" type="button">Сброс</button>
       </div>
       <div id="marker" class="marker" style="display:none"></div>
     </section>
     <aside class="sidebar">
-      <h2 class="side-title">Оклейка</h2>
+      <h2 class="side-title">Соберите оклейку</h2>
       <div class="wrap-block">
         <div class="label">Автомобиль</div>
-        <div class="tools" style="grid-template-columns:repeat(2,1fr)">
+        <div class="tools">
           <button class="tool active" data-model="mercedes" type="button">Седан</button>
           <button class="tool" data-model="mazda" type="button">Кроссовер</button>
         </div>
@@ -101,47 +102,59 @@
         <div class="label">Готовые варианты</div>
         <div class="presets">
           <button class="preset active" data-preset="0" type="button"><i class="stock"></i><span>Сток<small>Заводской цвет</small></span></button>
-          <button class="preset" data-preset="1" type="button"><i style="background:#0b0d10"></i><span>Obsidian Black<small>сатин · Перламутр</small></span></button>
-          <button class="preset" data-preset="2" type="button"><i style="background:#63351f"></i><span>Cocoa Brown<small>Глянец · Металлик</small></span></button>
-          <button class="preset" data-preset="3" type="button"><i style="background:#f5f5f2"></i><span>Pearl White<small>Глянец · Металлик</small></span></button>
+          <button class="preset" data-preset="1" type="button"><i style="background:#0b0d10"></i><span>Obsidian Black<small>Сатин · перламутр</small></span></button>
+          <button class="preset" data-preset="2" type="button"><i style="background:#63351f"></i><span>Cocoa Brown<small>Глянец · металлик</small></span></button>
+          <button class="preset" data-preset="3" type="button"><i style="background:#f5f5f2"></i><span>Pearl White<small>Глянец · металлик</small></span></button>
         </div>
       </div>
-      <div class="wrap-block" hidden><div class="label">Зоны кузова</div><div class="zones" id="zones"></div></div>
+      <div class="wrap-block">
+        <div class="label">Зоны кузова</div>
+        <div class="zones" id="zones"></div>
+      </div>
       <div class="wrap-block">
         <div class="label">Выбранная деталь</div>
-        <div id="selectedInfo" class="selectedInfo">Нажмите на деталь автомобиля</div>
+        <div id="selectedInfo" class="selectedInfo">Нажмите на деталь на авто</div>
       </div>
       <div class="wrap-block">
         <div class="label">Инструмент</div>
-        <div class="tools" style="grid-template-columns:repeat(3,1fr)">
+        <div class="tools">
           <button class="tool active" data-tool="select" type="button">Выбор</button>
           <button class="tool" data-tool="fill" type="button">Заливка</button>
-          <button class="tool" data-tool="remove" type="button">Отмена</button>
+          <button class="tool" data-tool="remove" type="button">Снять</button>
         </div>
       </div>
-      <div class="wrap-block"><div class="label">Цвет плёнки</div><div id="swatches" class="swatches"></div></div>
+      <div class="wrap-block">
+        <div class="label">Цвет плёнки</div>
+        <div id="swatches" class="swatches"></div>
+      </div>
       <div class="wrap-block">
         <div class="label">Финиш</div>
         <div class="finish">
           <button class="active" data-finish="gloss" type="button">Глянец</button>
-          <button data-finish="satin" type="button">сатин</button>
+          <button data-finish="satin" type="button">Сатин</button>
           <button data-finish="matte" type="button">Матовый</button>
         </div>
       </div>
       <div class="wrap-block">
-        <div class="label">Материал / эффект</div>
+        <div class="label">Эффект</div>
         <div class="finish">
           <button class="active" data-effect="solid" type="button">Однотон</button>
           <button data-effect="metal" type="button">Металлик</button>
           <button data-effect="pearl" type="button">Перламутр</button>
         </div>
       </div>
-      <div class="wrap-block" hidden><div class="label">Детали</div><div id="parts" class="parts"></div></div>
+      <div class="wrap-block" hidden>
+        <div class="label">Детали</div>
+        <div id="parts" class="parts"></div>
+      </div>
     </aside>
     <div class="summary">
       <div class="summary-row">
-        <div><div class="sumlabel">Ваш подбор</div><div id="total" class="total">0 ₽</div></div>
-        <a class="cta" id="quote" href="tel:+79000623277">ПОЛУЧИТЬ РАСЧЁТ</a>
+        <div>
+          <div class="sumlabel">Ваш подбор</div>
+          <div id="total" class="total">0 ₽</div>
+        </div>
+        <a class="cta" id="quote" href="tel:+79000623277">Позвонить</a>
       </div>
     </div>
   </div>
@@ -321,6 +334,9 @@
 <script src="ba-slider.js"></script>
 <script src="reviews-carousel.js"></script>
 <script type="importmap">{"imports":{"three":"vendor/three/build/three.module.js","three/addons/":"vendor/three/examples/jsm/"}}</script>
-<script type="module" src="wrap-boot.js?v=1"></script>
+<link rel="modulepreload" href="vendor/three/build/three.module.js">
+<link rel="modulepreload" href="wrap-configurator.core.js?v=rtg2">
+<link rel="preload" href="models/mercedes.glb?v=5" as="fetch" type="model/gltf-binary" crossorigin fetchpriority="high">
+<script type="module" src="wrap-loader.js?v=rtg2"></script>
 </body>
 </html>
