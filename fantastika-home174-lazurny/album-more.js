@@ -22,7 +22,7 @@
       title: 'Территория',
       kicker: 'Во дворе',
       lead: 'Мангал, костёр и вечер на воздухе',
-      preview: '../photoHouse/Территория у дома/1f48198f-5b70-4a94-a2a9-c8547c740f15.jpg',
+      preview: '../photoHouse/Территория у дома/guest-03.jpg',
     },
     {
       id: 'banya',
