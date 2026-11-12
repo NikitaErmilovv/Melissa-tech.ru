@@ -1441,6 +1441,10 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   text-transform:none;
 }
 .hero--auto-custom .hero-brand-line .accent{color:var(--accent)}
+.hero--auto-custom.hero--sdc .hero-heading--logo .hero-eyebrow-city{
+  position:relative;
+  transform:translateY(-5mm);
+}
 /* Auto Custom: ДЕТЕЙЛИНГ / СТУДИЯ — крупнее */
 .hero--auto-custom.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
   font-size:clamp(44px,6.2vw,88px);
