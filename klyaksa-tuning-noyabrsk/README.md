@@ -10,4 +10,5 @@
 Экспорт из этой папки: `bash scripts/export-site-standalone.sh klyaksa-tuning-noyabrsk`
 
 Прайс пересобрать: `python3 scripts/klyaksa_services_layout.py`  
-Фото к услугам на прайсе: положить в `img/services/<slug>.jpg` (slug как в `data-service-photo` на странице).
+Фото к услугам на прайсе: `img/services/*.jpg` (пересборка подставляет пути из `klyaksa_services_layout.py`).
+Временно для карточек услуг используются кадры из репозитория `sdc-detailing` (блок услуг на главной SDC, не галерея «Работы»).
