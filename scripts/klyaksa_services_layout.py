@@ -218,16 +218,29 @@ def build() -> str:
     interior_pick = matrix_to_simple(D.INTERIOR_ELEMENTS)[:3]
     parts.append(
         services_panel(
-            "interior-engine",
-            "Химчистка салона и двигателя",
-            "Глубокая чистка салона с разбором и обработка подкапотного пространства.",
+            "interior",
+            "Химчистка салона",
+            "Полная химчистка с разбором и чистка салона по элементам.",
             [
                 ("Химчистка салона с разбором", ot_from("от 33000")),
-                ("Химчистка ДВС и моторного отсека", ot_from(D.EXTRAS_BODY[0][1])),
                 *interior_pick,
             ],
             "services/interior.html",
             photo="img/services/interior.jpg",
+        )
+    )
+
+    parts.append(
+        services_panel(
+            "engine",
+            "Химчистка двигателя",
+            "Чистка ДВС и подкапотного пространства, защитная консервация.",
+            [
+                ("Химчистка ДВС и моторного отсека", ot_from(D.EXTRAS_BODY[0][1])),
+                ("Чистка насадки глушителя", ot_from("100")),
+            ],
+            "services/interior.html",
+            photo="img/services/engine.jpg",
         )
     )
 
@@ -353,7 +366,7 @@ def main() -> None:
     a = html_text.index("<!-- PRICELIST_BEGIN -->")
     b = html_text.index("<!-- PRICELIST_END -->") + len("<!-- PRICELIST_END -->")
     html_text = html_text[:a] + build() + html_text[b:]
-    html_text = re.sub(r'href="styles\.css\?v=\d+"', 'href="styles.css?v=91"', html_text, count=1)
+    html_text = re.sub(r'href="styles\.css\?v=\d+"', 'href="styles.css?v=92"', html_text, count=1)
     SERVICES.write_text(html_text, encoding="utf-8")
     patch_styles()
     print("ok")
