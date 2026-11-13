@@ -67,14 +67,39 @@ def price_lines(rows: list[tuple[str, str]]) -> str:
     return f'<ul class="services-panel-prices">{"".join(items)}</ul>'
 
 
+def media_single(photo: str) -> str:
+    return (
+        f'<div class="services-panel-media">'
+        f'<img src="{esc(photo)}" alt="" loading="lazy" decoding="async">'
+        f"</div>"
+    )
+
+
+def media_subphotos(items: list[tuple[str, str]]) -> str:
+    figs: list[str] = []
+    for src, caption in items:
+        figs.append(
+            f'<figure class="services-panel-subphoto">'
+            f'<img src="{esc(src)}" alt="{esc(caption)}" loading="lazy" decoding="async">'
+            f"<figcaption>{esc(caption)}</figcaption>"
+            f"</figure>"
+        )
+    body = "".join(figs)
+    return f'<div class="services-panel-media services-panel-media--subphotos">{body}</div>'
+
+
 def services_panel(
     sid: str,
     title: str,
     lead: str,
     rows: list[tuple[str, str]],
-    photo: str,
     more_href: str,
+    *,
+    photo: str | None = None,
+    media_html: str | None = None,
 ) -> str:
+    if media_html is None:
+        media_html = media_single(photo or "img/services/wrap.jpg")
     return f"""<section class="section services-panel-section" id="{esc(sid)}">
   <article class="services-panel">
     <div class="services-panel-copy">
@@ -83,9 +108,7 @@ def services_panel(
       {price_lines(rows)}
       <a class="button button--outline services-panel-more" href="{esc(more_href)}">Подробнее</a>
     </div>
-    <div class="services-panel-media">
-      <img src="{esc(photo)}" alt="" loading="lazy" decoding="async">
-    </div>
+    {media_html}
   </article>
 </section>
 """
@@ -103,17 +126,21 @@ def build() -> str:
 
     parts.append(
         services_panel(
-            "polish",
-            "Полировка и восстановление внешнего вида",
-            "Полировка кузова и фар, локальная коррекция царапин и сколов, восстановление блеска ЛКП.",
+            "restore",
+            "Реставрация сколов и царапин",
+            "Локальная коррекция ЛКП, восстановление сколов и царапин, полировка кузова и фар.",
             [
+                ("Реставрация сколов и царапин (элемент)", ot_from("от 1500")),
+                ("Восстановительная полировка одного элемента", ot_from("от 2500")),
                 ("Полировка кузова", ot_from(["28000 - 30000", "35000", "37000 - 40000"])),
                 ("Полировка фар (пара)", ot_from("от 2000")),
-                ("Реставрация сколов и царапин (элемент)", ot_from("от 1500")),
-                ("Удаление металлических вкраплений с ЛКП", ot_from("от 3000")),
             ],
-            "img/services/polish.jpg",
             "services/polish.html",
+            media_html=media_subphotos([
+                ("img/services/restore-scratches.jpg", "Царапины"),
+                ("img/services/restore-chips.jpg", "Сколы"),
+                ("img/services/polish.jpg", "Полировка"),
+            ]),
         )
     )
 
@@ -124,8 +151,8 @@ def build() -> str:
             "Оклейка кузова всеми видами плёнок",
             "Полиуретановая бронеплёнка, винил и декоративные решения — пакеты и поэлементно.",
             ppf_top,
-            "img/services/wrap.jpg",
             "services/ppf.html",
+            photo="img/services/wrap.jpg",
         )
     )
 
@@ -140,24 +167,23 @@ def build() -> str:
                 ("Молдинги дверей", ot_from("от 6000")),
                 ("Зеркало (1 шт.)", ot_from("от 3500")),
             ],
-            "img/services/antichrome.jpg",
             "services/antichrome.html",
+            photo="img/services/antichrome.jpg",
         )
     )
 
     parts.append(
         services_panel(
             "salon-wrap",
-            "Оклейка салона и защита экранов",
-            "Защитная и декоративная плёнка в салоне, статическая плёнка на дисплеи.",
+            "Оклейка салона",
+            "Защитная и декоративная плёнка на элементах интерьера.",
             [
                 ("Защита дверных карт (1 шт.)", ot_from("2000")),
                 ("Защита пластиковых порогов (1 шт.)", ot_from("1500")),
                 ("Оклейка элементов интерьера", "После осмотра"),
-                ("Защита экранов статической плёнкой", "После осмотра"),
             ],
-            "img/services/salon-wrap.jpg",
             "contact.html",
+            photo="img/services/salon-wrap.jpg",
         )
     )
 
@@ -171,12 +197,25 @@ def build() -> str:
                 ("Стойка лобового стекла (1 шт.)", ot_from("3000")),
                 ("Тонировка лобового (светопропускаемость 75–90%)", ot_from("от 6000")),
             ],
-            "img/services/windshield.jpg",
-            "services/tint.html",
+            "services/ppf.html",
+            photo="img/services/windshield.jpg",
         )
     )
 
-    interior_pick = matrix_to_simple(D.INTERIOR_ELEMENTS)[:5]
+    parts.append(
+        services_panel(
+            "screen-wrap",
+            "Защита экранов статической плёнкой",
+            "Статическая плёнка на мультимедиа и дисплеи — защита от царапин и пыли.",
+            [
+                ("Защита экранов статической плёнкой", "После осмотра"),
+            ],
+            "contact.html",
+            photo="img/services/salon-wrap.jpg",
+        )
+    )
+
+    interior_pick = matrix_to_simple(D.INTERIOR_ELEMENTS)[:3]
     parts.append(
         services_panel(
             "interior-engine",
@@ -185,10 +224,10 @@ def build() -> str:
             [
                 ("Химчистка салона с разбором", ot_from("от 33000")),
                 ("Химчистка ДВС и моторного отсека", ot_from(D.EXTRAS_BODY[0][1])),
-                *interior_pick[:3],
+                *interior_pick,
             ],
-            "img/services/interior.jpg",
             "services/interior.html",
+            photo="img/services/interior.jpg",
         )
     )
 
@@ -203,8 +242,8 @@ def build() -> str:
                 ("Шумоизоляция пола и арок", ["45000", "50000", "55000"]),
                 ("Шумоизоляция багажника", ["25000", "30000", "35000"]),
             ]),
-            "img/services/sound.jpg",
             "services/sound.html",
+            photo="img/services/sound.jpg",
         )
     )
 
@@ -219,15 +258,15 @@ def build() -> str:
                 ("Боковое стекло (1 шт.)", ["от 1800", "от 2400", "от 2400"]),
                 ("Тонирование фары (пара)", ["от 7000", "от 7000", "от 8000"]),
             ]),
-            "img/services/tint.jpg",
             "services/tint.html",
+            photo="img/services/tint.jpg",
         )
     )
 
     parts.append(
         services_panel(
             "wash",
-            "Детейлинг-мойка",
+            "Детейлинг мойка",
             "Наружная, комплексная и предпродажная мойка по детейлинг-регламенту.",
             [
                 ("Наружная мойка кузова", ot_from("1600")),
@@ -235,24 +274,8 @@ def build() -> str:
                 ("Detailing мойка-1", ot_from("9000")),
                 ("Detailing мойка-2", ot_from("11700")),
             ],
-            "img/services/wash.jpg",
             "services/wash.html",
-        )
-    )
-
-    parts.append(
-        services_panel(
-            "protect",
-            "Защита кузова и салона",
-            "Керамика, жидкое стекло и консервация салона под задачу.",
-            matrix_to_simple([
-                ("Покрытие GYEON Q2 ONE EVO (12 мес.)", ["14000", "15000", "16000"]),
-                ("Керамика Detail Basic Coat (12 мес.)", ["13000", "14000", "15000"]),
-                ("Жидкое стекло Detail Final Coat (12 мес.)", ["13000", "14000", "15000"]),
-                ("Многослойная восковая защита ЛКП", ["10000", "12000", "14000"]),
-            ]),
-            "img/services/protection.jpg",
-            "services/protection.html",
+            photo="img/services/wash.jpg",
         )
     )
 
@@ -293,11 +316,20 @@ def patch_styles() -> None:
   width:100%;height:100%;min-height:260px;max-height:520px;
   object-fit:cover;border-radius:14px;display:block;
 }
+.services-panel-media--subphotos{display:flex;flex-direction:column;gap:12px;min-height:auto}
+.services-panel-subphoto{margin:0;display:flex;flex-direction:column;flex:1;min-height:0}
+.services-panel-media--subphotos .services-panel-subphoto img{
+  flex:1;width:100%;min-height:120px;max-height:170px;object-fit:cover;border-radius:12px;
+}
+.services-panel-subphoto figcaption{
+  margin:6px 0 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:#9a9a94;
+}
 .pricelist-intro{padding-top:28px;padding-bottom:4px}
 @media(max-width:860px){
   .services-panel{grid-template-columns:1fr;padding:28px 22px;gap:24px}
   .services-panel-media{order:-1;min-height:200px}
   .services-panel-media img{min-height:220px;max-height:320px}
+  .services-panel-media--subphotos .services-panel-subphoto img{min-height:100px;max-height:140px}
   .services-panel-row{flex-direction:column;gap:6px;align-items:flex-start}
   .services-panel-price{align-self:flex-start}
 }
@@ -321,7 +353,7 @@ def main() -> None:
     a = html_text.index("<!-- PRICELIST_BEGIN -->")
     b = html_text.index("<!-- PRICELIST_END -->") + len("<!-- PRICELIST_END -->")
     html_text = html_text[:a] + build() + html_text[b:]
-    html_text = re.sub(r'href="styles\.css\?v=\d+"', 'href="styles.css?v=90"', html_text, count=1)
+    html_text = re.sub(r'href="styles\.css\?v=\d+"', 'href="styles.css?v=91"', html_text, count=1)
     SERVICES.write_text(html_text, encoding="utf-8")
     patch_styles()
     print("ok")
