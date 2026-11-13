@@ -25,6 +25,8 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .logo{font-size:18px;font-weight:900;letter-spacing:-.04em;white-space:nowrap}
 .logo a{display:inline-flex;align-items:baseline;gap:0.32em}
 .site-nav .logo a{gap:0.32em}
+.logo--img .logo-img{display:block;height:46px;width:46px;object-fit:cover;border-radius:50%}
+.logo--img a{display:inline-flex;align-items:center;line-height:0}
 .logo-mark{color:var(--accent);font-weight:900;letter-spacing:-.04em;font-size:1em;line-height:1}
 .logo-word{
   color:#fff;font-weight:900;font-size:1em;letter-spacing:-.04em;
@@ -1390,19 +1392,15 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 
 .hero--facet-lab .heroimg{opacity:.9}
-.hero--facet-lab .heroimg{opacity:.9}
-.hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
-  visibility:visible;position:static;transform:none;pointer-events:auto;user-select:text;
-  margin:6px 0 18px;font-size:clamp(38px,5.2vw,68px);line-height:.98;letter-spacing:-.05em;
-  font-weight:800;color:#fff;
-}
-.hero--rp.hero--sdc .hero-logo-wrap:has(.hero-logo-display){min-height:0}
-.hero--rp.hero--sdc .hero-heading--logo .hero-eyebrow-city{
+.hero--facet-lab .hero-heading--logo .hero-eyebrow-city{
   margin-top:clamp(20px,3.5vw,42px);margin-bottom:2px;
 }
-.hero--facet-lab .hero-logo-spacer.hero-logo-display .accent{color:var(--accent)}
+.hero--facet-lab .hero-brand-logo{
+  position:relative;left:auto;top:auto;transform:none;
+  display:block;width:min(200px,46vw);height:auto;margin:4px 0 16px;
+  border-radius:50%;object-fit:cover;
+}
 @media (max-width:800px){
-  .hero--rp.hero--sdc .hero-logo-spacer.hero-logo-display{
-    font-size:clamp(32px,9vw,48px);margin:4px 0 14px;
-  }
+  .hero--facet-lab .hero-brand-logo{width:min(160px,40vw);margin:2px 0 12px}
+  .logo--img .logo-img{height:40px;width:40px}
 }
