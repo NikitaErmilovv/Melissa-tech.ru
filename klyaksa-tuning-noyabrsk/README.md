@@ -8,3 +8,6 @@
 
 **Отдельный репозиторий для правок:** https://github.com/basicworker905-alt/Rita-Klyaksa  
 Экспорт из этой папки: `bash scripts/export-site-standalone.sh klyaksa-tuning-noyabrsk`
+
+Прайс пересобрать: `python3 scripts/klyaksa_services_layout.py`  
+Фото к услугам на прайсе: положить в `img/services/<slug>.jpg` (slug как в `data-service-photo` на странице).
