@@ -93,6 +93,23 @@ def tagline(text: str) -> str:
     return f'  <p class="pricelist-tagline">{esc(text)}</p>\n'
 
 
+def photos_block(slugs: list[str], labels: list[str] | None = None) -> str:
+    figures: list[str] = []
+    for i, slug in enumerate(slugs):
+        src = f"img/services/{slug}.jpg"
+        cap = ""
+        if labels and i < len(labels):
+            cap = f'<figcaption class="service-block-photo-cap">{esc(labels[i])}</figcaption>'
+        figures.append(
+            f"""<figure class="service-block-photo-item">
+      <div class="service-block-photo" data-service-photo="{esc(slug)}" style="background-image:url('{src}')"></div>
+      {cap}
+    </figure>"""
+        )
+    multi = " service-block-photos--multi" if len(slugs) > 1 else ""
+    return f'<div class="service-block-photos{multi}">\n    ' + "\n    ".join(figures) + "\n    </div>"
+
+
 def service_block(
     sid: str,
     kicker: str,
@@ -101,7 +118,8 @@ def service_block(
     *,
     intro: str | None = None,
     from_price: str | None = None,
-    photo_slug: str | None = None,
+    photo_slug: str | list[str] | None = None,
+    photo_labels: list[str] | None = None,
     note_items: list[str] | None = None,
     works: list[str] | None = None,
     sign: str | None = None,
@@ -112,11 +130,9 @@ def service_block(
     )
     photo_html = ""
     if photo_slug:
-        src = f"img/services/{photo_slug}.jpg"
-        photo_html = (
-            f'<div class="service-block-photo" data-service-photo="{esc(photo_slug)}" '
-            f'style="background-image:url(\'{src}\')"></div>'
-        )
+        slugs = [photo_slug] if isinstance(photo_slug, str) else photo_slug
+        labels = photo_labels if photo_labels and len(photo_labels) == len(slugs) else None
+        photo_html = photos_block(slugs, labels)
     works_html = composition(works) if works else ""
     return f"""<section class="section pricelist-page service-block" id="{sid}">
   <div class="service-block-grid">
@@ -147,7 +163,7 @@ def catalog_card(
 
 def build_catalog() -> str:
     featured = [
-        ("restore", "КУЗОВ", "Реставрация сколов и царапин", "Локальная коррекция ЛКП без перекраски.", ot_from("от 1500"), "restore"),
+        ("restore", "КУЗОВ", "Реставрация сколов и царапин", "Локальная коррекция ЛКП без перекраски.", ot_from("от 1500"), "restore-scratches"),
         ("wrap-films", "ПЛЁНКА", "Оклейка кузова", "Полиуретан, винил, декоративные и защитные плёнки.", ot_from("20000"), "wrap"),
         ("antichrome", "ТЮНИНГ", "Антихром", "Оклейка хрома в цвет кузова или чёрный.", ot_from("от 15000"), "antichrome"),
         ("salon-wrap", "САЛОН", "Оклейка салона", "Элементы интерьера защитной и декоративной плёнкой.", "после осмотра", "salon-wrap"),
@@ -193,7 +209,8 @@ def build() -> str:
             ]),
             intro="Локальное восстановление ЛКП и оптики.",
             from_price=ot_from("от 1500"),
-            photo_slug="restore",
+            photo_slug=["restore-scratches", "restore-chips"],
+            photo_labels=["Царапины", "Сколы"],
             note_items=["Финальная цена зависит от глубины повреждений и площади."],
         )
     )
@@ -509,8 +526,7 @@ def patch_styles() -> None:
 .service-catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:28px}
 .service-catalog-card{display:flex;flex-direction:column;gap:8px;padding:0;border:1px solid rgba(255,255,255,.1);border-radius:6px;background:rgba(255,255,255,.02);text-decoration:none;color:inherit;overflow:hidden;transition:border-color .2s,transform .2s}
 .service-catalog-card:hover{border-color:var(--accent-soft);transform:translateY(-2px)}
-.service-catalog-photo{min-height:140px;background:#1a1a17 center/cover no-repeat;background-image:none!important;background-color:rgba(255,255,255,.04)}
-.service-catalog-photo[style*="background-image:url"]{background-size:cover;background-position:center}
+.service-catalog-photo{min-height:140px;background:#1a1a17 center/cover no-repeat;background-color:rgba(255,255,255,.04)}
 .service-catalog-kicker{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);padding:14px 16px 0}
 .service-catalog-title{margin:0;padding:0 16px;font-size:18px;line-height:1.25}
 .service-catalog-lead{margin:0;padding:0 16px;font-size:12px;line-height:1.45;color:#9a9a94}
@@ -520,6 +536,11 @@ def patch_styles() -> None:
 .pricelist-nav a{font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;border:1px solid rgba(255,255,255,.12);border-radius:3px;color:#c8c6be;text-decoration:none}
 .pricelist-nav a:hover{border-color:var(--accent-soft);color:var(--accent)}
 .service-block-grid{display:grid;grid-template-columns:minmax(0,280px) 1fr;gap:28px;align-items:start}
+.service-catalog-photo{min-height:140px;background:#1a1a17 center/cover no-repeat;background-color:rgba(255,255,255,.04)}
+.service-block-photos{display:flex;flex-direction:column;gap:12px}
+.service-block-photos--multi .service-block-photo-item{margin:0}
+.service-block-photo-item{display:flex;flex-direction:column;gap:6px;margin:0}
+.service-block-photo-cap{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9a9a94;text-align:center}
 .service-block-photo{min-height:200px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:#161614 center/cover no-repeat;background-color:rgba(255,255,255,.03)}
 .service-block-from{margin:12px 0 0;font-size:22px;font-weight:700;color:var(--accent)}
 .pricelist-table--simple{min-width:0}
