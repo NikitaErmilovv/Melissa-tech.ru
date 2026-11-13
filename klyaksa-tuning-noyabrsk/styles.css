@@ -1359,9 +1359,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);
 }
 .services-panel-row:last-child{border-bottom:0}
-.services-panel-prices--long{max-height:min(56vh,480px);overflow-y:auto;padding-right:6px;scrollbar-width:thin}
-.services-panel-prices--long::-webkit-scrollbar{width:6px}
-.services-panel-prices--long::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px}
 .services-panel-name{font-size:14px;line-height:1.45;color:#e2e0d8;flex:1;min-width:0}
 .services-panel-price{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums}
 .button.button--outline{
