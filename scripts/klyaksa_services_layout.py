@@ -17,7 +17,6 @@ STYLES = SITE / "styles.css"
 
 # Совпадает с плитками на index.html (photo-strip--home).
 HOME_TILE_PHOTOS = {
-    "restore": "img/works/home/polish.jpg",
     "wrap-films": "img/works/home/ppf.jpg",
     "interior": "img/services/interior.jpg",
     "wash": "img/works/home/wash.jpg",
@@ -144,7 +143,7 @@ def build() -> str:
                 ("Полировка фар (пара)", ot_from("от 2000")),
             ],
             "services/polish.html",
-            photo=HOME_TILE_PHOTOS["restore"],
+            photo="img/services/restore-services.png",
         )
     )
 
@@ -187,7 +186,7 @@ def build() -> str:
                 ("Оклейка элементов интерьера", "После осмотра"),
             ],
             "contact.html",
-            photo="img/services/salon-wrap.jpg",
+            photo="img/services/salon-wrap.png",
         )
     )
 
@@ -202,7 +201,7 @@ def build() -> str:
                 ("Тонировка лобового (светопропускаемость 75–90%)", ot_from("от 6000")),
             ],
             "services/ppf.html",
-            photo="img/services/windshield.jpg",
+            photo="img/services/windshield.png",
         )
     )
 
@@ -215,7 +214,7 @@ def build() -> str:
                 ("Защита экранов статической плёнкой", "После осмотра"),
             ],
             "contact.html",
-            photo="img/services/salon-wrap.jpg",
+            photo="img/services/salon-wrap.png",
         )
     )
 
