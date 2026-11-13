@@ -100,7 +100,7 @@ def services_panel(
     title: str,
     lead: str,
     rows: list[tuple[str, str]],
-    more_href: str,
+    more_detail: str,
     *,
     photo: str | None = None,
     media_html: str | None = None,
@@ -113,7 +113,10 @@ def services_panel(
       <h2 class="services-panel-title">{esc(title)}</h2>
       <p class="services-panel-lead">{esc(lead)}</p>
       {price_lines(rows)}
-      <a class="button button--outline services-panel-more" href="{esc(more_href)}">Подробнее</a>
+      <details class="services-panel-more">
+        <summary class="button button--outline">Подробнее</summary>
+        <p class="services-panel-detail">{esc(more_detail)}</p>
+      </details>
     </div>
     {media_html}
   </article>
@@ -142,7 +145,7 @@ def build() -> str:
                 ("Полировка кузова", ot_from(["28000 - 30000", "35000", "37000 - 40000"])),
                 ("Полировка фар (пара)", ot_from("от 2000")),
             ],
-            "services/polish.html",
+            "Локально убираем сколы и царапины, восстанавливаем блеск. Объём и глубина работ — после осмотра элемента.",
             photo="img/services/restore-services.png",
         )
     )
@@ -154,7 +157,7 @@ def build() -> str:
             "Оклейка кузова всеми видами плёнок",
             "Полиуретановая бронеплёнка, винил и декоративные решения — пакеты и поэлементно.",
             ppf_top,
-            "services/ppf.html",
+            "Бронеплёнка, винил и декор: готовые пакеты зон риска или оклейка по деталям. Марка плёнки и сроки — на осмотре.",
             photo=HOME_TILE_PHOTOS["wrap-films"],
         )
     )
@@ -170,7 +173,7 @@ def build() -> str:
                 ("Молдинги дверей", ot_from("от 6000")),
                 ("Зеркало (1 шт.)", ot_from("от 3500")),
             ],
-            "services/antichrome.html",
+            "Хром и декоративный пластик — в чёрный мат/глянец или в цвет кузова. Список элементов согласуем до начала.",
             photo="img/services/antichrome.jpg",
         )
     )
@@ -185,7 +188,7 @@ def build() -> str:
                 ("Защита пластиковых порогов (1 шт.)", ot_from("1500")),
                 ("Оклейка элементов интерьера", "После осмотра"),
             ],
-            "contact.html",
+            "Защищаем торпедо, пороги и дверные карты от царапин и следов. Нестандартные зоны — по согласованной схеме.",
             photo="img/services/salon-wrap.png",
         )
     )
@@ -200,7 +203,7 @@ def build() -> str:
                 ("Стойка лобового стекла (1 шт.)", ot_from("3000")),
                 ("Тонировка лобового (светопропускаемость 75–90%)", ot_from("от 6000")),
             ],
-            "services/ppf.html",
+            "Прозрачная PPF на лобовое и примыкающие зоны — меньше сколов от камней. Установка в чистом боксе.",
             photo="img/services/windshield.png",
         )
     )
@@ -213,7 +216,7 @@ def build() -> str:
             [
                 ("Защита экранов статической плёнкой", "После осмотра"),
             ],
-            "contact.html",
+            "Статическая плёнка на дисплеи: без клея, снимается без следов. Расклад по экранам — после осмотра салона.",
             photo="img/services/salon-wrap.png",
         )
     )
@@ -228,7 +231,7 @@ def build() -> str:
                 ("Химчистка салона с разбором", ot_from("от 33000")),
                 *interior_pick,
             ],
-            "services/interior.html",
+            "Чистка с разбором или по элементам: ткань, кожа, потолок, багажник. Цена зависит от загрязнения и типа обивки.",
             photo=HOME_TILE_PHOTOS["interior"],
         )
     )
@@ -242,7 +245,7 @@ def build() -> str:
                 ("Химчистка ДВС и моторного отсека", ot_from(D.EXTRAS_BODY[0][1])),
                 ("Чистка насадки глушителя", ot_from("100")),
             ],
-            "services/interior.html",
+            "Безопасная мойка ДВС и подкапотного пространства, консервация после сушки. Степень загрязнения влияет на время и цену.",
             photo="img/services/engine.jpg",
         )
     )
@@ -258,7 +261,7 @@ def build() -> str:
                 ("Шумоизоляция пола и арок", ["45000", "50000", "55000"]),
                 ("Шумоизоляция багажника", ["25000", "30000", "35000"]),
             ]),
-            "services/sound.html",
+            "Маты на двери, пол, арки или весь салон — меньше шума с дороги. Объём уточняем на осмотре и вибро-тесте.",
             photo="img/services/sound.jpg",
         )
     )
@@ -274,7 +277,7 @@ def build() -> str:
                 ("Боковое стекло (1 шт.)", ["от 1800", "от 2400", "от 2400"]),
                 ("Тонирование фары (пара)", ["от 7000", "от 7000", "от 8000"]),
             ]),
-            "services/tint.html",
+            "Тонировочные и атермальные плёнки, в т.ч. лобовое в разрешённых пределах. Плотность и юридичность — подбираем вместе.",
             photo="img/services/tint.jpg",
         )
     )
@@ -290,7 +293,7 @@ def build() -> str:
                 ("Detailing мойка-1", ot_from("9000")),
                 ("Detailing мойка-2", ot_from("11700")),
             ],
-            "services/wash.html",
+            "От экспресс-мойки до двухфазной с салоном по детейлинг-регламенту. Состав работ зависит от выбранного пакета.",
             photo=HOME_TILE_PHOTOS["wash"],
         )
     )
@@ -327,6 +330,20 @@ def patch_styles() -> None:
   padding:12px 26px;font-size:13px;letter-spacing:.04em;font-weight:700;
 }
 .button.button--outline:hover{background:rgba(var(--accent-rgb),.1);color:var(--accent-hover)}
+.services-panel-more{margin:0}
+.services-panel-more summary{
+  list-style:none;cursor:pointer;display:inline-block;
+}
+.services-panel-more summary::-webkit-details-marker{display:none}
+.services-panel-more summary::marker{content:""}
+.services-panel-more[open] summary{
+  background:rgba(var(--accent-rgb),.1);color:var(--accent-hover);
+}
+.services-panel-detail{
+  margin:14px 0 0;padding:14px 16px;max-width:52ch;
+  font-size:13px;line-height:1.55;color:#b8b6ae;
+  border-left:2px solid var(--accent-soft);
+}
 .services-panel-media{align-self:stretch;min-height:260px}
 .services-panel-media img{
   width:100%;height:100%;min-height:260px;max-height:520px;
@@ -369,7 +386,7 @@ def main() -> None:
     a = html_text.index("<!-- PRICELIST_BEGIN -->")
     b = html_text.index("<!-- PRICELIST_END -->") + len("<!-- PRICELIST_END -->")
     html_text = html_text[:a] + build() + html_text[b:]
-    html_text = re.sub(r'href="styles\.css\?v=\d+"', 'href="styles.css?v=92"', html_text, count=1)
+    html_text = re.sub(r'href="styles\.css\?v=\d+"', 'href="styles.css?v=93"', html_text, count=1)
     SERVICES.write_text(html_text, encoding="utf-8")
     patch_styles()
     print("ok")
