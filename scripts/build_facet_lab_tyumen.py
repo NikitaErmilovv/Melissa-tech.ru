@@ -22,9 +22,10 @@ from build_bunker_bubbles import (  # noqa: E402
     apply_text as apply_text_base,
     copy_site,
     fetch_photos,
-    finish_site,
 )
+from fetch_2gis_firm_photos import patch_index_works, patch_service_tiles  # noqa: E402
 from fetch_2gis_reviews import fetch_branch_reviews  # noqa: E402
+from generate_gallery_manifest import write_manifest  # noqa: E402
 
 SITE = {
     "slug": "facet-lab-tyumen",
@@ -183,6 +184,23 @@ def patch_files(dest: Path, site: dict) -> None:
     )
 
 
+def finish_site_photos(site: dict, rel_paths: list[str]) -> None:
+    """Gallery and tiles from 2GIS only — no rp-detailing services-home copies."""
+    slug = site["slug"]
+    site_dir = ROOT / slug
+    services_dir = site_dir / "img" / "services-home"
+    if services_dir.is_dir():
+        shutil.rmtree(services_dir)
+    for name in ("logo-hero.jpg", "logo-hero.png"):
+        p = site_dir / "img" / name
+        if p.is_file():
+            p.unlink()
+    if rel_paths:
+        patch_service_tiles(slug, rel_paths)
+        patch_index_works(slug, rel_paths)
+    write_manifest(site_dir)
+
+
 def apply_custom_hero(dest: Path) -> None:
     hero = dest / "img" / "hero-home.jpg"
     hero.parent.mkdir(parents=True, exist_ok=True)
@@ -204,7 +222,7 @@ def main() -> None:
     dest = copy_site(SITE)
     rel = fetch_photos(SITE)
     patch_files(dest, SITE)
-    finish_site(SITE, rel)
+    finish_site_photos(SITE, rel)
     apply_custom_hero(dest)
     print(f"  OK {len(rel)} photos, port {SITE['port']}")
 
