@@ -236,7 +236,7 @@ def build() -> str:
                 ("Чистка насадки глушителя", ot_from("100")),
             ],
             "services/interior.html",
-            photo="img/services/engine.png",
+            photo="img/services/engine.jpg",
         )
     )
 
