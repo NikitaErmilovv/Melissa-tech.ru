@@ -48,8 +48,8 @@
 
   window.AvtoCmsApi = {
     siteBase,
-    login(password) {
-      const body = JSON.stringify({ password });
+    login(email, password) {
+      const body = JSON.stringify({ email: email || '', password });
       const headers = { 'Content-Type': 'application/json' };
       if (isLocal()) {
         return fetch('/api/cms/login', { method: 'POST', headers, body });

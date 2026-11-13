@@ -9,6 +9,8 @@ $contentFile = $cmsDir . '/content.json';
 $configLocal = $cmsDir . '/config.local.json';
 $configExample = $cmsDir . '/config.example.json';
 $sessionsFile = $cmsDir . '/_sessions.json';
+$staffFile = $cmsDir . '/staff.json';
+$staffExample = $cmsDir . '/staff.example.json';
 $uploadsDir = $root . '/img/cms/uploads';
 
 const TOKEN_TTL = 86400;
@@ -55,18 +57,62 @@ function bearer_token(): ?string {
     return null;
 }
 
-function check_token(?string $token): bool {
+function load_staff(): array {
+    global $staffFile, $staffExample;
+    foreach ([$staffFile, $staffExample] as $path) {
+        if (!is_file($path)) {
+            continue;
+        }
+        $data = json_decode((string) file_get_contents($path), true);
+        $accounts = is_array($data) ? ($data['accounts'] ?? null) : null;
+        if (is_array($accounts) && $accounts) {
+            return $accounts;
+        }
+    }
+    return [];
+}
+
+function session_user(?string $token): ?array {
     if (!$token) {
-        return false;
+        return null;
     }
     $sessions = load_sessions();
-    $exp = $sessions[$token] ?? null;
-    if (!$exp || time() > (int) $exp) {
+    $row = $sessions[$token] ?? null;
+    if (is_int($row) || (is_string($row) && ctype_digit($row))) {
+        if (time() > (int) $row) {
+            unset($sessions[$token]);
+            save_sessions($sessions);
+            return null;
+        }
+        return [
+            'exp' => (int) $row,
+            'role' => 'Администратор',
+            'name' => 'Редактор',
+            'email' => '',
+            'id' => '',
+        ];
+    }
+    if (!is_array($row) || time() > (int) ($row['exp'] ?? 0)) {
         unset($sessions[$token]);
         save_sessions($sessions);
-        return false;
+        return null;
     }
-    return true;
+    return $row;
+}
+
+function check_token(?string $token): bool {
+    return session_user($token) !== null;
+}
+
+function require_roles(array $roles): array {
+    $user = session_user(bearer_token());
+    if (!$user) {
+        send_json(401, ['error' => 'Unauthorized']);
+    }
+    if (!in_array((string) ($user['role'] ?? ''), $roles, true)) {
+        send_json(403, ['error' => 'Forbidden']);
+    }
+    return $user;
 }
 
 function read_content(): array {
@@ -106,21 +152,49 @@ $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 if ($action === 'login' && $method === 'POST') {
     $body = json_decode((string) file_get_contents('php://input'), true);
     $pwd = is_array($body) ? trim((string) ($body['password'] ?? '')) : '';
-    $expected = cms_password();
-    if ($expected === '' || !hash_equals($expected, $pwd)) {
+    $email = is_array($body) ? strtolower(trim((string) ($body['email'] ?? ''))) : '';
+    $account = null;
+    if ($email !== '') {
+        foreach (load_staff() as $row) {
+            if (!is_array($row)) {
+                continue;
+            }
+            $rowEmail = strtolower(trim((string) ($row['email'] ?? '')));
+            $rowPwd = (string) ($row['password'] ?? '');
+            if ($rowEmail === $email && $rowPwd !== '' && hash_equals($rowPwd, $pwd)) {
+                $account = $row;
+                break;
+            }
+        }
+    } else {
+        $expected = cms_password();
+        if ($expected !== '' && hash_equals($expected, $pwd)) {
+            $account = [
+                'id' => '',
+                'name' => 'Редактор',
+                'email' => '',
+                'role' => 'Администратор',
+            ];
+        }
+    }
+    if (!$account) {
         send_json(401, ['error' => 'Unauthorized']);
     }
     $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+    $user = [
+        'id' => (string) ($account['id'] ?? ''),
+        'name' => (string) ($account['name'] ?? ''),
+        'email' => (string) ($account['email'] ?? ''),
+        'role' => (string) ($account['role'] ?? 'Стажёр'),
+    ];
     $sessions = load_sessions();
-    $sessions[$token] = time() + TOKEN_TTL;
+    $sessions[$token] = $user + ['exp' => time() + TOKEN_TTL];
     save_sessions($sessions);
-    send_json(200, ['token' => $token]);
+    send_json(200, ['token' => $token, 'user' => $user]);
 }
 
 if ($action === 'save' && $method === 'POST') {
-    if (!check_token(bearer_token())) {
-        send_json(401, ['error' => 'Unauthorized']);
-    }
+    require_roles(['Администратор']);
     $payload = json_decode((string) file_get_contents('php://input'), true);
     if (!is_array($payload)) {
         send_json(400, ['error' => 'Bad JSON']);
@@ -164,9 +238,7 @@ if ($action === 'save' && $method === 'POST') {
 }
 
 if ($action === 'upload' && $method === 'POST') {
-    if (!check_token(bearer_token())) {
-        send_json(401, ['error' => 'Unauthorized']);
-    }
+    require_roles(['Администратор']);
     if (empty($_FILES['file']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
         send_json(400, ['error' => 'No file']);
     }
@@ -237,9 +309,7 @@ if ($action === 'reviews-2gis' && $method === 'GET') {
 }
 
 if ($action === 'wrap-zones-save' && $method === 'POST') {
-    if (!check_token(bearer_token())) {
-        send_json(401, ['error' => 'Unauthorized']);
-    }
+    require_roles(['Администратор']);
     $raw = file_get_contents('php://input');
     $payload = json_decode($raw, true);
     $hasZones = isset($payload['zones']) && is_array($payload['zones']);
@@ -270,9 +340,7 @@ if ($action === 'wrap-zones-save' && $method === 'POST') {
 }
 
 if ($action === 'articles-save' && $method === 'POST') {
-    if (!check_token(bearer_token())) {
-        send_json(401, ['error' => 'Unauthorized']);
-    }
+    require_roles(['Администратор']);
     require_once __DIR__ . '/articles-lib.php';
     $payload = json_decode((string) file_get_contents('php://input'), true);
     if (!is_array($payload)) {
@@ -291,13 +359,20 @@ if ($action === 'articles-save' && $method === 'POST') {
 }
 
 if ($action === 'training-save' && $method === 'POST') {
-    if (!check_token(bearer_token())) {
-        send_json(401, ['error' => 'Unauthorized']);
-    }
+    $actor = require_roles(['Администратор', 'Преподаватель', 'Менеджер']);
     $raw = file_get_contents('php://input');
     $payload = json_decode($raw, true);
     if (!is_array($payload) || !isset($payload['students']) || !is_array($payload['students'])) {
         send_json(400, ['error' => 'Missing students']);
+    }
+    if (($actor['role'] ?? '') !== 'Администратор') {
+        $pathKeep = dirname(__DIR__) . '/data/training.json';
+        $existing = is_file($pathKeep) ? json_decode((string) file_get_contents($pathKeep), true) : [];
+        if (!is_array($existing)) {
+            $existing = [];
+        }
+        $payload['users'] = $existing['users'] ?? [];
+        $payload['settings'] = $existing['settings'] ?? [];
     }
     $path = dirname(__DIR__) . '/data/training.json';
     cms_backup_file('training', $path);
