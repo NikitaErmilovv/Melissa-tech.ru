@@ -392,7 +392,7 @@ def build() -> str:
     ]
     ppf = f'  <h3 class="pricelist-sheet-title">Пакеты</h3>\n{matrix(ppf_packages, VEH3)}  <h3 class="pricelist-sheet-title">Оклейка деталей</h3>\n{matrix(ppf_parts, VEH3)}'
     parts.append(section(
-        "ppf", "ЗАЩИТА", "АНТИГРАВИЙНАЯ ЗАЩИТА",
+        "ppf", "ЗАЩИТА", "БРОНЕПЛЁНКА",
         ppf,
         note_items=["Цены в прайс-листе являются базовыми и могут быть увеличены от 20% до 50% в зависимости от степени трудозатрат, вида и производителя плёнки."],
         sign="Ваш автомобиль защищён!",
