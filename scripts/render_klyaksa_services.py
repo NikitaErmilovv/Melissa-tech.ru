@@ -267,7 +267,7 @@ def build_body() -> str:
         page(
             "ppf",
             "ЗАЩИТА",
-            "Антигравийная защита",
+            "Бронеплёнка",
             ppf_inner,
             ["Цены базовые; +20–50% от трудозатрат и вида плёнки."],
             "Ваш автомобиль защищён!",
@@ -322,7 +322,7 @@ def build_body() -> str:
     nav = """<nav class="pricelist-nav" aria-label="Разделы прайса">
   <a href="#wash-exterior">Мойка</a><a href="#wash-detail-1">Detailing 1</a><a href="#wash-detail-2">Detailing 2</a>
   <a href="#interior-dry">Химчистка</a><a href="#extras">Доп. услуги</a><a href="#detailing">Детейлинг</a>
-  <a href="#tint">Тонировка</a><a href="#ppf">Антигравий</a><a href="#antichrome">Антихром</a><a href="#sound">Шумоизоляция</a>
+  <a href="#tint">Тонировка</a><a href="#ppf">Бронеплёнка</a><a href="#antichrome">Антихром</a><a href="#sound">Шумоизоляция</a>
 </nav>"""
 
     return f"""<!-- PRICELIST_BEGIN -->
