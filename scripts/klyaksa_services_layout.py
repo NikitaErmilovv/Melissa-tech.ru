@@ -136,11 +136,7 @@ def build() -> str:
                 ("Полировка фар (пара)", ot_from("от 2000")),
             ],
             "services/polish.html",
-            media_html=media_subphotos([
-                ("img/services/restore-scratches.jpg", "Царапины"),
-                ("img/services/restore-chips.jpg", "Сколы"),
-                ("img/services/polish.jpg", "Полировка"),
-            ]),
+            photo="img/services/polish.jpg",
         )
     )
 
@@ -240,7 +236,7 @@ def build() -> str:
                 ("Чистка насадки глушителя", ot_from("100")),
             ],
             "services/interior.html",
-            photo="img/services/engine.jpg",
+            photo="img/services/engine.png",
         )
     )
 
