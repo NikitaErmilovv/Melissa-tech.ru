@@ -1,0 +1,15 @@
+[Unit]
+Description=Авто Блеск
+After=network.target mariadb.service
+Wants=mariadb.service
+
+[Service]
+WorkingDirectory=/opt/autoblesk
+EnvironmentFile=/opt/autoblesk/.env
+ExecStart=/usr/local/bin/node /opt/autoblesk/dist/boot.js
+Restart=always
+RestartSec=3
+User=root
+
+[Install]
+WantedBy=multi-user.target
