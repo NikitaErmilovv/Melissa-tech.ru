@@ -15,6 +15,14 @@ SITE = ROOT / "klyaksa-tuning-noyabrsk"
 SERVICES = SITE / "services.html"
 STYLES = SITE / "styles.css"
 
+# Совпадает с плитками на index.html (photo-strip--home).
+HOME_TILE_PHOTOS = {
+    "restore": "img/works/home/polish.jpg",
+    "wrap-films": "img/works/home/ppf.jpg",
+    "interior": "img/services/interior.jpg",
+    "wash": "img/works/home/wash.jpg",
+}
+
 
 def esc(s: str) -> str:
     return html.escape(s, quote=False)
@@ -136,7 +144,7 @@ def build() -> str:
                 ("Полировка фар (пара)", ot_from("от 2000")),
             ],
             "services/polish.html",
-            photo="img/services/polish.jpg",
+            photo=HOME_TILE_PHOTOS["restore"],
         )
     )
 
@@ -148,7 +156,7 @@ def build() -> str:
             "Полиуретановая бронеплёнка, винил и декоративные решения — пакеты и поэлементно.",
             ppf_top,
             "services/ppf.html",
-            photo="img/services/wrap.jpg",
+            photo=HOME_TILE_PHOTOS["wrap-films"],
         )
     )
 
@@ -222,7 +230,7 @@ def build() -> str:
                 *interior_pick,
             ],
             "services/interior.html",
-            photo="img/services/interior.jpg",
+            photo=HOME_TILE_PHOTOS["interior"],
         )
     )
 
@@ -284,7 +292,7 @@ def build() -> str:
                 ("Detailing мойка-2", ot_from("11700")),
             ],
             "services/wash.html",
-            photo="img/services/wash.jpg",
+            photo=HOME_TILE_PHOTOS["wash"],
         )
     )
 
