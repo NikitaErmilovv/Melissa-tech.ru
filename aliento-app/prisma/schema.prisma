@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phone        String
+  passwordHash String
+  role         String   @default("STUDENT")
+  blocked      Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  teacher       Teacher?
+  bookings      Booking[]
+  subscriptions Subscription[]
+  attendances   Attendance[]
+  payments      Payment[]
+  notifications Notification[]
+}
+
+model Teacher {
+  id          String       @id @default(cuid())
+  userId      String       @unique
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  classes     DanceClass[]
+}
+
+model DanceClass {
+  id          String       @id @default(cuid())
+  teacherId   String
+  teacher     Teacher      @relation(fields: [teacherId], references: [id])
+  title       String
+  level       String
+  description String
+  startsAt    DateTime
+  endsAt      DateTime
+  room        String
+  capacity    Int
+  bookings    Booking[]
+  attendances Attendance[]
+}
+
+model Booking {
+  id        String     @id @default(cuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classId   String
+  class     DanceClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  status    String     @default("BOOKED")
+  createdAt DateTime   @default(now())
+  attendance Attendance?
+
+  @@unique([userId, classId])
+}
+
+model Plan {
+  id           String         @id @default(cuid())
+  name         String
+  classCount   Int
+  durationDays Int
+  priceRub     Int
+  popular      Boolean        @default(false)
+  description  String
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id               String    @id @default(cuid())
+  userId           String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId           String
+  plan             Plan      @relation(fields: [planId], references: [id])
+  totalClasses     Int
+  remainingClasses Int
+  expiresAt        DateTime
+  status           String    @default("ACTIVE")
+  createdAt        DateTime  @default(now())
+  payments         Payment[]
+}
+
+model Attendance {
+  id        String     @id @default(cuid())
+  bookingId String     @unique
+  booking   Booking    @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classId   String
+  class     DanceClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  status    String
+  createdAt DateTime   @default(now())
+}
+
+model Payment {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscriptionId String?
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+  amountRub      Int
+  status         String
+  purpose        String
+  createdAt      DateTime      @default(now())
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  startsAt    DateTime
+  place       String
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  body      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
