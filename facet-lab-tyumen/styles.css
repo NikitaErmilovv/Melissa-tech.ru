@@ -23,8 +23,8 @@ body.page-sub > nav.site-nav{
 }
 body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .logo{font-size:18px;font-weight:900;letter-spacing:-.04em;white-space:nowrap}
-.logo a{display:inline-flex;align-items:baseline;gap:0}
-.site-nav .logo a{gap:0}
+.logo a{display:inline-flex;align-items:baseline;gap:0.32em}
+.site-nav .logo a{gap:0.32em}
 .logo-mark{color:var(--accent);font-weight:900;letter-spacing:-.04em;font-size:1em;line-height:1}
 .logo-word{
   color:#fff;font-weight:900;font-size:1em;letter-spacing:-.04em;
@@ -513,6 +513,7 @@ html.media-lightbox-open{overflow:hidden}
   display:inline-flex;align-items:baseline;gap:10px;
   font-size:28px;font-weight:900;color:#f5f5f2;line-height:1;letter-spacing:-.04em;
 }
+.footer-logo{display:inline-flex;align-items:baseline;gap:0.32em}
 .footer-logo .logo-mark{color:var(--accent);font-size:1em;font-weight:900;letter-spacing:-.04em;line-height:1}
 .footer-logo .logo-word{
   color:#fff;font-size:1em;font-weight:900;letter-spacing:-.04em;

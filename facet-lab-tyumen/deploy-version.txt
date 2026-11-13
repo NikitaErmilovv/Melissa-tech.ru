@@ -2,4 +2,4 @@ site=facet-lab-tyumen
 brand=Facet lab
 prod=https://melissa-tech.ru/facet-lab-tyumen/
 deploy=git-push-timeweb-hook
-deploy-trigger=facet-lab-tyumen-photos-2gis-20261113T0655Z
+deploy-trigger=facet-lab-tyumen-home-pick-20261113T0702Z
