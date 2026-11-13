@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Klyaksa services page in the same layout as Pervushin."""
+"""Klyaksa services.html — card panels (title, lead, price rows, photo, Подробнее)."""
 from __future__ import annotations
 
 import html
@@ -11,9 +11,16 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import klyaksa_pricelist_data as D  # noqa: E402
 
-SERVICES = ROOT / "klyaksa-tuning-noyabrsk" / "services.html"
-VEH3 = ["Седан", "Кроссовер", "Джип"]
-VEH4 = ["Мини", "Седан", "Кроссовер", "Джип"]
+SITE = ROOT / "klyaksa-tuning-noyabrsk"
+SERVICES = SITE / "services.html"
+STYLES = SITE / "styles.css"
+
+# Совпадает с плитками на index.html (photo-strip--home).
+HOME_TILE_PHOTOS = {
+    "wrap-films": "img/works/home/ppf.jpg",
+    "interior": "img/services/interior.jpg",
+    "wash": "img/works/home/wash.jpg",
+}
 
 
 def esc(s: str) -> str:
@@ -30,409 +37,348 @@ def money(raw: str) -> str:
     return re.sub(r"\d+", repl, raw)
 
 
-def notes(items: list[str]) -> str:
-    if not items:
-        return ""
-    lis = "".join(f"    <li>{esc(x)}</li>\n" for x in items)
-    return f'  <ul class="pricelist-notes">\n{lis}  </ul>\n'
+def ot_from(raw: str | list[str]) -> str:
+    if isinstance(raw, list):
+        raw = raw[0] if raw else ""
+    s = str(raw).strip()
+    if not s:
+        return "После осмотра"
+    low = s.lower()
+    if low in {"после осмотра", "договорная"}:
+        return "После осмотра"
+    if low.startswith("от"):
+        chunk = s[2:].strip()
+    elif " - " in s:
+        chunk = s.split(" - ", 1)[0].strip()
+    else:
+        chunk = s
+    digits = re.sub(r"\D", "", chunk.split()[0] if chunk else "")
+    if not digits:
+        return "После осмотра"
+    return f"От {money(digits)} ₽"
 
 
-def class_table(pairs: list[tuple[str, str]]) -> str:
-    rows = "\n".join(
-        f"        <tr><td>{esc(name)}</td><td>{money(price)}</td></tr>" for name, price in pairs
+def matrix_to_simple(rows: list[tuple[str, list[str]]]) -> list[tuple[str, str]]:
+    return [(name, ot_from(prices)) for name, prices in rows]
+
+
+def price_lines(rows: list[tuple[str, str]]) -> str:
+    items: list[str] = []
+    for name, label in rows:
+        items.append(
+            f'<li class="services-panel-row">'
+            f'<span class="services-panel-name">{esc(name)}</span>'
+            f'<span class="services-panel-price">{esc(label)}</span>'
+            f"</li>"
+        )
+    return f'<ul class="services-panel-prices">{"".join(items)}</ul>'
+
+
+def media_single(photo: str) -> str:
+    return (
+        f'<div class="services-panel-media">'
+        f'<img src="{esc(photo)}" alt="" loading="lazy" decoding="async">'
+        f"</div>"
     )
-    return f"""  <div class="pricelist-table-wrap">
-    <table class="pricelist-table">
-      <thead><tr><th>Класс автомобиля</th><th>Стоимость, ₽</th></tr></thead>
-      <tbody>
-{rows}
-      </tbody>
-    </table>
-  </div>
-"""
 
 
-def matrix(rows: list[tuple[str, list[str]]], cols: list[str]) -> str:
-    heads = "".join(f"<th>{esc(c)}</th>" for c in cols)
-    body = []
-    for name, prices in rows:
-        cells = "".join(f"<td>{money(p)}</td>" for p in prices)
-        body.append(f"        <tr><td>{esc(name)}</td>{cells}</tr>")
-    return f"""  <div class="pricelist-table-wrap">
-    <table class="pricelist-table">
-      <thead><tr><th>Услуга</th>{heads}</tr></thead>
-      <tbody>
-{chr(10).join(body)}
-      </tbody>
-    </table>
-  </div>
-"""
+def media_subphotos(items: list[tuple[str, str]]) -> str:
+    figs: list[str] = []
+    for src, caption in items:
+        figs.append(
+            f'<figure class="services-panel-subphoto">'
+            f'<img src="{esc(src)}" alt="{esc(caption)}" loading="lazy" decoding="async">'
+            f"<figcaption>{esc(caption)}</figcaption>"
+            f"</figure>"
+        )
+    body = "".join(figs)
+    return f'<div class="services-panel-media services-panel-media--subphotos">{body}</div>'
 
 
-def two_col(rows: list[tuple[str, str]]) -> str:
-    body = "\n".join(
-        f"        <tr><td>{esc(a)}</td><td>{money(b)}</td></tr>" for a, b in rows
-    )
-    return f"""  <div class="pricelist-table-wrap">
-    <table class="pricelist-table">
-      <thead><tr><th>Наименование</th><th>Стоимость, ₽</th></tr></thead>
-      <tbody>
-{body}
-      </tbody>
-    </table>
-  </div>
-"""
-
-
-def composition(items: list[str]) -> str:
-    lis = "\n".join(f"      <li>{esc(item)}</li>" for item in items)
-    return f"""  <div class="pricelist-includes">
-    <h3 class="pricelist-includes-title">Что входит в услугу</h3>
-    <ol class="pricelist-composition">
-{lis}
-    </ol>
-  </div>
-"""
-
-
-def tagline(text: str) -> str:
-    return f'  <p class="pricelist-tagline">{esc(text)}</p>\n'
-
-
-def section(
+def services_panel(
     sid: str,
-    kicker: str,
     title: str,
-    inner: str,
-    intro: str | None = None,
-    note_items: list[str] | None = None,
-    works: list[str] | None = None,
-    sign: str | None = None,
+    lead: str,
+    rows: list[tuple[str, str]],
+    more_detail: str,
+    *,
+    photo: str | None = None,
+    media_html: str | None = None,
 ) -> str:
-    intro_html = f'\n    <p class="intro">{esc(intro)}</p>' if intro else ""
-    works_html = composition(works) if works else ""
-    sign_html = tagline(sign) if sign else ""
-    return f"""<section class="section pricelist-page" id="{sid}">
-  <div class="section-head">
-    <div><div class="kicker">{esc(kicker)}</div><h2>{esc(title)}</h2></div>{intro_html}
-  </div>
-{inner}{works_html}{notes(note_items or [])}{sign_html}</section>
+    if media_html is None:
+        media_html = media_single(photo or "img/services/wrap.jpg")
+    return f"""<section class="section services-panel-section" id="{esc(sid)}">
+  <article class="services-panel">
+    <div class="services-panel-copy">
+      <h2 class="services-panel-title">{esc(title)}</h2>
+      <p class="services-panel-lead">{esc(lead)}</p>
+      {price_lines(rows)}
+      <details class="services-panel-more">
+        <summary class="button button--outline">Подробнее</summary>
+        <p class="services-panel-detail">{esc(more_detail)}</p>
+      </details>
+    </div>
+    {media_html}
+  </article>
+</section>
+"""
+
+
+def build_intro() -> str:
+    return """<section class="section pricelist-intro">
+  <p class="intro services-intro">Базовые цены — от минимального объёма работ. Точная стоимость после осмотра автомобиля в студии.</p>
+</section>
 """
 
 
 def build() -> str:
-    parts: list[str] = []
-    parts.append(section(
-        "wash-exterior", "МОЙКА", "НАРУЖНАЯ МОЙКА КУЗОВА",
-        class_table(list(zip(VEH3, ["1600", "1750", "1850"]))),
-        works=[
-            "Бесконтактная мойка с нанесением эмульсии",
-            "Ручная мойка шампунем и широкопористой губкой",
-            "Сушка кузова автомобиля микрофибровым полотенцем",
-            "Продувка воздухом (лючок бензобака, зеркала, замки и ручки дверей)",
-            "Протирка дверных проёмов",
-            "Чистка, консервация (чернение) шин — глянец, матовый",
-        ],
-    ))
-    parts.append(section(
-        "wash-complex", "МОЙКА", "КОМПЛЕКСНАЯ МОЙКА",
-        class_table(list(zip(VEH3, ["3200", "3400", "3800"]))),
-        works=[
-            "Бесконтактная мойка с нанесением эмульсии",
-            "Ручная мойка шампунем и широкопористой губкой",
-            "Сушка кузова автомобиля микрофибровым полотенцем",
-            "Продувка воздухом (лючок бензобака, зеркала, замки и ручки дверей)",
-            "Протирка дверных проёмов",
-            "Чистка, консервация (чернение) шин",
-            "Салон: мойка резиновых ковриков + чернение / пылесос ворсовых (4 шт.)",
-            "Салон: чистка педального блока + чернение",
-            "Салон: уборка салона пылесосом",
-            "Салон: чистка стёкол изнутри с очистителем",
-            "Салон: влажная уборка салона с очистителем",
-        ],
-        note_items=[
-            "Мойка колёсных арок от льда и снега занимает дополнительное время и оплачивается дополнительно (400 рублей).",
-            "Третий ряд сидений оплачивается дополнительно — 300 руб.",
-            "Цены в прайс-листе являются базовыми и могут быть увеличены от 20% до 50% в зависимости от степени загрязнения автомобиля и трудозатрат.",
-        ],
-        sign="Современные технологии и высококачественные материалы!",
-    ))
-    parts.append(section(
-        "wash-detail-1", "МОЙКА", "DETAILING МОЙКА-1",
-        class_table(list(zip(VEH4, ["9000", "10000", "11000", "12500"]))),
-        intro="Предпродажная мойка.",
-        works=[
-            "Чистка дисков (4 шт.) и насадок глушителя",
-            "Чистка дверных петель",
-            "Бесконтактная мойка кузова и арок с нанесением эмульсии",
-            "Ручная мойка шампунем и широкопористой губкой",
-            "Покрытие кузова консервирующим полимером премиум-класс Protector WAX — защита кузова от пыли и грязи, глубокий блеск",
-            "Сушка кузова автомобиля турбосушкой и микрофибровым полотенцем",
-            "Консервация наружного пластика (чернение)",
-            "Чистка, консервация (чернение) шин — глянец, матовый",
-            "Салон: мойка резиновых ковриков + чернение / пылесос ворсовых (4 шт.)",
-            "Салон: чистка педального блока + чернение",
-            "Салон: уборка салона пылесосом",
-            "Салон: чистка стёкол изнутри с очистителем",
-            "Салон: влажная уборка салона с очистителем",
-            "Салон: обработка пластика полиролью с антистатическим эффектом",
-            "Салон: обработка кожаных сидений кондиционером; тканевых — Pol Star (при наличии)",
-            "Салон: консервация резиновых уплотнителей",
-            "Багажник: мойка резинового коврика + чернение (при наличии)",
-            "Багажник: уборка пылесосом",
-            "Багажник: влажная уборка пластика с очистителем",
-            "Багажник: обработка пластика полиролью с антистатическим эффектом",
-        ],
-        note_items=[
-            "Цены в прайс-листе являются базовыми и могут быть увеличены от 20% до 50% в зависимости от степени загрязнения автомобиля и трудозатрат.",
-            "Время выполнения данной услуги составляет до 6 часов (ориентировочно).",
-            "Услуги осуществляются профессиональной автохимией премиум класса.",
-            "Третий ряд сидений оплачивается дополнительно — 1 000 руб.",
-        ],
-        sign="Доверьте свой автомобиль профессионалам!",
-    ))
-    parts.append(section(
-        "wash-detail-2", "МОЙКА", "DETAILING МОЙКА-2",
-        class_table(list(zip(VEH4, ["11700", "12100", "13000", "14500"]))),
-        intro="Предпродажная мойка.",
-        works=[
-            "Чистка дисков (4 шт.) и насадок глушителя",
-            "Чистка дверных петель",
-            "Бесконтактная мойка кузова и арок с нанесением эмульсии",
-            "Удаление битумных пятен и металлических вкраплений с кузова",
-            "Ручная мойка шампунем и широкопористой губкой",
-            "Сушка кузова автомобиля турбосушкой и микрофибровым полотенцем",
-            "Покрытие кузова консервирующим полимером премиум-класс Protector WAX — защита кузова от пыли и грязи, глубокий блеск",
-            "Консервация наружного пластика (чернение)",
-            "Чистка, консервация (чернение) шин",
-            "Консервация резиновых уплотнителей",
-            "Салон: мойка резиновых ковриков + чернение / пылесос ворсовых (4 шт.)",
-            "Салон: чистка педального блока + чернение",
-            "Салон: уборка салона пылесосом",
-            "Салон: чистка стёкол изнутри с очистителем",
-            "Салон: влажная уборка салона с очистителем",
-            "Салон: обработка пластика полиролью с антистатическим эффектом",
-            "Салон: обработка кожаных сидений кондиционером; тканевых сидений — Pol Star",
-            "Багажник: мойка резинового коврика + чернение (при наличии)",
-            "Багажник: уборка пылесосом",
-            "Багажник: влажная уборка пластика с очистителем",
-            "Багажник: обработка пластика полиролью с антистатическим эффектом",
-        ],
-        note_items=[
-            "Цены в прайс-листе являются базовыми и могут быть увеличены от 20% до 50% в зависимости от степени загрязнения автомобиля и трудозатрат.",
-            "Третий ряд сидений оплачивается дополнительно — 1 000 руб.",
-            "Время выполнения данной услуги составляет до 10 часов (ориентировочно).",
-            "Услуги осуществляются профессиональной автохимией премиум класса.",
-        ],
-        sign="Доверьте свой автомобиль профессионалам!",
-    ))
-    parts.append(section(
-        "interior-full", "САЛОН", "ХИМЧИСТКА С РАЗБОРОМ",
-        class_table(list(zip(VEH3, ["от 33000", "от 35000", "от 37000"]))),
-        intro="Полная химчистка салона автомобиля.",
-        works=[
-            "Наружная двухфазная мойка",
-            "Дверные петли",
-            "Потолок",
-            "Стойки",
-            "Ремни безопасности",
-            "Дверные облицовки",
-            "Торпедо",
-            "Сиденья (демонтаж и монтаж)",
-            "Пол",
-            "Багажник",
-            "Полироль внутреннего пластика",
-            "Кондиционер кожи",
-            "Озонирование салона (удаление неприятных запахов, бактерий и микроорганизмов) — 1 час",
-        ],
-        note_items=["Стоимость работы со светлым салоном может быть увеличена до 20%."],
-    ))
-    parts.append(section(
-        "interior-parts", "САЛОН", "ХИМЧИСТКА ПО ЭЛЕМЕНТАМ",
-        matrix([
-            ("Химчистка ворсовых ковриков (1 шт.)", ["500", "500", "500"]),
-            ("Химчистка стойки (1 шт.)", ["300", "350", "350"]),
-            ("Химчистка потолка", ["5000", "6000", "7000"]),
-            ("Химчистка передней панели (торпедо)", ["3500", "3700", "3800"]),
-            ("Химчистка напольного покрытия автомобиля", ["6000", "7000", "8500"]),
-            ("Химчистка дверной облицовки (1 шт.)", ["600", "600", "700"]),
-            ("Химчистка сиденья (ткань) (1 шт.)", ["3000", "3200", "3200"]),
-            ("Химчистка задний диван (ткань)", ["6000", "6400", "6400"]),
-            ("Химчистка сиденья (кожа) (1 шт.)", ["2200", "2300", "2300"]),
-            ("Химчистка задний диван (кожа)", ["4400", "4600", "4600"]),
-            ("Химчистка багажника + полироль пластика", ["3000", "3500", "3500"]),
-            ("Химчистка ремня безопасности (1 шт.)", ["800", "800", "800"]),
-            ("Химчистка руля", ["700", "700", "700"]),
-        ], VEH3),
-        note_items=["Цены в прайс-листе являются базовыми и могут быть увеличены от 20% до 50% в зависимости от степени загрязнения автомобиля и трудозатрат."],
-        sign="Tuning studia КЛЯКСА. Ваш автомобиль обретает будущее!",
-    ))
-    parts.append(section(
-        "extras-salon", "ДОПОЛНИТЕЛЬНО", "САЛОН",
-        matrix(D.EXTRAS_SALON, VEH3),
-    ))
-    parts.append(section(
-        "extras-body", "ДОПОЛНИТЕЛЬНО", "КУЗОВ",
-        matrix(D.EXTRAS_BODY, VEH3),
-        note_items=["Цены в прайс-листе являются базовыми и могут быть увеличены от 20% до 50% в зависимости от степени загрязнения автомобиля и трудозатрат."],
-    ))
+    parts: list[str] = [build_intro()]
 
-    detailing = [
-        ("polish", "ПОЛИРОВКА", [
-            ("Восстановительная полировка кузова", ["28000 - 30000", "35000", "37000 - 40000"]),
-            ("Восстановительная полировка одного элемента кузова", ["от 2500", "от 2500", "от 2500"]),
-            ("Частичная полировка одного элемента", ["от 1500", "от 1500", "от 1500"]),
-            ("Полировка фар (2 шт.)", ["от 2000", "от 2000", "от 2000"]),
-        ]),
-        ("protect", "ЗАЩИТА КУЗОВА", [
-            ("Покрытие кузова Q2 ONE EVO GYEON (12 мес.) (жидкое стекло)", ["14000", "15000", "16000"]),
-            ("Покрытие кузова Detail Basic Coat (12 мес.) (керамика)", ["13000", "14000", "15000"]),
-            ("Покрытие кузова Detail Final Coat (12 мес.) (жидкое стекло)", ["13000", "14000", "15000"]),
-            ("«Американский восковой пирог». Многослойная восковая защита ЛКП кузова (Chemical Guys, Dodo Juice): глейз — 1 слой, силант — 1 слой, воск — 1 слой", ["10000", "12000", "14000"]),
-        ]),
-        ("glass", "СТЕКЛО", [
-            ("Водоотталкивающее покрытие для стекла Aquapel («Антидождь», передняя полусфера + зеркала, действует до 10 месяцев)", ["4000", "4000", "4000"]),
-            ("Гидрофобное покрытие для стекла Chemical Russian Rain («Антидождь», действует до 6 месяцев) — передняя полусфера", ["1000", "1000", "1000"]),
-            ("Гидрофобное покрытие для стекла Chemical Russian Rain — по кругу", ["2000", "2200", "2300"]),
-            ("Защитное покрытие для стекла Ceramic Pro Rain («Антидождь», действует до 12 месяцев) — передняя полусфера", ["3000", "3000", "3000"]),
-            ("Защитное покрытие для стекла Ceramic Pro Rain — по кругу", ["4000", "4300", "4300"]),
-        ]),
-        ("leather", "КОЖА", [
-            ("Консервация кожаных сидений кварцевой керамической защитой Gyeon Q2 Leather Shield (4 шт.) (до 12 мес.)", ["5000", "6000", "6000"]),
-            ("Кондиционер кожи от LeTech", ["2000", "2000", "2000"]),
-        ]),
-        ("plastic", "ПЛАСТИК", [
-            ("Чистка внутреннего пластика и консервация антистатическим консервантом Gyeon Q2 Preserve (до 3 мес.)", ["4000", "5000", "5000"]),
-        ]),
-        ("fabric", "ТКАНЬ", [
-            ("Обработка (пропитка) тканевых сидений кварцевой защитой Gyeon Q2 Fabric Coat (4 шт.) (6 мес.)", ["4000", "4500", "4500"]),
-        ]),
-        ("wheels", "РЕЗИНА, ДИСКИ", [
-            ("Покрытие дисков термоустойчивой (до 1000°C) кварцевой керамической защитой Gyeon Q2 Rim (до 9 мес.)", ["2000", "2500", "2500"]),
-            ("Глубокая чистка и покрытие шин кварцевой защитой Gyeon Q2 Tire (до 5 моек)", ["от 1000", "от 1000", "от 1000"]),
-        ]),
-    ]
-    for sid, title, rows in detailing:
-        sign = "Ваш автомобиль может быть новым всегда!" if sid == "wheels" else None
-        parts.append(section(sid, "ДЕТЕЙЛИНГ", title, matrix(rows, VEH3), sign=sign))
+    parts.append(
+        services_panel(
+            "restore",
+            "Реставрация сколов и царапин",
+            "Локальная коррекция ЛКП, восстановление сколов и царапин, полировка кузова и фар.",
+            [
+                ("Реставрация сколов и царапин (элемент)", ot_from("от 1500")),
+                ("Восстановительная полировка одного элемента", ot_from("от 2500")),
+                ("Полировка кузова", ot_from(["28000 - 30000", "35000", "37000 - 40000"])),
+                ("Полировка фар (пара)", ot_from("от 2000")),
+            ],
+            "Локально убираем сколы и царапины, восстанавливаем блеск. Объём и глубина работ — после осмотра элемента.",
+            photo="img/services/restore-services.png",
+        )
+    )
 
-    tint_blocks = [
-        ("Тонирование стёкол", [
-            ("Задняя полусфера", ["от 7200", "от 8400", "от 9600"]),
-            ("Передняя полусфера (светопропускаемость 75%–90%)", ["от 9600", "от 9600", "от 9600"]),
-            ("Передняя полусфера (светопропускаемость 5%–50%)", ["от 7200", "от 8400", "от 8400"]),
-            ("Заднее стекло", ["от 3600", "от 4800", "от 4800"]),
-            ("Боковое заднее стекло (1 шт.)", ["от 1800", "от 2400", "от 2400"]),
-            ("Лобовое стекло (светопропускаемость 75%–90%)", ["от 6000", "от 6000", "от 6000"]),
-            ("Лобовое стекло (светопропускаемость 5%–50%)", ["от 4800", "от 4800", "от 6000"]),
-            ("Переднее боковое стекло (1 шт.) (светопропускаемость 75%–90%)", ["от 2000", "от 2760", "от 2760"]),
-            ("Переднее боковое стекло (1 шт.) (светопропускаемость 5%–50%)", ["от 1800", "от 2400", "от 2400"]),
-            ("Форточка (1 шт.)", ["от 1800", "от 1800", "от 1800"]),
-        ]),
-        ("Хамелеон", [
-            ("Передняя полусфера", ["10000", "10000", "11000"]),
-            ("Лобовое стекло", ["6000", "6000", "7000"]),
-            ("Боковое стекло", ["2000", "2000", "3000"]),
-        ]),
-        ("Растонирование", [
-            ("Заднее стекло", ["от 2700", "от 2700", "от 2700"]),
-            ("Лобовое стекло", ["от 2200", "от 2200", "от 2200"]),
-            ("Боковое стекло (1 шт.)", ["от 700", "от 700", "от 700"]),
-            ("Форточка (1 шт.)", ["от 400", "от 400", "от 400"]),
-        ]),
-        ("Фары", [
-            ("Тонирование передней фары (пара)", ["от 7000", "от 7000", "от 8000"]),
-            ("Тонирование задней фары (пара)", ["от 7000", "от 7000", "от 8000"]),
-            ("Тонирование туманки (пара)", ["от 2000", "от 2000", "от 2000"]),
-            ("Фотохром задней фары (пара)", ["от 8000", "от 8500", "от 8500"]),
-            ("Фотохром передней фары (пара)", ["от 8000", "от 8500", "от 8500"]),
-        ]),
-    ]
-    tint_inner = []
-    for i, (title, rows) in enumerate(tint_blocks):
-        tint_inner.append(f'  <h3 class="pricelist-sheet-title">{esc(title)}</h3>\n' + matrix(rows, VEH3))
-    parts.append(section(
-        "tint", "ТОНИРОВКА", "ТОНИРОВАНИЕ АВТОМОБИЛЯ",
-        "\n".join(tint_inner),
-        note_items=["Цены в прайс-листе являются базовыми и могут быть увеличены от 20% до 50% в зависимости от степени трудозатрат."],
-        sign="Ваш автомобиль прекрасен!",
-    ))
+    ppf_top = matrix_to_simple(D.PPF_PACKAGES)[:4] + matrix_to_simple(D.PPF_PARTS)[:2]
+    parts.append(
+        services_panel(
+            "wrap-films",
+            "Оклейка кузова всеми видами плёнок",
+            "Полиуретановая бронеплёнка, винил и декоративные решения — пакеты и поэлементно.",
+            ppf_top,
+            "Бронеплёнка, винил и декор: готовые пакеты зон риска или оклейка по деталям. Марка плёнки и сроки — на осмотре.",
+            photo=HOME_TILE_PHOTOS["wrap-films"],
+        )
+    )
 
-    ppf_packages = [
-        ("Оклейка кузова полностью", ["от 225000", "от 235000", "от 250000"]),
-        ("Пакет мини: капот (част.), фары, крылья (част.)", ["20000", "22000", "24000"]),
-        ("Пакет стандарт: крылья, капот, бампер, фары, зеркала", ["78000", "83000", "87000"]),
-        ("Пакет стандарт +: крылья, капот, бампер, зеркала, фары, стойка лобового стекла, полоса на крыше, под ручками", ["90000", "95000", "100000"]),
-        ("Пакет максимум: крылья, капот, бампер, зеркала, фары, стойка лобового стекла, полоса на крыше, проёмы дверей, под ручками, погрузочная зона", ["100000", "110000", "115000"]),
-    ]
-    ppf_parts = [
-        ("Капот полностью", ["от 20000", "от 21000", "от 22000"]),
-        ("Капот (полоса)", ["9000", "10000", "10000"]),
-        ("Передний бампер", ["от 20000", "от 22000", "от 22000"]),
-        ("Фары", ["от 6000", "от 6000", "от 7000"]),
-        ("Передние крылья полностью", ["20000", "22000", "22000"]),
-        ("Передние крылья (частично)", ["6000", "6000", "6000"]),
-        ("Стойка лобового стекла (частично) (1 шт.)", ["3000", "3000", "3000"]),
-        ("Крыша (полоса)", ["8000", "8000", "8000"]),
-        ("Зеркало (1 шт.)", ["от 6000", "от 6000", "от 7000"]),
-        ("Углубления под ручками дверей", ["2000", "2000", "2000"]),
-        ("Туманки", ["от 2000", "от 2000", "от 2000"]),
-        ("Дверь (1 шт.)", ["от 13000", "от 13000", "от 14000"]),
-        ("Крыша полностью", ["22000", "25000", "25000"]),
-        ("Порог (наружный) (1 шт.)", ["от 7000", "от 8000", "от 8000"]),
-        ("Дверная стойка (1 шт.)", ["1500", "1500", "1500"]),
-        ("Крышка багажника", ["от 20000", "от 20000", "от 22000"]),
-        ("Задний бампер", ["от 20000", "от 22000", "от 22000"]),
-        ("Заднее крыло (1 шт.)", ["16000", "16000", "18000"]),
-        ("Расширитель крыла (1 шт.)", ["от 5000", "от 5000", "от 6000"]),
-        ("Зона погрузки", ["от 5000", "от 5000", "от 5000"]),
-        ("Проёмы дверей", ["от 6000", "от 6000", "от 6000"]),
-        ("Защита дверных карт (1 шт.)", ["2000", "2000", "2000"]),
-        ("Защита пластиковых порогов (1 шт.)", ["1500", "1500", "1500"]),
-    ]
-    ppf = f'  <h3 class="pricelist-sheet-title">Пакеты</h3>\n{matrix(ppf_packages, VEH3)}  <h3 class="pricelist-sheet-title">Оклейка деталей</h3>\n{matrix(ppf_parts, VEH3)}'
-    parts.append(section(
-        "ppf", "ЗАЩИТА", "АНТИГРАВИЙНАЯ ЗАЩИТА",
-        ppf,
-        note_items=["Цены в прайс-листе являются базовыми и могут быть увеличены от 20% до 50% в зависимости от степени трудозатрат, вида и производителя плёнки."],
-        sign="Ваш автомобиль защищён!",
-    ))
+    parts.append(
+        services_panel(
+            "antichrome",
+            "Антихром",
+            "Оклеиваем хром и декоративный пластик в цвет кузова или в чёрный мат / глянец.",
+            [
+                ("Решётка радиатора", ot_from("от 15000")),
+                ("Молдинги вокруг окон", ot_from("от 18000")),
+                ("Молдинги дверей", ot_from("от 6000")),
+                ("Зеркало (1 шт.)", ot_from("от 3500")),
+            ],
+            "Хром и декоративный пластик — в чёрный мат/глянец или в цвет кузова. Список элементов согласуем до начала.",
+            photo="img/services/antichrome.jpg",
+        )
+    )
 
-    anti = [
-        ("Решетка радиатора", "от 15000"),
-        ("Молдинги вокруг окон", "от 18000"),
-        ("Молдинги багажника", "от 6000"),
-        ("Молдинги дверей", "от 6000"),
-        ("Молдинги бамперов", "от 8000"),
-        ("Окантовка противотуманных фонарей", "от 8000"),
-        ("Диффузор задний", "от 15000"),
-        ("Диффузор передний", "от 12000"),
-        ("Рейлинги", "от 18000"),
-        ("Ручка двери (1 шт.)", "от 3000"),
-        ("Зеркало (1 шт.)", "от 3500"),
-        ("«Жабры» на крыле", "от 6000"),
-    ]
-    parts.append(section(
-        "antichrome", "ТЮНИНГ", "АНТИХРОМ",
-        two_col(anti),
-        note_items=["Цены в прайс-листе являются базовыми и могут быть увеличены в зависимости от степени трудозатрат и производителя плёнки."],
-        sign="Ваш автомобиль преображён!",
-    ))
-    parts.append(section(
-        "sound", "САЛОН", "ШУМОИЗОЛЯЦИЯ",
-        matrix([
-            ("Полная шумоизоляция", ["110000", "125000", "140000"]),
-            ("Шумоизоляция дверей (5 шт.)", ["30000", "35000", "35000"]),
-            ("Шумоизоляция пола и колёсных арок", ["45000", "50000", "55000"]),
-            ("Шумоизоляция подкрылков (4 шт.)", ["25000", "30000", "30000"]),
-            ("Шумоизоляция багажника", ["25000", "30000", "35000"]),
-            ("Шумоизоляция крыши", ["35000", "40000", "45000"]),
-            ("Шумоизоляция торпеды", ["45000", "45000", "45000"]),
-        ], VEH3),
-        note_items=["Цены в прайс-листе являются базовыми и могут быть увеличены от 20% до 50% в зависимости от трудозатрат."],
-        sign="Ваш автомобиль преображён!",
-    ))
-    return "<!-- PRICELIST_BEGIN -->\n" + "\n".join(parts) + "<!-- PRICELIST_END -->"
+    parts.append(
+        services_panel(
+            "salon-wrap",
+            "Оклейка салона",
+            "Защитная и декоративная плёнка на элементах интерьера.",
+            [
+                ("Защита дверных карт (1 шт.)", ot_from("2000")),
+                ("Защита пластиковых порогов (1 шт.)", ot_from("1500")),
+                ("Оклейка элементов интерьера", "После осмотра"),
+            ],
+            "Защищаем торпедо, пороги и дверные карты от царапин и следов. Нестандартные зоны — по согласованной схеме.",
+            photo="img/services/salon-wrap.png",
+        )
+    )
+
+    parts.append(
+        services_panel(
+            "windshield-ppf",
+            "Защита лобового стекла полиуретановой плёнкой",
+            "Прозрачная PPF на лобовое и смежные зоны — защита от сколов и трещин.",
+            [
+                ("Лобовое стекло", ot_from("от 4800")),
+                ("Стойка лобового стекла (1 шт.)", ot_from("3000")),
+                ("Тонировка лобового (светопропускаемость 75–90%)", ot_from("от 6000")),
+            ],
+            "Прозрачная PPF на лобовое и примыкающие зоны — меньше сколов от камней. Установка в чистом боксе.",
+            photo="img/services/windshield.png",
+        )
+    )
+
+    parts.append(
+        services_panel(
+            "screen-wrap",
+            "Защита экранов статической плёнкой",
+            "Статическая плёнка на мультимедиа и дисплеи — защита от царапин и пыли.",
+            [
+                ("Защита экранов статической плёнкой", "После осмотра"),
+            ],
+            "Статическая плёнка на дисплеи: без клея, снимается без следов. Расклад по экранам — после осмотра салона.",
+            photo="img/services/screen-wrap.png",
+        )
+    )
+
+    interior_pick = matrix_to_simple(D.INTERIOR_ELEMENTS)[:3]
+    parts.append(
+        services_panel(
+            "interior",
+            "Химчистка салона",
+            "Полная химчистка с разбором и чистка салона по элементам.",
+            [
+                ("Химчистка салона с разбором", ot_from("от 33000")),
+                *interior_pick,
+            ],
+            "Чистка с разбором или по элементам: ткань, кожа, потолок, багажник. Цена зависит от загрязнения и типа обивки.",
+            photo=HOME_TILE_PHOTOS["interior"],
+        )
+    )
+
+    parts.append(
+        services_panel(
+            "engine",
+            "Химчистка двигателя",
+            "Чистка ДВС и подкапотного пространства, защитная консервация.",
+            [
+                ("Химчистка ДВС и моторного отсека", ot_from(D.EXTRAS_BODY[0][1])),
+                ("Чистка насадки глушителя", ot_from("100")),
+            ],
+            "Безопасная мойка ДВС и подкапотного пространства, консервация после сушки. Степень загрязнения влияет на время и цену.",
+            photo="img/services/engine.jpg",
+        )
+    )
+
+    parts.append(
+        services_panel(
+            "sound",
+            "Шумоизоляция",
+            "Комплексная или точечная шумоизоляция салона, дверей, пола и багажника.",
+            matrix_to_simple([
+                ("Полная шумоизоляция", ["110000", "125000", "140000"]),
+                ("Шумоизоляция дверей (5 шт.)", ["30000", "35000", "35000"]),
+                ("Шумоизоляция пола и арок", ["45000", "50000", "55000"]),
+                ("Шумоизоляция багажника", ["25000", "30000", "35000"]),
+            ]),
+            "Маты на двери, пол, арки или весь салон — меньше шума с дороги. Объём уточняем на осмотре и вибро-тесте.",
+            photo="img/services/sound.jpg",
+        )
+    )
+
+    parts.append(
+        services_panel(
+            "tint",
+            "Тонировка",
+            "Тонировочные и атермальные плёнки, хамелеон, тонировка фар.",
+            matrix_to_simple([
+                ("Задняя полусфера", ["от 7200", "от 8400", "от 9600"]),
+                ("Передняя полусфера", ["от 9600", "от 9600", "от 9600"]),
+                ("Боковое стекло (1 шт.)", ["от 1800", "от 2400", "от 2400"]),
+                ("Тонирование фары (пара)", ["от 7000", "от 7000", "от 8000"]),
+            ]),
+            "Тонировочные и атермальные плёнки, в т.ч. лобовое в разрешённых пределах. Плотность и юридичность — подбираем вместе.",
+            photo="img/services/tint.jpg",
+        )
+    )
+
+    parts.append(
+        services_panel(
+            "wash",
+            "Детейлинг мойка",
+            "Наружная, комплексная и предпродажная мойка по детейлинг-регламенту.",
+            [
+                ("Наружная мойка кузова", ot_from("1600")),
+                ("Комплексная мойка", ot_from("3200")),
+                ("Detailing мойка-1", ot_from("9000")),
+                ("Detailing мойка-2", ot_from("11700")),
+            ],
+            "От экспресс-мойки до двухфазной с салоном по детейлинг-регламенту. Состав работ зависит от выбранного пакета.",
+            photo=HOME_TILE_PHOTOS["wash"],
+        )
+    )
+
+    return "<!-- PRICELIST_BEGIN -->\n" + "\n".join(parts) + "\n<!-- PRICELIST_END -->"
+
+
+def patch_styles() -> None:
+    block = """
+.services-intro{max-width:640px;margin-bottom:8px}
+.services-panel-section{padding-top:20px;padding-bottom:20px;scroll-margin-top:96px}
+.services-panel-section:first-of-type{padding-top:12px}
+.services-panel{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,42%);
+  gap:40px 48px;align-items:stretch;
+  padding:36px 40px;border:1px solid rgba(255,255,255,.09);
+  border-radius:16px;background:rgba(255,255,255,.02);
+}
+.services-panel-title{
+  margin:0 0 14px;font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.03em;line-height:1.2;color:#fff;
+}
+.services-panel-lead{margin:0 0 22px;font-size:14px;line-height:1.55;color:#9a9a94;max-width:52ch}
+.services-panel-prices{list-style:none;margin:0 0 28px;padding:0}
+.services-panel-row{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);
+}
+.services-panel-row:last-child{border-bottom:0}
+.services-panel-name{font-size:14px;line-height:1.45;color:#e2e0d8;flex:1;min-width:0}
+.services-panel-price{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums}
+.button.button--outline{
+  background:transparent;color:var(--accent);
+  border:1px solid var(--accent);border-radius:999px;
+  padding:12px 26px;font-size:13px;letter-spacing:.04em;font-weight:700;
+}
+.button.button--outline:hover{background:rgba(var(--accent-rgb),.1);color:var(--accent-hover)}
+.services-panel-more{margin:0}
+.services-panel-more summary{
+  list-style:none;cursor:pointer;display:inline-block;
+}
+.services-panel-more summary::-webkit-details-marker{display:none}
+.services-panel-more summary::marker{content:""}
+.services-panel-more[open] summary{
+  background:rgba(var(--accent-rgb),.1);color:var(--accent-hover);
+}
+.services-panel-detail{
+  margin:14px 0 0;padding:14px 16px;max-width:52ch;
+  font-size:13px;line-height:1.55;color:#b8b6ae;
+  border-left:2px solid var(--accent-soft);
+}
+.services-panel-media{align-self:stretch;min-height:260px}
+.services-panel-media img{
+  width:100%;height:100%;min-height:260px;max-height:520px;
+  object-fit:cover;border-radius:14px;display:block;
+}
+.services-panel-media--subphotos{display:flex;flex-direction:column;gap:12px;min-height:auto}
+.services-panel-subphoto{margin:0;display:flex;flex-direction:column;flex:1;min-height:0}
+.services-panel-media--subphotos .services-panel-subphoto img{
+  flex:1;width:100%;min-height:120px;max-height:170px;object-fit:cover;border-radius:12px;
+}
+.services-panel-subphoto figcaption{
+  margin:6px 0 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:#9a9a94;
+}
+.pricelist-intro{padding-top:28px;padding-bottom:4px}
+@media(max-width:860px){
+  .services-panel{grid-template-columns:1fr;padding:28px 22px;gap:24px}
+  .services-panel-media{order:-1;min-height:200px}
+  .services-panel-media img{min-height:220px;max-height:320px}
+  .services-panel-media--subphotos .services-panel-subphoto img{min-height:100px;max-height:140px}
+  .services-panel-row{flex-direction:column;gap:6px;align-items:flex-start}
+  .services-panel-price{align-self:flex-start}
+}
+"""
+    css = STYLES.read_text(encoding="utf-8")
+    marker = "/* KLYSAKA_SERVICE_CATALOG */"
+    if marker in css:
+        css = re.sub(
+            re.escape(marker) + r".*?" + re.escape(marker) + r"_END",
+            marker + block + marker + "_END",
+            css,
+            flags=re.S,
+        )
+    else:
+        css = css.rstrip() + f"\n{marker}{block}{marker}_END\n"
+    STYLES.write_text(css, encoding="utf-8")
 
 
 def main() -> None:
@@ -440,8 +386,9 @@ def main() -> None:
     a = html_text.index("<!-- PRICELIST_BEGIN -->")
     b = html_text.index("<!-- PRICELIST_END -->") + len("<!-- PRICELIST_END -->")
     html_text = html_text[:a] + build() + html_text[b:]
-    html_text = re.sub(r'href="styles\.css\?v=\d+"', 'href="styles.css?v=87"', html_text, count=1)
+    html_text = re.sub(r'href="styles\.css\?v=\d+"', 'href="styles.css?v=93"', html_text, count=1)
     SERVICES.write_text(html_text, encoding="utf-8")
+    patch_styles()
     print("ok")
 
 
