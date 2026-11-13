@@ -1392,6 +1392,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 
 .hero--facet-lab .heroimg{opacity:.9}
+.hero--facet-lab .hero-brand-logo,.hero--facet-lab .hero-mark-logo{display:none!important}
 .hero--facet-lab .hero-heading--logo .hero-eyebrow-city{
   margin-top:clamp(20px,3.5vw,42px);margin-bottom:2px;
 }
