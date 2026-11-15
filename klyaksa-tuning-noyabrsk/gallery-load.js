@@ -16,7 +16,17 @@
   "img/works/incoming/klyaksa/12-skyline-custom.jpg",
   "img/works/incoming/klyaksa/13-studio-wide.jpg",
   "img/works/incoming/klyaksa/14-bay-curtains.jpg",
-  "img/works/incoming/klyaksa/15-audi-wash-bay.jpg"
+  "img/works/incoming/klyaksa/15-audi-wash-bay.jpg",
+  "img/works/incoming/klyaksa/16-lexus-wash.png",
+  "img/works/incoming/klyaksa/17-bmw-protection.jpg",
+  "img/works/incoming/klyaksa/18-interior-seats.jpg",
+  "img/works/incoming/klyaksa/19-gac-front.jpg",
+  "img/works/incoming/klyaksa/20-engine-clean.jpg",
+  "img/works/incoming/klyaksa/21-seat-dryclean.jpg",
+  "img/works/incoming/klyaksa/22-door-panel.jpg",
+  "img/works/incoming/klyaksa/23-jeep-ppf.jpg",
+  "img/works/incoming/klyaksa/24-headlight-ppf.jpg",
+  "img/works/incoming/klyaksa/25-mustang-yellow.jpg"
 ];
   var manifestUrl = 'data/gallery-manifest.json';
 
