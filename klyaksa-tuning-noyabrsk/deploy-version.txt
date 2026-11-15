@@ -1,3 +1,3 @@
 prod=https://melissa-tech.ru/klyaksa-tuning-noyabrsk/
 deploy=git-push-timeweb-hook
-deploy-trigger=klyaksa-timeweb-20261108T1947Z
+deploy-trigger=klyaksa-content-footer-gallery-20261115T0525Z
