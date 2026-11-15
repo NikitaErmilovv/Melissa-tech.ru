@@ -3,7 +3,7 @@ import { folderRelFor, pushLog, withDb } from "./db";
 import { savePreparedFile } from "./images";
 import { safeAbs, uid } from "./paths";
 import { countPhrase, DEFAULT_TEMPLATES } from "./text";
-import type { PrintStatus, ProductKind, TemplateKey, Templates } from "./types";
+import type { FileSource, PrintStatus, ProductKind, TemplateKey, Templates } from "./types";
 
 const PRINT: PrintStatus[] = ["new", "printing", "done", "defect", "cancelled"];
 const PRINT_LABEL: Record<PrintStatus, string> = {
@@ -73,7 +73,7 @@ export async function removeOrder(id: string) {
   });
 }
 
-export async function addUploads(orderId: string, files: Buffer[]) {
+export async function addUploads(orderId: string, files: Buffer[], source: FileSource = "manual") {
   let saved = 0;
   let skipped = 0;
   let squared = 0;
@@ -81,7 +81,7 @@ export async function addUploads(orderId: string, files: Buffer[]) {
     const order = db.orders.find((item) => item.id === orderId);
     if (!order) throw new Error("заказ не найден");
     for (const bytes of files) {
-      const result = await savePreparedFile(order, bytes, "manual");
+      const result = await savePreparedFile(order, bytes, source);
       if ("error" in result.saved) skipped += 1;
       else {
         saved += 1;

@@ -4,7 +4,7 @@ export type ProductKind = "sticker" | "photo";
 
 export type IntakeMode = "choice" | "photos" | "link";
 
-export type FileSource = "chat" | "yandex" | "gdrive" | "manual" | "demo";
+export type FileSource = "chat" | "yandex" | "gdrive" | "manual" | "demo" | "site";
 
 export type TemplateKey =
   | "greeting"
@@ -19,7 +19,8 @@ export type TemplateKey =
   | "replaceAsk"
   | "replaceLocked"
   | "replaceClosed"
-  | "unknownArticle";
+  | "unknownArticle"
+  | "siteOnly";
 
 export type Templates = Record<TemplateKey, string>;
 
@@ -88,6 +89,8 @@ export interface Order {
   files: OrderFile[];
   log: OrderLog[];
   pendingDownloads: PendingDownload[];
+  /** Публичная ссылка для загрузки фото покупателем. */
+  intakeToken: string;
 }
 
 export interface FbsOrder {

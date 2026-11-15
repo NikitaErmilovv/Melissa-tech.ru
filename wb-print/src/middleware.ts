@@ -27,14 +27,19 @@ function authorized(request: NextRequest, expected: { user?: string; password: s
   }
 }
 
+function isPublicPath(pathname: string): boolean {
+  return pathname.startsWith("/upload") || pathname.startsWith("/api/intake");
+}
+
 export function middleware(request: NextRequest) {
+  if (isPublicPath(request.nextUrl.pathname)) return NextResponse.next();
   const expected = panelAuth();
   if (!expected.password) return NextResponse.next();
   if (authorized(request, expected as { user?: string; password: string })) return NextResponse.next();
 
-  return new NextResponse("Нужен пароль панели", {
+  return new NextResponse("Unauthorized", {
     status: 401,
-    headers: { "WWW-Authenticate": 'Basic realm="Печатный стол", charset="UTF-8"' },
+    headers: { "WWW-Authenticate": 'Basic realm="wb-print"' },
   });
 }
 

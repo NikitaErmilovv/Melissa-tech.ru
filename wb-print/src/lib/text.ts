@@ -1,3 +1,4 @@
+import { intakeLink } from "./intake-token";
 import type { Order, ProductKind, TemplateKey, Templates } from "./types";
 
 const ONES_F = ["", "одну", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"];
@@ -37,7 +38,7 @@ export const TEMPLATE_META: { key: TemplateKey; title: string; hint: string }[] 
   {
     key: "greeting",
     title: "Первое сообщение, фото",
-    hint: "Только печать фотографий: в чат или ссылкой. {{order}} {{article}} {{needText}}",
+    hint: "Покупатель грузит фото на сайте. {{order}} {{article}} {{needText}} {{uploadLink}}",
   },
   {
     key: "greetingSticker",
@@ -99,30 +100,42 @@ export const TEMPLATE_META: { key: TemplateKey; title: string; hint: string }[] 
     title: "Артикул ещё не заведён",
     hint: "Если для nmId или артикула нет правила. {{order}} {{article}}",
   },
+  {
+    key: "siteOnly",
+    title: "Фото только на сайте",
+    hint: "Если покупатель шлёт файл или ссылку в чат WB. {{order}} {{uploadLink}}",
+  },
 ];
 
 export const DEFAULT_TEMPLATES: Templates = {
   greeting: `Здравствуйте! Заказ Wildberries №{{order}} — «{{article}}».
 Нужно {{needText}}.
 
-Пришлите, пожалуйста, фотографии в этот чат или ссылкой на диск с фотографиями. Доступ по ссылке должен быть открытым.`,
-  askPhotos: `Заказ №{{order}}. Жду {{needText}} — в чат или ссылкой на диск с открытым доступом.`,
-  askLink: `Заказ №{{order}}. Пришлите ссылку на диск с фотографиями. Доступ по ссылке должен быть открытым.`,
-  diskSaved: `Заказ №{{order}}. Ссылку получил, скачиваю фото. Если диск закрыт — откройте доступ или пришлите файлы в чат.`,
+Загрузите, пожалуйста, фото на нашем сайте по вашей ссылке (номер заказа подставится сам):
+{{uploadLink}}`,
+  askPhotos: `Заказ №{{order}}. Жду {{needText}} на сайте: {{uploadLink}}`,
+  askLink: `Заказ №{{order}}. Ссылку на диск можно указать на странице загрузки: {{uploadLink}}`,
+  diskSaved: `Заказ №{{order}}. Ссылку с сайта получил, скачиваю фото.`,
   greetingSticker: `Здравствуйте! Заказ Wildberries №{{order}} — «{{article}}».
 
-Пришлите, пожалуйста, {{needText}}, {{which}} хотели бы напечатать.
-Лучше сразу квадратные. Если фотография будет не квадратной, обрежу квадрат с левого верхнего угла — по самой большой стороне, которая помещается.`,
-  stickerNoLink: `Заказ №{{order}}. Для стикеров ссылку не принимаю. Пришлите квадратные фотографии прямо в этот чат.`,
-  progress: `Заказ №{{order}}. Принял {{got}} из {{need}}. Ещё нужно {{leftText}}.`,
-  reminder: `Заказ №{{order}}: уже {{got}} из {{need}}. Не хватает {{leftText}}.`,
+Нужно {{needText}}. Загрузите, пожалуйста, {{which}} хотели бы напечатать, на сайте по ссылке:
+{{uploadLink}}
+
+Лучше сразу квадратные. Если фотография будет не квадратной, обрежу квадрат с левого верхнего угла.`,
+  stickerNoLink: `Заказ №{{order}}. Для стикеров грузите файлы на сайте, не в чат: {{uploadLink}}`,
+  progress: `Заказ №{{order}}. Принял {{got}} из {{need}}. Ещё нужно {{leftText}}. Догрузить: {{uploadLink}}`,
+  reminder: `Заказ №{{order}}: уже {{got}} из {{need}}. Не хватает {{leftText}}.
+
+Ссылка для загрузки:
+{{uploadLink}}`,
   complete: `Заказ №{{order}}. Всё в порядке, всё принято ({{got}} из {{need}}). {{acceptedLine}}
 
 Замена в течение 30 минут: напишите «замена» и пришлите файлы заново.`,
-  replaceAsk: `Заказ №{{order}}. Прежние фотографии убрал. Пришлите заново {{needText}}.{{squareLine}}`,
+  replaceAsk: `Заказ №{{order}}. Прежние фотографии убрал. Загрузите заново {{needText}} на сайте: {{uploadLink}}{{squareLine}}`,
   replaceLocked: `Заказ №{{order}}. Фотографии уже приняты. Чтобы заменить их, в течение 30 минут напишите «замена», затем пришлите новые.`,
   replaceClosed: `Заказ №{{order}}. Фотографии уже в печати. Время на замену вышло, новые файлы не принимаю.`,
   unknownArticle: `Заказ №{{order}} вижу. Артикул «{{article}}» ещё не заведён, поэтому точное число файлов не знаю. Напишите числом, сколько нужно, или дождитесь, пока мы уточним.`,
+  siteOnly: `Заказ №{{order}}. Фото и ссылки в чат не принимаем — только на сайте: {{uploadLink}}`,
 };
 
 const STOCK_TEMPLATES: Partial<Record<TemplateKey, string[]>> = {
@@ -147,7 +160,8 @@ const LEGACY_TEMPLATE_MARKERS: Partial<Record<TemplateKey, RegExp[]>> = {
     /Напишите «ссылка»/i,
     /Яндекс/i,
     /Google/i,
-    /Пришлите фотографии прямо в этот чат, или отправьте ссылку/i,
+    /Пришлите фотографии прямо в этот чат/i,
+    /в этот чат или ссылкой на диск/i,
   ],
   askPhotos: [/Яндекс/i, /Google/i, /несколькими сообщениями: каждое фото/i],
   askLink: [/Яндекс/i, /Google/i],
@@ -219,6 +233,7 @@ export function orderVars(order: Order): Record<string, string | number> {
     leftText: countPhrase(left, kind),
     which: need % 10 === 1 && need % 100 !== 11 ? "которую" : "которые",
     acceptedLine,
+    uploadLink: intakeLink(order),
     squareLine:
       kind === "sticker"
         ? "\nЛучше сразу квадратные. Если фотография будет не квадратной, обрежу квадрат с левого верхнего угла."

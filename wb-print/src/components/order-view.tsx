@@ -95,6 +95,14 @@ export function OrderView({ id }: { id: string }) {
               {order.articleTitle}
               {order.clientName ? ` · ${order.clientName}` : ""}
             </p>
+            {order.source === "wb" && order.intakeToken ? (
+              <p className="mt-1 text-xs text-muted-foreground">
+                Страница загрузки для покупателя:{" "}
+                <a className="underline" href={`/upload/${encodeURIComponent(order.intakeToken)}`} target="_blank" rel="noreferrer">
+                  открыть
+                </a>
+              </p>
+            ) : null}
           </div>
           <div className="flex flex-wrap gap-2">
             <a className={buttonVariants({ variant: "outline", className: "h-10" })} href={`/api/orders/${order.id}/zip`}>

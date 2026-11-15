@@ -3,6 +3,7 @@ import path from "path";
 import { saveOrderFile } from "./images";
 import { dataRoot, ensureDir } from "./paths";
 import { demoPhoto } from "./png";
+import { ensureIntakeToken } from "./intake-token";
 import { templatesWithDefaults } from "./text";
 import { dayKey } from "./time";
 import type { Article, Database, Order, OrderLog, ProductKind, Settings } from "./types";
@@ -98,6 +99,7 @@ function blankOrder(fields: Pick<Order, "id" | "wbOrderId" | "vendorCode" | "art
     files: [],
     log: [],
     pendingDownloads: [],
+    intakeToken: "",
     ...fields,
   };
 }
@@ -271,6 +273,8 @@ function normalize(db: Database): Database {
     }
     if (typeof order.archivedAt !== "string") order.archivedAt = order.printStatus === "done" ? order.updatedAt || null : null;
     if (order.intakeMode === "choice") order.intakeMode = "photos";
+    order.intakeToken ??= "";
+    ensureIntakeToken(order);
   }
   return db;
 }

@@ -3,8 +3,8 @@ import { folderRelFor, pushLog, readDb, seenEvent, withDb } from "./db";
 import { pullPublicDisk } from "./disks";
 import { savePreparedFile } from "./images";
 import { safeAbs, uid } from "./paths";
+import { ensureIntakeToken } from "./intake-token";
 import {
-  buyerIntent,
   diskUrlFromText,
   fill,
   orderVars,
@@ -148,6 +148,7 @@ function freshOrder(db: Database, input: IngestInput, text: string): Order {
     files: [],
     log: [],
     pendingDownloads: [],
+    intakeToken: "",
   };
 }
 
@@ -217,9 +218,12 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
       if (article && (created || order.expectedPhotos === 0)) assignArticle(order, article);
     }
     if ((!order.wbOrderId || order.wbOrderId === "без-номера") && digits) order.wbOrderId = digits;
+    ensureIntakeToken(order);
 
+    const chatIntake = input.source === "demo";
     const sticker = order.kind === "sticker";
-    const rawUrl = diskUrlFromText(text);
+    const rawUrl = chatIntake ? diskUrlFromText(text) : null;
+    const chatAttach = (images.length > 0 || Boolean(rawUrl)) && !chatIntake;
     const now = Date.now();
     const wasFull =
       order.expectedPhotos > 0 &&
@@ -244,8 +248,9 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
     let rejected = 0;
     let squared = 0;
     let squareFailed = 0;
+    const ingestImages = chatIntake ? images : [];
     if (accepting) {
-      for (const image of images) {
+      for (const image of ingestImages) {
         const result = await savePreparedFile(order, image.bytes, image.source);
         if ("error" in result.saved) rejected += 1;
         else {
@@ -266,7 +271,7 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
     }
 
     let fetchUrl = "";
-    const url = sticker || !accepting ? "" : rawUrl;
+  const url = chatIntake && !sticker && accepting ? rawUrl : null;
     if (url && url !== order.diskUrl) {
       order.diskUrl = url;
       order.intakeMode = "link";
@@ -275,15 +280,19 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
       fetchUrl = url;
     }
 
-    const intent = buyerIntent(text);
-    if (saved > 0) {
+    if (saved > 0 && chatIntake) {
       order.intakeMode = "photos";
       order.lastReminderAt = null;
-    } else if (!sticker && intent === "photos") order.intakeMode = "photos";
-    else if (!sticker && intent === "link") order.intakeMode = "link";
+    }
 
-    const line = [text, images.length ? `вложений: ${images.length}` : ""].filter(Boolean).join(" · ");
+    const line = [
+      text,
+      images.length ? (chatIntake ? `вложений: ${images.length}` : `в чат вложений: ${images.length} (не принимаем)`) : "",
+    ]
+      .filter(Boolean)
+      .join(" · ");
     if (line) pushLog(order, "in", line);
+    if (chatAttach) pushLog(order, "system", "Файлы и ссылки из чата WB не сохраняем — только через страницу загрузки.");
 
     const replies: string[] = [];
     const stopped = order.printStatus === "cancelled" || order.printStatus === "defect";
@@ -292,7 +301,7 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
       const need = order.expectedPhotos;
       const justDone = need > 0 && gotBefore < need && got >= need && !order.completedNoticeAt;
       if (!accepting) {
-        const ask = images.length > 0 || Boolean(rawUrl) || wantsReplace(text);
+        const ask = chatAttach || (chatIntake && (images.length > 0 || Boolean(rawUrl))) || wantsReplace(text);
         if (ask && !inWindow && order.replaceHintAt !== "closed") {
           replies.push(fill(db.templates.replaceClosed, orderVars(order)));
           order.replaceHintAt = "closed";
@@ -303,26 +312,29 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
       } else if (!order.greetedAt) {
         order.greetedAt = new Date().toISOString();
         if (need === 0) replies.push(fill(db.templates.unknownArticle, orderVars(order)));
-        else if (sticker) {
-          replies.push(fill(db.templates.greetingSticker, orderVars(order)));
-          if (rawUrl) replies.push(fill(db.templates.stickerNoLink, orderVars(order)));
-        } else {
-          replies.push(fill(db.templates.greeting, orderVars(order)));
+        else if (sticker) replies.push(fill(db.templates.greetingSticker, orderVars(order)));
+        else replies.push(fill(db.templates.greeting, orderVars(order)));
+        if (chatIntake) {
+          if (justDone) replies.push(fill(db.templates.complete, orderVars(order)));
+          else if (saved > 0) replies.push(fill(db.templates.progress, orderVars(order)));
+          else if (!sticker && url) replies.push(fill(db.templates.diskSaved, orderVars(order)));
+        } else if (chatAttach) {
+          replies.push(fill(db.templates.siteOnly, orderVars(order)));
         }
-        if (justDone) replies.push(fill(db.templates.complete, orderVars(order)));
-        else if (saved > 0) replies.push(fill(db.templates.progress, orderVars(order)));
-        else if (!sticker && url) replies.push(fill(db.templates.diskSaved, orderVars(order)));
-      } else if (justDone) {
+      } else if (chatIntake && justDone) {
         replies.push(fill(db.templates.complete, orderVars(order)));
       } else if (openedReplace && saved === 0 && !fetchUrl) {
         replies.push(fill(db.templates.replaceAsk, orderVars(order)));
-      } else if (saved > 0) {
+      } else if (chatIntake && saved > 0) {
         replies.push(fill(justDone ? db.templates.complete : db.templates.progress, orderVars(order)));
-      } else if (sticker && rawUrl) {
+      } else if (chatIntake && sticker && rawUrl) {
         replies.push(fill(db.templates.stickerNoLink, orderVars(order)));
-      } else if (!sticker && url) {
+      } else if (chatIntake && !sticker && url) {
         replies.push(fill(db.templates.diskSaved, orderVars(order)));
-      if (justDone) {
+      } else if (chatAttach) {
+        replies.push(fill(db.templates.siteOnly, orderVars(order)));
+      }
+      if (chatIntake && justDone) {
         order.completedNoticeAt = new Date().toISOString();
         order.replacing = false;
         order.replaceHintAt = null;
@@ -384,6 +396,11 @@ export async function attachBytes(orderId: string, bytes: Buffer, source: FileSo
   await withDb(async (db) => {
     const order = db.orders.find((item) => item.id === orderId);
     if (!order) return;
+    if (order.source === "wb") {
+      order.pendingDownloads = [];
+      pushLog(order, "system", "Догрузка из чата WB отключена — только сайт.");
+      return;
+    }
     const accepting = !order.completedNoticeAt || order.replacing || order.files.length < order.expectedPhotos;
     if (!accepting) {
       pushLog(order, "system", "Новое фото из чата не сохранил: набор уже принят, слова «замена» не было.");
