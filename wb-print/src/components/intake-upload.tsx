@@ -1,6 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { previewUrlForFile } from "@/lib/client-preview";
+import { MAX_UPLOAD_BYTES, MAX_UPLOAD_MB } from "@/lib/upload-limits";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -30,10 +32,28 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   const [lightbox, setLightbox] = useState<{ kind: "server" | "local"; index: number } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const localPreviews = useMemo(
-    () => picked.map((file) => ({ file, url: URL.createObjectURL(file) })),
-    [picked],
-  );
+  const [localPreviews, setLocalPreviews] = useState<{ file: File; url: string }[]>([]);
+  const previewGen = useRef(0);
+
+  useEffect(() => {
+    const gen = ++previewGen.current;
+    let alive = true;
+    void (async () => {
+      const rows: { file: File; url: string }[] = [];
+      for (const file of picked) {
+        const url = await previewUrlForFile(file);
+        if (!alive || gen !== previewGen.current) {
+          URL.revokeObjectURL(url);
+          continue;
+        }
+        rows.push({ file, url });
+      }
+      if (alive && gen === previewGen.current) setLocalPreviews(rows);
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [picked]);
 
   useEffect(
     () => () => {
@@ -79,6 +99,9 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
         skipped?: number;
         error?: string;
       };
+      if (res.status === 413) {
+        throw new Error(`Файл слишком большой — до ${MAX_UPLOAD_MB} МБ на одно фото.`);
+      }
       if (!res.ok) throw new Error(data.error || "не удалось загрузить");
       if (data.view) setView(data.view);
       else await refresh(true);
@@ -173,7 +196,9 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
                 onClick={() => fileInputRef.current?.click()}
               >
                 <span className="font-medium">Нажмите, чтобы выбрать фото</span>
-                <span className="text-xs text-muted-foreground">JPEG, PNG, HEIC — любой формат с телефона</span>
+                <span className="text-xs text-muted-foreground">
+                  любой формат, до {MAX_UPLOAD_MB} МБ на фото
+                </span>
               </button>
               <input
                 ref={fileInputRef}
@@ -184,9 +209,18 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
                 onChange={(e) => {
                   const list = e.target.files;
                   if (!list?.length) return;
-                  const next = Array.from(list).filter((f) => f.size > 0);
+                  const all = Array.from(list);
+                  const oversize = all.filter((f) => f.size > MAX_UPLOAD_BYTES);
+                  const next = all.filter((f) => f.size > 0 && f.size <= MAX_UPLOAD_BYTES);
+                  if (oversize.length) {
+                    setError(`Часть файлов больше ${MAX_UPLOAD_MB} МБ — их не добавили.`);
+                  }
                   if (!next.length) {
-                    setError("Файл пустой — выберите другое фото из галереи.");
+                    setError(
+                      oversize.length
+                        ? `Максимум ${MAX_UPLOAD_MB} МБ на фото.`
+                        : "Файл пустой — выберите другое фото из галереи.",
+                    );
                     return;
                   }
                   setPicked((prev) => [...prev, ...next]);
@@ -197,6 +231,7 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
               {picked.length > 0 && (
                 <p className="text-xs text-muted-foreground">
                   Выбрано {picked.length}: {picked.map((f) => f.name || "фото").join(" · ")}
+                  {localPreviews.length < picked.length ? " · готовим превью…" : null}
                 </p>
               )}
               {localPreviews.length > 0 && (

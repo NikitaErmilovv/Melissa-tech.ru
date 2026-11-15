@@ -3,11 +3,22 @@ import path from "path";
 import sharp from "sharp";
 import type { FileSource, Order, OrderFile } from "./types";
 import { ensureDir, safeAbs, uid } from "./paths";
+import { MAX_UPLOAD_BYTES, MAX_UPLOAD_MB } from "./upload-limits";
 
-const MAX_BYTES = 30 * 1024 * 1024;
+const MAX_EDGE = 20_000;
+const SHARP_READ = {
+  failOn: "none" as const,
+  animated: false,
+  limitInputPixels: false,
+  sequentialRead: true,
+};
+
+function sharpIn(bytes: Buffer) {
+  return sharp(bytes, SHARP_READ);
+}
 
 export function sniffImage(buf: Buffer): { ext: string; mime: string } | null {
-  if (buf.length < 12 || buf.length > MAX_BYTES) return null;
+  if (buf.length < 12) return null;
   if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) {
     return { ext: "jpg", mime: "image/jpeg" };
   }
@@ -29,21 +40,34 @@ export function sniffImage(buf: Buffer): { ext: string; mime: string } | null {
 
 /** Любой растровый формат → JPEG с учётом EXIF; на сайте и в ВК всегда показывается превью. */
 export async function normalizeUploadBytes(bytes: Buffer): Promise<Buffer> {
-  if (bytes.length < 12 || bytes.length > MAX_BYTES) throw new Error("размер файла");
+  if (bytes.length < 12) throw new Error("пустой файл");
+  if (bytes.length > MAX_UPLOAD_BYTES) throw new Error(`файл больше ${MAX_UPLOAD_MB} МБ`);
   try {
-    const meta = await sharp(bytes, { failOn: "none", animated: false }).metadata();
+    const meta = await sharpIn(bytes).metadata();
     if (!meta.width || !meta.height) throw new Error("нет изображения");
-    const out = await sharp(bytes, { failOn: "none", animated: false }).rotate().jpeg({ quality: 91 }).toBuffer();
+    const w = meta.width;
+    const h = meta.height;
+    let pipeline = sharpIn(bytes).rotate();
+    if (w > MAX_EDGE || h > MAX_EDGE) {
+      pipeline = pipeline.resize({
+        width: MAX_EDGE,
+        height: MAX_EDGE,
+        fit: "inside",
+        withoutEnlargement: true,
+      });
+    }
+    const out = await pipeline.jpeg({ quality: 91, mozjpeg: true }).toBuffer();
     if (!sniffImage(out)) throw new Error("конвертация");
     return out;
-  } catch {
-    if (sniffImage(bytes)) return bytes;
-    throw new Error("не удалось прочитать фото");
+  } catch (err) {
+    if (sniffImage(bytes) && bytes.length <= MAX_UPLOAD_BYTES) return bytes;
+    const detail = err instanceof Error ? err.message : "";
+    throw new Error(detail || "не удалось прочитать фото");
   }
 }
 
 export async function squareCropTopLeft(bytes: Buffer): Promise<{ bytes: Buffer; cropped: boolean }> {
-  const meta = await sharp(bytes, { failOn: "none", animated: false }).metadata();
+  const meta = await sharpIn(bytes).metadata();
   const width = meta.width ?? 0;
   const height = meta.height ?? 0;
   if (width < 1 || height < 1) throw new Error("нет размера");
@@ -55,7 +79,7 @@ export async function squareCropTopLeft(bytes: Buffer): Promise<{ bytes: Buffer;
   const cropped = visualWidth !== visualHeight;
   if (!cropped && orientation <= 1) return { bytes, cropped: false };
 
-  let pipeline = sharp(bytes, { failOn: "none", animated: false }).rotate();
+  let pipeline = sharpIn(bytes).rotate();
   if (cropped) pipeline = pipeline.extract({ left: 0, top: 0, width: side, height: side });
   const format = meta.format;
   const out =
@@ -126,7 +150,7 @@ export function saveOrderFile(
   return file;
 }
 
-export async function readBodyCap(res: Response, max = MAX_BYTES): Promise<Buffer> {
+export async function readBodyCap(res: Response, max = MAX_UPLOAD_BYTES): Promise<Buffer> {
   const reader = res.body?.getReader();
   if (!reader) return Buffer.alloc(0);
   const chunks: Buffer[] = [];
@@ -137,7 +161,7 @@ export async function readBodyCap(res: Response, max = MAX_BYTES): Promise<Buffe
     total += value.byteLength;
     if (total > max) {
       await reader.cancel();
-      throw new Error("файл больше 30 МБ");
+      throw new Error(`файл больше ${MAX_UPLOAD_MB} МБ`);
     }
     chunks.push(Buffer.from(value));
   }

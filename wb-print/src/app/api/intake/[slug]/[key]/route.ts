@@ -1,8 +1,10 @@
 import { intakeUploadFiles } from "@/lib/intake-actions";
 import { orderByIntakeRoute, publicIntakeView } from "@/lib/intake-token";
 import { fail } from "@/lib/http";
+import { MAX_UPLOAD_BYTES, MAX_UPLOAD_MB } from "@/lib/upload-limits";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 300;
 
 export async function GET(_request: Request, context: { params: Promise<{ slug: string; key: string }> }) {
   try {
@@ -32,7 +34,11 @@ export async function POST(request: Request, context: { params: Promise<{ slug: 
       const key = `${entry.name}:${entry.size}:${entry.lastModified}`;
       if (seen.has(key)) continue;
       seen.add(key);
-      buffers.push(Buffer.from(await entry.arrayBuffer()));
+      const buf = Buffer.from(await entry.arrayBuffer());
+      if (buf.length > MAX_UPLOAD_BYTES) {
+        throw new Error(`одно фото больше ${MAX_UPLOAD_MB} МБ`);
+      }
+      buffers.push(buf);
     }
     if (buffers.length === 0) throw new Error("выберите хотя бы одно фото");
     const result = await intakeUploadFiles(order.id, buffers);
