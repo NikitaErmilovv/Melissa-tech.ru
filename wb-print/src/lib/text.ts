@@ -105,9 +105,9 @@ export const DEFAULT_TEMPLATES: Templates = {
   greeting: `Здравствуйте! Заказ Wildberries №{{order}} — «{{article}}».
 Нужно {{needText}}.
 
-Пришлите фотографии прямо в этот чат, или отправьте ссылку на диск с фотографиями. Диск должен быть с открытым доступом.`,
-  askPhotos: `Заказ №{{order}}. Жду {{needText}} в этом чате — можно несколькими сообщениями.`,
-  askLink: `Заказ №{{order}}. Жду ссылку на Яндекс Диск или Google Диск с открытым доступом.`,
+Пришлите, пожалуйста, фотографии в этот чат или ссылкой на диск с фотографиями. Доступ по ссылке должен быть открытым.`,
+  askPhotos: `Заказ №{{order}}. Жду {{needText}} — в чат или ссылкой на диск с открытым доступом.`,
+  askLink: `Заказ №{{order}}. Пришлите ссылку на диск с фотографиями. Доступ по ссылке должен быть открытым.`,
   diskSaved: `Заказ №{{order}}. Ссылку получил, скачиваю фото. Если диск закрыт — откройте доступ или пришлите файлы в чат.`,
   greetingSticker: `Здравствуйте! Заказ Wildberries №{{order}} — «{{article}}».
 
@@ -139,6 +139,21 @@ const STOCK_TEMPLATES: Partial<Record<TemplateKey, string[]>> = {
   replaceAsk: [`Заказ №{{order}}. Прежние фотографии убрал. Пришлите заново {{needText}}.`],
 };
 
+/** Сохранённые в БД тексты с этими маркерами сбрасываются на DEFAULT при чтении. */
+const LEGACY_TEMPLATE_MARKERS: Partial<Record<TemplateKey, RegExp[]>> = {
+  greeting: [
+    /Как пришл/i,
+    /Напишите «фото»/i,
+    /Напишите «ссылка»/i,
+    /Яндекс/i,
+    /Google/i,
+    /Пришлите фотографии прямо в этот чат, или отправьте ссылку/i,
+  ],
+  askPhotos: [/Яндекс/i, /Google/i, /несколькими сообщениями: каждое фото/i],
+  askLink: [/Яндекс/i, /Google/i],
+  diskSaved: [/Яндекс/i, /Google/i, /Ссылку записал/i],
+};
+
 const PREVIOUS_TEMPLATES: Partial<Templates> = {
   greeting: `Здравствуйте! Заказ Wildberries №{{order}} — «{{article}}».
 Нужно {{count}} фото.
@@ -155,17 +170,24 @@ const PREVIOUS_TEMPLATES: Partial<Templates> = {
   unknownArticle: `Заказ №{{order}} вижу. Артикул «{{article}}» ещё не заведён, поэтому точное число фото не знаю. Напишите числом, сколько фото нужно, или дождитесь, пока мы уточним.`,
 };
 
+function isLegacyTemplate(key: TemplateKey, text: string): boolean {
+  const trimmed = text.trim();
+  const previous = PREVIOUS_TEMPLATES[key]?.trim();
+  if (previous && trimmed === previous) return true;
+  const stock = STOCK_TEMPLATES[key]?.some((item) => item.trim() === trimmed);
+  if (stock) return true;
+  const markers = LEGACY_TEMPLATE_MARKERS[key];
+  return Boolean(markers?.some((re) => re.test(text)));
+}
+
 export function templatesWithDefaults(saved: Partial<Templates> | null | undefined): Templates {
   const next = { ...DEFAULT_TEMPLATES };
   if (!saved) return next;
   for (const key of Object.keys(DEFAULT_TEMPLATES) as TemplateKey[]) {
     const value = saved[key];
     if (typeof value !== "string" || !value.trim()) continue;
-    const trimmed = value.trim();
-    const previous = PREVIOUS_TEMPLATES[key]?.trim();
-    const stock = STOCK_TEMPLATES[key]?.some((item) => item.trim() === trimmed);
-    if (trimmed === previous || stock) continue;
-    next[key] = value;
+    if (isLegacyTemplate(key, value)) continue;
+    next[key] = value.trim();
   }
   return next;
 }

@@ -319,19 +319,8 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
         replies.push(fill(db.templates.stickerNoLink, orderVars(order)));
       } else if (!sticker && url) {
         replies.push(fill(db.templates.diskSaved, orderVars(order)));
-      } else if (!sticker && images.length > 0 && saved === 0) {
-        replies.push(
-          fill(
-            db.templates.askPhotos,
-            orderVars(order),
-          ),
-        );
       } else if (!sticker && (rawUrl || intent === "link")) {
         replies.push(fill(db.templates.diskSaved, orderVars(order)));
-      } else if (!sticker && text && (intent === "photos" || intent === "link")) {
-        replies.push(fill(intent === "link" ? db.templates.askLink : db.templates.askPhotos, orderVars(order)));
-      } else if (!sticker && text && !wantsReplace(text) && intent !== "none") {
-        replies.push(fill(db.templates.askPhotos, orderVars(order)));
       }
       if (justDone) {
         order.completedNoticeAt = new Date().toISOString();

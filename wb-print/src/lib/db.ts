@@ -268,6 +268,7 @@ function normalize(db: Database): Database {
       order.kind = /стикер/i.test(`${order.articleTitle} ${order.vendorCode}`) ? "sticker" : "photo";
     }
     if (typeof order.archivedAt !== "string") order.archivedAt = order.printStatus === "done" ? order.updatedAt || null : null;
+    if (order.intakeMode === "choice") order.intakeMode = "photos";
   }
   return db;
 }
