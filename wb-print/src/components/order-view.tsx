@@ -15,7 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { intakePath } from "@/lib/intake-link";
 import { countPhrase } from "@/lib/text";
 import type { PrintStatus } from "@/lib/types";
 import { formatStamp, formatTime } from "@/lib/time";
@@ -99,7 +98,7 @@ export function OrderView({ id }: { id: string }) {
                 Страница загрузки для покупателя:{" "}
                 <a
                   className="underline"
-                  href={`/upload/${encodeURIComponent(intakePath(order).slug)}/${encodeURIComponent(order.intakeToken)}`}
+                  href={`/upload/${encodeURIComponent(order.wbOrderId || order.id)}/${encodeURIComponent(order.intakeToken)}`}
                   target="_blank"
                   rel="noreferrer"
                 >
