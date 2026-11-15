@@ -5,15 +5,20 @@
 set -euo pipefail
 ENV_FILE="${ENV_FILE:-/opt/autoblesk/.env}"
 
-PUBLIC_APP_URL="https://ЗАМЕНИТЕ-ДОМЕН"
+DOMAIN="ЗАМЕНИТЕ-ДОМЕН"
+PUBLIC_APP_URL="https://${DOMAIN}"
 RESEND_API_KEY="re_ЗАМЕНИТЕ"
-MAIL_FROM="Авто Блеск <noreply@ЗАМЕНИТЕ-ДОМЕН>"
+MAIL_FROM="Авто Блеск <noreply@${DOMAIN}>"
+MAIL_REPLY_TO="support@${DOMAIN}"
+MAIL_BRAND_NAME="Авто Блеск"
 
 touch "$ENV_FILE"
 for kv in \
   "PUBLIC_APP_URL=$PUBLIC_APP_URL" \
   "RESEND_API_KEY=$RESEND_API_KEY" \
-  "MAIL_FROM=$MAIL_FROM"; do
+  "MAIL_FROM=$MAIL_FROM" \
+  "MAIL_REPLY_TO=$MAIL_REPLY_TO" \
+  "MAIL_BRAND_NAME=$MAIL_BRAND_NAME"; do
   key="${kv%%=*}"
   if grep -q "^${key}=" "$ENV_FILE"; then
     sed -i "s|^${key}=.*|${kv}|" "$ENV_FILE"

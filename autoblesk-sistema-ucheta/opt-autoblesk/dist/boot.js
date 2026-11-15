@@ -691,6 +691,8 @@ var init_env = __esm({
       publicAppUrl: process.env.PUBLIC_APP_URL ?? "",
       resendApiKey: process.env.RESEND_API_KEY ?? "",
       mailFrom: process.env.MAIL_FROM ?? "\u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A <onboarding@resend.dev>",
+      mailReplyTo: process.env.MAIL_REPLY_TO ?? "",
+      mailBrandName: process.env.MAIL_BRAND_NAME ?? "\u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A",
       smtpHost: process.env.SMTP_HOST ?? "",
       smtpPort: Number(process.env.SMTP_PORT ?? 587),
       smtpSecure: process.env.SMTP_SECURE === "1",
@@ -58108,28 +58110,41 @@ init_env();
 init_companies();
 
 // api/lib/mail.ts
+function escMailHtml(value) {
+  return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
 function absoluteAppUrl(path) {
   const base = (env.publicAppUrl ?? "").replace(/\/$/, "");
   const p = path.startsWith("/") ? path : `/${path}`;
   return base ? `${base}${p}` : p;
 }
+function mailLayout(bodyHtml) {
+  const brand = escMailHtml(env.mailBrandName);
+  return `<!doctype html><html lang="ru"><body style="font-family:Manrope,Segoe UI,sans-serif;background:#FAF7F1;color:#210c02;padding:24px;max-width:560px">
+<div style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#c42121;margin-bottom:16px">${brand}</div>
+${bodyHtml}
+<p style="margin-top:32px;font-size:11px;color:#888">\u042D\u0442\u043E \u0441\u043B\u0443\u0436\u0435\u0431\u043D\u043E\u0435 \u0443\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435. \u041D\u0435 \u043E\u0442\u0432\u0435\u0447\u0430\u0439\u0442\u0435 \u043D\u0430 \u043F\u0438\u0441\u044C\u043C\u043E.</p>
+</body></html>`;
+}
 async function sendResendEmail({ to, subject, html, text }) {
   if (!env.resendApiKey) {
     return { skipped: true, reason: "no_api_key" };
   }
+  const payload = {
+    from: env.mailFrom,
+    to: Array.isArray(to) ? to : [to],
+    subject,
+    html,
+    text
+  };
+  if (env.mailReplyTo) payload.reply_to = env.mailReplyTo;
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${env.resendApiKey}`,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      from: env.mailFrom,
-      to: Array.isArray(to) ? to : [to],
-      subject,
-      html,
-      text
-    })
+    body: JSON.stringify(payload)
   });
   const body = await res.text();
   if (!res.ok) {
@@ -58143,16 +58158,53 @@ async function sendResendEmail({ to, subject, html, text }) {
 }
 async function sendRegistrationVerifyEmail({ to, ownerName, studioName, verifyPath }) {
   const url = absoluteAppUrl(verifyPath);
-  const subject = "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u2014 \u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A";
-  const html = `<!doctype html><html lang="ru"><body style="font-family:Manrope,Segoe UI,sans-serif;background:#FAF7F1;color:#210c02;padding:24px">
-<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${ownerName}!</p>
-<p>\u0412\u044B \u043E\u0441\u0442\u0430\u0432\u0438\u043B\u0438 \u0437\u0430\u044F\u0432\u043A\u0443 \u043D\u0430 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044E \u0441\u0442\u0443\u0434\u0438\u0438 <strong>${studioName}</strong> \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0435 \u00AB\u0410\u0432\u0442\u043E\u0431\u043B\u0435\u0441\u043A\u00BB.</p>
-<p>\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u0430\u0434\u0440\u0435\u0441 \u043F\u043E\u0447\u0442\u044B \u2014 \u043F\u043E\u0441\u043B\u0435 \u044D\u0442\u043E\u0433\u043E \u0437\u0430\u044F\u0432\u043A\u0443 \u0440\u0430\u0441\u0441\u043C\u043E\u0442\u0440\u0438\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D.</p>
+  const subject = `\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u2014 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${escMailHtml(ownerName)}!</p>
+<p>\u0417\u0430\u044F\u0432\u043A\u0430 \u043D\u0430 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044E \u0441\u0442\u0443\u0434\u0438\u0438 <strong>${escMailHtml(studioName)}</strong>.</p>
+<p>\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u0430\u0434\u0440\u0435\u0441 \u043F\u043E\u0447\u0442\u044B \u2014 \u0437\u0430\u0442\u0435\u043C \u0437\u0430\u044F\u0432\u043A\u0443 \u0440\u0430\u0441\u0441\u043C\u043E\u0442\u0440\u0438\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D.</p>
 <p><a href="${url}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C email</a></p>
-<p style="font-size:12px;color:#666">\u0415\u0441\u043B\u0438 \u043A\u043D\u043E\u043F\u043A\u0430 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F, \u0441\u043A\u043E\u043F\u0438\u0440\u0443\u0439\u0442\u0435 \u0441\u0441\u044B\u043B\u043A\u0443:<br/><span style="word-break:break-all">${url}</span></p>
-</body></html>`;
-  const text = `\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u0434\u043B\u044F \u0437\u0430\u044F\u0432\u043A\u0438 \u00AB${studioName}\u00BB: ${url}`;
+<p style="font-size:12px;color:#666">\u0421\u0441\u044B\u043B\u043A\u0430: <span style="word-break:break-all">${url}</span></p>`);
+  const text = `\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u0434\u043B\u044F \u00AB${studioName}\u00BB: ${url}`;
   return sendResendEmail({ to, subject, html, text });
+}
+async function sendRegistrationApprovedEmail({ to, ownerName, studioName, loginUrl }) {
+  const url = loginUrl || absoluteAppUrl("/login");
+  const subject = `\u0421\u0442\u0443\u0434\u0438\u044F \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0430 \u2014 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${escMailHtml(ownerName)}!</p>
+<p>\u0417\u0430\u044F\u0432\u043A\u0430 \u043D\u0430 <strong>${escMailHtml(studioName)}</strong> \u043E\u0434\u043E\u0431\u0440\u0435\u043D\u0430. \u041C\u043E\u0436\u043D\u043E \u0432\u0445\u043E\u0434\u0438\u0442\u044C \u0441 \u0442\u0435\u043C \u043F\u0430\u0440\u043E\u043B\u0435\u043C, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0443\u043A\u0430\u0437\u0430\u043B\u0438 \u043F\u0440\u0438 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438.</p>
+<p><a href="${url}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">\u0412\u043E\u0439\u0442\u0438 \u0432 CRM</a></p>`);
+  const text = `\u0421\u0442\u0443\u0434\u0438\u044F ${studioName} \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0430. \u0412\u0445\u043E\u0434: ${url}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function sendStaffAccessEmail({ to, name, companyName, login, password }) {
+  const url = absoluteAppUrl("/login");
+  const subject = `\u0414\u043E\u0441\u0442\u0443\u043F \u0432 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${escMailHtml(name)}!</p>
+<p>\u0414\u043B\u044F \u0441\u0442\u0443\u0434\u0438\u0438 <strong>${escMailHtml(companyName)}</strong> \u0441\u043E\u0437\u0434\u0430\u043D \u0434\u043E\u0441\u0442\u0443\u043F:</p>
+<ul style="line-height:1.6"><li><strong>\u041B\u043E\u0433\u0438\u043D:</strong> ${escMailHtml(login)}</li><li><strong>\u041F\u0430\u0440\u043E\u043B\u044C:</strong> ${escMailHtml(password)}</li></ul>
+<p><a href="${url}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">\u0412\u043E\u0439\u0442\u0438</a></p>
+<p style="font-size:12px;color:#666">\u0421\u043C\u0435\u043D\u0438\u0442\u0435 \u043F\u0430\u0440\u043E\u043B\u044C \u043F\u043E\u0441\u043B\u0435 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0432\u0445\u043E\u0434\u0430.</p>`);
+  const text = `\u0414\u043E\u0441\u0442\u0443\u043F ${companyName}: \u043B\u043E\u0433\u0438\u043D ${login}, \u043F\u0430\u0440\u043E\u043B\u044C ${password}. ${url}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function sendPasswordResetEmail({ to, name, login, password }) {
+  const url = absoluteAppUrl("/login");
+  const subject = `\u041D\u043E\u0432\u044B\u0439 \u043F\u0430\u0440\u043E\u043B\u044C \u2014 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>${escMailHtml(name)}, \u0434\u043B\u044F \u0432\u0430\u0441 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D \u043D\u043E\u0432\u044B\u0439 \u043F\u0430\u0440\u043E\u043B\u044C.</p>
+<ul><li><strong>\u041B\u043E\u0433\u0438\u043D:</strong> ${escMailHtml(login ?? to)}</li><li><strong>\u041F\u0430\u0440\u043E\u043B\u044C:</strong> ${escMailHtml(password)}</li></ul>
+<p><a href="${url}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">\u0412\u043E\u0439\u0442\u0438</a></p>`);
+  const text = `\u041D\u043E\u0432\u044B\u0439 \u043F\u0430\u0440\u043E\u043B\u044C: ${password}. \u0412\u0445\u043E\u0434: ${url}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function trySendMail(task) {
+  if (!env.resendApiKey) return { sent: false };
+  try {
+    await task();
+    return { sent: true };
+  } catch (e) {
+    console.error("[mail]", e);
+    return { sent: false, error: e instanceof Error ? e.message : String(e) };
+  }
 }
 
 // api/queries/registration.ts
@@ -59517,7 +59569,8 @@ var platformRouter = createRouter({
   registrationRequests: superadminQuery.input(external_exports.object({ status: external_exports.enum(["pending", "approved", "rejected"]).optional() }).optional()).query(({ input: input2 }) => listRegistrationRequests(input2?.status)),
   approveRegistration: superadminQuery.input(external_exports.object({ requestId: external_exports.number().int().positive() })).mutation(async ({ ctx, input: input2 }) => {
     const res = await approveRegistrationRequest(input2.requestId, ctx.user.id);
-    return { ok: true, ...res };
+    const mail = await trySendMail(() => sendRegistrationApprovedEmail({ to: res.email, ownerName: res.ownerName, studioName: res.studioName }));
+    return { ...res, mailSent: mail.sent };
   }),
   rejectRegistration: superadminQuery.input(
     external_exports.object({
@@ -59552,8 +59605,21 @@ var platformRouter = createRouter({
       password: external_exports.string().min(8).max(128),
       role: external_exports.enum(["user", "admin"]).default("user")
     })
-  ).mutation(async ({ input: input2 }) => issueStaffCredentials(input2)),
-  resetPassword: superadminQuery.input(external_exports.object({ userId: external_exports.number().int().positive() })).mutation(async ({ input: input2 }) => resetUserPassword(input2.userId)),
+  ).mutation(async ({ input: input2 }) => {
+    const res = await issueStaffCredentials(input2);
+    if (res.email) {
+      await trySendMail(() => sendStaffAccessEmail({ to: res.email, name: input2.name.trim(), companyName: res.companyName, login: res.login, password: res.password }));
+    }
+    return res;
+  }),
+  resetPassword: superadminQuery.input(external_exports.object({ userId: external_exports.number().int().positive() })).mutation(async ({ input: input2 }) => {
+    const res = await resetUserPassword(input2.userId);
+    if (res.email) {
+      const mail = await trySendMail(() => sendPasswordResetEmail({ to: res.email, name: res.name ?? "", login: res.email, password: res.password }));
+      return { ...res, mailSent: mail.sent };
+    }
+    return res;
+  }),
   setBlocked: superadminQuery.input(external_exports.object({ companyId: external_exports.number().int().positive(), blocked: external_exports.boolean() })).mutation(async ({ input: input2 }) => {
     await setCompanyBlocked(input2.companyId, input2.blocked);
     return { ok: true };
@@ -60136,7 +60202,10 @@ app.get("/api/build-info", (c) =>
     mail: {
       resendConfigured: Boolean(env.resendApiKey),
       from: env.mailFrom,
-      publicAppUrl: env.publicAppUrl || null
+      replyTo: env.mailReplyTo || null,
+      brand: env.mailBrandName,
+      publicAppUrl: env.publicAppUrl || null,
+      templates: ["registration_verify", "registration_approved", "staff_access", "password_reset"]
     }
   })
 );
