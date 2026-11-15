@@ -58156,6 +58156,31 @@ async function sendResendEmail({ to, subject, html, text }) {
     return { ok: true, raw: body };
   }
 }
+async function sendRegistrationCodeEmail({ to, ownerName, code }) {
+  const subject = `\u041A\u043E\u0434 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F \u2014 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${escMailHtml(ownerName)}!</p>
+<p>\u0412\u0430\u0448 \u043A\u043E\u0434 \u0434\u043B\u044F \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438 \u0432 ${escMailHtml(env.mailBrandName)}:</p>
+<p style="font-size:32px;font-weight:800;letter-spacing:.2em">${escMailHtml(code)}</p>
+<p style="font-size:12px;color:#666">\u041A\u043E\u0434 \u0434\u0435\u0439\u0441\u0442\u0432\u0443\u0435\u0442 15 \u043C\u0438\u043D\u0443\u0442.</p>`);
+  const text = `\u041A\u043E\u0434 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438: ${code}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function sendSuperadminNewStudioEmail({ to, studioName, ownerName, email: email3, phone, city, companyId }) {
+  const subject = `\u041D\u043E\u0432\u0430\u044F \u0441\u0442\u0443\u0434\u0438\u044F \u2014 ${env.mailBrandName}`;
+  const platformUrl = absoluteAppUrl(`/platform/organizations/${companyId}`);
+  const html = mailLayout(`<p>\u0417\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0430 \u043D\u043E\u0432\u0430\u044F \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F.</p>
+<ul style="line-height:1.7">
+<li><strong>\u0421\u0442\u0443\u0434\u0438\u044F:</strong> ${escMailHtml(studioName)}</li>
+<li><strong>\u0412\u043B\u0430\u0434\u0435\u043B\u0435\u0446:</strong> ${escMailHtml(ownerName)}</li>
+<li><strong>Email:</strong> ${escMailHtml(email3)}</li>
+<li><strong>\u0422\u0435\u043B\u0435\u0444\u043E\u043D:</strong> ${escMailHtml(phone ?? "\u2014")}</li>
+<li><strong>\u0413\u043E\u0440\u043E\u0434:</strong> ${escMailHtml(city ?? "\u2014")}</li>
+<li><strong>ID:</strong> ${companyId}</li>
+</ul>
+<p><a href="${platformUrl}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:10px 16px;border-radius:10px;text-decoration:none">\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0435</a></p>`);
+  const text = `\u041D\u043E\u0432\u0430\u044F \u0441\u0442\u0443\u0434\u0438\u044F: ${studioName}, ${ownerName}, ${email3}`;
+  return sendResendEmail({ to, subject, html, text });
+}
 async function sendRegistrationVerifyEmail({ to, ownerName, studioName, verifyPath }) {
   const url = absoluteAppUrl(verifyPath);
   const subject = `\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u2014 ${env.mailBrandName}`;
@@ -58288,6 +58313,139 @@ async function rejectRegistrationRequest(requestId, reviewerId, note) {
     reviewNote: note?.trim() || null
   }).where(eq(registrationRequests.id, requestId));
 }
+var REG_META_PREFIX = "regv2:";
+var REG_PENDING_STUDIO = "__pending_org__";
+var DEMO_SAMPLE_TAG = "demoSample:1";
+function encodeRegMeta(meta) {
+  return REG_META_PREFIX + JSON.stringify(meta);
+}
+function parseRegMeta(note) {
+  if (!note || !String(note).startsWith(REG_META_PREFIX)) return null;
+  try {
+    return JSON.parse(String(note).slice(REG_META_PREFIX.length));
+  } catch {
+    return null;
+  }
+}
+function generateRegCode() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+async function findPendingRegV2(email3) {
+  const db = getDb();
+  const rows = await db.select().from(registrationRequests).where(and(eq(registrationRequests.email, email3), eq(registrationRequests.status, "pending"))).limit(1);
+  return rows[0];
+}
+async function startRegistrationV2(input2) {
+  const db = getDb();
+  const email3 = input2.email.trim().toLowerCase();
+  const existingUser = await db.select().from(users).where(eq(users.email, email3)).limit(1);
+  if (existingUser[0]) throw new Error("Email \u0443\u0436\u0435 \u0437\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D");
+  const code = generateRegCode();
+  const meta = { code, exp: Date.now() + 15 * 60 * 1e3, step: "code", completionToken: randomBytes2(16).toString("hex") };
+  const passwordHash = hashPassword(input2.password);
+  const pending = await findPendingRegV2(email3);
+  if (pending) {
+    await db.update(registrationRequests).set({
+      ownerName: input2.ownerName.trim(),
+      phone: phoneForStorage(input2.phone),
+      passwordHash,
+      emailConfirmed: false,
+      reviewNote: encodeRegMeta(meta),
+      studioName: REG_PENDING_STUDIO
+    }).where(eq(registrationRequests.id, pending.id));
+  } else {
+    await db.insert(registrationRequests).values({
+      studioName: REG_PENDING_STUDIO,
+      ownerName: input2.ownerName.trim(),
+      email: email3,
+      phone: phoneForStorage(input2.phone),
+      passwordHash,
+      status: "pending",
+      emailConfirmed: false,
+      reviewNote: encodeRegMeta(meta)
+    });
+  }
+  const mail = await trySendMail(() => sendRegistrationCodeEmail({ to: email3, ownerName: input2.ownerName.trim(), code }));
+  return {
+    email: email3,
+    emailSent: mail.sent,
+    devCode: !env.resendApiKey ? code : void 0
+  };
+}
+async function verifyRegistrationCodeV2(email3, code) {
+  const row = await findPendingRegV2(email3.trim().toLowerCase());
+  if (!row) throw new Error("\u0417\u0430\u044F\u0432\u043A\u0430 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430");
+  const meta = parseRegMeta(row.reviewNote);
+  if (!meta || meta.step !== "code") throw new Error("\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0437\u0430\u043F\u0440\u043E\u0441\u0438\u0442\u0435 \u043A\u043E\u0434");
+  if (String(meta.code) !== String(code).trim()) throw new Error("\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 \u043A\u043E\u0434");
+  if (Date.now() > Number(meta.exp)) throw new Error("\u041A\u043E\u0434 \u0438\u0441\u0442\u0451\u043A. \u0417\u0430\u043F\u0440\u043E\u0441\u0438\u0442\u0435 \u043D\u043E\u0432\u044B\u0439");
+  meta.step = "org";
+  const db = getDb();
+  await db.update(registrationRequests).set({ emailConfirmed: true, reviewNote: encodeRegMeta(meta) }).where(eq(registrationRequests.id, row.id));
+  return { email: email3, completionToken: meta.completionToken };
+}
+async function notifySuperadminsNewStudio(studio) {
+  const db = getDb();
+  const supers = await db.select().from(users).where(eq(users.role, "superadmin"));
+  const targets = supers.map((u) => u.email).filter(Boolean);
+  if (!targets.length) return { sent: 0 };
+  let sent = 0;
+  for (const to of targets) {
+    const m = await trySendMail(() => sendSuperadminNewStudioEmail({ to, ...studio }));
+    if (m.sent) sent++;
+  }
+  return { sent };
+}
+async function completeRegistrationV2(input2, ctx) {
+  const email3 = input2.email.trim().toLowerCase();
+  const row = await findPendingRegV2(email3);
+  if (!row || !row.emailConfirmed) throw new Error("\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u043A\u043E\u0434");
+  const meta = parseRegMeta(row.reviewNote);
+  if (!meta || meta.step !== "org" || meta.completionToken !== input2.completionToken) throw new Error("\u0421\u0435\u0441\u0441\u0438\u044F \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438 \u043D\u0435\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u0430");
+  const created = await createStudioWithOwner({
+    studioName: input2.studioName.trim(),
+    ownerName: row.ownerName,
+    email: email3,
+    phone: row.phone ?? void 0,
+    passwordHash: row.passwordHash,
+    legalName: input2.legalName?.trim() || void 0,
+    inn: input2.inn?.trim() || void 0,
+    city: input2.city?.trim() || void 0,
+    address: input2.address?.trim() || void 0,
+    profileNotes: DEMO_SAMPLE_TAG
+  });
+  await ensureStudioServiceCatalogFromDemo(created.companyId);
+  await ensureStudioDashboardSampleData(created.companyId, created.userId);
+  const db = getDb();
+  await db.update(registrationRequests).set({
+    studioName: input2.studioName.trim(),
+    status: "approved",
+    reviewedAt: /* @__PURE__ */ new Date(),
+    reviewNote: "\u0421\u0430\u043C\u043E\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
+  }).where(eq(registrationRequests.id, row.id));
+  await notifySuperadminsNewStudio({
+    studioName: input2.studioName.trim(),
+    ownerName: row.ownerName,
+    email: email3,
+    phone: row.phone,
+    city: input2.city,
+    companyId: created.companyId
+  });
+  const token = await attachSessionCookie(ctx, created.unionId);
+  const user = await findUserByUnionId(created.unionId);
+  return { token, demoSampleEnabled: true, companyId: created.companyId, user: user ? { id: user.id, email: user.email, name: user.name, role: user.role, companyId: user.companyId } : null };
+}
+async function disableDemoSampleData(companyId) {
+  const db = getDb();
+  const company = await getCompanyById(companyId);
+  if (!company?.profileNotes?.includes(DEMO_SAMPLE_TAG)) return { ok: true, removed: false };
+  await db.delete(orders).where(eq(orders.companyId, companyId));
+  await db.delete(expenses).where(eq(expenses.companyId, companyId));
+  await db.delete(clients).where(eq(clients.companyId, companyId));
+  const notes = String(company.profileNotes || "").replace(DEMO_SAMPLE_TAG, "").trim() || null;
+  await db.update(companies).set({ profileNotes: notes }).where(eq(companies.id, companyId));
+  return { ok: true, removed: true };
+}
 
 // api/queries/tenant.ts
 function tenantCompanyId(user) {
@@ -58377,6 +58535,49 @@ var authRouter = createRouter({
         code: "BAD_REQUEST",
         message: e instanceof Error ? e.message : "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C"
       });
+    }
+  }),
+  startRegistration: publicQuery.input(
+    external_exports.object({
+      ownerName: external_exports.string().trim().min(2).max(255),
+      email: external_exports.string().trim().email().max(320),
+      phone: external_exports.string().trim().max(32).optional(),
+      password: external_exports.string().min(8).max(128)
+    })
+  ).mutation(async ({ input: input2 }) => {
+    try {
+      return await startRegistrationV2(input2);
+    } catch (e) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: e instanceof Error ? e.message : "\u041E\u0448\u0438\u0431\u043A\u0430" });
+    }
+  }),
+  verifyRegistrationCode: publicQuery.input(
+    external_exports.object({
+      email: external_exports.string().trim().email().max(320),
+      code: external_exports.string().trim().min(4).max(8)
+    })
+  ).mutation(async ({ input: input2 }) => {
+    try {
+      return await verifyRegistrationCodeV2(input2.email, input2.code);
+    } catch (e) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: e instanceof Error ? e.message : "\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 \u043A\u043E\u0434" });
+    }
+  }),
+  completeRegistration: publicQuery.input(
+    external_exports.object({
+      email: external_exports.string().trim().email().max(320),
+      completionToken: external_exports.string().trim().min(8).max(128),
+      studioName: external_exports.string().trim().min(2).max(255),
+      legalName: external_exports.string().trim().max(255).optional(),
+      inn: external_exports.string().trim().max(20).optional(),
+      city: external_exports.string().trim().max(120).optional(),
+      address: external_exports.string().trim().max(500).optional()
+    })
+  ).mutation(async ({ ctx, input: input2 }) => {
+    try {
+      return await completeRegistrationV2(input2, ctx);
+    } catch (e) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: e instanceof Error ? e.message : "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044E" });
     }
   }),
   login: publicQuery.input(
@@ -59694,6 +59895,9 @@ var deskRouter = createRouter({
   ).mutation(async ({ ctx, input: input2 }) => {
     await saveStudioSettings(tenantCompanyId(ctx.user), input2);
     return { ok: true };
+  }),
+  disableDemoSample: adminQuery.mutation(async ({ ctx }) => {
+    return disableDemoSampleData(tenantCompanyId(ctx.user));
   }),
   mine: authedQuery.query(async ({ ctx }) => {
     const companyId = tenantCompanyId(ctx.user);
