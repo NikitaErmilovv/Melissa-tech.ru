@@ -3,7 +3,7 @@ import path from "path";
 import { saveOrderFile } from "./images";
 import { dataRoot, ensureDir } from "./paths";
 import { demoPhoto } from "./png";
-import { ensureIntakeToken } from "./intake-token";
+import { ensureIntakeToken } from "./intake-link";
 import { templatesWithDefaults } from "./text";
 import { dayKey } from "./time";
 import type { Article, Database, Order, OrderLog, ProductKind, Settings } from "./types";

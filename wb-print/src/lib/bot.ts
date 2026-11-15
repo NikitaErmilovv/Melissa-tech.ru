@@ -3,7 +3,7 @@ import { folderRelFor, pushLog, readDb, seenEvent, withDb } from "./db";
 import { pullPublicDisk } from "./disks";
 import { savePreparedFile } from "./images";
 import { safeAbs, uid } from "./paths";
-import { ensureIntakeToken } from "./intake-token";
+import { ensureIntakeToken } from "./intake-link";
 import {
   diskUrlFromText,
   fill,

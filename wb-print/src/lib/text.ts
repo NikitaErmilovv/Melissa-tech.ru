@@ -1,4 +1,4 @@
-import { intakeLink } from "./intake-token";
+import { intakeLink } from "./intake-link";
 import type { Order, ProductKind, TemplateKey, Templates } from "./types";
 
 const ONES_F = ["", "одну", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"];

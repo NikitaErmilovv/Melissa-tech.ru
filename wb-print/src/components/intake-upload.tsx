@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { PublicIntakeView } from "@/lib/intake-token";
+import type { PublicIntakeView } from "@/lib/intake-public";
 
 type Phase = "loading" | "ready" | "error";
 
