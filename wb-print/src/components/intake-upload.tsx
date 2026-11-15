@@ -13,7 +13,6 @@ export function IntakeUpload({ token }: { token: string }) {
   const [view, setView] = useState<PublicIntakeView | null>(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
-  const [diskUrl, setDiskUrl] = useState("");
   const [files, setFiles] = useState<FileList | null>(null);
 
   const refresh = useCallback(async () => {
@@ -52,30 +51,6 @@ export function IntakeUpload({ token }: { token: string }) {
       setFiles(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "ошибка загрузки");
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function sendDisk() {
-    if (!diskUrl.trim()) {
-      setError("вставьте ссылку на диск");
-      return;
-    }
-    setBusy(true);
-    setError("");
-    try {
-      const res = await fetch(`/api/intake/${encodeURIComponent(token)}`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ diskUrl }),
-      });
-      const data = (await res.json()) as { view?: PublicIntakeView; error?: string; note?: string };
-      if (!res.ok) throw new Error(data.error || "не удалось скачать с диска");
-      if (data.view) setView(data.view);
-      setDiskUrl("");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "ошибка");
     } finally {
       setBusy(false);
     }
@@ -125,7 +100,7 @@ export function IntakeUpload({ token }: { token: string }) {
                 </p>
               )}
               <div className="space-y-2">
-                <Label htmlFor="files">Фотографии с телефона или компьютера</Label>
+                <Label htmlFor="files">Выберите фото и нажмите «Отправить»</Label>
                 <Input
                   id="files"
                   type="file"
@@ -138,22 +113,6 @@ export function IntakeUpload({ token }: { token: string }) {
                   Отправить фото
                 </Button>
               </div>
-
-              {!view.stickerSquare && (
-                <div className="space-y-2 border-t border-border pt-4">
-                  <Label htmlFor="disk">Или ссылка на диск с открытым доступом</Label>
-                  <Input
-                    id="disk"
-                    value={diskUrl}
-                    onChange={(e) => setDiskUrl(e.target.value)}
-                    placeholder="https://…"
-                    className="bg-background"
-                  />
-                  <Button type="button" variant="outline" className="w-full" disabled={busy} onClick={() => void sendDisk()}>
-                    Скачать с диска
-                  </Button>
-                </div>
-              )}
             </>
           )}
 

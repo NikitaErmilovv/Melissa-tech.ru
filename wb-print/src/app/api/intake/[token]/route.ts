@@ -1,4 +1,4 @@
-import { intakeDiskUrl, intakeUploadFiles } from "@/lib/intake-actions";
+import { intakeUploadFiles } from "@/lib/intake-actions";
 import { orderByIntakeToken, publicIntakeView } from "@/lib/intake-token";
 import { fail } from "@/lib/http";
 
@@ -29,10 +29,7 @@ export async function POST(request: Request, context: { params: Promise<{ token:
       const result = await intakeUploadFiles(token, buffers);
       return Response.json(result);
     }
-    const body = (await request.json().catch(() => ({}))) as { diskUrl?: string };
-    if (!body.diskUrl?.trim()) throw new Error("нужны файлы или ссылка на диск");
-    const result = await intakeDiskUrl(token, body.diskUrl);
-    return Response.json(result);
+    throw new Error("отправьте фотографии файлами, ссылку на диск не принимаем");
   } catch (error) {
     return fail(error);
   }
