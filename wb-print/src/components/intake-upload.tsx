@@ -113,9 +113,11 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
         const got = nextView?.got ?? saved;
         const need = nextView?.need ?? 0;
         if (nextView?.complete) {
-          setNotice("Всё отлично, все фотографии приняты.");
+          setNotice("");
+        } else if (skipped) {
+          setNotice(`Принято ${saved}, пропущено ${skipped}. Сейчас ${got}${need ? ` из ${need}` : ""}.`);
         } else {
-          setNotice(`Принято ${saved} фото${skipped ? `, пропущено ${skipped}` : ""}. Сейчас ${got}${need ? ` из ${need}` : ""}.`);
+          setNotice(saved === 1 ? "Фото отправлено." : `Отправлено ${saved} фото.`);
         }
       } else if (skipped > 0) {
         setError(
@@ -133,7 +135,6 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   const uploaded = view?.files ?? [];
   const gotCount = view ? Math.max(view.got, uploaded.length) : 0;
   const pendingAdd = picked.length;
-  const counterGot = gotCount + pendingAdd;
   const canUpload = Boolean(view && !view.cancelled && view.need > 0 && gotCount < view.need);
 
   async function removeUploaded(fileId: string) {
@@ -187,19 +188,21 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
             <p className="mt-1 text-sm text-muted-foreground">{view.articleTitle}</p>
             {view.need > 0 ? (
               <p className="font-heading mt-4 text-4xl font-black tracking-tight">
-                <span className="text-accent">{counterGot}</span>
+                <span className="text-accent">{gotCount}</span>
                 <span className="text-muted-foreground"> / </span>
                 <span>{view.need}</span>
               </p>
             ) : (
               <p className="font-heading mt-4 text-4xl font-black tracking-tight">
-                <span className="text-accent">{counterGot}</span>
+                <span className="text-accent">{gotCount}</span>
               </p>
             )}
             <p className="mt-1 text-xs text-muted-foreground">
               {pendingAdd > 0
-                ? `${gotCount} на сервере · +${pendingAdd} к отправке`
-                : "фото принято"}
+                ? `${pendingAdd} фото к отправке`
+                : gotCount > 0 && !view.complete
+                  ? "фото принято"
+                  : null}
             </p>
           </div>
 
