@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,9 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { PublicIntakeFile, PublicIntakeView } from "@/lib/intake-public";
+import type { PublicIntakeView } from "@/lib/intake-public";
 
 type Phase = "loading" | "ready" | "error";
 
@@ -26,15 +25,28 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   const [phase, setPhase] = useState<Phase>("loading");
   const [view, setView] = useState<PublicIntakeView | null>(null);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
-  const [files, setFiles] = useState<FileList | null>(null);
-  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [picked, setPicked] = useState<File[]>([]);
+  const [lightbox, setLightbox] = useState<{ kind: "server" | "local"; index: number } | null>(null);
 
-  const refresh = useCallback(async () => {
-    setPhase("loading");
+  const localPreviews = useMemo(
+    () => picked.map((file) => ({ file, url: URL.createObjectURL(file) })),
+    [picked],
+  );
+
+  useEffect(
+    () => () => {
+      for (const row of localPreviews) URL.revokeObjectURL(row.url);
+    },
+    [localPreviews],
+  );
+
+  const refresh = useCallback(async (silent = false) => {
+    if (!silent) setPhase("loading");
     setError("");
     try {
-      const res = await fetch(apiBase(slug, intakeKey));
+      const res = await fetch(apiBase(slug, intakeKey), { cache: "no-store" });
       const data = (await res.json()) as { view?: PublicIntakeView; error?: string };
       if (!res.ok) throw new Error(data.error || "не удалось открыть заказ");
       setView(data.view ?? null);
@@ -50,21 +62,34 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   }, [refresh]);
 
   async function uploadFiles() {
-    if (!files?.length) {
-      setError("выберите фото");
+    if (!picked.length) {
+      setError("выберите хотя бы одно фото");
       return;
     }
     setBusy(true);
     setError("");
+    setNotice("");
     try {
       const form = new FormData();
-      for (const file of files) form.append("files", file);
+      for (const file of picked) form.append("files", file);
       const res = await fetch(apiBase(slug, intakeKey), { method: "POST", body: form });
-      const data = (await res.json()) as { view?: PublicIntakeView; error?: string };
+      const data = (await res.json()) as {
+        view?: PublicIntakeView;
+        saved?: number;
+        skipped?: number;
+        error?: string;
+      };
       if (!res.ok) throw new Error(data.error || "не удалось загрузить");
       if (data.view) setView(data.view);
-      else await refresh();
-      setFiles(null);
+      else await refresh(true);
+      const saved = data.saved ?? 0;
+      const skipped = data.skipped ?? 0;
+      if (saved > 0) {
+        setNotice(`Принято ${saved} фото${skipped ? `, пропущено ${skipped}` : ""}.`);
+      } else if (skipped > 0) {
+        setError("Файлы не приняты. Попробуйте JPG или PNG из галереи.");
+      }
+      setPicked([]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "ошибка загрузки");
     } finally {
@@ -73,44 +98,53 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   }
 
   const uploaded = view?.files ?? [];
-  const open = lightbox !== null && lightbox >= 0 && lightbox < uploaded.length;
+  const canUpload = Boolean(view && !view.cancelled && view.need > 0 && !view.complete);
 
-  function step(delta: number) {
-    if (lightbox === null || uploaded.length === 0) return;
-    const next = (lightbox + delta + uploaded.length) % uploaded.length;
-    setLightbox(next);
+  const serverOpen =
+    lightbox?.kind === "server" &&
+    lightbox.index >= 0 &&
+    lightbox.index < uploaded.length;
+  const localOpen =
+    lightbox?.kind === "local" &&
+    lightbox.index >= 0 &&
+    lightbox.index < localPreviews.length;
+
+  function stepServer(delta: number) {
+    if (!serverOpen || lightbox === null) return;
+    const next = (lightbox.index + delta + uploaded.length) % uploaded.length;
+    setLightbox({ kind: "server", index: next });
   }
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-lg flex-col gap-6 px-4 py-10 text-foreground">
+    <div className="mx-auto flex min-h-screen w-full max-w-lg flex-col gap-6 px-4 py-8 text-foreground">
       <header className="space-y-1">
         <p className="font-heading text-xs uppercase tracking-[0.2em] text-muted-foreground">DODJ · печать</p>
         <h1 className="font-heading text-2xl font-bold">Загрузка фото</h1>
       </header>
 
-      {phase === "loading" && <p className="text-sm text-muted-foreground">Открываем заказ…</p>}
-      {phase === "error" && <p className="text-sm text-destructive">{error}</p>}
+      {phase === "loading" && !view && <p className="text-sm text-muted-foreground">Открываем заказ…</p>}
+      {phase === "error" && !view && <p className="text-sm text-destructive">{error}</p>}
 
       {view && (
-        <div className="space-y-6 rounded-2xl border border-border bg-card p-5">
+        <div className="space-y-5 rounded-2xl border border-border bg-card p-5">
           <div>
-            <p className="text-sm text-muted-foreground">Заказ Wildberries</p>
-            <p className="font-heading text-xl font-bold">№ {view.wbOrderId}</p>
-            <p className="mt-2 text-sm">{view.articleTitle}</p>
+            <p className="text-sm text-muted-foreground">Заказ Wildberries № {view.wbOrderId}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{view.articleTitle}</p>
             {view.need > 0 && (
-              <p className="mt-3 text-sm">
-                Принято <span className="font-semibold text-accent">{view.got}</span> из{" "}
-                <span className="font-semibold">{view.need}</span>
+              <p className="font-heading mt-4 text-4xl font-black tracking-tight">
+                <span className="text-accent">{view.got}</span>
+                <span className="text-muted-foreground"> / </span>
+                <span>{view.need}</span>
               </p>
             )}
+            <p className="mt-1 text-xs text-muted-foreground">фото принято</p>
           </div>
 
           {uploaded.length > 0 && (
             <PreviewGrid
-              files={uploaded}
-              slug={slug}
-              intakeKey={intakeKey}
-              onOpen={(index) => setLightbox(index)}
+              title="Уже загружено"
+              urls={uploaded.map((file) => ({ id: file.id, alt: file.name, src: fileSrc(slug, intakeKey, file.id) }))}
+              onOpen={(index) => setLightbox({ kind: "server", index })}
             />
           )}
 
@@ -122,65 +156,75 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
 
           {view.complete && !view.cancelled && (
             <p className="rounded-xl border border-accent/40 bg-accent/10 px-4 py-3 text-sm text-accent-foreground">
-              Всё отлично, все фотографии приняты. Можно закрыть страницу.
+              Всё отлично, все фотографии приняты.
             </p>
           )}
 
-          {!view.cancelled && !view.complete && view.need > 0 && (
-            <>
+          {canUpload && (
+            <div className="space-y-3 border-t border-border pt-4">
               {view.stickerSquare && (
-                <p className="text-xs text-muted-foreground">
-                  Для стикеров лучше загружать квадратные фото. Неквадратные обрежем с левого верхнего угла.
-                </p>
+                <p className="text-xs text-muted-foreground">Для стикеров лучше квадратные фото.</p>
               )}
-              <div className="space-y-2">
-                <Label htmlFor="files">Добавить фото</Label>
-                <Input
-                  id="files"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  className="h-auto bg-background py-2"
-                  onChange={(e) => setFiles(e.target.files)}
+              <Label
+                htmlFor="files"
+                className="flex min-h-28 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-background px-4 py-6 text-center text-sm"
+              >
+                <span className="font-medium">Нажмите, чтобы выбрать фото</span>
+                <span className="text-xs text-muted-foreground">можно несколько за раз</span>
+              </Label>
+              <input
+                id="files"
+                type="file"
+                accept="image/*"
+                multiple
+                className="sr-only"
+                onChange={(e) => {
+                  const list = e.target.files;
+                  if (!list?.length) return;
+                  setPicked((prev) => [...prev, ...Array.from(list)]);
+                  e.target.value = "";
+                }}
+              />
+              {localPreviews.length > 0 && (
+                <PreviewGrid
+                  title="Перед отправкой — проверьте"
+                  urls={localPreviews.map((row, i) => ({
+                    id: `local-${i}`,
+                    alt: row.file.name,
+                    src: row.url,
+                  }))}
+                  onOpen={(index) => setLightbox({ kind: "local", index })}
                 />
-                <Button type="button" className="w-full" disabled={busy} onClick={() => void uploadFiles()}>
-                  Отправить
-                </Button>
-              </div>
-            </>
+              )}
+              <Button type="button" className="w-full" disabled={busy || !picked.length} onClick={() => void uploadFiles()}>
+                {busy ? "Отправляем…" : picked.length ? `Отправить ${picked.length} фото` : "Отправить"}
+              </Button>
+            </div>
           )}
 
-          {error && phase === "ready" && <p className="text-sm text-destructive">{error}</p>}
+          {notice && <p className="text-sm text-accent-foreground">{notice}</p>}
+          {error && <p className="text-sm text-destructive">{error}</p>}
         </div>
       )}
 
-      <Dialog open={open} onOpenChange={(next) => !next && setLightbox(null)}>
+      <Dialog open={Boolean(serverOpen || localOpen)} onOpenChange={(next) => !next && setLightbox(null)}>
         <DialogContent className="max-w-[min(100vw-2rem,42rem)] border-border bg-card p-0">
-          {open && uploaded[lightbox!] ? (
-            <>
-              <DialogHeader className="px-4 pt-4">
-                <DialogTitle className="text-sm font-normal text-muted-foreground">
-                  {lightbox! + 1} из {uploaded.length} · {uploaded[lightbox!].name}
-                </DialogTitle>
-              </DialogHeader>
-              <div className="relative bg-black/40 px-2 pb-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={fileSrc(slug, intakeKey, uploaded[lightbox!].id)}
-                  alt={uploaded[lightbox!].name}
-                  className="mx-auto max-h-[70vh] w-full object-contain"
-                />
-                <div className="mt-3 flex justify-between gap-2 px-2">
-                  <Button type="button" variant="outline" size="sm" onClick={() => step(-1)}>
-                    Назад
-                  </Button>
-                  <Button type="button" variant="outline" size="sm" onClick={() => step(1)}>
-                    Дальше
-                  </Button>
-                </div>
-              </div>
-            </>
-          ) : null}
+          {serverOpen && uploaded[lightbox!.index] && (
+            <LightboxBody
+              title={`${lightbox!.index + 1} из ${uploaded.length}`}
+              src={fileSrc(slug, intakeKey, uploaded[lightbox!.index].id)}
+              alt={uploaded[lightbox!.index].name}
+              onPrev={() => stepServer(-1)}
+              onNext={() => stepServer(1)}
+            />
+          )}
+          {localOpen && localPreviews[lightbox!.index] && (
+            <LightboxBody
+              title={`${lightbox!.index + 1} из ${localPreviews.length}`}
+              src={localPreviews[lightbox!.index].url}
+              alt={localPreviews[lightbox!.index].file.name}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </div>
@@ -188,37 +232,66 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
 }
 
 function PreviewGrid({
-  files,
-  slug,
-  intakeKey,
+  title,
+  urls,
   onOpen,
 }: {
-  files: PublicIntakeFile[];
-  slug: string;
-  intakeKey: string;
+  title: string;
+  urls: { id: string; alt: string; src: string }[];
   onOpen: (index: number) => void;
 }) {
   return (
     <div className="space-y-2">
-      <p className="text-sm font-medium">Загруженные фото · нажмите, чтобы открыть</p>
-      <div className="grid grid-cols-3 gap-2">
-        {files.map((file, index) => (
+      <p className="text-sm font-medium">{title}</p>
+      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+        {urls.map((row, index) => (
           <button
-            key={file.id}
+            key={row.id}
             type="button"
-            className="overflow-hidden rounded-lg border border-border bg-background text-left"
+            className="aspect-square overflow-hidden rounded-lg border border-border bg-muted"
             onClick={() => onOpen(index)}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={fileSrc(slug, intakeKey, file.id)}
-              alt={file.name}
-              className="aspect-square w-full object-cover"
-              loading="lazy"
-            />
+            <img src={row.src} alt={row.alt} className="h-full w-full object-cover" loading="lazy" />
           </button>
         ))}
       </div>
     </div>
+  );
+}
+
+function LightboxBody({
+  title,
+  src,
+  alt,
+  onPrev,
+  onNext,
+}: {
+  title: string;
+  src: string;
+  alt: string;
+  onPrev?: () => void;
+  onNext?: () => void;
+}) {
+  return (
+    <>
+      <DialogHeader className="px-4 pt-4">
+        <DialogTitle className="text-sm font-normal text-muted-foreground">{title}</DialogTitle>
+      </DialogHeader>
+      <div className="bg-black/50 px-2 pb-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} className="mx-auto max-h-[72vh] w-full object-contain" />
+        {onPrev && onNext ? (
+          <div className="mt-3 flex justify-between gap-2 px-2">
+            <Button type="button" variant="outline" size="sm" onClick={onPrev}>
+              Назад
+            </Button>
+            <Button type="button" variant="outline" size="sm" onClick={onNext}>
+              Дальше
+            </Button>
+          </div>
+        ) : null}
+      </div>
+    </>
   );
 }

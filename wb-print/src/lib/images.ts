@@ -27,6 +27,18 @@ export function sniffImage(buf: Buffer): { ext: string; mime: string } | null {
   return null;
 }
 
+/** iPhone/VK часто шлют HEIC — в превью браузер их не рисует; перед записью в JPG. */
+export async function browserSafeImage(bytes: Buffer): Promise<Buffer> {
+  const kind = sniffImage(bytes);
+  if (!kind) return bytes;
+  const convert =
+    kind.ext === "heic" || kind.ext === "heif" || kind.ext === "avif" || kind.mime === "image/heic";
+  if (!convert) return bytes;
+  const out = await sharp(bytes, { failOn: "none", animated: false }).rotate().jpeg({ quality: 91 }).toBuffer();
+  if (!sniffImage(out)) throw new Error("не удалось преобразовать фото");
+  return out;
+}
+
 export async function squareCropTopLeft(bytes: Buffer): Promise<{ bytes: Buffer; cropped: boolean }> {
   const meta = await sharp(bytes, { failOn: "none", animated: false }).metadata();
   const width = meta.width ?? 0;
@@ -61,6 +73,11 @@ export async function savePreparedFile(
   source: FileSource,
 ): Promise<{ saved: OrderFile | { error: string }; cropped: boolean; failed: boolean }> {
   let payload = bytes;
+  try {
+    payload = await browserSafeImage(payload);
+  } catch {
+    return { saved: { error: "файл не похож на фото" }, cropped: false, failed: true };
+  }
   let cropped = false;
   let failed = false;
   if (order.kind === "sticker") {
