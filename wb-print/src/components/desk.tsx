@@ -236,7 +236,6 @@ function KindBlock({ title, days, empty }: { title: string; days: ReturnType<typ
                             </span>
                             <span className="text-muted-foreground">
                               {order.expectedPhotos > 0 && left === 0 ? (order.kind === "sticker" ? "макеты на месте" : "все фото здесь") : order.expectedPhotos > 0 ? `ещё ${left}` : "правило не задано"}
-                              {order.diskUrl ? " · ссылка" : ""}
                             </span>
                           </div>
                           <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/10">

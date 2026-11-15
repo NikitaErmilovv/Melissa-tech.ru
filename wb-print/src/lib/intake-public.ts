@@ -1,5 +1,11 @@
 import type { Order } from "./types";
 
+export interface PublicIntakeFile {
+  id: string;
+  name: string;
+  contentType: string;
+}
+
 export interface PublicIntakeView {
   wbOrderId: string;
   articleTitle: string;
@@ -9,6 +15,7 @@ export interface PublicIntakeView {
   cancelled: boolean;
   kind: Order["kind"];
   stickerSquare: boolean;
+  files: PublicIntakeFile[];
 }
 
 export function publicIntakeView(order: Order): PublicIntakeView {
@@ -24,5 +31,10 @@ export function publicIntakeView(order: Order): PublicIntakeView {
     cancelled: order.printStatus === "cancelled" || order.printStatus === "defect",
     kind: order.kind,
     stickerSquare: order.kind === "sticker",
+    files: order.files.map((file) => ({
+      id: file.id,
+      name: file.name,
+      contentType: file.contentType,
+    })),
   };
 }

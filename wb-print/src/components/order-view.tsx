@@ -35,7 +35,6 @@ export function OrderView({ id }: { id: string }) {
   const order = data?.orders.find((item) => item.id === id);
   const [wbOrderId, setWbOrderId] = useState("");
   const [expected, setExpected] = useState("");
-  const [diskUrl, setDiskUrl] = useState("");
   const [articleId, setArticleId] = useState("");
   const [primed, setPrimed] = useState(false);
   const [note, setNote] = useState("");
@@ -49,7 +48,6 @@ export function OrderView({ id }: { id: string }) {
     if (!order || primed) return;
     setWbOrderId(order.wbOrderId);
     setExpected(String(order.expectedPhotos));
-    setDiskUrl(order.diskUrl);
     const match = data?.articles.find((article) => article.vendorCode === order.vendorCode);
     setArticleId(match?.id ?? "");
     setPrimed(true);
@@ -247,34 +245,12 @@ export function OrderView({ id }: { id: string }) {
           <p className="text-xs text-muted-foreground">Если выбран артикул, число файлов берётся из него. Стикеры сохраняются в отдельную папку.</p>
         </section>
 
-        {order.kind === "sticker" ? (
-          <section className="sheet space-y-2 p-4">
-            <h2 className="text-sm">Без ссылки</h2>
-            <p className="text-xs leading-relaxed text-muted-foreground">
-              Для стикеров покупатель присылает фотографии в чат, лучше квадратом. Если кадр не квадратный, в папку сохраняется квадрат с левого верхнего угла — по самой большой стороне, которая помещается. Ссылка на диск только для печати фотографий. Замена уже принятого набора: слово «замена» в течение 30 минут, затем новые файлы.
-            </p>
-          </section>
-        ) : (
-          <section className="sheet space-y-3 p-4">
-            <h2 className="text-sm">Диск</h2>
-            <Input value={diskUrl} onChange={(event) => setDiskUrl(event.target.value)} placeholder="https://disk.yandex.ru/..." className="h-10 bg-background" />
-            <Button
-              type="button"
-              variant="outline"
-              className="h-10 w-full"
-              disabled={Boolean(busy)}
-              onClick={() => run("диск", () => postJson(`/api/orders/${order.id}/disk`, { url: diskUrl }))}
-            >
-              Скачать в эту папку
-            </Button>
-            {order.diskNote ? <p className="text-xs leading-relaxed text-muted-foreground">{order.diskNote}</p> : null}
-            {order.diskUrl ? (
-              <a href={order.diskUrl} target="_blank" rel="noreferrer" className="block text-xs underline">
-                Открыть ссылку
-              </a>
-            ) : null}
-          </section>
-        )}
+        <section className="sheet space-y-2 p-4">
+          <h2 className="text-sm">Покупатель</h2>
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            Фото только со страницы загрузки по ссылке из чата WB. Замена: слово «замена» в течение 30 минут, затем новые файлы на сайте.
+          </p>
+        </section>
 
         <section className="sheet space-y-3 p-4">
           <h2 className="text-sm">Как будто покупатель написал</h2>
