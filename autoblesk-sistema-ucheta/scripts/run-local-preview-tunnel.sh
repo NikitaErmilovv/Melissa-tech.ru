@@ -27,7 +27,7 @@ done
 TUN_SESSION="autoblesk-crm-local-tunnel"
 tmux -f /exec-daemon/tmux.portal.conf has-session -t "=$TUN_SESSION" 2>/dev/null && tmux -f /exec-daemon/tmux.portal.conf kill-session -t "=$TUN_SESSION" || true
 tmux -f /exec-daemon/tmux.portal.conf new-session -d -s "$TUN_SESSION" -- bash -lc "
-  cloudflared tunnel --url \"$APP_URL\" 2>&1 | tee /tmp/autoblesk-local-tunnel.log
+  /tmp/cloudflared tunnel --url \"$APP_URL\" 2>&1 | tee /tmp/autoblesk-local-tunnel.log
 "
 
 sleep 5
