@@ -58314,27 +58314,29 @@ function carLabel(make, model, car) {
   const fromParts = [make?.trim(), model?.trim()].filter(Boolean).join(" ");
   return fromParts || car?.trim() || null;
 }
-async function listClients(search) {
+async function listClients(search, companyId) {
   const db = getDb();
   const base = db.select().from(clients);
+  const scope = companyId != null ? eq(clients.companyId, companyId) : void 0;
   if (!search) {
-    return base.orderBy(desc(clients.createdAt)).limit(100);
+    const q = companyId != null ? base.where(scope) : base;
+    return q.orderBy(desc(clients.createdAt)).limit(100);
   }
   const q = `%${search}%`;
-  return base.where(
-    or(
-      like(clients.name, q),
-      like(clients.phone, q),
-      like(clients.car, q),
-      like(clients.plate, q),
-      like(clients.source, q)
-    )
-  ).orderBy(desc(clients.createdAt)).limit(100);
+  const nameFilter = or(
+    like(clients.name, q),
+    like(clients.phone, q),
+    like(clients.car, q),
+    like(clients.plate, q),
+    like(clients.source, q)
+  );
+  return (companyId != null ? base.where(and(scope, nameFilter)) : base.where(nameFilter)).orderBy(desc(clients.createdAt)).limit(100);
 }
 async function createClient(data) {
   const db = getDb();
   const car = carLabel(data.make, data.model, data.car);
   const res = await db.insert(clients).values({
+    companyId: data.companyId ?? 1,
     name: data.name,
     phone: phoneForStorage(data.phone),
     email: data.email || null,
@@ -58529,13 +58531,18 @@ async function listBayOrders() {
 async function removeOrder(id) {
   await getDb().delete(orders).where(eq(orders.id, id));
 }
-async function listExpenses(limit = 60) {
+async function listExpenses(limit = 60, companyId) {
   const db = getDb();
-  return db.select({ expense: expenses, authorName: users.name }).from(expenses).leftJoin(users, eq(expenses.createdById, users.id)).orderBy(desc(expenses.createdAt)).limit(limit);
+  const query = db.select({ expense: expenses, authorName: users.name }).from(expenses).leftJoin(users, eq(expenses.createdById, users.id));
+  if (companyId != null) {
+    return query.where(eq(expenses.companyId, companyId)).orderBy(desc(expenses.createdAt)).limit(limit);
+  }
+  return query.orderBy(desc(expenses.createdAt)).limit(limit);
 }
 async function createExpense(data) {
   const db = getDb();
   const res = await db.insert(expenses).values({
+    companyId: data.companyId ?? 1,
     category: data.category,
     title: data.title,
     amount: data.amount,
@@ -58845,7 +58852,7 @@ var callsRouter = createRouter({
   missedRevenue: authedQuery.query(({ ctx }) => listMissedRevenue(tenantCompanyId(ctx.user)))
 });
 var clientsRouter = createRouter({
-  list: authedQuery.input(external_exports.object({ search: external_exports.string().max(100).optional() }).optional()).query(({ input: input2 }) => listClients(input2?.search?.trim() || void 0)),
+  list: authedQuery.input(external_exports.object({ search: external_exports.string().max(100).optional() }).optional()).query(({ ctx, input: input2 }) => listClients(input2?.search?.trim() || void 0, tenantCompanyId(ctx.user))),
   create: authedQuery.input(
     external_exports.object({
       name: external_exports.string().trim().min(1, "\u0423\u043A\u0430\u0436\u0438\u0442\u0435 \u0438\u043C\u044F \u043A\u043B\u0438\u0435\u043D\u0442\u0430").max(255),
@@ -58858,7 +58865,7 @@ var clientsRouter = createRouter({
       source: external_exports.string().trim().max(60).optional(),
       notes: external_exports.string().trim().max(4e3).optional()
     })
-  ).mutation(({ ctx, input: input2 }) => createClient({ ...input2, createdById: ctx.user.id })),
+  ).mutation(({ ctx, input: input2 }) => createClient({ ...input2, companyId: tenantCompanyId(ctx.user), createdById: ctx.user.id })),
   update: authedQuery.input(
     external_exports.object({
       id: external_exports.number().int().positive(),
@@ -58896,7 +58903,7 @@ var servicesRouter = createRouter({
   catalog: authedQuery.query(() => listServiceCatalog())
 });
 var ordersRouter = createRouter({
-  list: authedQuery.input(external_exports.object({ limit: external_exports.number().int().min(1).max(200).optional() }).optional()).query(({ input: input2 }) => listOrders(input2?.limit ?? 60)),
+  list: authedQuery.input(external_exports.object({ limit: external_exports.number().int().min(1).max(200).optional() }).optional()).query(({ ctx, input: input2 }) => listOrders(input2?.limit ?? 60, { companyId: tenantCompanyId(ctx.user) })),
   // Быстрое добавление: можно привязать существующего клиента
   // или создать нового «на лету» по имени.
   create: authedQuery.input(
@@ -58929,6 +58936,7 @@ var ordersRouter = createRouter({
         source: input2.clientSource,
         car: input2.car,
         plate: input2.plate,
+        companyId: tenantCompanyId(ctx.user),
         createdById: ctx.user.id
       });
       clientId = client.id;
@@ -58985,7 +58993,7 @@ var expensesRouter = createRouter({
     if (ctx.user.role !== "admin") {
       return [];
     }
-    return listExpenses(input2?.limit ?? 60);
+    return listExpenses(input2?.limit ?? 60, tenantCompanyId(ctx.user));
   }),
   create: adminQuery.input(
     external_exports.object({
@@ -58995,7 +59003,7 @@ var expensesRouter = createRouter({
       notes: external_exports.string().trim().max(4e3).optional()
     })
   ).mutation(async ({ ctx, input: input2 }) => {
-    const id = await createExpense({ ...input2, createdById: ctx.user.id });
+    const id = await createExpense({ ...input2, companyId: tenantCompanyId(ctx.user), createdById: ctx.user.id });
     return { id };
   }),
   remove: adminQuery.input(external_exports.object({ id: external_exports.number().int().positive() })).mutation(async ({ input: input2 }) => {
@@ -59031,7 +59039,7 @@ var statsRouter = createRouter({
       weekIncomeByDay(companyId),
       weekExpenseByDay(companyId),
       listOrders(8, { accounted: true, companyId }),
-      listExpenses(8)
+      listExpenses(8, companyId)
     ]);
     const incomeToday = Number(todayIncomeRow?.total ?? 0);
     const incomeYesterday = Number(yesterdayIncomeRow?.total ?? 0);
