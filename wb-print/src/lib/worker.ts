@@ -82,23 +82,7 @@ function dueOrders(orders: Order[], silenceMin: number, remindMin: number, now: 
 }
 
 async function runReminders() {
-  const db = readDb();
-  const due = dueOrders(db.orders, db.settings.silenceMin, db.settings.remindMin, Date.now());
-  for (const order of due) {
-    const current = readDb();
-    const live = current.orders.find((item) => item.id === order.id);
-    if (!live) continue;
-    if (live.printStatus === "cancelled" || live.printStatus === "defect") continue;
-    const text =
-      live.intakeMode === "link" && !live.diskUrl
-        ? fill(current.templates.askLink, orderVars(live))
-        : fill(current.templates.reminder, orderVars(live));
-    await withDb((draft) => {
-      const row = draft.orders.find((item) => item.id === order.id);
-      if (row) row.lastReminderAt = new Date().toISOString();
-    });
-    await deliver(order.id, text);
-  }
+  /* Автонапоминания в чат WB отключены: приветствие со ссылкой и прогресс с сайта. */
 }
 
 async function armWatch() {
