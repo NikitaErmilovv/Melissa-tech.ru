@@ -58107,6 +58107,54 @@ async function verifySessionToken(token) {
 init_env();
 init_companies();
 
+// api/lib/mail.ts
+function absoluteAppUrl(path) {
+  const base = (env.publicAppUrl ?? "").replace(/\/$/, "");
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return base ? `${base}${p}` : p;
+}
+async function sendResendEmail({ to, subject, html, text }) {
+  if (!env.resendApiKey) {
+    return { skipped: true, reason: "no_api_key" };
+  }
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.resendApiKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      from: env.mailFrom,
+      to: Array.isArray(to) ? to : [to],
+      subject,
+      html,
+      text
+    })
+  });
+  const body = await res.text();
+  if (!res.ok) {
+    throw new Error(`Resend HTTP ${res.status}: ${body.slice(0, 500)}`);
+  }
+  try {
+    return JSON.parse(body);
+  } catch {
+    return { ok: true, raw: body };
+  }
+}
+async function sendRegistrationVerifyEmail({ to, ownerName, studioName, verifyPath }) {
+  const url = absoluteAppUrl(verifyPath);
+  const subject = "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u2014 \u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A";
+  const html = `<!doctype html><html lang="ru"><body style="font-family:Manrope,Segoe UI,sans-serif;background:#FAF7F1;color:#210c02;padding:24px">
+<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${ownerName}!</p>
+<p>\u0412\u044B \u043E\u0441\u0442\u0430\u0432\u0438\u043B\u0438 \u0437\u0430\u044F\u0432\u043A\u0443 \u043D\u0430 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044E \u0441\u0442\u0443\u0434\u0438\u0438 <strong>${studioName}</strong> \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0435 \u00AB\u0410\u0432\u0442\u043E\u0431\u043B\u0435\u0441\u043A\u00BB.</p>
+<p>\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u0430\u0434\u0440\u0435\u0441 \u043F\u043E\u0447\u0442\u044B \u2014 \u043F\u043E\u0441\u043B\u0435 \u044D\u0442\u043E\u0433\u043E \u0437\u0430\u044F\u0432\u043A\u0443 \u0440\u0430\u0441\u0441\u043C\u043E\u0442\u0440\u0438\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D.</p>
+<p><a href="${url}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C email</a></p>
+<p style="font-size:12px;color:#666">\u0415\u0441\u043B\u0438 \u043A\u043D\u043E\u043F\u043A\u0430 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F, \u0441\u043A\u043E\u043F\u0438\u0440\u0443\u0439\u0442\u0435 \u0441\u0441\u044B\u043B\u043A\u0443:<br/><span style="word-break:break-all">${url}</span></p>
+</body></html>`;
+  const text = `\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u0434\u043B\u044F \u0437\u0430\u044F\u0432\u043A\u0438 \u00AB${studioName}\u00BB: ${url}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+
 // api/queries/registration.ts
 init_drizzle_orm();
 init_schema2();
@@ -58238,12 +58286,29 @@ var authRouter = createRouter({
   ).mutation(async ({ input: input2 }) => {
     try {
       const { email: email3, verifyPath } = await submitRegistrationRequest(input2);
+      let emailSent = false;
+      let mailError = null;
+      if (env.resendApiKey) {
+        try {
+          await sendRegistrationVerifyEmail({
+            to: email3,
+            ownerName: input2.ownerName.trim(),
+            studioName: input2.studioName.trim(),
+            verifyPath
+          });
+          emailSent = true;
+        } catch (e) {
+          mailError = e instanceof Error ? e.message : String(e);
+          console.error("[mail] registration verify", mailError);
+        }
+      }
       return {
         ok: true,
         email: email3,
         pending: true,
-        verifyPath,
-        message: "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u043F\u043E\u0447\u0442\u0443 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435. \u041F\u043E\u0441\u043B\u0435 \u044D\u0442\u043E\u0433\u043E \u0437\u0430\u044F\u0432\u043A\u0430 \u043F\u043E\u043F\u0430\u0434\u0451\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D\u0443. \u041F\u0438\u0441\u044C\u043C\u043E \u0447\u0435\u0440\u0435\u0437 Resend \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u043C, \u043A\u043E\u0433\u0434\u0430 \u0431\u0443\u0434\u0435\u0442 \u043A\u043B\u044E\u0447 \u2014 \u0441\u0435\u0439\u0447\u0430\u0441 \u0441\u0441\u044B\u043B\u043A\u0430 \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u043D\u0430 \u044D\u043A\u0440\u0430\u043D\u0435."
+        verifyPath: emailSent ? void 0 : verifyPath,
+        emailSent,
+        message: emailSent ? "\u041C\u044B \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u043B\u0438 \u043F\u0438\u0441\u044C\u043C\u043E \u0441 \u0441\u0441\u044B\u043B\u043A\u043E\u0439 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F. \u041F\u043E\u0441\u043B\u0435 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F \u0437\u0430\u044F\u0432\u043A\u0443 \u0443\u0432\u0438\u0434\u0438\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D." : mailError ? `\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043F\u0438\u0441\u044C\u043C\u043E (${mailError}). \u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435 \u043D\u0430 \u044D\u043A\u0440\u0430\u043D\u0435.` : "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u043F\u043E\u0447\u0442\u0443 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435 \u043D\u0438\u0436\u0435. \u041F\u043E\u0441\u043B\u0435 \u044D\u0442\u043E\u0433\u043E \u0437\u0430\u044F\u0432\u043A\u0430 \u043F\u043E\u043F\u0430\u0434\u0451\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D\u0443."
       };
     } catch (e) {
       throw new TRPCError({
@@ -60067,7 +60132,12 @@ app.get("/api/build-info", (c) =>
   c.json({
     build: "detaildesk-2026-11-15",
     localPreview: env.localPreview,
-    testCabinet: TEST_CABINET_NAME
+    testCabinet: TEST_CABINET_NAME,
+    mail: {
+      resendConfigured: Boolean(env.resendApiKey),
+      from: env.mailFrom,
+      publicAppUrl: env.publicAppUrl || null
+    }
   })
 );
 app.get("/api/dev/preview-login", createPreviewLoginHandler());
