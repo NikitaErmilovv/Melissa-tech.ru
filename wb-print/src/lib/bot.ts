@@ -1,4 +1,3 @@
-import fs from "fs";
 import { folderRelFor, pushLog, readDb, seenEvent, withDb } from "./db";
 import { pullPublicDisk } from "./disks";
 import { savePreparedFile } from "./images";
@@ -11,7 +10,6 @@ import {
   parseArticleCode,
   parseOrderDigits,
   parsePhotoCount,
-  REPLACE_MS,
   wantsReplace,
 } from "./text";
 import type { Article, Database, FileSource, Order } from "./types";
@@ -54,21 +52,6 @@ function findArticle(
   const code = opts.vendorCode?.trim().toLowerCase();
   if (code) return db.articles.find((article) => article.vendorCode.toLowerCase() === code);
   return undefined;
-}
-
-function clearOrderFiles(order: Order) {
-  for (const file of order.files) {
-    const abs = safeAbs(file.relPath);
-    if (!abs) continue;
-    try {
-      fs.unlinkSync(abs);
-    } catch {
-      // файла уже нет
-    }
-  }
-  order.files = [];
-  order.lastPhotoAt = null;
-  pushLog(order, "system", "Прежние фотографии убраны: покупатель написал «замена».");
 }
 
 function assignArticle(order: Order, article: Article) {
@@ -224,24 +207,7 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
     const sticker = order.kind === "sticker";
     const rawUrl = chatIntake ? diskUrlFromText(text) : null;
     const chatAttach = (images.length > 0 || Boolean(rawUrl)) && !chatIntake;
-    const now = Date.now();
-    const wasFull =
-      order.expectedPhotos > 0 &&
-      order.files.length >= order.expectedPhotos &&
-      Boolean(order.completedNoticeAt) &&
-      !order.replacing;
-    const inWindow = Boolean(order.completedNoticeAt) && now - new Date(order.completedNoticeAt!).getTime() <= REPLACE_MS;
-    let openedReplace = false;
-    if (wasFull && wantsReplace(text) && inWindow) {
-      clearOrderFiles(order);
-      order.completedNoticeAt = null;
-      order.replacing = true;
-      order.replaceHintAt = null;
-      order.intakeMode = "photos";
-      order.lastPhotoAt = new Date().toISOString();
-      openedReplace = true;
-    }
-    const accepting = !order.completedNoticeAt || order.replacing || order.files.length < order.expectedPhotos;
+    const accepting = !order.completedNoticeAt || order.files.length < order.expectedPhotos;
 
     const gotBefore = order.files.length;
     let saved = 0;
@@ -302,13 +268,7 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
       const justDone = need > 0 && gotBefore < need && got >= need && !order.completedNoticeAt;
       if (!accepting) {
         const ask = chatAttach || (chatIntake && (images.length > 0 || Boolean(rawUrl))) || wantsReplace(text);
-        if (ask && !inWindow && order.replaceHintAt !== "closed") {
-          replies.push(fill(db.templates.replaceClosed, orderVars(order)));
-          order.replaceHintAt = "closed";
-        } else if (ask && inWindow && !order.replaceHintAt) {
-          replies.push(fill(db.templates.replaceLocked, orderVars(order)));
-          order.replaceHintAt = new Date().toISOString();
-        }
+        if (ask) replies.push(fill(db.templates.complete, orderVars(order)));
       } else if (!order.greetedAt) {
         order.greetedAt = new Date().toISOString();
         if (need === 0) replies.push(fill(db.templates.unknownArticle, orderVars(order)));
@@ -323,8 +283,6 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
         }
       } else if (chatIntake && justDone) {
         replies.push(fill(db.templates.complete, orderVars(order)));
-      } else if (openedReplace && saved === 0 && !fetchUrl) {
-        replies.push(fill(db.templates.replaceAsk, orderVars(order)));
       } else if (chatIntake && saved > 0) {
         replies.push(fill(justDone ? db.templates.complete : db.templates.progress, orderVars(order)));
       } else if (chatIntake && sticker && rawUrl) {
@@ -401,9 +359,9 @@ export async function attachBytes(orderId: string, bytes: Buffer, source: FileSo
       pushLog(order, "system", "Догрузка из чата WB отключена — только сайт.");
       return;
     }
-    const accepting = !order.completedNoticeAt || order.replacing || order.files.length < order.expectedPhotos;
+    const accepting = !order.completedNoticeAt || order.files.length < order.expectedPhotos;
     if (!accepting) {
-      pushLog(order, "system", "Новое фото из чата не сохранил: набор уже принят, слова «замена» не было.");
+      pushLog(order, "system", "Новое фото из чата не сохранил: набор уже принят.");
       return;
     }
     const before = order.files.length;
@@ -475,13 +433,9 @@ export async function forceRemind(orderId: string) {
     throw new Error("по отменённому заказу не напоминаем");
   }
   const full = order.expectedPhotos > 0 && order.files.length >= order.expectedPhotos;
-  const locked = Boolean(order.completedNoticeAt) && !order.replacing && full;
-  const inWindow = locked && Date.now() - new Date(order.completedNoticeAt!).getTime() <= REPLACE_MS;
-  const text = locked
-    ? fill(inWindow ? snap.templates.replaceLocked : snap.templates.replaceClosed, orderVars(order))
-    : full
-      ? fill(snap.templates.complete, orderVars(order))
-      : order.intakeMode === "link" && !order.diskUrl
+  const text = full
+    ? fill(snap.templates.complete, orderVars(order))
+    : order.intakeMode === "link" && !order.diskUrl
         ? fill(snap.templates.askLink, orderVars(order))
         : order.expectedPhotos > 0
           ? fill(snap.templates.reminder, orderVars(order))

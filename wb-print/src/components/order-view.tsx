@@ -146,13 +146,8 @@ export function OrderView({ id }: { id: string }) {
             <div className="h-full rounded-full bg-[#ffc5ee]" style={{ width: `${pct}%` }} />
           </div>
           <p className="mt-3 text-xs text-muted-foreground">Папка на компьютере: data/{order.folderRel}</p>
-          {order.replacing ? <p className="mt-2 text-xs">Покупатель написал «замена». Жду новый набор фотографий.</p> : null}
-          {!order.replacing && order.completedNoticeAt && order.expectedPhotos > 0 && order.files.length >= order.expectedPhotos ? (
-            <p className="mt-2 text-xs text-muted-foreground">
-              {Date.now() > new Date(order.completedNoticeAt).getTime() + 30 * 60 * 1000
-                ? "Набор принят. Время на замену вышло."
-                : `Набор принят. Замена до ${formatTime(new Date(new Date(order.completedNoticeAt).getTime() + 30 * 60 * 1000).toISOString())}: сначала слово «замена», затем новые фотографии.`}
-            </p>
+          {order.completedNoticeAt && order.expectedPhotos > 0 && order.files.length >= order.expectedPhotos ? (
+            <p className="mt-2 text-xs text-muted-foreground">Набор принят, передаём в печать.</p>
           ) : null}
           {order.pending > 0 ? <p className="mt-1 text-xs">WB ещё проверяет {order.pending} файл(ов), заберём следующим опросом.</p> : null}
         </section>
@@ -247,7 +242,7 @@ export function OrderView({ id }: { id: string }) {
         <section className="sheet space-y-2 p-4">
           <h2 className="text-sm">Покупатель</h2>
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Фото только со страницы загрузки по ссылке из чата WB. Замена: слово «замена» в течение 30 минут, затем новые файлы на сайте.
+            Фото только со страницы загрузки по ссылке из чата WB.
           </p>
         </section>
 

@@ -129,9 +129,7 @@ export const DEFAULT_TEMPLATES: Templates = {
 
 Ссылка для загрузки:
 {{uploadLink}}`,
-  complete: `Заказ №{{order}}. Всё в порядке, всё принято ({{got}} из {{need}}). {{acceptedLine}}
-
-Замена в течение 30 минут: напишите «замена» и пришлите файлы заново.`,
+  complete: `Заказ №{{order}}. Всё принято ({{got}} из {{need}}). {{acceptedLine}}`,
   replaceAsk: `Заказ №{{order}}. Прежние фотографии убрал. Загрузите заново {{needText}} на сайте: {{uploadLink}}{{squareLine}}`,
   replaceLocked: `Заказ №{{order}}. Фотографии уже приняты. Чтобы заменить их, в течение 30 минут напишите «замена», затем загрузите новые на сайте: {{uploadLink}}`,
   replaceClosed: `Заказ №{{order}}. Фотографии уже в печати. Время на замену вышло, новые файлы не принимаю.`,
@@ -143,6 +141,9 @@ const STOCK_TEMPLATES: Partial<Record<TemplateKey, string[]>> = {
   complete: [
     `Все {{need}} фото по заказу №{{order}} на месте. Передаём в печать.`,
     `Все {{needText}} по заказу №{{order}} на месте. Можно печатать.`,
+    `Заказ №{{order}}. Всё в порядке, всё принято ({{got}} из {{need}}). {{acceptedLine}}
+
+Замена в течение 30 минут: напишите «замена» и пришлите файлы заново.`,
   ],
   greetingSticker: [
     `Здравствуйте! Заказ Wildberries №{{order}} — «{{article}}».
@@ -170,6 +171,7 @@ const LEGACY_TEMPLATE_MARKERS: Partial<Record<TemplateKey, RegExp[]>> = {
   askPhotos: [/Яндекс/i, /Google/i, /несколькими сообщениями: каждое фото/i],
   askLink: [/Яндекс/i, /Google/i],
   diskSaved: [/Яндекс/i, /Google/i, /Ссылку записал/i],
+  complete: [/Замена в течение/i, /напишите «замена»/i, /30 минут.*замена/i],
 };
 
 const PREVIOUS_TEMPLATES: Partial<Templates> = {
