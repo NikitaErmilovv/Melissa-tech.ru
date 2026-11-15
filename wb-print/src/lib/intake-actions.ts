@@ -27,8 +27,6 @@ export async function notifyIntakeProgress(orderId: string, gotBefore: number) {
       row.replaceHintAt = null;
       row.lastReminderAt = null;
     });
-  } else if (got > gotBefore && got < need) {
-    text = fill(snap.templates.progress, orderVars(order));
   }
   if (text) await deliver(orderId, text);
 }

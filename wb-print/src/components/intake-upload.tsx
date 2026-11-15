@@ -27,7 +27,7 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   const [phase, setPhase] = useState<Phase>("loading");
   const [view, setView] = useState<PublicIntakeView | null>(null);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
+  const [hint, setHint] = useState("");
   const [busy, setBusy] = useState(false);
   const [uploadPct, setUploadPct] = useState<number | null>(null);
   const [uploadPhase, setUploadPhase] = useState<"upload" | "processing" | null>(null);
@@ -94,16 +94,22 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
     const got = view ? Math.max(view.got, onServer) : 0;
     const total = got + picked.length;
     if (need > 0 && total > need) {
+      setHint("");
       setError(
         `В заказе ${need} фото, уже ${got}. Вы добавили ещё ${picked.length} — лишних ${total - need}. Уберите лишние.`,
       );
+      return;
+    }
+    if (need > 0 && total < need) {
+      setError("");
+      setHint(`Добавьте все фото: нужно ${need}, сейчас ${total}. Не хватает ${need - total}.`);
       return;
     }
     setBusy(true);
     setUploadPct(0);
     setUploadPhase("upload");
     setError("");
-    setNotice("");
+    setHint("");
     try {
       const form = new FormData();
       for (const file of picked) form.append("files", file);
@@ -124,10 +130,11 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
       const nextView = data.view ?? null;
       if (nextView) setView(nextView);
       else await refresh(true);
-      const saved = data.saved ?? 0;
       const skipped = data.skipped ?? 0;
-      if (saved > 0 && !nextView?.complete) {
-        setNotice(saved === 1 ? "Фото отправлено." : `Отправлено ${saved} фото.`);
+      const saved = data.saved ?? 0;
+      if (nextView?.complete) {
+        setHint("Всё успешно отправлено");
+        setError("");
       } else if (skipped > 0 && saved === 0) {
         setError(
           "Файлы не приняты — браузер мог отправить пустой файл. Выберите снова или откройте ссылку в Safari/Chrome.",
@@ -148,20 +155,21 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   const pendingAdd = picked.length;
   const displayGot = gotCount + pendingAdd;
   const overNeed = Boolean(view && view.need > 0 && displayGot > view.need);
+  const underNeed = Boolean(view && view.need > 0 && displayGot < view.need && pendingAdd > 0);
+  const sendReady = Boolean(view && view.need > 0 && displayGot === view.need && pendingAdd > 0);
   const canUpload = Boolean(view && !view.cancelled && view.need > 0 && !view.complete);
 
   async function removeUploaded(fileId: string) {
     if (!window.confirm("Удалить это фото?")) return;
     setBusy(true);
     setError("");
-    setNotice("");
+    setHint("");
     try {
       const res = await fetch(fileSrc(slug, intakeKey, fileId), { method: "DELETE" });
       const data = (await res.json()) as { view?: PublicIntakeView; error?: string };
       if (!res.ok) throw new Error(data.error || "не удалось удалить");
       if (data.view) setView(data.view);
       else await refresh(true);
-      setNotice("Фото удалено — можно загрузить другое.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "ошибка удаления");
     } finally {
@@ -210,7 +218,11 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
                 <span className="text-accent">{displayGot}</span>
               </p>
             )}
-            {gotCount > 0 && pendingAdd === 0 && !view.complete ? (
+            {hint ? (
+              <p className="mt-2 text-sm font-medium text-accent">{hint}</p>
+            ) : view.complete ? (
+              <p className="mt-2 text-sm text-muted-foreground">Всё успешно отправлено</p>
+            ) : gotCount > 0 && pendingAdd === 0 ? (
               <p className="mt-1 text-xs text-muted-foreground">фото принято</p>
             ) : null}
           </div>
@@ -240,6 +252,11 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
           {overNeed ? (
             <p className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
               Фотографий больше, чем в заказе ({view.need}). Уберите {displayGot - view.need} лишних перед отправкой.
+            </p>
+          ) : null}
+          {underNeed ? (
+            <p className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              Добавьте все {view.need} фото — сейчас {displayGot}, не хватает {view.need - displayGot}.
             </p>
           ) : null}
 
@@ -303,7 +320,7 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
               <Button
                 type="button"
                 className="w-full"
-                disabled={busy || !picked.length || overNeed}
+                disabled={busy || !picked.length || overNeed || !sendReady}
                 onClick={() => void uploadFiles()}
               >
                 {busy
@@ -332,8 +349,7 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
             </div>
           )}
 
-          {notice && <p className="text-sm text-accent-foreground">{notice}</p>}
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error ? <p className="text-sm text-destructive">{error}</p> : null}
         </div>
       )}
 
