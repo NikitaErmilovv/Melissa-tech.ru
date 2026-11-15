@@ -29719,6 +29719,10 @@ async function createStudioWithOwner(input2) {
   });
   const userId = Number(userRes[0].insertId);
   await db.insert(staffProfiles).values({ userId, position: "\u0412\u043B\u0430\u0434\u0435\u043B\u0435\u0446", isActive: true });
+  if (env.localPreview) {
+    await ensureStudioServiceCatalogFromDemo(companyId);
+    await ensureStudioDashboardSampleData(companyId, userId);
+  }
   return { companyId, userId, unionId };
 }
 async function issueStudioCredentials(input2) {
@@ -58415,8 +58419,88 @@ async function clientStats(clientId) {
 init_drizzle_orm();
 init_schema2();
 init_connection();
-async function listServiceCatalog() {
-  return getDb().select().from(serviceCatalog).where(eq(serviceCatalog.active, true)).orderBy(asc(serviceCatalog.sortOrder), asc(serviceCatalog.name));
+async function ensureStudioServiceCatalogFromDemo(companyId) {
+  if (companyId === 1) return;
+  const db = getDb();
+  const [{ n }] = await db.select({ n: sql`COUNT(*)` }).from(serviceCatalog).where(eq(serviceCatalog.companyId, companyId));
+  if (Number(n) > 0) return;
+  const demo = await db.select().from(serviceCatalog).where(eq(serviceCatalog.companyId, 1));
+  if (demo.length === 0) return;
+  for (const row of demo) {
+    const { id, createdAt, ...rest } = row;
+    await db.insert(serviceCatalog).values({ ...rest, companyId });
+  }
+}
+async function listServiceCatalog(companyId) {
+  const db = getDb();
+  let rows = await db.select().from(serviceCatalog).where(and(eq(serviceCatalog.active, true), eq(serviceCatalog.companyId, companyId))).orderBy(asc(serviceCatalog.sortOrder), asc(serviceCatalog.name));
+  if (rows.length === 0 && companyId !== 1) {
+    await ensureStudioServiceCatalogFromDemo(companyId);
+    rows = await db.select().from(serviceCatalog).where(and(eq(serviceCatalog.active, true), eq(serviceCatalog.companyId, companyId))).orderBy(asc(serviceCatalog.sortOrder), asc(serviceCatalog.name));
+  }
+  return rows;
+}
+async function ensureStudioDashboardSampleData(companyId, userId) {
+  const db = getDb();
+  const [{ n: orderCount }] = await db.select({ n: sql`COUNT(*)` }).from(orders).where(and(eq(orders.companyId, companyId), isNotNull(orders.postedAt)));
+  if (Number(orderCount) >= 5) return;
+  let clientRows = await db.select({ id: clients.id }).from(clients).where(eq(clients.companyId, companyId)).limit(8);
+  const seedClients = [
+    { name: "\u0418\u0432\u0430\u043D \u041F\u0435\u0442\u0440\u043E\u0432", phone: "+79001110001", car: "Toyota Camry" },
+    { name: "\u041C\u0430\u0440\u0438\u044F \u0421\u0438\u0434\u043E\u0440\u043E\u0432\u0430", phone: "+79001110002", car: "BMW X5" },
+    { name: "\u0410\u043B\u0435\u043A\u0441\u0435\u0439 \u041A\u043E\u0437\u043B\u043E\u0432", phone: "+79001110003", car: "Kia Rio" }
+  ];
+  for (let i = clientRows.length; i < seedClients.length; i++) {
+    await createClient({ ...seedClients[i], companyId, createdById: userId });
+  }
+  clientRows = await db.select({ id: clients.id, car: clients.car }).from(clients).where(eq(clients.companyId, companyId)).limit(8);
+  if (clientRows.length === 0) return;
+  const samples = [
+    { category: "wash", services: "\u041A\u043E\u043C\u043F\u043B\u0435\u043A\u0441\u043D\u0430\u044F \u043C\u043E\u0439\u043A\u0430", amount: 3500, daysAgo: 0, materialCost: 200 },
+    { category: "polish", services: "\u041F\u043E\u043B\u0438\u0440\u043E\u0432\u043A\u0430 \u043A\u0443\u0437\u043E\u0432\u0430", amount: 12e3, daysAgo: 0, materialCost: 1500 },
+    { category: "ceramic", services: "\u041A\u0435\u0440\u0430\u043C\u0438\u0447\u0435\u0441\u043A\u043E\u0435 \u043F\u043E\u043A\u0440\u044B\u0442\u0438\u0435", amount: 28e3, daysAgo: 1, materialCost: 4e3 },
+    { category: "wash", services: "\u0414\u0435\u0442\u0435\u0439\u043B\u0438\u043D\u0433 \u0441\u0430\u043B\u043E\u043D\u0430", amount: 6500, daysAgo: 2, materialCost: 600 },
+    { category: "other", services: "\u0425\u0438\u043C\u0447\u0438\u0441\u0442\u043A\u0430 \u0441\u0430\u043B\u043E\u043D\u0430", amount: 4e3, daysAgo: 3, materialCost: 300 },
+    { category: "polish", services: "\u0410\u0431\u0440\u0430\u0437\u0438\u0432 \u0444\u0430\u0440", amount: 8500, daysAgo: 4, materialCost: 400 },
+    { category: "wash", services: "\u041C\u043E\u0439\u043A\u0430 + \u0432\u043E\u0441\u043A", amount: 5e3, daysAgo: 5, materialCost: 250 },
+    { category: "ceramic", services: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u043A\u0435\u0440\u0430\u043C\u0438\u043A\u0438", amount: 15e3, daysAgo: 6, materialCost: 2e3 }
+  ];
+  for (let i = 0; i < samples.length; i++) {
+    const spec = samples[i];
+    const client = clientRows[i % clientRows.length];
+    const when = /* @__PURE__ */ new Date();
+    when.setDate(when.getDate() - spec.daysAgo);
+    when.setHours(10 + i % 6, 30, 0, 0);
+    const orderId = await createOrder({
+      companyId,
+      clientId: client.id,
+      car: client.car,
+      category: spec.category,
+      services: spec.services,
+      amount: spec.amount,
+      materialCost: spec.materialCost,
+      materialsSet: true,
+      paymentMethod: i % 2 === 0 ? "card" : "cash",
+      status: "done",
+      performedById: userId,
+      createdById: userId
+    });
+    await db.update(orders).set({ postedAt: when, createdAt: when }).where(eq(orders.id, orderId));
+  }
+  const [{ n: expCount }] = await db.select({ n: sql`COUNT(*)` }).from(expenses).where(eq(expenses.companyId, companyId));
+  if (Number(expCount) < 3) {
+    const expenseSamples = [
+      { category: "rent", title: "\u0410\u0440\u0435\u043D\u0434\u0430 \u0431\u043E\u043A\u0441\u0430", amount: 15e3, daysAgo: 2 },
+      { category: "supplies", title: "\u0420\u0430\u0441\u0445\u043E\u0434\u043D\u0438\u043A\u0438 \u043D\u0430 \u043D\u0435\u0434\u0435\u043B\u044E", amount: 4800, daysAgo: 1 },
+      { category: "other", title: "\u041A\u043E\u043C\u043C\u0443\u043D\u0430\u043B\u044C\u043D\u044B\u0435 \u0443\u0441\u043B\u0443\u0433\u0438", amount: 1200, daysAgo: 0 }
+    ];
+    for (const spec of expenseSamples) {
+      const when = /* @__PURE__ */ new Date();
+      when.setDate(when.getDate() - spec.daysAgo);
+      const id = await createExpense({ companyId, category: spec.category, title: spec.title, amount: spec.amount, createdById: userId });
+      await db.update(expenses).set({ createdAt: when }).where(eq(expenses.id, id));
+    }
+  }
 }
 
 // api/queries/business.ts
@@ -58900,7 +58984,7 @@ var clientsRouter = createRouter({
   })
 });
 var servicesRouter = createRouter({
-  catalog: authedQuery.query(() => listServiceCatalog())
+  catalog: authedQuery.query(({ ctx }) => listServiceCatalog(tenantCompanyId(ctx.user)))
 });
 var ordersRouter = createRouter({
   list: authedQuery.input(external_exports.object({ limit: external_exports.number().int().min(1).max(200).optional() }).optional()).query(({ ctx, input: input2 }) => listOrders(input2?.limit ?? 60, { companyId: tenantCompanyId(ctx.user) })),
@@ -59014,6 +59098,9 @@ var expensesRouter = createRouter({
 var statsRouter = createRouter({
   summary: authedQuery.query(async ({ ctx }) => {
     const companyId = tenantCompanyId(ctx.user);
+    if (env.localPreview) {
+      await ensureStudioDashboardSampleData(companyId, ctx.user.id);
+    }
     const [
       todayIncomeRow,
       yesterdayIncomeRow,
@@ -59799,6 +59886,13 @@ function createPreviewLoginHandler() {
       role: asSuper ? "superadmin" : asEmployee ? "user" : "admin",
       lastSignInAt: /* @__PURE__ */ new Date()
     });
+    if (!asSuper && !asEmployee) {
+      const previewUser = await findUserByUnionId(unionId);
+      if (previewUser?.companyId) {
+        await ensureStudioServiceCatalogFromDemo(previewUser.companyId);
+        await ensureStudioDashboardSampleData(previewUser.companyId, previewUser.id);
+      }
+    }
     const token = await signSessionToken({
       unionId,
       clientId: env.appId
