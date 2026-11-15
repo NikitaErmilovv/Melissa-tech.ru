@@ -1,4 +1,6 @@
 import fs from "fs";
+import { intakeRemoveFile } from "@/lib/intake-actions";
+import { fail } from "@/lib/http";
 import { orderByIntakeRoute } from "@/lib/intake-token";
 import { safeAbs } from "@/lib/paths";
 
@@ -22,4 +24,19 @@ export async function GET(
       "Cache-Control": "private, max-age=300",
     },
   });
+}
+
+export async function DELETE(
+  _request: Request,
+  context: { params: Promise<{ slug: string; key: string; fileId: string }> },
+) {
+  try {
+    const { slug, key, fileId } = await context.params;
+    const order = orderByIntakeRoute(slug, key);
+    if (!order) throw new Error("ссылка недействительна");
+    const result = await intakeRemoveFile(order.id, fileId);
+    return Response.json(result);
+  } catch (error) {
+    return fail(error);
+  }
 }

@@ -103,12 +103,20 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
         throw new Error(`Файл слишком большой — до ${MAX_UPLOAD_MB} МБ на одно фото.`);
       }
       if (!res.ok) throw new Error(data.error || "не удалось загрузить");
-      if (data.view) setView(data.view);
-      else await refresh(true);
+      const fresh = await fetch(apiBase(slug, intakeKey), { cache: "no-store" });
+      const freshData = (await fresh.json()) as { view?: PublicIntakeView };
+      const nextView = freshData.view ?? data.view ?? null;
+      if (nextView) setView(nextView);
       const saved = data.saved ?? 0;
       const skipped = data.skipped ?? 0;
       if (saved > 0) {
-        setNotice(`Принято ${saved} фото${skipped ? `, пропущено ${skipped}` : ""}.`);
+        const got = nextView?.got ?? saved;
+        const need = nextView?.need ?? 0;
+        if (nextView?.complete) {
+          setNotice("Всё отлично, все фотографии приняты.");
+        } else {
+          setNotice(`Принято ${saved} фото${skipped ? `, пропущено ${skipped}` : ""}. Сейчас ${got}${need ? ` из ${need}` : ""}.`);
+        }
       } else if (skipped > 0) {
         setError(
           "Файлы не приняты — браузер мог отправить пустой файл. Выберите снова или откройте ссылку в Safari/Chrome.",
@@ -123,7 +131,29 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   }
 
   const uploaded = view?.files ?? [];
-  const canUpload = Boolean(view && !view.cancelled && view.need > 0 && !view.complete);
+  const gotCount = view ? Math.max(view.got, uploaded.length) : 0;
+  const pendingAdd = picked.length;
+  const counterGot = gotCount + pendingAdd;
+  const canUpload = Boolean(view && !view.cancelled && view.need > 0 && gotCount < view.need);
+
+  async function removeUploaded(fileId: string) {
+    if (!window.confirm("Удалить это фото?")) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const res = await fetch(fileSrc(slug, intakeKey, fileId), { method: "DELETE" });
+      const data = (await res.json()) as { view?: PublicIntakeView; error?: string };
+      if (!res.ok) throw new Error(data.error || "не удалось удалить");
+      if (data.view) setView(data.view);
+      else await refresh(true);
+      setNotice("Фото удалено — можно загрузить другое.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "ошибка удаления");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   const serverOpen =
     lightbox?.kind === "server" &&
@@ -155,14 +185,22 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
           <div>
             <p className="text-sm text-muted-foreground">Заказ Wildberries № {view.wbOrderId}</p>
             <p className="mt-1 text-sm text-muted-foreground">{view.articleTitle}</p>
-            {view.need > 0 && (
+            {view.need > 0 ? (
               <p className="font-heading mt-4 text-4xl font-black tracking-tight">
-                <span className="text-accent">{view.got}</span>
+                <span className="text-accent">{counterGot}</span>
                 <span className="text-muted-foreground"> / </span>
                 <span>{view.need}</span>
               </p>
+            ) : (
+              <p className="font-heading mt-4 text-4xl font-black tracking-tight">
+                <span className="text-accent">{counterGot}</span>
+              </p>
             )}
-            <p className="mt-1 text-xs text-muted-foreground">фото принято</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {pendingAdd > 0
+                ? `${gotCount} на сервере · +${pendingAdd} к отправке`
+                : "фото принято"}
+            </p>
           </div>
 
           {uploaded.length > 0 && (
@@ -170,6 +208,7 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
               title="Уже загружено"
               urls={uploaded.map((file) => ({ id: file.id, alt: file.name, src: fileSrc(slug, intakeKey, file.id) }))}
               onOpen={(index) => setLightbox({ kind: "server", index })}
+              onRemove={!view.cancelled ? (id) => void removeUploaded(id) : undefined}
             />
           )}
 
@@ -306,24 +345,40 @@ function PreviewGrid({
   title,
   urls,
   onOpen,
+  onRemove,
 }: {
   title: string;
   urls: { id: string; alt: string; src: string }[];
   onOpen: (index: number) => void;
+  onRemove?: (id: string) => void;
 }) {
   return (
     <div className="space-y-2">
       <p className="text-sm font-medium">{title}</p>
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
         {urls.map((row, index) => (
-          <button
-            key={row.id}
-            type="button"
-            className="aspect-square overflow-hidden rounded-lg border border-border bg-muted"
-            onClick={() => onOpen(index)}
-          >
-            <Thumb src={row.src} alt={row.alt} />
-          </button>
+          <div key={row.id} className="relative">
+            <button
+              type="button"
+              className="aspect-square w-full overflow-hidden rounded-lg border border-border bg-muted"
+              onClick={() => onOpen(index)}
+            >
+              <Thumb src={row.src} alt={row.alt} />
+            </button>
+            {onRemove ? (
+              <button
+                type="button"
+                aria-label="Удалить фото"
+                className="absolute top-1 right-1 flex size-7 items-center justify-center rounded-full border border-border bg-background/95 text-xs font-bold shadow-sm"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onRemove(row.id);
+                }}
+              >
+                ×
+              </button>
+            ) : null}
+          </div>
         ))}
       </div>
     </div>
