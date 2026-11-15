@@ -1,0 +1,1 @@
+import{j as o}from"./index-CVeIa8uA.js";import{c as t}from"./utils-Bk382tBs.js";function i({className:e,...s}){return o.jsxDEV("div",{className:t("animate-pulse rounded-md bg-muted",e),...s},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/components/ui/skeleton.tsx",lineNumber:5,columnNumber:5},this)}export{i as S};
