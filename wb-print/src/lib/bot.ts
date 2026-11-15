@@ -134,7 +134,7 @@ function freshOrder(db: Database, input: IngestInput, text: string): Order {
     createdAt,
     updatedAt: createdAt,
     printStatus: "new",
-    intakeMode: "choice",
+    intakeMode: kind === "sticker" ? "photos" : "photos",
     greetedAt: null,
     replacing: false,
     replaceHintAt: null,
@@ -181,7 +181,7 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
   const images = input.images ?? [];
 
   const prepared = await withDb(async (db) => {
-    if (seenEvent(db, input.eventId)) {
+    if (input.eventId && db.settings.seenEventIds.includes(input.eventId)) {
       const existing = db.orders.find((order) => input.chatId && order.chatId === input.chatId);
       return { orderId: existing?.id ?? "", replies: [] as string[], fetchUrl: "" };
     }
@@ -298,31 +298,40 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
           order.replaceHintAt = new Date().toISOString();
         }
       } else if (!order.greetedAt) {
+        order.greetedAt = new Date().toISOString();
         if (need === 0) replies.push(fill(db.templates.unknownArticle, orderVars(order)));
-        else if (justDone) replies.push(fill(db.templates.complete, orderVars(order)));
-        else if (sticker && saved === 0) {
+        else if (sticker) {
           replies.push(fill(db.templates.greetingSticker, orderVars(order)));
           if (rawUrl) replies.push(fill(db.templates.stickerNoLink, orderVars(order)));
-        } else if (saved > 0) replies.push(fill(db.templates.progress, orderVars(order)));
+        } else {
+          replies.push(fill(db.templates.greeting, orderVars(order)));
+        }
+        if (justDone) replies.push(fill(db.templates.complete, orderVars(order)));
+        else if (saved > 0) replies.push(fill(db.templates.progress, orderVars(order)));
         else if (!sticker && url) replies.push(fill(db.templates.diskSaved, orderVars(order)));
-        else if (!sticker && intent === "photos") replies.push(fill(db.templates.askPhotos, orderVars(order)));
-        else if (!sticker && intent === "link") replies.push(fill(db.templates.askLink, orderVars(order)));
-        else replies.push(fill(sticker ? db.templates.greetingSticker : db.templates.greeting, orderVars(order)));
-        order.greetedAt = new Date().toISOString();
       } else if (justDone) {
         replies.push(fill(db.templates.complete, orderVars(order)));
       } else if (openedReplace && saved === 0 && !fetchUrl) {
         replies.push(fill(db.templates.replaceAsk, orderVars(order)));
-      } else if (saved > 0 && gotBefore === 0) {
-        replies.push(fill(db.templates.progress, orderVars(order)));
+      } else if (saved > 0) {
+        replies.push(fill(justDone ? db.templates.complete : db.templates.progress, orderVars(order)));
       } else if (sticker && rawUrl) {
         replies.push(fill(db.templates.stickerNoLink, orderVars(order)));
       } else if (!sticker && url) {
         replies.push(fill(db.templates.diskSaved, orderVars(order)));
-      } else if (!sticker && intent === "photos" && saved === 0) {
+      } else if (!sticker && images.length > 0 && saved === 0) {
+        replies.push(
+          fill(
+            db.templates.askPhotos,
+            orderVars(order),
+          ),
+        );
+      } else if (!sticker && (rawUrl || intent === "link")) {
+        replies.push(fill(db.templates.diskSaved, orderVars(order)));
+      } else if (!sticker && text && (intent === "photos" || intent === "link")) {
+        replies.push(fill(intent === "link" ? db.templates.askLink : db.templates.askPhotos, orderVars(order)));
+      } else if (!sticker && text && !wantsReplace(text) && intent !== "none") {
         replies.push(fill(db.templates.askPhotos, orderVars(order)));
-      } else if (!sticker && intent === "link" && !url) {
-        replies.push(fill(db.templates.askLink, orderVars(order)));
       }
       if (justDone) {
         order.completedNoticeAt = new Date().toISOString();

@@ -105,22 +105,20 @@ export const DEFAULT_TEMPLATES: Templates = {
   greeting: `Здравствуйте! Заказ Wildberries №{{order}} — «{{article}}».
 Нужно {{needText}}.
 
-Как пришлёте файлы?
-Напишите «фото» — прямо в этот чат, можно несколькими сообщениями.
-Напишите «ссылка» — на Яндекс Диск или Google Диск. Диск должен быть открыт по ссылке.`,
-  askPhotos: `Заказ №{{order}}. Пришлите {{needText}} в этот чат. Можно несколькими сообщениями: каждый файл я сохраняю сразу.`,
-  askLink: `Заказ №{{order}}. Пришлите ссылку на Яндекс Диск или Google Диск. Проверьте, что доступ открыт по ссылке и без пароля, иначе файлы не скачаются.`,
-  diskSaved: `Заказ №{{order}}. Ссылку записал. Если диск открыт, файлы скачаются в папку заказа. Если нет — пришлите их в чат.`,
+Пришлите фотографии прямо в этот чат, или отправьте ссылку на диск с фотографиями. Диск должен быть с открытым доступом.`,
+  askPhotos: `Заказ №{{order}}. Жду {{needText}} в этом чате — можно несколькими сообщениями.`,
+  askLink: `Заказ №{{order}}. Жду ссылку на Яндекс Диск или Google Диск с открытым доступом.`,
+  diskSaved: `Заказ №{{order}}. Ссылку получил, скачиваю фото. Если диск закрыт — откройте доступ или пришлите файлы в чат.`,
   greetingSticker: `Здравствуйте! Заказ Wildberries №{{order}} — «{{article}}».
 
 Пришлите, пожалуйста, {{needText}}, {{which}} хотели бы напечатать.
 Лучше сразу квадратные. Если фотография будет не квадратной, обрежу квадрат с левого верхнего угла — по самой большой стороне, которая помещается.`,
   stickerNoLink: `Заказ №{{order}}. Для стикеров ссылку не принимаю. Пришлите квадратные фотографии прямо в этот чат.`,
-  progress: `Заказ №{{order}}. Принял {{got}} из {{need}}. Ещё не хватает {{leftText}} — дошлите следующими сообщениями.`,
-  reminder: `Заказ №{{order}}: принято {{got}} из {{need}}. Вы не отправили ещё {{leftText}}.`,
-  complete: `Заказ №{{order}}. {{acceptedLine}}
+  progress: `Заказ №{{order}}. Принял {{got}} из {{need}}. Ещё нужно {{leftText}}.`,
+  reminder: `Заказ №{{order}}: уже {{got}} из {{need}}. Не хватает {{leftText}}.`,
+  complete: `Заказ №{{order}}. Всё в порядке, всё принято ({{got}} из {{need}}). {{acceptedLine}}
 
-Если нужно заменить, в течение 30 минут напишите «замена» и пришлите файлы заново. Без этого слова новые фотографии не возьму.`,
+Замена в течение 30 минут: напишите «замена» и пришлите файлы заново.`,
   replaceAsk: `Заказ №{{order}}. Прежние фотографии убрал. Пришлите заново {{needText}}.{{squareLine}}`,
   replaceLocked: `Заказ №{{order}}. Фотографии уже приняты. Чтобы заменить их, в течение 30 минут напишите «замена», затем пришлите новые.`,
   replaceClosed: `Заказ №{{order}}. Фотографии уже в печати. Время на замену вышло, новые файлы не принимаю.`,
@@ -186,8 +184,8 @@ export function orderVars(order: Order): Record<string, string | number> {
   const needText = countPhrase(need, kind);
   const acceptedLine =
     kind === "sticker"
-      ? `Принял ${needText} — ${need === 1 ? "она пойдёт" : "они пойдут"} в печать.`
-      : `Все ${needText} приняты и пойдут в печать.`;
+      ? `Макеты на месте, передаём в печать.`
+      : `Фотографии на месте, передаём в печать.`;
   return {
     order: order.wbOrderId || "уточняется",
     article: order.articleTitle || order.vendorCode || "товар",
@@ -215,12 +213,13 @@ export function wantsReplace(text: string): boolean {
 export function buyerIntent(text: string): "photos" | "link" | "none" {
   const t = text.trim().toLowerCase();
   if (!t) return "none";
+  if (diskUrlFromText(t)) return "link";
   if (/https?:\/\//.test(t) || /яндекс|yandex|yadi\.sk|google|диск/.test(t)) {
-    if (/фото/.test(t) && !/ссылк|диск|http/.test(t)) return "photos";
-    if (/ссылк|диск|яндекс|yandex|google|http/.test(t)) return "link";
+    if (/фото|фотк|картинк|снимк/i.test(t) && !/ссылк|диск|http/i.test(t)) return "photos";
+    return "link";
   }
-  if (/^(фото|фотки|фотографии|картинки|стикер|стикеры|макет|макеты)\b/.test(t)) return "photos";
-  if (/\bссылк/.test(t) && t.length < 120) return "link";
+  if (/фото|фотк|фотограф|картинк|стикер|стикеры|макет/i.test(t)) return "photos";
+  if (/ссылк/i.test(t) && t.length < 200) return "link";
   return "none";
 }
 
