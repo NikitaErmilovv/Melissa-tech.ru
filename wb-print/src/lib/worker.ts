@@ -88,6 +88,7 @@ async function runReminders() {
     const current = readDb();
     const live = current.orders.find((item) => item.id === order.id);
     if (!live) continue;
+    if (live.printStatus === "cancelled" || live.printStatus === "defect") continue;
     const text =
       live.intakeMode === "link" && !live.diskUrl
         ? fill(current.templates.askLink, orderVars(live))

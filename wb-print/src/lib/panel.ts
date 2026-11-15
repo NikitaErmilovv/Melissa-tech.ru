@@ -189,10 +189,10 @@ export async function saveSettings(patch: {
       }
     }
     if (typeof patch.silenceMin === "number" && Number.isFinite(patch.silenceMin)) {
-      db.settings.silenceMin = clamp(patch.silenceMin, 1, 30);
+      db.settings.silenceMin = clamp(patch.silenceMin, 5, 30);
     }
     if (typeof patch.remindMin === "number" && Number.isFinite(patch.remindMin)) {
-      db.settings.remindMin = clamp(patch.remindMin, 1, 60);
+      db.settings.remindMin = clamp(patch.remindMin, 20, 120);
     }
     if (typeof patch.liveReplies === "boolean") {
       db.settings.liveReplies = patch.liveReplies;

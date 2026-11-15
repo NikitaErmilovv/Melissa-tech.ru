@@ -27,8 +27,8 @@ export function SettingsView() {
   const router = useRouter();
   const { data, reload } = useDesk();
   const [token, setToken] = useState("");
-  const [silence, setSilence] = useState("2");
-  const [remind, setRemind] = useState("4");
+  const [silence, setSilence] = useState("5");
+  const [remind, setRemind] = useState("20");
   const [primed, setPrimed] = useState(false);
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState("");
