@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { intakePath } from "@/lib/intake-link";
 import { countPhrase } from "@/lib/text";
 import type { PrintStatus } from "@/lib/types";
 import { formatStamp, formatTime } from "@/lib/time";
@@ -98,7 +99,12 @@ export function OrderView({ id }: { id: string }) {
             {order.source === "wb" && order.intakeToken ? (
               <p className="mt-1 text-xs text-muted-foreground">
                 Страница загрузки для покупателя:{" "}
-                <a className="underline" href={`/upload/${encodeURIComponent(order.intakeToken)}`} target="_blank" rel="noreferrer">
+                <a
+                  className="underline"
+                  href={`/upload/${encodeURIComponent(intakePath(order).slug)}/${encodeURIComponent(order.intakeToken)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   открыть
                 </a>
               </p>

@@ -8,7 +8,11 @@ import type { PublicIntakeView } from "@/lib/intake-public";
 
 type Phase = "loading" | "ready" | "error";
 
-export function IntakeUpload({ token }: { token: string }) {
+function apiBase(slug: string, key: string) {
+  return `/api/intake/${encodeURIComponent(slug)}/${encodeURIComponent(key)}`;
+}
+
+export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: string }) {
   const [phase, setPhase] = useState<Phase>("loading");
   const [view, setView] = useState<PublicIntakeView | null>(null);
   const [error, setError] = useState("");
@@ -19,7 +23,7 @@ export function IntakeUpload({ token }: { token: string }) {
     setPhase("loading");
     setError("");
     try {
-      const res = await fetch(`/api/intake/${encodeURIComponent(token)}`);
+      const res = await fetch(apiBase(slug, intakeKey));
       const data = (await res.json()) as { view?: PublicIntakeView; error?: string };
       if (!res.ok) throw new Error(data.error || "не удалось открыть заказ");
       setView(data.view ?? null);
@@ -28,7 +32,7 @@ export function IntakeUpload({ token }: { token: string }) {
       setPhase("error");
       setError(err instanceof Error ? err.message : "ошибка");
     }
-  }, [token]);
+  }, [slug, intakeKey]);
 
   useEffect(() => {
     void refresh();
@@ -44,7 +48,7 @@ export function IntakeUpload({ token }: { token: string }) {
     try {
       const form = new FormData();
       for (const file of files) form.append("files", file);
-      const res = await fetch(`/api/intake/${encodeURIComponent(token)}`, { method: "POST", body: form });
+      const res = await fetch(apiBase(slug, intakeKey), { method: "POST", body: form });
       const data = (await res.json()) as { view?: PublicIntakeView; error?: string };
       if (!res.ok) throw new Error(data.error || "не удалось загрузить");
       if (data.view) setView(data.view);

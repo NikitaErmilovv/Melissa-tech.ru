@@ -1,6 +1,6 @@
 import { deliver, downloadIntoOrder } from "./bot";
 import { pushLog, readDb, withDb } from "./db";
-import { orderByIntakeToken, publicIntakeView } from "./intake-token";
+import { publicIntakeView } from "./intake-token";
 import { addUploads } from "./panel";
 import { fill, orderVars } from "./text";
 
@@ -31,8 +31,8 @@ export async function notifyIntakeProgress(orderId: string, gotBefore: number) {
   if (text) await deliver(orderId, text);
 }
 
-export async function intakeUploadFiles(token: string, files: Buffer[]) {
-  const order = orderByIntakeToken(token);
+export async function intakeUploadFiles(orderId: string, files: Buffer[]) {
+  const order = readDb().orders.find((item) => item.id === orderId);
   if (!order) throw new Error("ссылка устарела или заказ не найден");
   if (order.printStatus === "cancelled" || order.printStatus === "defect") {
     throw new Error("заказ отменён, файлы больше не принимаем");
@@ -52,8 +52,8 @@ export async function intakeUploadFiles(token: string, files: Buffer[]) {
   return { ...result, view: live ? publicIntakeView(live) : publicIntakeView(order) };
 }
 
-export async function intakeDiskUrl(token: string, url: string) {
-  const order = orderByIntakeToken(token);
+export async function intakeDiskUrl(orderId: string, url: string) {
+  const order = readDb().orders.find((item) => item.id === orderId);
   if (!order) throw new Error("ссылка устарела или заказ не найден");
   if (order.printStatus === "cancelled" || order.printStatus === "defect") {
     throw new Error("заказ отменён, файлы больше не принимаем");
