@@ -9,12 +9,19 @@ import type { PrintStatus, ProductKind, PublicOrder } from "@/lib/types";
 import { dayKey, formatDay } from "@/lib/time";
 import { useDesk } from "./use-desk";
 
+type DeskScope = "today" | "allDays" | "archive";
+
+const SCOPES: { id: DeskScope; label: string }[] = [
+  { id: "today", label: "Сегодня" },
+  { id: "allDays", label: "Все дни" },
+  { id: "archive", label: "Архив" },
+];
+
 const FILTERS: { id: string; label: string }[] = [
   { id: "all", label: "Все" },
   { id: "waiting", label: "Ждут файлы" },
   { id: "new", label: "Новые" },
   { id: "printing", label: "В печати" },
-  { id: "done", label: "Готово" },
   { id: "cancelled", label: "Отменённые" },
 ];
 
@@ -38,8 +45,21 @@ function waiting(order: PublicOrder) {
   return order.expectedPhotos > 0 && order.files.length < order.expectedPhotos && order.printStatus !== "cancelled" && order.printStatus !== "defect" && order.printStatus !== "done";
 }
 
+function isArchived(order: PublicOrder) {
+  return Boolean(order.archivedAt) || order.printStatus === "done";
+}
+
+function inScope(order: PublicOrder, scope: DeskScope, today: string) {
+  if (order.source !== "wb") return false;
+  if (scope === "archive") return isArchived(order);
+  if (isArchived(order)) return false;
+  if (scope === "today") return dayKey(order.createdAt) === today;
+  return true;
+}
+
 export function Desk() {
   const { data, error } = useDesk();
+  const [scope, setScope] = useState<DeskScope>("today");
   const [filter, setFilter] = useState("all");
   const [query, setQuery] = useState("");
   const orders = data?.orders ?? [];
@@ -48,23 +68,24 @@ export function Desk() {
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
     return orders.filter((order) => {
+      if (!inScope(order, scope, today)) return false;
       if (filter === "waiting" && !waiting(order)) return false;
       if (filter !== "all" && filter !== "waiting" && order.printStatus !== filter) return false;
       if (!q) return true;
       return [order.wbOrderId, order.articleTitle, order.vendorCode, order.clientName].join(" ").toLowerCase().includes(q);
     });
-  }, [orders, filter, query]);
+  }, [orders, scope, filter, query, today]);
 
   const days = useMemo(() => groupDays(visible), [visible]);
   const stickerDays = days.filter((day) => day.kind === "sticker");
   const photoDays = days.filter((day) => day.kind === "photo");
 
-  const todayOrders = orders.filter((order) => dayKey(order.createdAt) === today);
+  const activeToday = orders.filter((order) => inScope(order, "today", today));
   const stats = [
-    { label: "сегодня", value: todayOrders.length },
-    { label: "ждут файлы", value: orders.filter(waiting).length },
-    { label: "в печати", value: orders.filter((order) => order.printStatus === "printing").length },
-    { label: "готово", value: orders.filter((order) => order.printStatus === "done").length },
+    { label: "сегодня", value: activeToday.length },
+    { label: "ждут файлы", value: activeToday.filter(waiting).length },
+    { label: "в печати", value: activeToday.filter((order) => order.printStatus === "printing").length },
+    { label: "в архиве", value: orders.filter((order) => order.source === "wb" && isArchived(order)).length },
   ];
 
   return (
@@ -86,7 +107,21 @@ export function Desk() {
 
       <section>
         <h1 className="sr-only">Стол</h1>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-1 overflow-x-auto">
+            {SCOPES.map((item) => (
+              <Button
+                key={item.id}
+                type="button"
+                variant={scope === item.id ? "default" : "outline"}
+                className="h-10 shrink-0"
+                onClick={() => setScope(item.id)}
+              >
+                {item.label}
+              </Button>
+            ))}
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -106,19 +141,28 @@ export function Desk() {
               </Button>
             ))}
           </div>
+          </div>
         </div>
 
         {!data && !error ? <p className="mt-8 text-sm text-muted-foreground">Открываю стол…</p> : null}
         {error && !data ? <p className="mt-8 text-sm text-destructive">{error}</p> : null}
         {data && days.length === 0 ? (
           <div className="sheet mt-6 p-8">
-            <p className="font-heading text-2xl font-black tracking-[-0.04em] uppercase">На столе пусто</p>
-            <p className="mt-2 max-w-md text-sm text-muted-foreground">
-              Когда покупатель напишет в чат WB, папка появится здесь. Пока можно прогнать сообщение в настройках.
+            <p className="font-heading text-2xl font-black tracking-[-0.04em] uppercase">
+              {scope === "archive" ? "В архиве пусто" : scope === "allDays" ? "Нет заказов с WB" : "Сегодня пусто"}
             </p>
-            <Link href="/settings" className="mt-4 inline-block text-sm underline">
-              Открыть проверку без WB
-            </Link>
+            <p className="mt-2 max-w-md text-sm text-muted-foreground">
+              {scope === "archive"
+                ? "Заказы попадают сюда, когда ставите статус «Готово». Старые дни — во вкладке «Все дни»."
+                : scope === "allDays"
+                  ? "Здесь только живые заказы с Wildberries по всем дням. Примеры и демо на столе не показываем."
+                  : "Когда покупатель сам напишет в чат WB, папка появится здесь. Старые и готовые — в «Все дни» и «Архив»."}
+            </p>
+            {scope === "today" ? (
+              <Link href="/settings" className="mt-4 inline-block text-sm underline">
+                Настройки и проверка WB
+              </Link>
+            ) : null}
           </div>
         ) : null}
 
@@ -192,7 +236,6 @@ function KindBlock({ title, days, empty }: { title: string; days: ReturnType<typ
                             </span>
                             <span className="text-muted-foreground">
                               {order.expectedPhotos > 0 && left === 0 ? (order.kind === "sticker" ? "макеты на месте" : "все фото здесь") : order.expectedPhotos > 0 ? `ещё ${left}` : "правило не задано"}
-                              {order.source === "demo" ? " · пример" : ""}
                               {order.diskUrl ? " · ссылка" : ""}
                             </span>
                           </div>

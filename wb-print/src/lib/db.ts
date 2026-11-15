@@ -93,6 +93,7 @@ function blankOrder(fields: Pick<Order, "id" | "wbOrderId" | "vendorCode" | "art
     lastPhotoAt: null,
     lastReminderAt: null,
     completedNoticeAt: null,
+    archivedAt: null,
     source: "demo",
     files: [],
     log: [],
@@ -266,6 +267,7 @@ function normalize(db: Database): Database {
     if (order.kind !== "sticker" && order.kind !== "photo") {
       order.kind = /стикер/i.test(`${order.articleTitle} ${order.vendorCode}`) ? "sticker" : "photo";
     }
+    if (typeof order.archivedAt !== "string") order.archivedAt = order.printStatus === "done" ? order.updatedAt || null : null;
   }
   return db;
 }

@@ -82,6 +82,8 @@ export interface Order {
   lastPhotoAt: string | null;
   lastReminderAt: string | null;
   completedNoticeAt: string | null;
+  /** Когда заказ убран со стола (обычно после «Готово»). */
+  archivedAt: string | null;
   source: "wb" | "demo";
   files: OrderFile[];
   log: OrderLog[];

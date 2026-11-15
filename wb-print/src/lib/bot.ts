@@ -143,6 +143,7 @@ function freshOrder(db: Database, input: IngestInput, text: string): Order {
     lastPhotoAt: null,
     lastReminderAt: null,
     completedNoticeAt: null,
+    archivedAt: null,
     source: input.source,
     files: [],
     log: [],

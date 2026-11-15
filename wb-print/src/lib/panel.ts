@@ -33,6 +33,13 @@ export async function updateOrder(
     if (!order) throw new Error("заказ не найден");
     if (patch.printStatus && PRINT.includes(patch.printStatus) && patch.printStatus !== order.printStatus) {
       order.printStatus = patch.printStatus;
+      if (patch.printStatus === "done") {
+        order.archivedAt = new Date().toISOString();
+        pushLog(order, "system", "Заказ отмечен готовым и убран в архив на столе.");
+      } else if (order.archivedAt) {
+        order.archivedAt = null;
+        pushLog(order, "system", "Заказ снова на активном столе.");
+      }
       pushLog(order, "system", `Статус печати: ${PRINT_LABEL[patch.printStatus]}.`);
     }
     if (patch.articleId) {
