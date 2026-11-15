@@ -77,24 +77,35 @@ export async function addUploads(orderId: string, files: Buffer[], source: FileS
   let saved = 0;
   let skipped = 0;
   let squared = 0;
-  await withDb(async (db) => {
-    const order = db.orders.find((item) => item.id === orderId);
-    if (!order) throw new Error("заказ не найден");
-    for (const bytes of files) {
+  for (const bytes of files) {
+    await withDb(async (db) => {
+      const order = db.orders.find((item) => item.id === orderId);
+      if (!order) throw new Error("заказ не найден");
+      const cap = order.expectedPhotos;
+      if (cap > 0 && order.files.length >= cap) {
+        skipped += 1;
+        return;
+      }
       const result = await savePreparedFile(order, bytes, source);
       if ("error" in result.saved) skipped += 1;
       else {
         saved += 1;
         if (result.cropped) squared += 1;
+        if (order.intakeMode === "choice") order.intakeMode = "photos";
       }
-    }
-    if (saved && order.intakeMode === "choice") order.intakeMode = "photos";
-    pushLog(
-      order,
-      "system",
-      `С компьютера добавлено фото: ${saved}${skipped ? `, пропущено ${skipped}` : ""}${squared ? `. В квадрат с левого верхнего угла: ${squared}` : ""}.`,
-    );
-  });
+    });
+  }
+  if (saved || skipped) {
+    await withDb((db) => {
+      const order = db.orders.find((item) => item.id === orderId);
+      if (!order) return;
+      pushLog(
+        order,
+        "system",
+        `С компьютера добавлено фото: ${saved}${skipped ? `, пропущено ${skipped}` : ""}${squared ? `. В квадрат с левого верхнего угла: ${squared}` : ""}.`,
+      );
+    });
+  }
   return { saved, skipped };
 }
 

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { previewUrlForFile } from "@/lib/client-preview";
 import { MAX_UPLOAD_BYTES, MAX_UPLOAD_MB } from "@/lib/upload-limits";
+import { postFormWithProgress } from "@/lib/upload-xhr";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -28,6 +29,8 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
+  const [uploadPct, setUploadPct] = useState<number | null>(null);
+  const [uploadPhase, setUploadPhase] = useState<"upload" | "processing" | null>(null);
   const [picked, setPicked] = useState<File[]>([]);
   const [lightbox, setLightbox] = useState<{ kind: "server" | "local"; index: number } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -86,40 +89,46 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
       setError("выберите хотя бы одно фото");
       return;
     }
+    const need = view?.need ?? 0;
+    const onServer = view?.files?.length ?? view?.got ?? 0;
+    const got = view ? Math.max(view.got, onServer) : 0;
+    const total = got + picked.length;
+    if (need > 0 && total > need) {
+      setError(
+        `В заказе ${need} фото, уже ${got}. Вы добавили ещё ${picked.length} — лишних ${total - need}. Уберите лишние.`,
+      );
+      return;
+    }
     setBusy(true);
+    setUploadPct(0);
+    setUploadPhase("upload");
     setError("");
     setNotice("");
     try {
       const form = new FormData();
       for (const file of picked) form.append("files", file);
-      const res = await fetch(apiBase(slug, intakeKey), { method: "POST", body: form });
-      const data = (await res.json()) as {
+      const { status, json } = await postFormWithProgress(apiBase(slug, intakeKey), form, (pct, phase) => {
+        setUploadPct(phase === "processing" ? 100 : pct);
+        setUploadPhase(phase);
+      });
+      const data = json as {
         view?: PublicIntakeView;
         saved?: number;
         skipped?: number;
         error?: string;
       };
-      if (res.status === 413) {
+      if (status === 413) {
         throw new Error(`Файл слишком большой — до ${MAX_UPLOAD_MB} МБ на одно фото.`);
       }
-      if (!res.ok) throw new Error(data.error || "не удалось загрузить");
-      const fresh = await fetch(apiBase(slug, intakeKey), { cache: "no-store" });
-      const freshData = (await fresh.json()) as { view?: PublicIntakeView };
-      const nextView = freshData.view ?? data.view ?? null;
+      if (status < 200 || status >= 300) throw new Error(data.error || "не удалось загрузить");
+      const nextView = data.view ?? null;
       if (nextView) setView(nextView);
+      else await refresh(true);
       const saved = data.saved ?? 0;
       const skipped = data.skipped ?? 0;
-      if (saved > 0) {
-        const got = nextView?.got ?? saved;
-        const need = nextView?.need ?? 0;
-        if (nextView?.complete) {
-          setNotice("");
-        } else if (skipped) {
-          setNotice(`Принято ${saved}, пропущено ${skipped}. Сейчас ${got}${need ? ` из ${need}` : ""}.`);
-        } else {
-          setNotice(saved === 1 ? "Фото отправлено." : `Отправлено ${saved} фото.`);
-        }
-      } else if (skipped > 0) {
+      if (saved > 0 && !nextView?.complete) {
+        setNotice(saved === 1 ? "Фото отправлено." : `Отправлено ${saved} фото.`);
+      } else if (skipped > 0 && saved === 0) {
         setError(
           "Файлы не приняты — браузер мог отправить пустой файл. Выберите снова или откройте ссылку в Safari/Chrome.",
         );
@@ -129,13 +138,17 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
       setError(err instanceof Error ? err.message : "ошибка загрузки");
     } finally {
       setBusy(false);
+      setUploadPct(null);
+      setUploadPhase(null);
     }
   }
 
   const uploaded = view?.files ?? [];
   const gotCount = view ? Math.max(view.got, uploaded.length) : 0;
   const pendingAdd = picked.length;
-  const canUpload = Boolean(view && !view.cancelled && view.need > 0 && gotCount < view.need);
+  const displayGot = gotCount + pendingAdd;
+  const overNeed = Boolean(view && view.need > 0 && displayGot > view.need);
+  const canUpload = Boolean(view && !view.cancelled && view.need > 0 && !view.complete);
 
   async function removeUploaded(fileId: string) {
     if (!window.confirm("Удалить это фото?")) return;
@@ -188,22 +201,18 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
             <p className="mt-1 text-sm text-muted-foreground">{view.articleTitle}</p>
             {view.need > 0 ? (
               <p className="font-heading mt-4 text-4xl font-black tracking-tight">
-                <span className="text-accent">{gotCount}</span>
+                <span className="text-accent">{displayGot}</span>
                 <span className="text-muted-foreground"> / </span>
                 <span>{view.need}</span>
               </p>
             ) : (
               <p className="font-heading mt-4 text-4xl font-black tracking-tight">
-                <span className="text-accent">{gotCount}</span>
+                <span className="text-accent">{displayGot}</span>
               </p>
             )}
-            <p className="mt-1 text-xs text-muted-foreground">
-              {pendingAdd > 0
-                ? `${pendingAdd} фото к отправке`
-                : gotCount > 0 && !view.complete
-                  ? "фото принято"
-                  : null}
-            </p>
+            {gotCount > 0 && pendingAdd === 0 && !view.complete ? (
+              <p className="mt-1 text-xs text-muted-foreground">фото принято</p>
+            ) : null}
           </div>
 
           {uploaded.length > 0 && (
@@ -221,11 +230,18 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
             </p>
           )}
 
-          {view.complete && !view.cancelled && (
-            <p className="rounded-xl border border-accent/40 bg-accent/10 px-4 py-3 text-sm text-accent-foreground">
-              Всё отлично, все фотографии приняты.
+          {view.complete && !view.cancelled ? (
+            <div className="rounded-xl border border-border bg-background px-4 py-4 text-center">
+              <p className="font-heading text-xl font-bold tracking-tight">Готово</p>
+              <p className="mt-1 text-sm text-muted-foreground">Все фотографии приняты</p>
+            </div>
+          ) : null}
+
+          {overNeed ? (
+            <p className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              Фотографий больше, чем в заказе ({view.need}). Уберите {displayGot - view.need} лишних перед отправкой.
             </p>
-          )}
+          ) : null}
 
           {canUpload && (
             <div className="space-y-3 border-t border-border pt-4">
@@ -270,12 +286,9 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
                   e.target.value = "";
                 }}
               />
-              {picked.length > 0 && (
-                <p className="text-xs text-muted-foreground">
-                  Выбрано {picked.length}: {picked.map((f) => f.name || "фото").join(" · ")}
-                  {localPreviews.length < picked.length ? " · готовим превью…" : null}
-                </p>
-              )}
+              {picked.length > 0 && localPreviews.length < picked.length ? (
+                <p className="text-xs text-muted-foreground">Готовим превью…</p>
+              ) : null}
               {localPreviews.length > 0 && (
                 <PreviewGrid
                   title="Перед отправкой — проверьте"
@@ -287,9 +300,35 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
                   onOpen={(index) => setLightbox({ kind: "local", index })}
                 />
               )}
-              <Button type="button" className="w-full" disabled={busy || !picked.length} onClick={() => void uploadFiles()}>
-                {busy ? "Отправляем…" : picked.length ? `Отправить ${picked.length} фото` : "Отправить"}
+              <Button
+                type="button"
+                className="w-full"
+                disabled={busy || !picked.length || overNeed}
+                onClick={() => void uploadFiles()}
+              >
+                {busy
+                  ? uploadPhase === "processing"
+                    ? "Сохраняем на сервере…"
+                    : "Отправляем…"
+                  : picked.length
+                    ? `Отправить ${picked.length} фото`
+                    : "Отправить"}
               </Button>
+              {busy && uploadPct !== null ? (
+                <div className="space-y-1.5">
+                  <div className="h-2 overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-accent transition-[width] duration-200"
+                      style={{ width: `${uploadPhase === "processing" ? 100 : uploadPct}%` }}
+                    />
+                  </div>
+                  <p className="text-center text-xs text-muted-foreground">
+                    {uploadPhase === "processing"
+                      ? "Сохраняем и проверяем фото…"
+                      : `Загрузка ${uploadPct}%`}
+                  </p>
+                </div>
+              ) : null}
             </div>
           )}
 
