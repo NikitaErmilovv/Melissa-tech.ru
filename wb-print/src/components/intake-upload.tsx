@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import type { PublicIntakeView } from "@/lib/intake-public";
 
 type Phase = "loading" | "ready" | "error";
@@ -29,6 +28,7 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   const [busy, setBusy] = useState(false);
   const [picked, setPicked] = useState<File[]>([]);
   const [lightbox, setLightbox] = useState<{ kind: "server" | "local"; index: number } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const localPreviews = useMemo(
     () => picked.map((file) => ({ file, url: URL.createObjectURL(file) })),
@@ -87,7 +87,9 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
       if (saved > 0) {
         setNotice(`Принято ${saved} фото${skipped ? `, пропущено ${skipped}` : ""}.`);
       } else if (skipped > 0) {
-        setError("Файлы не приняты. Попробуйте JPG или PNG из галереи.");
+        setError(
+          "Файлы не приняты — браузер мог отправить пустой файл. Выберите снова или откройте ссылку в Safari/Chrome.",
+        );
       }
       setPicked([]);
     } catch (err) {
@@ -165,32 +167,44 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
               {view.stickerSquare && (
                 <p className="text-xs text-muted-foreground">Для стикеров лучше квадратные фото.</p>
               )}
-              <Label
-                htmlFor="files"
-                className="flex min-h-28 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-background px-4 py-6 text-center text-sm"
+              <button
+                type="button"
+                className="flex min-h-28 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border bg-background px-4 py-6 text-center text-sm"
+                onClick={() => fileInputRef.current?.click()}
               >
                 <span className="font-medium">Нажмите, чтобы выбрать фото</span>
-                <span className="text-xs text-muted-foreground">можно несколько за раз</span>
-              </Label>
+                <span className="text-xs text-muted-foreground">JPEG, PNG, HEIC — любой формат с телефона</span>
+              </button>
               <input
-                id="files"
+                ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept="image/*,.heic,.heif,.HEIC,image/heic,image/heif"
                 multiple
-                className="sr-only"
+                className="hidden"
                 onChange={(e) => {
                   const list = e.target.files;
                   if (!list?.length) return;
-                  setPicked((prev) => [...prev, ...Array.from(list)]);
+                  const next = Array.from(list).filter((f) => f.size > 0);
+                  if (!next.length) {
+                    setError("Файл пустой — выберите другое фото из галереи.");
+                    return;
+                  }
+                  setPicked((prev) => [...prev, ...next]);
+                  setError("");
                   e.target.value = "";
                 }}
               />
+              {picked.length > 0 && (
+                <p className="text-xs text-muted-foreground">
+                  Выбрано {picked.length}: {picked.map((f) => f.name || "фото").join(" · ")}
+                </p>
+              )}
               {localPreviews.length > 0 && (
                 <PreviewGrid
                   title="Перед отправкой — проверьте"
                   urls={localPreviews.map((row, i) => ({
                     id: `local-${i}`,
-                    alt: row.file.name,
+                    alt: row.file.name || `Фото ${i + 1}`,
                     src: row.url,
                   }))}
                   onOpen={(index) => setLightbox({ kind: "local", index })}
@@ -231,6 +245,28 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   );
 }
 
+function Thumb({ src, alt }: { src: string; alt: string }) {
+  const [broken, setBroken] = useState(false);
+  if (broken) {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-1 p-1 text-center text-[10px] leading-tight text-muted-foreground">
+        <span className="font-medium">Фото</span>
+        <span className="line-clamp-3 break-all">{alt}</span>
+      </div>
+    );
+  }
+  return (
+    /* eslint-disable-next-line @next/next/no-img-element */
+    <img
+      src={src}
+      alt={alt}
+      className="h-full w-full object-cover"
+      loading="lazy"
+      onError={() => setBroken(true)}
+    />
+  );
+}
+
 function PreviewGrid({
   title,
   urls,
@@ -251,8 +287,7 @@ function PreviewGrid({
             className="aspect-square overflow-hidden rounded-lg border border-border bg-muted"
             onClick={() => onOpen(index)}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={row.src} alt={row.alt} className="h-full w-full object-cover" loading="lazy" />
+            <Thumb src={row.src} alt={row.alt} />
           </button>
         ))}
       </div>

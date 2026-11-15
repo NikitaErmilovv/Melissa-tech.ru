@@ -26,8 +26,13 @@ export async function POST(request: Request, context: { params: Promise<{ slug: 
     }
     const form = await request.formData();
     const buffers: Buffer[] = [];
-    for (const entry of form.getAll("files")) {
-      if (entry instanceof File) buffers.push(Buffer.from(await entry.arrayBuffer()));
+    const seen = new Set<string>();
+    for (const [, entry] of form.entries()) {
+      if (!(entry instanceof File) || entry.size < 1) continue;
+      const key = `${entry.name}:${entry.size}:${entry.lastModified}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      buffers.push(Buffer.from(await entry.arrayBuffer()));
     }
     if (buffers.length === 0) throw new Error("выберите хотя бы одно фото");
     const result = await intakeUploadFiles(order.id, buffers);

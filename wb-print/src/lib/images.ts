@@ -27,16 +27,19 @@ export function sniffImage(buf: Buffer): { ext: string; mime: string } | null {
   return null;
 }
 
-/** iPhone/VK часто шлют HEIC — в превью браузер их не рисует; перед записью в JPG. */
-export async function browserSafeImage(bytes: Buffer): Promise<Buffer> {
-  const kind = sniffImage(bytes);
-  if (!kind) return bytes;
-  const convert =
-    kind.ext === "heic" || kind.ext === "heif" || kind.ext === "avif" || kind.mime === "image/heic";
-  if (!convert) return bytes;
-  const out = await sharp(bytes, { failOn: "none", animated: false }).rotate().jpeg({ quality: 91 }).toBuffer();
-  if (!sniffImage(out)) throw new Error("не удалось преобразовать фото");
-  return out;
+/** Любой растровый формат → JPEG с учётом EXIF; на сайте и в ВК всегда показывается превью. */
+export async function normalizeUploadBytes(bytes: Buffer): Promise<Buffer> {
+  if (bytes.length < 12 || bytes.length > MAX_BYTES) throw new Error("размер файла");
+  try {
+    const meta = await sharp(bytes, { failOn: "none", animated: false }).metadata();
+    if (!meta.width || !meta.height) throw new Error("нет изображения");
+    const out = await sharp(bytes, { failOn: "none", animated: false }).rotate().jpeg({ quality: 91 }).toBuffer();
+    if (!sniffImage(out)) throw new Error("конвертация");
+    return out;
+  } catch {
+    if (sniffImage(bytes)) return bytes;
+    throw new Error("не удалось прочитать фото");
+  }
 }
 
 export async function squareCropTopLeft(bytes: Buffer): Promise<{ bytes: Buffer; cropped: boolean }> {
@@ -72,9 +75,9 @@ export async function savePreparedFile(
   bytes: Buffer,
   source: FileSource,
 ): Promise<{ saved: OrderFile | { error: string }; cropped: boolean; failed: boolean }> {
-  let payload = bytes;
+  let payload: Buffer;
   try {
-    payload = await browserSafeImage(payload);
+    payload = await normalizeUploadBytes(bytes);
   } catch {
     return { saved: { error: "файл не похож на фото" }, cropped: false, failed: true };
   }
@@ -82,19 +85,14 @@ export async function savePreparedFile(
   let failed = false;
   if (order.kind === "sticker") {
     try {
-      const square = await squareCropTopLeft(bytes);
+      const square = await squareCropTopLeft(payload);
       payload = square.bytes;
       cropped = square.cropped;
     } catch {
       failed = true;
     }
   }
-  let saved = saveOrderFile(order, payload, source);
-  if ("error" in saved && payload !== bytes) {
-    saved = saveOrderFile(order, bytes, source);
-    cropped = false;
-    failed = true;
-  }
+  const saved = saveOrderFile(order, payload, source);
   return { saved, cropped, failed };
 }
 
