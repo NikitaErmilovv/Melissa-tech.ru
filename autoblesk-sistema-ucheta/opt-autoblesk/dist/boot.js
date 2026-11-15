@@ -59959,30 +59959,40 @@ async function handleClientLog(c) {
 // api/dev-preview.ts
 init_env();
 var PREVIEW_UNION_ID = "local-preview-owner";
-var PREVIEW_SUPER_ID = "local-preview-superadmin";
+var PREVIEW_EMPLOYEE_ID = "local-preview-employee";
+var TEST_CABINET_NAME = "\u0422\u0435\u0441\u0442\u043E\u0432\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442";
+async function markTestCabinetCompany(companyId) {
+  const db = getDb();
+  await db.update(companies).set({ name: TEST_CABINET_NAME, email: "test-cabinet@demo.local" }).where(eq(companies.id, companyId));
+}
 function createPreviewLoginHandler() {
   return async (c) => {
     if (!env.localPreview) {
       return c.json({ error: "Not available" }, 404);
     }
-    let asSuper = c.req.query("role") === "superadmin";
     let asEmployee = c.req.query("role") === "employee";
     if (c.req.method === "POST") {
       const body = await c.req.json().catch(() => ({}));
-      if (body.role === "superadmin") asSuper = true;
+      if (body.role === "superadmin") {
+        return c.json({ error: "\u0421\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D \u0432\u0445\u043E\u0434\u0438\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u043E \u043B\u043E\u0433\u0438\u043D\u0443 \u0438 \u043F\u0430\u0440\u043E\u043B\u044E" }, 403);
+      }
       if (body.role === "employee") asEmployee = true;
     }
-    const unionId = asSuper ? PREVIEW_SUPER_ID : env.ownerUnionId || PREVIEW_UNION_ID;
+  if (c.req.query("role") === "superadmin") {
+    return c.json({ error: "\u0421\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D \u0432\u0445\u043E\u0434\u0438\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u043E \u043B\u043E\u0433\u0438\u043D\u0443 \u0438 \u043F\u0430\u0440\u043E\u043B\u044E" }, 403);
+  }
+    const unionId = asEmployee ? PREVIEW_EMPLOYEE_ID : env.ownerUnionId || PREVIEW_UNION_ID;
     await upsertUser({
       unionId,
-      name: asSuper ? "\u0421\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D (\u0434\u0435\u043C\u043E)" : asEmployee ? "\u041C\u0430\u0441\u0442\u0435\u0440 (\u0434\u0435\u043C\u043E)" : "\u0412\u043B\u0430\u0434\u0435\u043B\u0435\u0446 (\u0434\u0435\u043C\u043E)",
-      email: asSuper ? "superadmin@autoblesk.local" : asEmployee ? "staff@autoblesk.local" : "demo@autoblesk.local",
-      role: asSuper ? "superadmin" : asEmployee ? "user" : "admin",
+      name: asEmployee ? "\u0421\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A (\u0442\u0435\u0441\u0442)" : "\u0412\u043B\u0430\u0434\u0435\u043B\u0435\u0446 (\u0442\u0435\u0441\u0442)",
+      email: asEmployee ? "staff-test@demo.local" : "owner-test@demo.local",
+      role: asEmployee ? "user" : "admin",
       lastSignInAt: /* @__PURE__ */ new Date()
     });
-    if (!asSuper && !asEmployee) {
-      const previewUser = await findUserByUnionId(unionId);
-      if (previewUser?.companyId) {
+    const previewUser = await findUserByUnionId(unionId);
+    if (previewUser?.companyId) {
+      await markTestCabinetCompany(previewUser.companyId);
+      if (!asEmployee) {
         await ensureStudioServiceCatalogFromDemo(previewUser.companyId);
         await ensureStudioDashboardSampleData(previewUser.companyId, previewUser.id);
       }
@@ -60000,10 +60010,10 @@ function createPreviewLoginHandler() {
       return c.json({
         ok: true,
         token,
-        role: asSuper ? "superadmin" : asEmployee ? "employee" : "owner"
+        role: asEmployee ? "employee" : "owner"
       });
     }
-    const dest = asSuper ? "/platform" : "/";
+    const dest = "/";
     if (c.req.query("redirect") === "302") {
       return c.redirect(dest, 302);
     }
@@ -60053,6 +60063,13 @@ app.use("*", async (c, next) => {
 });
 app.use("/api/trpc/*", bodyLimit({ maxSize: 50 * 1024 * 1024 }));
 app.get(Paths.oauthCallback, createOAuthCallbackHandler());
+app.get("/api/build-info", (c) =>
+  c.json({
+    build: "detaildesk-2026-11-15",
+    localPreview: env.localPreview,
+    testCabinet: TEST_CABINET_NAME
+  })
+);
 app.get("/api/dev/preview-login", createPreviewLoginHandler());
 app.post("/api/dev/preview-login", createPreviewLoginHandler());
 app.use("/api/trpc/*", async (c) => {
