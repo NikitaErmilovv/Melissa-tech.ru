@@ -5,3 +5,10 @@
 Фото: `img/works/incoming/klyaksa/`
 
 2ГИС: https://2gis.ru/noyabrsk/firm/70000001035583613
+
+**Отдельный репозиторий для правок:** https://github.com/basicworker905-alt/Rita-Klyaksa  
+Экспорт из этой папки: `bash scripts/export-site-standalone.sh klyaksa-tuning-noyabrsk`
+
+Прайс пересобрать: `python3 scripts/klyaksa_services_layout.py`  
+Фото к услугам на прайсе: `img/services/*.jpg` (пересборка подставляет пути из `klyaksa_services_layout.py`).
+Временно для карточек услуг используются кадры из репозитория `sdc-detailing` (блок услуг на главной SDC, не галерея «Работы»).
