@@ -29,8 +29,8 @@ export function pushLog(order: Order, kind: OrderLog["kind"], text: string, deli
 function emptySettings(): Settings {
   return {
     token: "",
-    silenceMin: 2,
-    remindMin: 4,
+    silenceMin: 5,
+    remindMin: 5,
     eventNext: null,
     eventCaughtUp: false,
     eventSeenUntil: 0,
@@ -250,6 +250,8 @@ function normalize(db: Database): Database {
   }
   for (const article of db.articles) article.kind = article.kind === "sticker" ? "sticker" : "photo";
   db.settings = { ...emptySettings(), ...db.settings };
+  db.settings.silenceMin = Math.min(30, Math.max(5, Number(db.settings.silenceMin) || 5));
+  db.settings.remindMin = Math.min(60, Math.max(5, Number(db.settings.remindMin) || 5));
   db.settings.liveReplies = Boolean(db.settings.liveReplies);
   db.settings.eventCaughtUp = Boolean(db.settings.eventCaughtUp);
   db.settings.eventSeenUntil = Number(db.settings.eventSeenUntil) || 0;

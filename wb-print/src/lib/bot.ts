@@ -271,12 +271,15 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
       order.diskUrl = url;
       order.intakeMode = "link";
       order.diskNote = "Ссылка записана, скачиваю…";
+      order.lastReminderAt = null;
       fetchUrl = url;
     }
 
     const intent = buyerIntent(text);
-    if (saved > 0) order.intakeMode = "photos";
-    else if (!sticker && intent === "photos") order.intakeMode = "photos";
+    if (saved > 0) {
+      order.intakeMode = "photos";
+      order.lastReminderAt = null;
+    } else if (!sticker && intent === "photos") order.intakeMode = "photos";
     else if (!sticker && intent === "link") order.intakeMode = "link";
 
     const line = [text, images.length ? `вложений: ${images.length}` : ""].filter(Boolean).join(" · ");
@@ -319,9 +322,6 @@ export async function ingest(input: IngestInput): Promise<{ orderId: string; rep
         replies.push(fill(db.templates.stickerNoLink, orderVars(order)));
       } else if (!sticker && url) {
         replies.push(fill(db.templates.diskSaved, orderVars(order)));
-      } else if (!sticker && (rawUrl || intent === "link")) {
-        replies.push(fill(db.templates.diskSaved, orderVars(order)));
-      }
       if (justDone) {
         order.completedNoticeAt = new Date().toISOString();
         order.replacing = false;
@@ -397,6 +397,7 @@ export async function attachBytes(orderId: string, bytes: Buffer, source: FileSo
     }
     if (prepared.cropped) pushLog(order, "system", "Неквадратное фото обрезал в квадрат с левого верхнего угла.");
     if (prepared.failed) pushLog(order, "system", "Квадрат не получился, в папке исходный файл.");
+    order.lastReminderAt = null;
     const need = order.expectedPhotos;
     if (
       need > 0 &&

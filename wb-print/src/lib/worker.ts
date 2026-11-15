@@ -64,17 +64,19 @@ function eventKey(event: WbEvent): string {
 }
 
 function dueOrders(orders: Order[], silenceMin: number, remindMin: number, now: number) {
-  const silence = silenceMin * 60_000;
-  const every = remindMin * 60_000;
+  const waitAfterActivity = silenceMin * 60_000;
+  const gapBetweenReminders = remindMin * 60_000;
   return orders.filter((order) => {
     if (order.printStatus === "cancelled" || order.printStatus === "defect") return false;
-    if (order.intakeMode === "link" && order.diskUrl) return false;
-    if (order.intakeMode === "choice" && order.files.length === 0) return false;
+    if (order.completedNoticeAt && order.files.length >= order.expectedPhotos) return false;
     if (order.expectedPhotos <= 0 || order.files.length >= order.expectedPhotos) return false;
+  /* Ссылку уже дали — не дожимаем; ответы только из скачивания и «всё принято». */
+    if (order.intakeMode === "link" && order.diskUrl.trim()) return false;
+    if (order.intakeMode === "choice" && order.files.length === 0) return false;
     const anchor = order.lastPhotoAt || order.greetedAt;
     if (!anchor) return false;
-    if (now - new Date(anchor).getTime() < silence) return false;
-    if (order.lastReminderAt && now - new Date(order.lastReminderAt).getTime() < every) return false;
+    if (now - new Date(anchor).getTime() < waitAfterActivity) return false;
+    if (order.lastReminderAt && now - new Date(order.lastReminderAt).getTime() < gapBetweenReminders) return false;
     return true;
   });
 }
