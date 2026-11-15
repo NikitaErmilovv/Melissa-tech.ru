@@ -58661,7 +58661,7 @@ async function dayExpense(dayOffset, companyId) {
   );
   return rows[0];
 }
-async function incomeByCategory(companyId, todayOnly) {
+async function incomeByCategory(companyId, dayOffset = 0) {
   const db = getDb();
   return db.select({
     category: orders.category,
@@ -58670,11 +58670,11 @@ async function incomeByCategory(companyId, todayOnly) {
     and(
       eq(orders.companyId, companyId),
       isNotNull(orders.postedAt),
-      todayOnly ? sql`DATE(${orders.postedAt}) = CURDATE()` : sql`1=1`
+      sql`DATE(${orders.postedAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
     )
   ).groupBy(orders.category);
 }
-async function expenseByCategory(companyId, todayOnly) {
+async function expenseByCategory(companyId, dayOffset = 0) {
   const db = getDb();
   return db.select({
     category: expenses.category,
@@ -58682,11 +58682,11 @@ async function expenseByCategory(companyId, todayOnly) {
   }).from(expenses).where(
     and(
       eq(expenses.companyId, companyId),
-      todayOnly ? sql`DATE(${expenses.createdAt}) = CURDATE()` : sql`1=1`
+      sql`DATE(${expenses.createdAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
     )
   ).groupBy(expenses.category);
 }
-async function weekIncomeByDay(companyId) {
+async function weekIncomeByDay(companyId, endDayOffset = 0) {
   const db = getDb();
   return db.select({
     day: sql`DATE(${orders.postedAt})`,
@@ -58695,17 +58695,20 @@ async function weekIncomeByDay(companyId) {
     and(
       eq(orders.companyId, companyId),
       isNotNull(orders.postedAt),
-      gte(orders.postedAt, sql`DATE_SUB(CURDATE(), INTERVAL 6 DAY)`)
+      sql`DATE(${orders.postedAt}) BETWEEN DATE_SUB(CURDATE(), INTERVAL ${endDayOffset + 6} DAY) AND DATE_SUB(CURDATE(), INTERVAL ${endDayOffset} DAY)`
     )
   ).groupBy(sql`DATE(${orders.postedAt})`);
 }
-async function weekExpenseByDay(companyId) {
+async function weekExpenseByDay(companyId, endDayOffset = 0) {
   const db = getDb();
   return db.select({
     day: sql`DATE(${expenses.createdAt})`,
     total: sql`COALESCE(SUM(${expenses.amount}), 0)`
   }).from(expenses).where(
-    and(eq(expenses.companyId, companyId), gte(expenses.createdAt, sql`DATE_SUB(CURDATE(), INTERVAL 6 DAY)`))
+    and(
+      eq(expenses.companyId, companyId),
+      sql`DATE(${expenses.createdAt}) BETWEEN DATE_SUB(CURDATE(), INTERVAL ${endDayOffset + 6} DAY) AND DATE_SUB(CURDATE(), INTERVAL ${endDayOffset} DAY)`
+    )
   ).groupBy(sql`DATE(${expenses.createdAt})`);
 }
 async function listStaff(companyId) {
@@ -59096,8 +59099,15 @@ var expensesRouter = createRouter({
   })
 });
 var statsRouter = createRouter({
-  summary: authedQuery.query(async ({ ctx }) => {
+  summary: authedQuery.input(
+    external_exports.object({
+      chartDayOffset: external_exports.number().int().min(0).max(365).optional(),
+      weekEndOffset: external_exports.number().int().min(0).max(365).optional()
+    }).optional()
+  ).query(async ({ ctx, input: input2 }) => {
     const companyId = tenantCompanyId(ctx.user);
+    const chartDayOffset = input2?.chartDayOffset ?? 0;
+    const weekEndOffset = input2?.weekEndOffset ?? chartDayOffset;
     if (env.localPreview) {
       await ensureStudioDashboardSampleData(companyId, ctx.user.id);
     }
@@ -59108,8 +59118,6 @@ var statsRouter = createRouter({
       yesterdayExpenseRow,
       incomeTodayCats,
       expenseTodayCats,
-      incomeAllCats,
-      expenseAllCats,
       weekIncome,
       weekExpense,
       recentOrders,
@@ -59119,12 +59127,10 @@ var statsRouter = createRouter({
       dayIncome(1, companyId),
       dayExpense(0, companyId),
       dayExpense(1, companyId),
-      incomeByCategory(companyId, true),
-      expenseByCategory(companyId, true),
-      incomeByCategory(companyId, false),
-      expenseByCategory(companyId, false),
-      weekIncomeByDay(companyId),
-      weekExpenseByDay(companyId),
+      incomeByCategory(companyId, chartDayOffset),
+      expenseByCategory(companyId, chartDayOffset),
+      weekIncomeByDay(companyId, weekEndOffset),
+      weekExpenseByDay(companyId, weekEndOffset),
       listOrders(8, { accounted: true, companyId }),
       listExpenses(8, companyId)
     ]);
@@ -59138,7 +59144,7 @@ var statsRouter = createRouter({
     const week2 = [];
     for (let i = 6; i >= 0; i--) {
       const d = /* @__PURE__ */ new Date();
-      d.setDate(d.getDate() - i);
+      d.setDate(d.getDate() - weekEndOffset - i);
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
       week2.push({
         date: key,
@@ -59184,6 +59190,8 @@ var statsRouter = createRouter({
         category: c.category,
         total: Number(c.total)
       })),
+      chartDayOffset,
+      weekEndOffset,
       week: week2,
       activity
     };
