@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from fetch_2gis_reviews import fetch_branch_reviews  # noqa: E402
 
 HOME_SERVICES = [
-    ("anticor", "КУЗОВНОЙ РЕМОНТ", "01-client.jpg"),
+    ("anticor", "КУЗОВНОЙ РЕМОНТ", "02-client.jpg"),
     ("ceramic", "ПОКРАСКА", "03-client.jpg"),
     ("polish", "ПОЛИРОВКА", "04-client.jpg"),
     ("ppf", "РЕМОНТ ВМЯТИН", "06-client.jpg"),
