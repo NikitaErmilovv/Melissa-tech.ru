@@ -1,0 +1,101 @@
+{
+  "slug": "grad54-novosibirsk",
+  "name": "Grad54",
+  "port": 8139,
+  "gis_firm_url": "https://2gis.ru/novosibirsk/firm/70000001065421759",
+  "phone_tel": "+79530598840",
+  "phone_display": "+7 (953) 059-88-40",
+  "phone_wa": "79530598840",
+  "phone_tg": "+79530598840",
+  "default_message": "Здравствуйте! Хочу записаться в Grad54.",
+  "hero_class": "grad54",
+  "hero_text_only": true,
+  "hero_title_html": "УДАЛЕНИЕ<br><span class=\"accent\">ВМЯТИН</span>",
+  "replace": {
+    "РП — детейлинг-студия Тольятти": "Grad54 — удаление вмятин без покраски, Новосибирск",
+    "Услуги — РП": "Услуги — Grad54",
+    "Контакты — РП": "Контакты — Grad54",
+    "О нас — РП": "О нас — Grad54",
+    "Работы — РП": "Работы — Grad54",
+    "Детейлинг-центр в Тольятти: мойка, полировка, защитные покрытия, антикор и тонировка по записи.": "Центр по удалению вмятин без покраски в Новосибирске: PDR, кузовной ремонт, полировка и детейлинг. Вилюйская, 23 — по записи.",
+    "ДЕТЕЙЛИНГ<br><span class=\"accent\">И ЗАЩИТА КУЗОВА</span>": "PDR<br><span class=\"accent\">БЕЗ ПОКРАСКИ</span>",
+    "ДЕТЕЙЛИНГ-СТУДИЯ<br><span class=\"accent\">ТОЛЬЯТТИ</span>": "ЦЕНТР PDR<br><span class=\"accent\">НОВОСИБИРСК</span>",
+    "ДЕТЕЙЛИНГ-СТУДИЯ<br><span class=\"accent\">РП</span>": "GRAD<span class=\"accent\">54</span>",
+    "детейлинг-студия на Московском проспекте в Автозаводском районе Тольятти. Уход за кузовом и салоном, полировка, плёнка и тонировка. Работаем по записи — звоните или пишите.": "Grad54 на Вилюйской в Новосибирске. Удаляем вмятины без покраски, восстанавливаем кузов и полируем — согласуем объём и сроки до начала работ.",
+    "Тольятти · работаем по записи": "Новосибирск · Вилюйская 23 · по записи",
+    "ТОЛЬЯТТИ": "НОВОСИБИРСК",
+    "Тольятти": "Новосибирск",
+    "г. Тольятти, 253-й квартал, стр. 19": "г. Новосибирск, Вилюйская улица, 23",
+    "253-й квартал, стр. 19": "Вилюйская улица, 23",
+    "Карта 2ГИС — г. Тольятти, 253-й квартал, стр. 19": "Карта 2ГИС — г. Новосибирск, Вилюйская улица, 23",
+    "https://2gis.ru/togliatti/firm/70000001067251376": "https://2gis.ru/novosibirsk/firm/70000001065421759",
+    "53.534132,49.25991": "54.997396,83.009087",
+    "+79626123368": "+79530598840",
+    "+7 (962) 612-33-68": "+7 (953) 059-88-40",
+    "79626123368": "79530598840",
+    "+79649696765": "+79530598840",
+    "+7 (964) 969-67-65": "+7 (953) 059-88-40",
+    "<span class=\"logo-mark\">РП</span><span class=\"logo-word\"></span>": "<span class=\"wordmark\"><span class=\"logo-mark\">GRAD</span><span class=\"logo-word\">54</span></span>",
+    "© 2026 РП": "© 2026 Grad54",
+    "Здравствуйте! Хочу записаться в РП.": "Здравствуйте! Хочу записаться в Grad54.",
+    "id=\"stat-reviews\">51": "id=\"stat-reviews\">63",
+    "id=\"stat-rating\">4.9": "id=\"stat-rating\">5.0",
+    " — РП": " — Grad54",
+    "alt=\"РП Detailing\"": "alt=\"Grad54\""
+  },
+  "home_services": [
+    {
+      "slug": "ppf",
+      "tag": "РЕМОНТ ВМЯТИН",
+      "image": "img/works/incoming/grad54/01-2gis.jpg"
+    },
+    {
+      "slug": "anticor",
+      "tag": "КУЗОВНОЙ РЕМОНТ",
+      "image": "img/works/incoming/grad54/02-2gis.jpg"
+    },
+    {
+      "slug": "polish",
+      "tag": "ПОЛИРОВКА",
+      "image": "img/works/incoming/grad54/03-2gis.jpg"
+    },
+    {
+      "slug": "ceramic",
+      "tag": "ПОКРАСКА",
+      "image": "img/works/incoming/grad54/04-2gis.jpg"
+    },
+    {
+      "slug": "wash",
+      "tag": "ДЕТЕЙЛИНГ",
+      "image": "img/works/incoming/grad54/05-2gis.jpg"
+    }
+  ],
+  "services": [
+    {
+      "slug": "ppf",
+      "title": "Ремонт вмятин без покраски",
+      "lead": "PDR: восстановление формы кузова без перекраски."
+    },
+    {
+      "slug": "anticor",
+      "title": "Кузовной ремонт",
+      "lead": "Локальный и кузовной ремонт после осмотра."
+    },
+    {
+      "slug": "polish",
+      "title": "Полировка",
+      "lead": "Полировка ЛКП и подготовка поверхности."
+    },
+    {
+      "slug": "ceramic",
+      "title": "Покраска автомобилей",
+      "lead": "Покрасочные работы и подбор оттенка."
+    },
+    {
+      "slug": "wash",
+      "title": "Детейлинг",
+      "lead": "Комплексный уход за автомобилем."
+    }
+  ],
+  "theme_css": ":root{--accent:#2563eb;--accent-soft:rgba(37,99,235,.35);--accent-hover:#3b82f6;--accent-deep:#1d4ed8;--accent-rgb:37,99,235}.hero{background:radial-gradient(circle at 70% 40%,#0c1a3a 0,#060d1f 35%,#0a0a0a 60%)}.button{background:var(--accent);color:#fff}.button.dark{border-color:rgba(255,255,255,.25);color:#fff}.hero--grad54 .heroimg{background-image:url('img/works/incoming/grad54/01-2gis.jpg')}.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}"
+}

@@ -1,0 +1,5 @@
+site=grad54-novosibirsk
+brand=Grad54
+prod=https://melissa-tech.ru/grad54-novosibirsk/
+deploy=git-push-timeweb-hook
+deploy-trigger=grad54-2gis-20261116
