@@ -93,6 +93,7 @@ function blankOrder(fields: Pick<Order, "id" | "wbOrderId" | "vendorCode" | "art
     diskNote: "",
     lastPhotoAt: null,
     lastReminderAt: null,
+    idleNudgeAt: null,
     completedNoticeAt: null,
     archivedAt: null,
     source: "demo",
@@ -268,6 +269,13 @@ function normalize(db: Database): Database {
     order.diskNote ??= "";
     order.replacing = Boolean(order.replacing);
     if (typeof order.replaceHintAt !== "string" || !order.replaceHintAt) order.replaceHintAt = null;
+    if (typeof order.idleNudgeAt !== "string" || !order.idleNudgeAt) order.idleNudgeAt = null;
+    if (!order.idleNudgeAt && order.files.length === 0) {
+      const idleOut = order.log.find(
+        (line) => line.kind === "out" && /когда будет удобно/i.test(line.text),
+      );
+      if (idleOut) order.idleNudgeAt = idleOut.at;
+    }
     if (order.kind !== "sticker" && order.kind !== "photo") {
       order.kind = /стикер/i.test(`${order.articleTitle} ${order.vendorCode}`) ? "sticker" : "photo";
     }

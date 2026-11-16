@@ -72,7 +72,7 @@ function dueIdleUploadNudges(orders: Order[], now: number) {
     if (order.expectedPhotos <= 0 || order.files.length > 0) return false;
     if (order.intakeMode === "link" && order.diskUrl.trim()) return false;
     if (order.intakeMode === "choice") return false;
-    if (order.lastReminderAt) return false;
+    if (order.idleNudgeAt) return false;
     const anchor = order.greetedAt || order.createdAt;
     if (!anchor) return false;
     return now - new Date(anchor).getTime() >= IDLE_UPLOAD_MS;
@@ -107,10 +107,16 @@ async function runReminders() {
     const live = snap.orders.find((item) => item.id === order.id);
     if (!live) continue;
     const text = fill(snap.templates.idleNudge, orderVars(live));
+    const sentAt = new Date().toISOString();
     await withDb((draft) => {
       const row = draft.orders.find((item) => item.id === order.id);
-      if (row) row.lastReminderAt = new Date().toISOString();
+      if (!row || row.idleNudgeAt) return;
+      if (row.printStatus === "cancelled" || row.printStatus === "defect") return;
+      row.idleNudgeAt = sentAt;
     });
+    const again = readDb().orders.find((item) => item.id === order.id);
+    if (!again?.idleNudgeAt || again.idleNudgeAt !== sentAt) continue;
+    if (again.printStatus === "cancelled" || again.printStatus === "defect") continue;
     await deliver(order.id, text);
   }
   const due = dueOrders(db.orders, db.settings.silenceMin, db.settings.remindMin, now);
