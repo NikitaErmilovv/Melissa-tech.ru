@@ -15,6 +15,7 @@ export type TemplateKey =
   | "stickerNoLink"
   | "progress"
   | "reminder"
+  | "idleNudge"
   | "complete"
   | "replaceAsk"
   | "replaceLocked"
