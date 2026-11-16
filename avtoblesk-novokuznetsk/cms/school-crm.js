@@ -24,7 +24,15 @@
     if (!res || !res.ok) throw new Error('save');
   }
 
+  function canWriteSchool() {
+    return window.AvtoCmsRole !== 'Стажёр';
+  }
+
   async function saveQuiet() {
+    if (!canWriteSchool()) {
+      toast('Роль «Стажёр»: только просмотр');
+      return;
+    }
     try {
       await persist();
       toast('Сохранено');

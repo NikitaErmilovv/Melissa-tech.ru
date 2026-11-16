@@ -1,6 +1,13 @@
 (function () {
   document.querySelectorAll('[data-cms-nav="services"], [data-cms-panel="services"]').forEach((el) => el.remove());
   const TOKEN_KEY = 'avtoblesk_cms_token';
+  const USER_KEY = 'avtoblesk_cms_user';
+  const ROLE_NAV = {
+    Администратор: null,
+    Преподаватель: ['school', 'school-students', 'school-certs', 'school-courses', 'school-student'],
+    Менеджер: ['school', 'school-students', 'school-courses', 'school-stats', 'school-student'],
+    Стажёр: ['school', 'school-students', 'school-certs', 'school-courses', 'school-student'],
+  };
   const CMS_EDIT_PAGES = new Set(['index.html', 'album.html', 'training.html']);
   const META_PAGES = [
     { id: 'index.html', label: 'Главная', title: 'АвтоБлеск — детейлинг' },
@@ -48,6 +55,34 @@
 
   function token() {
     return sessionStorage.getItem(TOKEN_KEY);
+  }
+
+  function currentUser() {
+    try {
+      return JSON.parse(sessionStorage.getItem(USER_KEY) || 'null');
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function applyRole(user) {
+    const role = (user && user.role) || 'Администратор';
+    window.AvtoCmsRole = role;
+    document.body.classList.toggle('cms-readonly', role === 'Стажёр');
+    const allowed = ROLE_NAV[role];
+    document.querySelectorAll('[data-cms-nav]').forEach((btn) => {
+      btn.hidden = !!(allowed && allowed.indexOf(btn.dataset.cmsNav) < 0);
+    });
+    const box = document.querySelector('.crm-user');
+    if (box && user && user.name) {
+      const av = box.querySelector('.crm-user-av');
+      const name = box.querySelector('b');
+      const meta = box.querySelector('span');
+      const parts = String(user.name).split(/\s+/).filter(Boolean);
+      if (av) av.textContent = parts.slice(0, 2).map((p) => p[0].toUpperCase()).join('') || 'AB';
+      if (name) name.textContent = user.name;
+      if (meta) meta.textContent = role;
+    }
   }
 
   function $(sel) {
@@ -703,7 +738,10 @@
     renderArticlesAdmin();
     renderServicesAdmin();
     renderWrapZonesAdmin();
-    switchView('dashboard');
+    const user = currentUser();
+    applyRole(user);
+    const home = user && ROLE_NAV[user.role] ? ROLE_NAV[user.role][0] : 'dashboard';
+    switchView(home);
 
     const addService = $('#cms-add-service');
     if (addService) {
@@ -747,6 +785,7 @@
     if (logout) {
       logout.onclick = () => {
         sessionStorage.removeItem(TOKEN_KEY);
+        sessionStorage.removeItem(USER_KEY);
         location.reload();
       };
     }
@@ -755,6 +794,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-cms-nav]').forEach((btn) => {
       btn.onclick = () => {
+        if (btn.hidden) return;
         if (btn.dataset.cmsNav === 'articles') {
           articleEditorMode = 'list';
           activeArticleId = null;
@@ -776,6 +816,7 @@
       e.preventDefault();
       const err = $('#cms-login-err');
       err.hidden = true;
+      const email = ($('#cms-login-email').value || '').trim();
       const password = ($('#cms-login-password').value || '').trim();
       if (!password) {
         err.textContent = 'Введите пароль';
@@ -784,14 +825,14 @@
       }
       let res;
       try {
-        res = await window.AvtoCmsApi.login(password);
+        res = await window.AvtoCmsApi.login(email, password);
       } catch (ex) {
         err.textContent = 'Нет связи с сервером. Попробуйте ещё раз.';
         err.hidden = false;
         return;
       }
       if (!res || !res.ok) {
-        err.textContent = 'Неверный пароль';
+        err.textContent = email ? 'Неверная почта или пароль' : 'Неверный пароль';
         err.hidden = false;
         return;
       }
@@ -809,6 +850,8 @@
         return;
       }
       sessionStorage.setItem(TOKEN_KEY, data.token);
+      if (data.user) sessionStorage.setItem(USER_KEY, JSON.stringify(data.user));
+      else sessionStorage.removeItem(USER_KEY);
       try {
         await initApp();
       } catch (ex) {
@@ -821,6 +864,7 @@
     if (token()) {
       initApp().catch((ex) => {
         sessionStorage.removeItem(TOKEN_KEY);
+        sessionStorage.removeItem(USER_KEY);
         showLogin(true);
         const err = $('#cms-login-err');
         if (err) {

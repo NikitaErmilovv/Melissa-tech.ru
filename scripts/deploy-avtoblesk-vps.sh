@@ -27,7 +27,15 @@ rsync -az --delete \
   --exclude '.git' \
   --exclude 'server.py' \
   --exclude '__pycache__' \
+  --exclude 'cms/config.local.json' \
+  --exclude 'cms/staff.json' \
+  --exclude 'cms/_sessions.json' \
   -e "ssh ${SSH_OPTS[*]}" \
   "$SRC/" "$HOST:$REMOTE_DIR/"
 
-echo "→ Done. Check https://autoblesk42.ru/"
+echo "→ Ensure CMS password file exists on server (preserved across deploys)"
+ssh "${SSH_OPTS[@]}" "$HOST" "cd '$REMOTE_DIR/cms' && \
+  if [ ! -f config.local.json ]; then cp config.example.json config.local.json; fi && \
+  if [ ! -f staff.json ]; then cp staff.example.json staff.json; fi"
+
+echo "→ Done. CMS: https://autoblesk42.ru/cms/admin-panel.html"
