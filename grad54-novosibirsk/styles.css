@@ -1389,4 +1389,15 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 
 
-:root{--accent:#2563eb;--accent-soft:rgba(37,99,235,.35);--accent-hover:#3b82f6;--accent-deep:#1d4ed8;--accent-rgb:37,99,235}.hero{background:radial-gradient(circle at 70% 40%,#0c1a3a 0,#060d1f 35%,#0a0a0a 60%)}.button{background:var(--accent);color:#fff}.button.dark{border-color:rgba(255,255,255,.25);color:#fff}.hero--grad54 .heroimg{background-image:url('img/works/incoming/grad54/01-2gis.jpg')}.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}
+:root{
+  --accent:#e11d2f;
+  --accent-soft:rgba(225,29,47,.38);
+  --accent-hover:#f43f51;
+  --accent-deep:#b91c2c;
+  --accent-ink:#fff;
+  --accent-rgb:225,29,47;
+}
+.hero--grad54 .heroimg{background-image:url('img/works/incoming/grad54/01-2gis.jpg')}
+.site-nav .logo .logo-mark{color:#fff}
+.site-nav .logo .logo-word{color:var(--accent)}
+.hero--grad54{background:radial-gradient(circle at 70% 42%,#2a0a0e 0,#120608 38%,#0a0a0a 62%)}
