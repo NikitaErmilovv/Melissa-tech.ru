@@ -1,5 +1,5 @@
 /* Авто Блеск — service worker: офлайн-оболочка PWA */
-const CACHE = "avto-blesk-v3";
+const CACHE = "avto-blesk-v4";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.add("/")));

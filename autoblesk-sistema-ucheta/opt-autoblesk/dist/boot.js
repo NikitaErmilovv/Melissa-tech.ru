@@ -31018,8 +31018,11 @@ function serveStaticFiles(app2) {
   const distPath = path.resolve(import.meta.dirname, "../dist/public");
   app2.use("*", serveStatic({ root: "./dist/public" }));
   app2.notFound((c) => {
-    const accept = c.req.header("accept") ?? "";
-    if (!accept.includes("text/html")) {
+    const p = c.req.path;
+    if (p.startsWith("/api/")) {
+      return c.json({ error: "Not Found" }, 404);
+    }
+    if (c.req.method !== "GET" && c.req.method !== "HEAD") {
       return c.json({ error: "Not Found" }, 404);
     }
     const indexPath = path.resolve(distPath, "index.html");
