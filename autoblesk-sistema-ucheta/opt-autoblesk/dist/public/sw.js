@@ -1,5 +1,5 @@
-/* Авто Блеск — service worker: офлайн-оболочка PWA */
-const CACHE = "avto-blesk-v4";
+/* Detail Desk — service worker: офлайн-оболочка PWA */
+const CACHE = "detaildesk-v5";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.add("/")));

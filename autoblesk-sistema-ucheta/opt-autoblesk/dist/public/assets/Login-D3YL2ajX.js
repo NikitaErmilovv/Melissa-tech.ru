@@ -73,7 +73,7 @@ function LoginPage() {
               {
                 className: "text-center",
                 children: [
-                  e.jsxDEV("h1", { className: "font-display text-2xl", children: "Авто Блеск" }, void 0, !1, {}, void 0),
+                  e.jsxDEV("h1", { className: "font-display text-2xl", children: "Detail Desk" }, void 0, !1, {}, void 0),
                   e.jsxDEV("p", { className: "mt-1 text-sm font-medium text-muted-foreground", children: "Учёт детейлинг-студии" }, void 0, !1, {}, void 0),
                 ],
               },
