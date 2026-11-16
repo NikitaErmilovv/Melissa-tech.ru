@@ -2,7 +2,7 @@ window.STUDIO_MESSENGERS = {
   wa: "79009211001",
   tg: "+79009211001",
   max: "",
-  defaultMessage: "Здравствуйте! Хочу записаться на кузовной ремонт.",
+  defaultMessage: "Здравствуйте! Хочу записаться в KuzOff.",
 };
 
 window.STUDIO_CONTACTS = {
