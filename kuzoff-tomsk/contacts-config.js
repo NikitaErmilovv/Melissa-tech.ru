@@ -7,7 +7,7 @@ window.STUDIO_MESSENGERS = {
 
 window.STUDIO_CONTACTS = {
   addressLine: "г. Томск, ул. Пушкина, 10/1, 634003",
-  hoursLine: "По предварительной записи · 10:00–20:00",
+  hoursLine: "По предварительной записи · 11:00–20:00",
   mapLat: 56.495371,
   mapLon: 84.95699,
   gisFirm: "https://2gis.ru/tomsk/firm/70000001061703033",

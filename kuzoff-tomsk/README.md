@@ -1,8 +1,8 @@
 # KuzOff
 
-Шаблон: rp-detailing-tolyatti + 3D-конфигуратор оклейки (RTG, как у auto-custom).
+Шаблон: rp-detailing-tolyatti. Фото альбома — `img/works/incoming/kuzoff/` (герой: `02-client.jpg`).
 
-После пересборки из JSON: `python3 scripts/patch_kuzoff_tomsk.py` (фото/отзывы 2ГИС, конфигуратор, контакты).
+После пересборки из JSON: `python3 scripts/patch_kuzoff_tomsk.py` (отзывы 2ГИС, услуги, контакты).
 
 Локально: `python server.py` → http://127.0.0.1:8138/
 

@@ -2,23 +2,18 @@
   var grid = document.getElementById('gallery-grid');
   if (!grid) return;
   var FALLBACK_FILES = [
-  "img/works/incoming/rp/01-2gis.jpg",
-  "img/works/incoming/rp/02-2gis.jpg",
-  "img/works/incoming/rp/03-2gis.jpg",
-  "img/works/incoming/rp/04-2gis.jpg",
-  "img/works/incoming/rp/05-2gis.jpg",
-  "img/works/incoming/rp/06-2gis.jpg",
-  "img/works/incoming/rp/07-2gis.jpg",
-  "img/works/incoming/rp/08-2gis.jpg",
-  "img/works/incoming/rp/09-2gis.jpg",
-  "img/works/incoming/rp/10-2gis.jpg",
-  "img/works/incoming/rp/11-2gis.jpg",
-  "img/works/incoming/rp/12-2gis.jpg",
-  "img/works/incoming/rp/13-2gis.jpg",
-  "img/works/incoming/rp/14-2gis.jpg",
-  "img/works/incoming/rp/15-2gis.jpg",
-  "img/works/incoming/rp/16-2gis.jpg"
-];
+    "img/works/incoming/kuzoff/01-client.jpg",
+    "img/works/incoming/kuzoff/02-client.jpg",
+    "img/works/incoming/kuzoff/03-client.jpg",
+    "img/works/incoming/kuzoff/04-client.jpg",
+    "img/works/incoming/kuzoff/05-client.jpg",
+    "img/works/incoming/kuzoff/06-client.jpg",
+    "img/works/incoming/kuzoff/07-client.jpg",
+    "img/works/incoming/kuzoff/08-client.jpg",
+    "img/works/incoming/kuzoff/09-client.jpg",
+    "img/works/incoming/kuzoff/10-client.jpg",
+    "img/works/incoming/kuzoff/11-client.jpg"
+  ];
   var manifestUrl = 'data/gallery-manifest.json';
 
   function render(files) {
