@@ -11,6 +11,7 @@ window.STUDIO_CONTACTS = {
   mapLat: 54.997396,
   mapLon: 83.009087,
   gisFirm: "https://2gis.ru/novosibirsk/firm/70000001065421759",
+  mapImage: "img/map-2gis-card.png",
   yandexMaps: "",
   phones: [
     { tel: "+79530598840", display: "+7 (953) 059-88-40" },

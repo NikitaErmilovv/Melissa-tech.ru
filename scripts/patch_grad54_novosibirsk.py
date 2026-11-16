@@ -257,6 +257,7 @@ window.STUDIO_CONTACTS = {{
   mapLat: {meta["map_lat"]},
   mapLon: {meta["map_lon"]},
   gisFirm: "{meta["firm_url"]}",
+  mapImage: "img/map-2gis-card.png",
   yandexMaps: "",
   phones: [
 {phone_lines}

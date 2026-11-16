@@ -25,13 +25,22 @@
     }
   });
 
-  if (lat && lon) {
+  var alt = "Карта 2ГИС — " + addr;
+  if (c.mapImage) {
+    var mapSrc = c.mapImage;
+    if (/\/services\//.test(window.location.pathname) && mapSrc.indexOf("../") !== 0) {
+      mapSrc = "../" + mapSrc;
+    }
+    document.querySelectorAll(".address-map-img").forEach(function (img) {
+      img.src = mapSrc;
+      img.alt = alt;
+    });
+  } else if (lat && lon) {
     var mapC = lat + "," + lon;
     var desk =
       "https://static.maps.2gis.com/1.0?s=880x450&amp;c=" + mapC + "&amp;z=16&amp;pt=" + mapC + "~k:p";
     var mob =
       "https://static.maps.2gis.com/1.0?s=720x720&amp;c=" + mapC + "&amp;z=16&amp;pt=" + mapC + "~k:p";
-    var alt = "Карта 2ГИС — " + addr;
     document.querySelectorAll(".address-map-img--desktop").forEach(function (img) {
       img.src = desk;
       img.alt = alt;
@@ -40,8 +49,10 @@
       img.src = mob;
       img.alt = alt;
     });
+  }
+  if (firm) {
     document.querySelectorAll(".address-map-frame").forEach(function (a) {
-      if (firm) a.href = firm;
+      a.href = firm;
     });
   }
 
