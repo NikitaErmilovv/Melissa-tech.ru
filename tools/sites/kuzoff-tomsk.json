@@ -13,10 +13,10 @@
   "hero_title_html": "KUZ<span class=\"accent\">OFF</span>",
   "replace": {
     "РП — детейлинг-студия Тольятти": "KuzOff — детейлинг-студия, Томск",
-    "Услуги — РП": "Услуги — KuzOff",
-    "Контакты — РП": "Контакты — KuzOff",
-    "О нас — РП": "О нас — KuzOff",
-    "Работы — РП": "Работы — KuzOff",
+    "Услуги — РП": "Услуги — Томск",
+    "Контакты — РП": "Контакты — Томск",
+    "О нас — РП": "О нас — Томск",
+    "Работы — РП": "Работы — Томск",
     "Детейлинг-центр в Тольятти: мойка, полировка, защитные покрытия, антикор и тонировка по записи.": "Детейлинг-студия в Томске: мойка, полировка, защитные покрытия и тонировка. Октябрьский район, ул. Пушкина — работаем по записи.",
     "ДЕТЕЙЛИНГ<br><span class=\"accent\">И ЗАЩИТА КУЗОВА</span>": "ДЕТЕЙЛИНГ<br><span class=\"accent\">И ЗАЩИТА КУЗОВА</span>",
     "ДЕТЕЙЛИНГ-СТУДИЯ<br><span class=\"accent\">ТОЛЬЯТТИ</span>": "ДЕТЕЙЛИНГ-СТУДИЯ<br><span class=\"accent\">ТОМСК</span>",
@@ -36,10 +36,10 @@
     "+79649696765": "+79234088056",
     "+7 (964) 969-67-65": "+7 (923) 408-80-56",
     "<span class=\"logo-mark\">РП</span><span class=\"logo-word\"></span>": "<span class=\"logo-mark\">KUZ</span><span class=\"logo-word\">OFF</span>",
-    "© 2026 РП": "© 2026 KuzOff",
+    "© 2026 РП": "© 2026",
     "Здравствуйте! Хочу записаться в РП.": "Здравствуйте! Хочу записаться в KuzOff.",
     "id=\"stat-reviews\">51": "id=\"stat-reviews\">102",
-    " — РП": " — KuzOff",
+    " — РП": " — Томск",
     "alt=\"РП Detailing\"": "alt=\"KuzOff\"",
     "target=\"_blank\" rel=\"noopener noreferrer\">2ГИС</a></div>": "target=\"_blank\" rel=\"noopener noreferrer\">2ГИС</a><a href=\"https://yandex.ru/maps/org/kuzoff/40290939410/?ll=84.956929%2C56.495494&amp;z=16\" target=\"_blank\" rel=\"noopener noreferrer\">Яндекс Карты</a></div>"
   },
@@ -145,5 +145,5 @@
       "id": "k3"
     }
   ],
-  "theme_css": ":root{--accent:#ef233c;--accent-soft:rgba(239,35,60,.38);--accent-hover:#ff3b55;--accent-deep:#c1121f;--accent-rgb:239,35,60}.hero{background:radial-gradient(circle at 72% 42%,#2a0a0e 0,#160608 28%,#0a0a0a 55%)}.button{background:var(--accent);color:#fff}.button.dark{border-color:rgba(255,255,255,.25);color:#fff}.hero-title-text{font-size:clamp(44px,7vw,92px);line-height:.9;letter-spacing:-.05em;margin:0 0 28px;font-weight:900;text-transform:uppercase}.hero-title-text .accent{color:var(--accent)}.hero--kuzoff .heroimg{background-image:url('img/works/incoming/rp/01-2gis.jpg')}.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}"
+  "theme_css": ":root{--accent:#d42527;--accent-soft:rgba(212,37,39,.38);--accent-hover:#e83032;--accent-deep:#9e1c1e;--accent-rgb:212,37,39}.hero{background:radial-gradient(circle at 72% 42%,#2a0a0e 0,#160608 28%,#0a0a0a 55%)}.button{background:var(--accent);color:#fff}.button.dark{border-color:rgba(255,255,255,.25);color:#fff}.hero-title-text{font-size:clamp(44px,7vw,92px);line-height:.9;letter-spacing:-.05em;margin:0 0 28px;font-weight:900;text-transform:uppercase}.hero-title-text .accent{color:var(--accent)}.hero--kuzoff .heroimg{background-image:url('img/works/incoming/rp/01-2gis.jpg')}.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}"
 }
