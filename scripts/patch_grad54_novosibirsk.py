@@ -36,7 +36,7 @@ HOME_SERVICES = [
 ]
 
 CATALOG = [
-    ("ppf", "Ремонт вмятин без покраски", "PDR: восстановление формы кузова без перекраски."),
+    ("ppf", "Ремонт вмятин без покраски", "Восстановление формы кузова без перекраски."),
     ("anticor", "Кузовной ремонт", "Локальный и кузовной ремонт после осмотра."),
     ("polish", "Полировка", "Полировка ЛКП и подготовка поверхности."),
     ("ceramic", "Покраска автомобилей", "Покрасочные работы и подбор оттенка."),
@@ -335,7 +335,7 @@ def patch_hero_copy() -> None:
     text = idx.read_text(encoding="utf-8")
     text = re.sub(
         r'<div class="eyebrow hero-eyebrow-city">[^<]*</div>',
-        '<div class="eyebrow hero-eyebrow-city">НОВОСИБИРСК · PDR</div>',
+        '<div class="eyebrow hero-eyebrow-city">НОВОСИБИРСК · УДАЛЕНИЕ ВМЯТИН БЕЗ ПОКРАСКИ</div>',
         text,
         count=1,
     )
