@@ -690,7 +690,9 @@ var init_env = __esm({
       localPreview: process.env.LOCAL_PREVIEW === "1",
       publicAppUrl: process.env.PUBLIC_APP_URL ?? "",
       resendApiKey: process.env.RESEND_API_KEY ?? "",
-      mailFrom: process.env.MAIL_FROM ?? "\u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A <onboarding@resend.dev>",
+      mailFrom: (process.env.MAIL_FROM ?? "").trim() || "\u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A <onboarding@resend.dev>",
+      mailReplyTo: (process.env.MAIL_REPLY_TO ?? "").trim(),
+      mailBrandName: (process.env.MAIL_BRAND_NAME ?? "").trim() || "\u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A",
       smtpHost: process.env.SMTP_HOST ?? "",
       smtpPort: Number(process.env.SMTP_PORT ?? 587),
       smtpSecure: process.env.SMTP_SECURE === "1",
@@ -58107,6 +58109,129 @@ async function verifySessionToken(token) {
 init_env();
 init_companies();
 
+// api/lib/mail.ts
+function escMailHtml(value) {
+  return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function absoluteAppUrl(path) {
+  const base = (env.publicAppUrl ?? "").replace(/\/$/, "");
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return base ? `${base}${p}` : p;
+}
+function mailLayout(bodyHtml) {
+  const brand = escMailHtml(env.mailBrandName);
+  return `<!doctype html><html lang="ru"><body style="font-family:Manrope,Segoe UI,sans-serif;background:#FAF7F1;color:#210c02;padding:24px;max-width:560px">
+<div style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#c42121;margin-bottom:16px">${brand}</div>
+${bodyHtml}
+<p style="margin-top:32px;font-size:11px;color:#888">\u042D\u0442\u043E \u0441\u043B\u0443\u0436\u0435\u0431\u043D\u043E\u0435 \u0443\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435. \u041D\u0435 \u043E\u0442\u0432\u0435\u0447\u0430\u0439\u0442\u0435 \u043D\u0430 \u043F\u0438\u0441\u044C\u043C\u043E.</p>
+</body></html>`;
+}
+async function sendResendEmail({ to, subject, html, text }) {
+  if (!env.resendApiKey) {
+    return { skipped: true, reason: "no_api_key" };
+  }
+  const payload = {
+    from: env.mailFrom,
+    to: Array.isArray(to) ? to : [to],
+    subject,
+    html,
+    text
+  };
+  if (env.mailReplyTo) payload.reply_to = env.mailReplyTo;
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.resendApiKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+  const body = await res.text();
+  if (!res.ok) {
+    throw new Error(`Resend HTTP ${res.status}: ${body.slice(0, 500)}`);
+  }
+  try {
+    return JSON.parse(body);
+  } catch {
+    return { ok: true, raw: body };
+  }
+}
+async function sendRegistrationCodeEmail({ to, ownerName, code }) {
+  const subject = `\u041A\u043E\u0434 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F \u2014 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${escMailHtml(ownerName)}!</p>
+<p>\u0412\u0430\u0448 \u043A\u043E\u0434 \u0434\u043B\u044F \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438 \u0432 ${escMailHtml(env.mailBrandName)}:</p>
+<p style="font-size:32px;font-weight:800;letter-spacing:.2em">${escMailHtml(code)}</p>
+<p style="font-size:12px;color:#666">\u041A\u043E\u0434 \u0434\u0435\u0439\u0441\u0442\u0432\u0443\u0435\u0442 15 \u043C\u0438\u043D\u0443\u0442.</p>`);
+  const text = `\u041A\u043E\u0434 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438: ${code}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function sendSuperadminNewStudioEmail({ to, studioName, ownerName, email: email3, phone, city, companyId }) {
+  const subject = `\u041D\u043E\u0432\u0430\u044F \u0441\u0442\u0443\u0434\u0438\u044F \u2014 ${env.mailBrandName}`;
+  const platformUrl = absoluteAppUrl(`/platform/organizations/${companyId}`);
+  const html = mailLayout(`<p>\u0417\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0430 \u043D\u043E\u0432\u0430\u044F \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044F.</p>
+<ul style="line-height:1.7">
+<li><strong>\u0421\u0442\u0443\u0434\u0438\u044F:</strong> ${escMailHtml(studioName)}</li>
+<li><strong>\u0412\u043B\u0430\u0434\u0435\u043B\u0435\u0446:</strong> ${escMailHtml(ownerName)}</li>
+<li><strong>Email:</strong> ${escMailHtml(email3)}</li>
+<li><strong>\u0422\u0435\u043B\u0435\u0444\u043E\u043D:</strong> ${escMailHtml(phone ?? "\u2014")}</li>
+<li><strong>\u0413\u043E\u0440\u043E\u0434:</strong> ${escMailHtml(city ?? "\u2014")}</li>
+<li><strong>ID:</strong> ${companyId}</li>
+</ul>
+<p><a href="${platformUrl}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:10px 16px;border-radius:10px;text-decoration:none">\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0435</a></p>`);
+  const text = `\u041D\u043E\u0432\u0430\u044F \u0441\u0442\u0443\u0434\u0438\u044F: ${studioName}, ${ownerName}, ${email3}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function sendRegistrationVerifyEmail({ to, ownerName, studioName, verifyPath }) {
+  const url = absoluteAppUrl(verifyPath);
+  const subject = `\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u2014 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${escMailHtml(ownerName)}!</p>
+<p>\u0417\u0430\u044F\u0432\u043A\u0430 \u043D\u0430 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044E \u0441\u0442\u0443\u0434\u0438\u0438 <strong>${escMailHtml(studioName)}</strong>.</p>
+<p>\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u0430\u0434\u0440\u0435\u0441 \u043F\u043E\u0447\u0442\u044B \u2014 \u0437\u0430\u0442\u0435\u043C \u0437\u0430\u044F\u0432\u043A\u0443 \u0440\u0430\u0441\u0441\u043C\u043E\u0442\u0440\u0438\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D.</p>
+<p><a href="${url}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C email</a></p>
+<p style="font-size:12px;color:#666">\u0421\u0441\u044B\u043B\u043A\u0430: <span style="word-break:break-all">${url}</span></p>`);
+  const text = `\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 email \u0434\u043B\u044F \u00AB${studioName}\u00BB: ${url}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function sendRegistrationApprovedEmail({ to, ownerName, studioName, loginUrl }) {
+  const url = loginUrl || absoluteAppUrl("/login");
+  const subject = `\u0421\u0442\u0443\u0434\u0438\u044F \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0430 \u2014 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${escMailHtml(ownerName)}!</p>
+<p>\u0417\u0430\u044F\u0432\u043A\u0430 \u043D\u0430 <strong>${escMailHtml(studioName)}</strong> \u043E\u0434\u043E\u0431\u0440\u0435\u043D\u0430. \u041C\u043E\u0436\u043D\u043E \u0432\u0445\u043E\u0434\u0438\u0442\u044C \u0441 \u0442\u0435\u043C \u043F\u0430\u0440\u043E\u043B\u0435\u043C, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0443\u043A\u0430\u0437\u0430\u043B\u0438 \u043F\u0440\u0438 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438.</p>
+<p><a href="${url}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">\u0412\u043E\u0439\u0442\u0438 \u0432 CRM</a></p>`);
+  const text = `\u0421\u0442\u0443\u0434\u0438\u044F ${studioName} \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0430. \u0412\u0445\u043E\u0434: ${url}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function sendStaffAccessEmail({ to, name, companyName, login, password }) {
+  const url = absoluteAppUrl("/login");
+  const subject = `\u0414\u043E\u0441\u0442\u0443\u043F \u0432 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${escMailHtml(name)}!</p>
+<p>\u0414\u043B\u044F \u0441\u0442\u0443\u0434\u0438\u0438 <strong>${escMailHtml(companyName)}</strong> \u0441\u043E\u0437\u0434\u0430\u043D \u0434\u043E\u0441\u0442\u0443\u043F:</p>
+<ul style="line-height:1.6"><li><strong>\u041B\u043E\u0433\u0438\u043D:</strong> ${escMailHtml(login)}</li><li><strong>\u041F\u0430\u0440\u043E\u043B\u044C:</strong> ${escMailHtml(password)}</li></ul>
+<p><a href="${url}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">\u0412\u043E\u0439\u0442\u0438</a></p>
+<p style="font-size:12px;color:#666">\u0421\u043C\u0435\u043D\u0438\u0442\u0435 \u043F\u0430\u0440\u043E\u043B\u044C \u043F\u043E\u0441\u043B\u0435 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0432\u0445\u043E\u0434\u0430.</p>`);
+  const text = `\u0414\u043E\u0441\u0442\u0443\u043F ${companyName}: \u043B\u043E\u0433\u0438\u043D ${login}, \u043F\u0430\u0440\u043E\u043B\u044C ${password}. ${url}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function sendPasswordResetEmail({ to, name, login, password }) {
+  const url = absoluteAppUrl("/login");
+  const subject = `\u041D\u043E\u0432\u044B\u0439 \u043F\u0430\u0440\u043E\u043B\u044C \u2014 ${env.mailBrandName}`;
+  const html = mailLayout(`<p>${escMailHtml(name)}, \u0434\u043B\u044F \u0432\u0430\u0441 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D \u043D\u043E\u0432\u044B\u0439 \u043F\u0430\u0440\u043E\u043B\u044C.</p>
+<ul><li><strong>\u041B\u043E\u0433\u0438\u043D:</strong> ${escMailHtml(login ?? to)}</li><li><strong>\u041F\u0430\u0440\u043E\u043B\u044C:</strong> ${escMailHtml(password)}</li></ul>
+<p><a href="${url}" style="display:inline-block;background:#c42121;color:#fff;font-weight:700;padding:12px 20px;border-radius:12px;text-decoration:none">\u0412\u043E\u0439\u0442\u0438</a></p>`);
+  const text = `\u041D\u043E\u0432\u044B\u0439 \u043F\u0430\u0440\u043E\u043B\u044C: ${password}. \u0412\u0445\u043E\u0434: ${url}`;
+  return sendResendEmail({ to, subject, html, text });
+}
+async function trySendMail(task) {
+  if (!env.resendApiKey) return { sent: false };
+  try {
+    await task();
+    return { sent: true };
+  } catch (e) {
+    console.error("[mail]", e);
+    return { sent: false, error: e instanceof Error ? e.message : String(e) };
+  }
+}
+
 // api/queries/registration.ts
 init_drizzle_orm();
 init_schema2();
@@ -58188,6 +58313,139 @@ async function rejectRegistrationRequest(requestId, reviewerId, note) {
     reviewNote: note?.trim() || null
   }).where(eq(registrationRequests.id, requestId));
 }
+var REG_META_PREFIX = "regv2:";
+var REG_PENDING_STUDIO = "__pending_org__";
+var DEMO_SAMPLE_TAG = "demoSample:1";
+function encodeRegMeta(meta) {
+  return REG_META_PREFIX + JSON.stringify(meta);
+}
+function parseRegMeta(note) {
+  if (!note || !String(note).startsWith(REG_META_PREFIX)) return null;
+  try {
+    return JSON.parse(String(note).slice(REG_META_PREFIX.length));
+  } catch {
+    return null;
+  }
+}
+function generateRegCode() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+async function findPendingRegV2(email3) {
+  const db = getDb();
+  const rows = await db.select().from(registrationRequests).where(and(eq(registrationRequests.email, email3), eq(registrationRequests.status, "pending"))).limit(1);
+  return rows[0];
+}
+async function startRegistrationV2(input2) {
+  const db = getDb();
+  const email3 = input2.email.trim().toLowerCase();
+  const existingUser = await db.select().from(users).where(eq(users.email, email3)).limit(1);
+  if (existingUser[0]) throw new Error("Email \u0443\u0436\u0435 \u0437\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D");
+  const code = generateRegCode();
+  const meta = { code, exp: Date.now() + 15 * 60 * 1e3, step: "code", completionToken: randomBytes2(16).toString("hex") };
+  const passwordHash = hashPassword(input2.password);
+  const pending = await findPendingRegV2(email3);
+  if (pending) {
+    await db.update(registrationRequests).set({
+      ownerName: input2.ownerName.trim(),
+      phone: phoneForStorage(input2.phone),
+      passwordHash,
+      emailConfirmed: false,
+      reviewNote: encodeRegMeta(meta),
+      studioName: REG_PENDING_STUDIO
+    }).where(eq(registrationRequests.id, pending.id));
+  } else {
+    await db.insert(registrationRequests).values({
+      studioName: REG_PENDING_STUDIO,
+      ownerName: input2.ownerName.trim(),
+      email: email3,
+      phone: phoneForStorage(input2.phone),
+      passwordHash,
+      status: "pending",
+      emailConfirmed: false,
+      reviewNote: encodeRegMeta(meta)
+    });
+  }
+  const mail = await trySendMail(() => sendRegistrationCodeEmail({ to: email3, ownerName: input2.ownerName.trim(), code }));
+  return {
+    email: email3,
+    emailSent: mail.sent,
+    devCode: !env.resendApiKey ? code : void 0
+  };
+}
+async function verifyRegistrationCodeV2(email3, code) {
+  const row = await findPendingRegV2(email3.trim().toLowerCase());
+  if (!row) throw new Error("\u0417\u0430\u044F\u0432\u043A\u0430 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430");
+  const meta = parseRegMeta(row.reviewNote);
+  if (!meta || meta.step !== "code") throw new Error("\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0437\u0430\u043F\u0440\u043E\u0441\u0438\u0442\u0435 \u043A\u043E\u0434");
+  if (String(meta.code) !== String(code).trim()) throw new Error("\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 \u043A\u043E\u0434");
+  if (Date.now() > Number(meta.exp)) throw new Error("\u041A\u043E\u0434 \u0438\u0441\u0442\u0451\u043A. \u0417\u0430\u043F\u0440\u043E\u0441\u0438\u0442\u0435 \u043D\u043E\u0432\u044B\u0439");
+  meta.step = "org";
+  const db = getDb();
+  await db.update(registrationRequests).set({ emailConfirmed: true, reviewNote: encodeRegMeta(meta) }).where(eq(registrationRequests.id, row.id));
+  return { email: email3, completionToken: meta.completionToken };
+}
+async function notifySuperadminsNewStudio(studio) {
+  const db = getDb();
+  const supers = await db.select().from(users).where(eq(users.role, "superadmin"));
+  const targets = supers.map((u) => u.email).filter(Boolean);
+  if (!targets.length) return { sent: 0 };
+  let sent = 0;
+  for (const to of targets) {
+    const m = await trySendMail(() => sendSuperadminNewStudioEmail({ to, ...studio }));
+    if (m.sent) sent++;
+  }
+  return { sent };
+}
+async function completeRegistrationV2(input2, ctx) {
+  const email3 = input2.email.trim().toLowerCase();
+  const row = await findPendingRegV2(email3);
+  if (!row || !row.emailConfirmed) throw new Error("\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u043A\u043E\u0434");
+  const meta = parseRegMeta(row.reviewNote);
+  if (!meta || meta.step !== "org" || meta.completionToken !== input2.completionToken) throw new Error("\u0421\u0435\u0441\u0441\u0438\u044F \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438 \u043D\u0435\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u0430");
+  const created = await createStudioWithOwner({
+    studioName: input2.studioName.trim(),
+    ownerName: row.ownerName,
+    email: email3,
+    phone: row.phone ?? void 0,
+    passwordHash: row.passwordHash,
+    legalName: input2.legalName?.trim() || void 0,
+    inn: input2.inn?.trim() || void 0,
+    city: input2.city?.trim() || void 0,
+    address: input2.address?.trim() || void 0,
+    profileNotes: DEMO_SAMPLE_TAG
+  });
+  await ensureStudioServiceCatalogFromDemo(created.companyId);
+  await ensureStudioDashboardSampleData(created.companyId, created.userId);
+  const db = getDb();
+  await db.update(registrationRequests).set({
+    studioName: input2.studioName.trim(),
+    status: "approved",
+    reviewedAt: /* @__PURE__ */ new Date(),
+    reviewNote: "\u0421\u0430\u043C\u043E\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
+  }).where(eq(registrationRequests.id, row.id));
+  await notifySuperadminsNewStudio({
+    studioName: input2.studioName.trim(),
+    ownerName: row.ownerName,
+    email: email3,
+    phone: row.phone,
+    city: input2.city,
+    companyId: created.companyId
+  });
+  const token = await attachSessionCookie(ctx, created.unionId);
+  const user = await findUserByUnionId(created.unionId);
+  return { token, demoSampleEnabled: true, companyId: created.companyId, user: user ? { id: user.id, email: user.email, name: user.name, role: user.role, companyId: user.companyId } : null };
+}
+async function disableDemoSampleData(companyId) {
+  const db = getDb();
+  const company = await getCompanyById(companyId);
+  if (!company?.profileNotes?.includes(DEMO_SAMPLE_TAG)) return { ok: true, removed: false };
+  await db.delete(orders).where(eq(orders.companyId, companyId));
+  await db.delete(expenses).where(eq(expenses.companyId, companyId));
+  await db.delete(clients).where(eq(clients.companyId, companyId));
+  const notes = String(company.profileNotes || "").replace(DEMO_SAMPLE_TAG, "").trim() || null;
+  await db.update(companies).set({ profileNotes: notes }).where(eq(companies.id, companyId));
+  return { ok: true, removed: true };
+}
 
 // api/queries/tenant.ts
 function tenantCompanyId(user) {
@@ -58238,12 +58496,29 @@ var authRouter = createRouter({
   ).mutation(async ({ input: input2 }) => {
     try {
       const { email: email3, verifyPath } = await submitRegistrationRequest(input2);
+      let emailSent = false;
+      let mailError = null;
+      if (env.resendApiKey) {
+        try {
+          await sendRegistrationVerifyEmail({
+            to: email3,
+            ownerName: input2.ownerName.trim(),
+            studioName: input2.studioName.trim(),
+            verifyPath
+          });
+          emailSent = true;
+        } catch (e) {
+          mailError = e instanceof Error ? e.message : String(e);
+          console.error("[mail] registration verify", mailError);
+        }
+      }
       return {
         ok: true,
         email: email3,
         pending: true,
-        verifyPath,
-        message: "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u043F\u043E\u0447\u0442\u0443 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435. \u041F\u043E\u0441\u043B\u0435 \u044D\u0442\u043E\u0433\u043E \u0437\u0430\u044F\u0432\u043A\u0430 \u043F\u043E\u043F\u0430\u0434\u0451\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D\u0443. \u041F\u0438\u0441\u044C\u043C\u043E \u0447\u0435\u0440\u0435\u0437 Resend \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u043C, \u043A\u043E\u0433\u0434\u0430 \u0431\u0443\u0434\u0435\u0442 \u043A\u043B\u044E\u0447 \u2014 \u0441\u0435\u0439\u0447\u0430\u0441 \u0441\u0441\u044B\u043B\u043A\u0430 \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u043D\u0430 \u044D\u043A\u0440\u0430\u043D\u0435."
+        verifyPath: emailSent ? void 0 : verifyPath,
+        emailSent,
+        message: emailSent ? "\u041C\u044B \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u043B\u0438 \u043F\u0438\u0441\u044C\u043C\u043E \u0441 \u0441\u0441\u044B\u043B\u043A\u043E\u0439 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F. \u041F\u043E\u0441\u043B\u0435 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F \u0437\u0430\u044F\u0432\u043A\u0443 \u0443\u0432\u0438\u0434\u0438\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D." : mailError ? `\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043F\u0438\u0441\u044C\u043C\u043E (${mailError}). \u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435 \u043D\u0430 \u044D\u043A\u0440\u0430\u043D\u0435.` : "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u043F\u043E\u0447\u0442\u0443 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435 \u043D\u0438\u0436\u0435. \u041F\u043E\u0441\u043B\u0435 \u044D\u0442\u043E\u0433\u043E \u0437\u0430\u044F\u0432\u043A\u0430 \u043F\u043E\u043F\u0430\u0434\u0451\u0442 \u0441\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D\u0443."
       };
     } catch (e) {
       throw new TRPCError({
@@ -58260,6 +58535,49 @@ var authRouter = createRouter({
         code: "BAD_REQUEST",
         message: e instanceof Error ? e.message : "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C"
       });
+    }
+  }),
+  startRegistration: publicQuery.input(
+    external_exports.object({
+      ownerName: external_exports.string().trim().min(2).max(255),
+      email: external_exports.string().trim().email().max(320),
+      phone: external_exports.string().trim().max(32).optional(),
+      password: external_exports.string().min(8).max(128)
+    })
+  ).mutation(async ({ input: input2 }) => {
+    try {
+      return await startRegistrationV2(input2);
+    } catch (e) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: e instanceof Error ? e.message : "\u041E\u0448\u0438\u0431\u043A\u0430" });
+    }
+  }),
+  verifyRegistrationCode: publicQuery.input(
+    external_exports.object({
+      email: external_exports.string().trim().email().max(320),
+      code: external_exports.string().trim().min(4).max(8)
+    })
+  ).mutation(async ({ input: input2 }) => {
+    try {
+      return await verifyRegistrationCodeV2(input2.email, input2.code);
+    } catch (e) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: e instanceof Error ? e.message : "\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 \u043A\u043E\u0434" });
+    }
+  }),
+  completeRegistration: publicQuery.input(
+    external_exports.object({
+      email: external_exports.string().trim().email().max(320),
+      completionToken: external_exports.string().trim().min(8).max(128),
+      studioName: external_exports.string().trim().min(2).max(255),
+      legalName: external_exports.string().trim().max(255).optional(),
+      inn: external_exports.string().trim().max(20).optional(),
+      city: external_exports.string().trim().max(120).optional(),
+      address: external_exports.string().trim().max(500).optional()
+    })
+  ).mutation(async ({ ctx, input: input2 }) => {
+    try {
+      return await completeRegistrationV2(input2, ctx);
+    } catch (e) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: e instanceof Error ? e.message : "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044E" });
     }
   }),
   login: publicQuery.input(
@@ -59452,7 +59770,8 @@ var platformRouter = createRouter({
   registrationRequests: superadminQuery.input(external_exports.object({ status: external_exports.enum(["pending", "approved", "rejected"]).optional() }).optional()).query(({ input: input2 }) => listRegistrationRequests(input2?.status)),
   approveRegistration: superadminQuery.input(external_exports.object({ requestId: external_exports.number().int().positive() })).mutation(async ({ ctx, input: input2 }) => {
     const res = await approveRegistrationRequest(input2.requestId, ctx.user.id);
-    return { ok: true, ...res };
+    const mail = await trySendMail(() => sendRegistrationApprovedEmail({ to: res.email, ownerName: res.ownerName, studioName: res.studioName }));
+    return { ...res, mailSent: mail.sent };
   }),
   rejectRegistration: superadminQuery.input(
     external_exports.object({
@@ -59487,8 +59806,21 @@ var platformRouter = createRouter({
       password: external_exports.string().min(8).max(128),
       role: external_exports.enum(["user", "admin"]).default("user")
     })
-  ).mutation(async ({ input: input2 }) => issueStaffCredentials(input2)),
-  resetPassword: superadminQuery.input(external_exports.object({ userId: external_exports.number().int().positive() })).mutation(async ({ input: input2 }) => resetUserPassword(input2.userId)),
+  ).mutation(async ({ input: input2 }) => {
+    const res = await issueStaffCredentials(input2);
+    if (res.email) {
+      await trySendMail(() => sendStaffAccessEmail({ to: res.email, name: input2.name.trim(), companyName: res.companyName, login: res.login, password: res.password }));
+    }
+    return res;
+  }),
+  resetPassword: superadminQuery.input(external_exports.object({ userId: external_exports.number().int().positive() })).mutation(async ({ input: input2 }) => {
+    const res = await resetUserPassword(input2.userId);
+    if (res.email) {
+      const mail = await trySendMail(() => sendPasswordResetEmail({ to: res.email, name: res.name ?? "", login: res.email, password: res.password }));
+      return { ...res, mailSent: mail.sent };
+    }
+    return res;
+  }),
   setBlocked: superadminQuery.input(external_exports.object({ companyId: external_exports.number().int().positive(), blocked: external_exports.boolean() })).mutation(async ({ input: input2 }) => {
     await setCompanyBlocked(input2.companyId, input2.blocked);
     return { ok: true };
@@ -59563,6 +59895,9 @@ var deskRouter = createRouter({
   ).mutation(async ({ ctx, input: input2 }) => {
     await saveStudioSettings(tenantCompanyId(ctx.user), input2);
     return { ok: true };
+  }),
+  disableDemoSample: adminQuery.mutation(async ({ ctx }) => {
+    return disableDemoSampleData(tenantCompanyId(ctx.user));
   }),
   mine: authedQuery.query(async ({ ctx }) => {
     const companyId = tenantCompanyId(ctx.user);
@@ -59959,30 +60294,40 @@ async function handleClientLog(c) {
 // api/dev-preview.ts
 init_env();
 var PREVIEW_UNION_ID = "local-preview-owner";
-var PREVIEW_SUPER_ID = "local-preview-superadmin";
+var PREVIEW_EMPLOYEE_ID = "local-preview-employee";
+var TEST_CABINET_NAME = "\u0422\u0435\u0441\u0442\u043E\u0432\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442";
+async function markTestCabinetCompany(companyId) {
+  const db = getDb();
+  await db.update(companies).set({ name: TEST_CABINET_NAME, email: "test-cabinet@demo.local" }).where(eq(companies.id, companyId));
+}
 function createPreviewLoginHandler() {
   return async (c) => {
     if (!env.localPreview) {
       return c.json({ error: "Not available" }, 404);
     }
-    let asSuper = c.req.query("role") === "superadmin";
     let asEmployee = c.req.query("role") === "employee";
     if (c.req.method === "POST") {
       const body = await c.req.json().catch(() => ({}));
-      if (body.role === "superadmin") asSuper = true;
+      if (body.role === "superadmin") {
+        return c.json({ error: "\u0421\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D \u0432\u0445\u043E\u0434\u0438\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u043E \u043B\u043E\u0433\u0438\u043D\u0443 \u0438 \u043F\u0430\u0440\u043E\u043B\u044E" }, 403);
+      }
       if (body.role === "employee") asEmployee = true;
     }
-    const unionId = asSuper ? PREVIEW_SUPER_ID : env.ownerUnionId || PREVIEW_UNION_ID;
+  if (c.req.query("role") === "superadmin") {
+    return c.json({ error: "\u0421\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D \u0432\u0445\u043E\u0434\u0438\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u043E \u043B\u043E\u0433\u0438\u043D\u0443 \u0438 \u043F\u0430\u0440\u043E\u043B\u044E" }, 403);
+  }
+    const unionId = asEmployee ? PREVIEW_EMPLOYEE_ID : env.ownerUnionId || PREVIEW_UNION_ID;
     await upsertUser({
       unionId,
-      name: asSuper ? "\u0421\u0443\u043F\u0435\u0440\u0430\u0434\u043C\u0438\u043D (\u0434\u0435\u043C\u043E)" : asEmployee ? "\u041C\u0430\u0441\u0442\u0435\u0440 (\u0434\u0435\u043C\u043E)" : "\u0412\u043B\u0430\u0434\u0435\u043B\u0435\u0446 (\u0434\u0435\u043C\u043E)",
-      email: asSuper ? "superadmin@autoblesk.local" : asEmployee ? "staff@autoblesk.local" : "demo@autoblesk.local",
-      role: asSuper ? "superadmin" : asEmployee ? "user" : "admin",
+      name: asEmployee ? "\u0421\u043E\u0442\u0440\u0443\u0434\u043D\u0438\u043A (\u0442\u0435\u0441\u0442)" : "\u0412\u043B\u0430\u0434\u0435\u043B\u0435\u0446 (\u0442\u0435\u0441\u0442)",
+      email: asEmployee ? "staff-test@demo.local" : "owner-test@demo.local",
+      role: asEmployee ? "user" : "admin",
       lastSignInAt: /* @__PURE__ */ new Date()
     });
-    if (!asSuper && !asEmployee) {
-      const previewUser = await findUserByUnionId(unionId);
-      if (previewUser?.companyId) {
+    const previewUser = await findUserByUnionId(unionId);
+    if (previewUser?.companyId) {
+      await markTestCabinetCompany(previewUser.companyId);
+      if (!asEmployee) {
         await ensureStudioServiceCatalogFromDemo(previewUser.companyId);
         await ensureStudioDashboardSampleData(previewUser.companyId, previewUser.id);
       }
@@ -60000,10 +60345,10 @@ function createPreviewLoginHandler() {
       return c.json({
         ok: true,
         token,
-        role: asSuper ? "superadmin" : asEmployee ? "employee" : "owner"
+        role: asEmployee ? "employee" : "owner"
       });
     }
-    const dest = asSuper ? "/platform" : "/";
+    const dest = "/";
     if (c.req.query("redirect") === "302") {
       return c.redirect(dest, 302);
     }
@@ -60053,6 +60398,21 @@ app.use("*", async (c, next) => {
 });
 app.use("/api/trpc/*", bodyLimit({ maxSize: 50 * 1024 * 1024 }));
 app.get(Paths.oauthCallback, createOAuthCallbackHandler());
+app.get("/api/build-info", (c) =>
+  c.json({
+    build: "detaildesk-2026-11-15",
+    localPreview: env.localPreview,
+    testCabinet: TEST_CABINET_NAME,
+    mail: {
+      resendConfigured: Boolean(env.resendApiKey),
+      from: env.mailFrom,
+      replyTo: env.mailReplyTo || null,
+      brand: env.mailBrandName,
+      publicAppUrl: env.publicAppUrl || null,
+      templates: ["registration_verify", "registration_approved", "staff_access", "password_reset"]
+    }
+  })
+);
 app.get("/api/dev/preview-login", createPreviewLoginHandler());
 app.post("/api/dev/preview-login", createPreviewLoginHandler());
 app.use("/api/trpc/*", async (c) => {

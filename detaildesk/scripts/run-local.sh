@@ -29,6 +29,13 @@ ssh "${SSH_OPTS[@]}" "$SSH_HOST" &
 TUNNEL_PID=$!
 sleep 2
 
+# Фронт в detaildesk и autoblesk-sistema-ucheta общий; boot.js иногда обновляли только в одной копии.
+CANON_BOOT="$(cd "$ROOT/../autoblesk-sistema-ucheta/opt-autoblesk/dist" 2>/dev/null && pwd)/boot.js"
+if [[ -f "$CANON_BOOT" ]] && ! grep -q 'startRegistration:' "$APP/dist/boot.js" 2>/dev/null; then
+  echo "Синхронизация dist/boot.js из autoblesk-sistema-ucheta …"
+  cp "$CANON_BOOT" "$APP/dist/boot.js"
+fi
+
 cd "$APP"
 set -a
 # shellcheck disable=SC1091
