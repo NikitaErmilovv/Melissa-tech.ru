@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>KuzOff — детейлинг-студия, Томск</title>
+<link rel="stylesheet" href="wrap-configurator.css?v=rtg2">
 <link rel="stylesheet" href="styles.css?v=128">
 </head>
 <body>
@@ -35,10 +36,10 @@
       <h1 class="hero-title-text">KUZ<span class="accent">OFF</span></h1>
       </div>
     <div class="hero-content">
-      <p>Детейлинг-студия в Томске: мойка, полировка, защитные покрытия и тонировка. Октябрьский район, ул. Пушкина — работаем по записи.</p>
+      <p>Детейлинг в Томске: мойка, полировка, защитные покрытия и тонировка. На главной — 3D-конфигуратор оклейки (RTG): соберите вариант и позвоните для расчёта.</p>
       <div class="actions">
         <a class="button" href="tel:+79009211001">ЗАПИСАТЬСЯ</a>
-        <a class="button dark" href="services.html">СМОТРЕТЬ УСЛУГИ</a>
+        <a class="button dark" href="#wrap">СОБРАТЬ ОКЛЕЙКУ</a>
       </div>
     </div>
   </div>
@@ -54,12 +55,102 @@
     <div><div class="kicker">01 / УСЛУГИ</div><h2>ДЕТЕЙЛИНГ<br><span class="accent">И ЗАЩИТА КУЗОВА</span></h2></div>
     <p class="intro">Работаем по записи — стоимость после осмотра автомобиля.</p>
   </div>
-  <div class="photo-strip photo-strip--services photo-strip--home">
-    <a class="photo" href="services/polish.html" style="background-image:url('img/services-home/01-polish.jpg')"><span class="tag">ПОЛИРОВКА</span></a>
-    <a class="photo" href="services/ppf.html" style="background-image:url('img/services-home/02-ppf.jpg')"><span class="tag">ЗАЩИТНАЯ ПЛЁНКА</span></a>
-    <a class="photo" href="services/wrap.html" style="background-image:url('img/services-home/03-wrap.jpg')"><span class="tag">ОКЛЕЙКА</span></a>
-    <a class="photo" href="services/engine-bay.html" style="background-image:url('img/services-home/04-engine-bay.jpg')"><span class="tag">МОЙКА ПОДКАПОТНОГО ПРОСТРАНСТВА</span></a>
-    <a class="photo" href="services/wash.html" style="background-image:url('img/services-home/05-wash.jpg')"><span class="tag">ДЕТЕЙЛИНГ-МОЙКА</span></a>
+    <div class="photo-strip photo-strip--services photo-strip--home">
+    <a class="photo" href="services/polish.html" style="background-image:url('img/works/incoming/kuzoff/01-2gis.jpg')"><span class="tag">ПОЛИРОВКА</span></a>
+    <a class="photo" href="services/ppf.html" style="background-image:url('img/works/incoming/kuzoff/02-2gis.jpg')"><span class="tag">ЗАЩИТНАЯ ПЛЁНКА</span></a>
+    <a class="photo" href="services/wrap.html" style="background-image:url('img/works/incoming/kuzoff/03-2gis.jpg')"><span class="tag">ОКЛЕЙКА</span></a>
+    <a class="photo" href="services/engine-bay.html" style="background-image:url('img/works/incoming/kuzoff/04-2gis.jpg')"><span class="tag">МОЙКА ПОДКАПОТНОГО ПРОСТРАНСТВА</span></a>
+    <a class="photo" href="services/wash.html" style="background-image:url('img/works/incoming/kuzoff/05-2gis.jpg')"><span class="tag">ДЕТЕЙЛИНГ-МОЙКА</span></a>
+  </div>
+</section>
+
+<section class="wrap-band section" id="wrap">
+  <div class="section-head">
+    <div>
+      <div class="kicker">КОНФИГУРАТОР</div>
+      <h2>СОБЕРИТЕ<br><span class="accent">ОКЛЕЙКУ.</span></h2>
+    </div>
+    <p class="intro">Выберите автомобиль, детали и финиш. Сумма на экране — ориентир; точный расчёт — после осмотра.</p>
+  </div>
+  <div id="wrap-cfg">
+    <section class="wrap-viewer">
+      <div id="canvas" class="canvas"></div>
+      <div class="wrap-hero"><h3>Оклейка <span>плёнкой</span></h3></div>
+      <div class="wrap-badge"><b id="status">Подготовка 3D…</b></div>
+      <div class="wrap-view-actions">
+        <button id="rotate" class="tool active" type="button">Автоповорот</button>
+        <button id="reset" class="tool" type="button">Сброс</button>
+      </div>
+      <div id="marker" class="marker" style="display:none"></div>
+    </section>
+    <aside class="sidebar">
+      <h2 class="side-title">Соберите оклейку</h2>
+      <div class="wrap-block">
+        <div class="label">Автомобиль</div>
+        <div class="tools">
+          <button class="tool active" data-model="mercedes" type="button">Седан</button>
+          <button class="tool" data-model="mazda" type="button">Кроссовер</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Готовые варианты</div>
+        <div class="presets">
+          <button class="preset active" data-preset="0" type="button"><i class="stock"></i><span>Сток<small>Заводской цвет</small></span></button>
+          <button class="preset" data-preset="1" type="button"><i style="background:#0b0d10"></i><span>Obsidian Black<small>Сатин · перламутр</small></span></button>
+          <button class="preset" data-preset="2" type="button"><i style="background:#63351f"></i><span>Cocoa Brown<small>Глянец · металлик</small></span></button>
+          <button class="preset" data-preset="3" type="button"><i style="background:#f5f5f2"></i><span>Pearl White<small>Глянец · металлик</small></span></button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Зоны кузова</div>
+        <div class="zones" id="zones"></div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Выбранная деталь</div>
+        <div id="selectedInfo" class="selectedInfo">Нажмите на деталь на авто</div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Инструмент</div>
+        <div class="tools">
+          <button class="tool active" data-tool="select" type="button">Выбор</button>
+          <button class="tool" data-tool="fill" type="button">Заливка</button>
+          <button class="tool" data-tool="remove" type="button">Снять</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Цвет плёнки</div>
+        <div id="swatches" class="swatches"></div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Финиш</div>
+        <div class="finish">
+          <button class="active" data-finish="gloss" type="button">Глянец</button>
+          <button data-finish="satin" type="button">Сатин</button>
+          <button data-finish="matte" type="button">Матовый</button>
+        </div>
+      </div>
+      <div class="wrap-block">
+        <div class="label">Эффект</div>
+        <div class="finish">
+          <button class="active" data-effect="solid" type="button">Однотон</button>
+          <button data-effect="metal" type="button">Металлик</button>
+          <button data-effect="pearl" type="button">Перламутр</button>
+        </div>
+      </div>
+      <div class="wrap-block" hidden>
+        <div class="label">Детали</div>
+        <div id="parts" class="parts"></div>
+      </div>
+    </aside>
+    <div class="summary">
+      <div class="summary-row">
+        <div>
+          <div class="sumlabel">Ваш подбор</div>
+          <div id="total" class="total">0 ₽</div>
+        </div>
+        <a class="cta" id="quote" href="tel:+79009211001">Позвонить</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -91,12 +182,12 @@
   <div class="section-head">
     <div><div class="kicker">02 / РАБОТЫ</div><h2>НАШИ<br><span class="accent">РАБОТЫ.</span></h2></div>
   </div>
-  <div class="photo-strip photo-strip--services">
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/rp/01-2gis.jpg')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/rp/02-2gis.jpg')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/rp/03-2gis.jpg')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/rp/04-2gis.jpg')"></a>
-    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/rp/05-2gis.jpg')"></a>
+    <div class="photo-strip photo-strip--services">
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/kuzoff/01-2gis.jpg')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/kuzoff/02-2gis.jpg')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/kuzoff/03-2gis.jpg')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/kuzoff/04-2gis.jpg')"></a>
+    <a class="photo" href="gallery.html" style="background-image:url('img/works/incoming/kuzoff/05-2gis.jpg')"></a>
   </div>
 </section>
 
@@ -195,6 +286,7 @@
     <div class="footer-col footer-col--phones">
       <b>КОНТАКТЫ</b>
       <a class="footer-phone-inline" href="tel:+79009211001">+7 (900) 921-10-01</a>
+      <a class="footer-phone-inline" href="tel:+79234088056">+7 (923) 408-80-56</a>
     </div>
   </div>
   <div class="footer-grid footer-mobile-only">
@@ -210,6 +302,7 @@
       <div class="footer-phones-block">
         <b>КОНТАКТЫ</b>
         <a class="footer-phone-inline" href="tel:+79009211001">+7 (900) 921-10-01</a>
+      <a class="footer-phone-inline" href="tel:+79234088056">+7 (923) 408-80-56</a>
       </div>
       <div class="footer-brand-divider" aria-hidden="true"></div>
       <div class="footer-brand-block">
@@ -236,5 +329,10 @@
 
 <script src="ba-slider.js"></script>
 <script src="reviews-carousel.js"></script>
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+<link rel="modulepreload" href="./vendor/three/build/three.module.js">
+<link rel="modulepreload" href="wrap-configurator.core.js?v=rtg2">
+<link rel="preload" href="models/mercedes.glb?v=5" as="fetch" type="model/gltf-binary" crossorigin fetchpriority="high">
+<script type="module" src="wrap-loader.js?v=rtg2"></script>
 </body>
 </html>

@@ -25,3 +25,5 @@ python3 Melissa-tech.ru/tools/clone-rp-site.py Melissa-tech.ru/tools/sites/kuzof
 ```
 
 Конфиги: `tools/sites/*.json` — телефоны, 2GIS, список услуг на главной, `theme_css` (для AR — чёрно-бело-красный акцент).
+
+**KuzOff:** после клона — `python3 scripts/patch_kuzoff_tomsk.py` (альбом и отзывы 2ГИС, RTG-конфигуратор на главной).
