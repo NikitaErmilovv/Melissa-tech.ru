@@ -82,7 +82,24 @@ function dueOrders(orders: Order[], silenceMin: number, remindMin: number, now: 
 }
 
 async function runReminders() {
-  /* Автонапоминания в чат WB отключены: приветствие со ссылкой и прогресс с сайта. */
+  const db = readDb();
+  if (!db.settings.token.trim() || !db.settings.liveReplies) return;
+  const now = Date.now();
+  const due = dueOrders(db.orders, db.settings.silenceMin, db.settings.remindMin, now);
+  for (const order of due) {
+    const snap = readDb();
+    const live = snap.orders.find((item) => item.id === order.id);
+    if (!live) continue;
+    const text =
+      live.intakeMode === "link" && !live.diskUrl.trim()
+        ? fill(snap.templates.askLink, orderVars(live))
+        : fill(snap.templates.reminder, orderVars(live));
+    await withDb((draft) => {
+      const row = draft.orders.find((item) => item.id === order.id);
+      if (row) row.lastReminderAt = new Date().toISOString();
+    });
+    await deliver(order.id, text);
+  }
 }
 
 async function armWatch() {

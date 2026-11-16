@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { previewUrlForFile } from "@/lib/client-preview";
-import { MAX_UPLOAD_BYTES, MAX_UPLOAD_MB } from "@/lib/upload-limits";
 import { postFormWithProgress } from "@/lib/upload-xhr";
 import { Button } from "@/components/ui/button";
 import {
@@ -102,8 +101,11 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
     }
     if (need > 0 && total < need) {
       setError("");
-      setHint(`Добавьте все фото: нужно ${need}, сейчас ${total}. Не хватает ${need - total}.`);
-      return;
+      setHint(
+        `Отправим ${picked.length} фото. В заказе нужно ${need}, после сохранения будет ${total}. Остальные можно догрузить той же ссылкой.`,
+      );
+    } else {
+      setHint("");
     }
     setBusy(true);
     setUploadPct(0);
@@ -124,7 +126,9 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
         error?: string;
       };
       if (status === 413) {
-        throw new Error(`Файл слишком большой — до ${MAX_UPLOAD_MB} МБ на одно фото.`);
+        throw new Error(
+          "Сервер отклонил загрузку (слишком большой пакет за раз). Отправьте меньше фото одним нажатием — остальные догрузите следующими отправками.",
+        );
       }
       if (status < 200 || status >= 300) throw new Error(data.error || "не удалось загрузить");
       const nextView = data.view ?? null;
@@ -134,6 +138,13 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
       const saved = data.saved ?? 0;
       if (nextView?.complete) {
         setHint("Всё успешно отправлено");
+        setError("");
+      } else if (saved > 0) {
+        setHint(
+          nextView
+            ? `Сохранено ${saved} фото — всего ${nextView.got} из ${nextView.need}. Можно догрузить ещё этой же ссылкой.`
+            : `Сохранено ${saved} фото.`,
+        );
         setError("");
       } else if (skipped > 0 && saved === 0) {
         setError(
@@ -156,7 +167,7 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   const displayGot = gotCount + pendingAdd;
   const overNeed = Boolean(view && view.need > 0 && displayGot > view.need);
   const underNeed = Boolean(view && view.need > 0 && displayGot < view.need && pendingAdd > 0);
-  const sendReady = Boolean(view && view.need > 0 && displayGot === view.need && pendingAdd > 0);
+  const sendReady = Boolean(view && pendingAdd > 0 && !overNeed);
   const canUpload = Boolean(view && !view.cancelled && view.need > 0 && !view.complete);
 
   async function removeUploaded(fileId: string) {
@@ -255,8 +266,9 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
             </p>
           ) : null}
           {underNeed ? (
-            <p className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-              Добавьте все {view.need} фото — сейчас {displayGot}, не хватает {view.need - displayGot}.
+            <p className="rounded-xl border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+              Можно отправить не все сразу: сейчас выбрано {pendingAdd}, всего будет {displayGot} из {view.need}. После
+              отправки остальные догрузите той же ссылкой — бот напомнит в чате WB.
             </p>
           ) : null}
 
@@ -271,9 +283,7 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
                 onClick={() => fileInputRef.current?.click()}
               >
                 <span className="font-medium">Нажмите, чтобы выбрать фото</span>
-                <span className="text-xs text-muted-foreground">
-                  любой формат, до {MAX_UPLOAD_MB} МБ на фото
-                </span>
+                <span className="text-xs text-muted-foreground">любой формат, без ограничения размера</span>
               </button>
               <input
                 ref={fileInputRef}
@@ -284,18 +294,9 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
                 onChange={(e) => {
                   const list = e.target.files;
                   if (!list?.length) return;
-                  const all = Array.from(list);
-                  const oversize = all.filter((f) => f.size > MAX_UPLOAD_BYTES);
-                  const next = all.filter((f) => f.size > 0 && f.size <= MAX_UPLOAD_BYTES);
-                  if (oversize.length) {
-                    setError(`Часть файлов больше ${MAX_UPLOAD_MB} МБ — их не добавили.`);
-                  }
+                  const next = Array.from(list).filter((f) => f.size > 0);
                   if (!next.length) {
-                    setError(
-                      oversize.length
-                        ? `Максимум ${MAX_UPLOAD_MB} МБ на фото.`
-                        : "Файл пустой — выберите другое фото из галереи.",
-                    );
+                    setError("Файл пустой — выберите другое фото из галереи.");
                     return;
                   }
                   setPicked((prev) => [...prev, ...next]);
@@ -320,7 +321,7 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
               <Button
                 type="button"
                 className="w-full"
-                disabled={busy || !picked.length || overNeed || !sendReady}
+                disabled={busy || !sendReady}
                 onClick={() => void uploadFiles()}
               >
                 {busy

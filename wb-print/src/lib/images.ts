@@ -41,7 +41,6 @@ export function sniffImage(buf: Buffer): { ext: string; mime: string } | null {
 /** Любой растровый формат → JPEG с учётом EXIF; на сайте и в ВК всегда показывается превью. */
 export async function normalizeUploadBytes(bytes: Buffer): Promise<Buffer> {
   if (bytes.length < 12) throw new Error("пустой файл");
-  if (bytes.length > MAX_UPLOAD_BYTES) throw new Error(`файл больше ${MAX_UPLOAD_MB} МБ`);
   try {
     const meta = await sharpIn(bytes).metadata();
     if (!meta.width || !meta.height) throw new Error("нет изображения");
@@ -60,7 +59,7 @@ export async function normalizeUploadBytes(bytes: Buffer): Promise<Buffer> {
     if (!sniffImage(out)) throw new Error("конвертация");
     return out;
   } catch (err) {
-    if (sniffImage(bytes) && bytes.length <= MAX_UPLOAD_BYTES) return bytes;
+    if (sniffImage(bytes)) return bytes;
     const detail = err instanceof Error ? err.message : "";
     throw new Error(detail || "не удалось прочитать фото");
   }
