@@ -8,6 +8,7 @@
 |-------|--------|------|
 | `toner-plus-nsk` | Тонер+, Новосибирск, Стартовая 7А | 8136 |
 | `ar-detailing-biysk` | AR-Detailing, Бийск, Революции 78/96 | 8137 |
+| `kuzoff-tomsk` | KuzOff, Томск, ул. Пушкина 10/1 (2ГИС + Яндекс Карты) | 8138 |
 
 Запуск из каталога сайта:
 
@@ -20,6 +21,9 @@ python3 server.py
 ```bash
 python3 Melissa-tech.ru/tools/clone-rp-site.py Melissa-tech.ru/tools/sites/toner-plus-nsk.json
 python3 Melissa-tech.ru/tools/clone-rp-site.py Melissa-tech.ru/tools/sites/ar-detailing-biysk.json
+python3 Melissa-tech.ru/tools/clone-rp-site.py Melissa-tech.ru/tools/sites/kuzoff-tomsk.json
 ```
 
 Конфиги: `tools/sites/*.json` — телефоны, 2GIS, список услуг на главной, `theme_css` (для AR — чёрно-бело-красный акцент).
+
+**KuzOff:** после клона — `python3 scripts/patch_kuzoff_tomsk.py` (отзывы 2ГИС, услуги, контакты); фото — в `img/works/incoming/kuzoff/`.
