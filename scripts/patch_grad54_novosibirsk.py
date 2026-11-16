@@ -335,7 +335,7 @@ def patch_hero_copy() -> None:
     text = idx.read_text(encoding="utf-8")
     text = re.sub(
         r'<div class="eyebrow hero-eyebrow-city">[^<]*</div>',
-        '<div class="eyebrow hero-eyebrow-city">НОВОСИБИРСК · УДАЛЕНИЕ ВМЯТИН БЕЗ ПОКРАСКИ</div>',
+        '<div class="eyebrow hero-eyebrow-city">НОВОСИБИРСК · по записи</div>',
         text,
         count=1,
     )

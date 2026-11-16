@@ -1122,8 +1122,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .hero:after{background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.35) 34%,transparent 52%,rgba(10,10,10,.28) 100%)}
 @media (max-width:768px){
   .heroimg{opacity:.45;width:100%;min-height:0}
-  .hero--grad54 .heroimg{opacity:.82;width:100%;max-width:none}
-  .hero--grad54 .heroimg:before{background:linear-gradient(180deg,rgba(10,10,10,.55) 0%,rgba(10,10,10,.2) 38%,transparent 62%)}
 }
 
 /* D2_detailing — акцент в тон кузова BMW на hero */
@@ -1399,34 +1397,23 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   --accent-ink:#fff;
   --accent-rgb:225,29,47;
 }
-.hero--grad54 .heroimg{
-  width:min(48vw,576px);
-  max-width:576px;
-  background:none;
-  opacity:1;
-}
-.hero--grad54 .heroimg--has-photo img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:58% 42%;
-}
-.hero--grad54.hero--sdc .heroimg{
-  width:min(48vw,576px);
-  max-width:576px;
-  opacity:1;
-}
-.hero--grad54.hero--sdc .hero-heading h1.hero-title-text--brand{
-  font-size:clamp(38px,5.8vw,72px);
-  line-height:.92;
+.hero--grad54 .heroimg{background-image:url('img/hero-frame.jpg');background-position:58% 45%}
+.hero--grad54.hero--sdc .hero-heading h1.hero-title-text{
+  font-size:clamp(32px,4.6vw,58px);
+  line-height:.94;
   letter-spacing:-.05em;
   margin:0 0 22px;
+  font-weight:800;
+}
+.hero--grad54 .hero-firm-name{
+  display:inline-flex;align-items:baseline;gap:0;
+  font-size:clamp(28px,4vw,48px);
+  line-height:1.05;
+  margin-top:.08em;
   font-weight:900;
 }
-.hero--grad54 .hero-title-text--brand .wordmark{display:inline-flex;align-items:baseline;gap:0}
-.hero--grad54 .hero-title-text--brand .logo-mark{color:#fff}
-.hero--grad54 .hero-title-text--brand .logo-word{color:var(--accent)}
-.hero--grad54 .heroimg:before{
-  background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.12) 32%,transparent 55%);
-}
+.hero--grad54 .hero-firm-name .logo-mark{color:#fff}
+.hero--grad54 .hero-firm-name .logo-word{color:var(--accent)}
 .site-nav .logo .logo-mark{color:#fff}
 .site-nav .logo .logo-word{color:var(--accent)}
 .hero--grad54{background:radial-gradient(circle at 70% 42%,#2a0a0e 0,#120608 38%,#0a0a0a 62%)}
