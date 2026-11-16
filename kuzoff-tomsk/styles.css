@@ -23,13 +23,13 @@ body.page-sub > nav.site-nav{
 }
 body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
 .logo{font-size:18px;font-weight:900;letter-spacing:-.04em;white-space:nowrap}
-.logo a{display:inline-flex;align-items:baseline;gap:.28em}
-.site-nav .logo a{gap:.28em}
-.wordmark{display:inline-flex;align-items:baseline;gap:.28em}
+.logo a{display:inline-flex;align-items:baseline;gap:0}
+.site-nav .logo a{gap:0}
+.wordmark{display:inline-flex;align-items:baseline;gap:0}
 .wordmark .logo-mark,.wordmark .logo-word{font-weight:900;letter-spacing:-.04em;line-height:1;text-transform:uppercase}
 .wordmark--section .logo-mark{color:#fff}
 .wordmark--section .logo-word{color:var(--accent)}
-.footer-logo{display:inline-flex;align-items:baseline;gap:.28em;margin-bottom:12px}
+.footer-logo{display:inline-flex;align-items:baseline;gap:.32em;margin-bottom:12px}
 .address-map-brand .wordmark .logo-mark{color:var(--accent)}
 .address-map-brand .wordmark .logo-word{color:#f5f5f2}
 .address-map-pin-label-text .wordmark .logo-mark{color:var(--accent)}
@@ -517,7 +517,7 @@ html.media-lightbox-open{overflow:hidden}
 .footer-hours-block b{font-size:11px;letter-spacing:2px;color:var(--accent);opacity:.72;margin-bottom:4px}
 .footer-hours-block span{font-size:13px;color:#888;line-height:1.5}
 .footer-logo{
-  display:inline-flex;align-items:baseline;gap:10px;
+  display:inline-flex;align-items:baseline;gap:.32em;
   font-size:28px;font-weight:900;color:#f5f5f2;line-height:1;letter-spacing:-.04em;
 }
 .footer-logo .logo-mark{color:var(--accent);font-size:1em;font-weight:900;letter-spacing:-.04em;line-height:1}
@@ -525,7 +525,7 @@ html.media-lightbox-open{overflow:hidden}
   color:#fff;font-size:1em;font-weight:900;letter-spacing:-.04em;
   text-transform:uppercase;line-height:1;
 }
-.address-map-brand,.address-map-pin-label-text{display:inline-flex;align-items:baseline;gap:8px}
+.address-map-brand,.address-map-pin-label-text{display:inline-flex;align-items:baseline;gap:0}
 .address-map-brand .logo-mark,.address-map-pin-label-text .logo-mark{color:var(--accent);letter-spacing:-.04em}
 .address-map-brand .logo-word{color:#f5f5f2;letter-spacing:-.04em;font-size:1em;font-weight:900;line-height:1}
 .address-map-pin-label-text .logo-word{color:#f5f5f2;letter-spacing:.14em;font-size:.7em;font-weight:700;line-height:1}
@@ -1214,7 +1214,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .address-map-pin-label-text{
   display:inline-flex!important;
   align-items:baseline;
-  gap:4px;
+  gap:0;
   width:max-content;
   max-width:none;
   box-sizing:border-box;
