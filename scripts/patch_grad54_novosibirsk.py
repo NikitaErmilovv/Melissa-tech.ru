@@ -18,6 +18,7 @@ UA = "Mozilla/5.0 (compatible; MelissaTechSite/1.0)"
 INCOMING = SITE / "img" / "works" / "incoming" / "grad54"
 
 sys.path.insert(0, str(ROOT / "scripts"))
+from fetch_2gis_catalog_branch import fetch_branch_catalog  # noqa: E402
 from fetch_2gis_firm_photos import (  # noqa: E402
     download,
     patch_home_hero,
@@ -158,12 +159,34 @@ def patch_home_services_strip() -> None:
     idx.write_text(text, encoding="utf-8")
 
 
-def patch_reviews() -> None:
-    reviews = fetch_branch_reviews(FIRM_ID, limit=12)
-    (SITE / "data" / "reviews-2gis.json").write_text(
-        json.dumps(reviews, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+def patch_reviews() -> int:
+    path = SITE / "data" / "reviews-2gis.json"
+    prev: list = []
+    if path.is_file():
+        try:
+            prev = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(prev, list):
+                prev = []
+        except json.JSONDecodeError:
+            prev = []
+    reviews: list = []
+    last_err: Exception | None = None
+    for attempt in range(5):
+        try:
+            reviews = fetch_branch_reviews(FIRM_ID, limit=12)
+            if reviews:
+                break
+        except (TimeoutError, OSError, ValueError) as exc:
+            last_err = exc
+    if not reviews and prev:
+        print(f"reviews: API empty, keeping {len(prev)} cached items")
+        return len(prev)
+    if not reviews:
+        msg = f"reviews: none from 2GIS API ({last_err})" if last_err else "reviews: none from 2GIS API"
+        print(msg)
+        return 0
+    path.write_text(json.dumps(reviews, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return len(reviews)
 
 
 def patch_services_pages() -> None:
@@ -187,29 +210,116 @@ def patch_services_pages() -> None:
     svc.write_text(html, encoding="utf-8")
 
 
-def patch_contacts() -> None:
+def sync_catalog() -> dict:
+    return fetch_branch_catalog(FIRM_ID, city_slug="novosibirsk")
+
+
+def patch_gis_meta(meta: dict) -> None:
+    (SITE / "data" / "gis-meta.json").write_text(
+        json.dumps(
+            {
+                "firm_id": meta["firm_id"],
+                "firm_url": meta["firm_url"],
+                "rating": meta["rating"],
+                "review_count": meta["review_count"],
+                "address": meta["address"],
+                "hours_line": meta["hours_line"],
+                "map_lat": meta["map_lat"],
+                "map_lon": meta["map_lon"],
+                "synced_at": "catalog.api.2gis.ru",
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+
+def patch_contacts(meta: dict) -> None:
+    phones = meta.get("phones") or []
+    phone_lines = "\n".join(
+        f'    {{ tel: "{p["tel"]}", display: "{p["display"]}" }},' for p in phones
+    )
+    wa = str(meta.get("wa") or "").replace("+", "")
+    tg = str(meta.get("tg") or (phones[0]["tel"] if phones else ""))
     (SITE / "contacts-config.js").write_text(
-        """window.STUDIO_MESSENGERS = {
-  wa: "79530598840",
-  tg: "+79530598840",
+        f"""window.STUDIO_MESSENGERS = {{
+  wa: "{wa}",
+  tg: "{tg}",
   max: "",
   defaultMessage: "Здравствуйте! Хочу записаться в Grad54.",
-};
+}};
 
-window.STUDIO_CONTACTS = {
-  addressLine: "г. Новосибирск, Вилюйская улица, 23",
-  hoursLine: "По предварительной записи",
-  mapLat: 54.997396,
-  mapLon: 83.009087,
-  gisFirm: "https://2gis.ru/novosibirsk/firm/70000001065421759",
+window.STUDIO_CONTACTS = {{
+  addressLine: "{meta["address"]}",
+  hoursLine: "{meta["hours_line"]}",
+  mapLat: {meta["map_lat"]},
+  mapLon: {meta["map_lon"]},
+  gisFirm: "{meta["firm_url"]}",
   yandexMaps: "",
   phones: [
-    { tel: "+79530598840", display: "+7 (953) 059-88-40" },
+{phone_lines}
   ],
-};
+}};
 """,
         encoding="utf-8",
     )
+
+
+def patch_html_from_catalog(meta: dict) -> None:
+    addr = meta["address"]
+    hours = meta["hours_line"]
+    tel = meta["phones"][0]["tel"] if meta.get("phones") else "+79530598840"
+    disp = meta["phones"][0]["display"] if meta.get("phones") else tel
+    desk = meta["map_desktop_url"]
+    mob = meta["map_mobile_url"]
+    alt = meta["map_alt"]
+    firm = meta["firm_url"]
+    rating = str(meta["rating"])
+    reviews = str(meta["review_count"])
+
+    for path in SITE.rglob("*.html"):
+        text = path.read_text(encoding="utf-8")
+        orig = text
+        text = re.sub(r'id="stat-reviews">\d+', f'id="stat-reviews">{reviews}', text)
+        text = re.sub(r'id="stat-rating">[\d.]+', f'id="stat-rating">{rating}', text)
+        text = re.sub(
+            r"https://static\.maps\.2gis\.com/1\.0\?s=880x450&amp;c=[^\"']+",
+            desk,
+            text,
+        )
+        text = re.sub(
+            r"https://static\.maps\.2gis\.com/1\.0\?s=720x720&amp;c=[^\"']+",
+            mob,
+            text,
+        )
+        text = re.sub(
+            r'alt="Карта 2ГИС — [^"]*"',
+            f'alt="{alt}"',
+            text,
+        )
+        text = re.sub(r"По предварительной записи · 10:00–20:00", hours, text)
+        text = re.sub(r"По предварительной записи · 10:00—20:00", hours, text)
+        text = re.sub(r"г\. Новосибирск, Вилюйская улица, 23", addr, text)
+        if "contacts-sync.js" not in text and "contacts-config.js" in text:
+            text = text.replace(
+                '<script src="contacts-config.js"></script>',
+                '<script src="contacts-config.js"></script>\n<script src="contacts-sync.js"></script>',
+            )
+            text = text.replace(
+                '<script src="../contacts-config.js"></script>',
+                '<script src="../contacts-config.js"></script>\n<script src="../contacts-sync.js"></script>',
+            )
+        if path.name == "contact.html":
+            text = re.sub(
+                r'<a class="contact-phone" href="tel:[^"]+">[^<]+</a>\s*<a class="contact-phone" href="tel:[^"]+">[^<]+</a>',
+                f'<a class="contact-phone" href="tel:{tel}">{disp}</a>',
+                text,
+                count=1,
+            )
+        if orig != text:
+            path.write_text(text, encoding="utf-8")
 
 
 def patch_gallery_manifest(rel_paths: list[str]) -> None:
@@ -252,18 +362,54 @@ def purge_template_asset_paths() -> None:
         path.write_text(text, encoding="utf-8")
 
 
+def patch_gallery_manifest_from_disk() -> None:
+    incoming = SITE / "img" / "works" / "incoming" / "grad54"
+    files = sorted(
+        f"img/works/incoming/grad54/{p.name}"
+        for p in incoming.glob("*")
+        if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}
+    )
+    if files:
+        (SITE / "data" / "gallery-manifest.json").write_text(
+            json.dumps({"files": files}, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+
 def main() -> None:
-    rel = sync_photos()
-    try:
-        patch_reviews()
-    except OSError:
-        (SITE / "data" / "reviews-2gis.json").write_text("[]\n", encoding="utf-8")
+    import argparse
+
+    p = argparse.ArgumentParser(description="Sync Grad54 site from 2GIS")
+    p.add_argument(
+        "--skip-photos",
+        action="store_true",
+        help="Do not re-download or reassign 2GIS photos (hero/services unchanged)",
+    )
+    args = p.parse_args()
+
+    meta = sync_catalog()
+    patch_gis_meta(meta)
+    patch_contacts(meta)
+    patch_html_from_catalog(meta)
+    n_rev = patch_reviews()
     patch_services_pages()
-    patch_contacts()
-    patch_gallery_manifest(rel)
     patch_hero_copy()
     purge_template_asset_paths()
-    print(f"grad54-novosibirsk patched ({len(rel)} photos from 2GIS)")
+
+    if args.skip_photos:
+        patch_gallery_manifest_from_disk()
+        print(
+            f"grad54-novosibirsk synced (catalog: {meta['review_count']} reviews @ {meta['rating']}, "
+            f"carousel items {n_rev}; photos skipped)"
+        )
+        return
+
+    rel = sync_photos()
+    patch_gallery_manifest(rel)
+    print(
+        f"grad54-novosibirsk patched ({len(rel)} photos, catalog reviews {meta['review_count']}, "
+        f"carousel items {n_rev})"
+    )
 
 
 if __name__ == "__main__":

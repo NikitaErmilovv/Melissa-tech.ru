@@ -7,7 +7,7 @@ window.STUDIO_MESSENGERS = {
 
 window.STUDIO_CONTACTS = {
   addressLine: "г. Новосибирск, Вилюйская улица, 23",
-  hoursLine: "По предварительной записи",
+  hoursLine: "Пн–Пт 09:00–17:00 · по предварительной записи",
   mapLat: 54.997396,
   mapLon: 83.009087,
   gisFirm: "https://2gis.ru/novosibirsk/firm/70000001065421759",

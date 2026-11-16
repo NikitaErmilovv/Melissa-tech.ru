@@ -50,8 +50,27 @@
         return it && (it.text || it.rating);
       });
       if (!list.length) {
-        track.innerHTML =
-          '<div class="review"><div class="stars">★★★★★</div><p>Отзывы загружаются…</p><small>2ГИС</small></div>';
+        fetch("data/gis-meta.json")
+          .then(function (r) {
+            return r.ok ? r.json() : null;
+          })
+          .then(function (meta) {
+            var n = meta && meta.review_count ? meta.review_count : "";
+            var r = meta && meta.rating != null ? meta.rating : "5";
+            var firm = meta && meta.firm_url ? meta.firm_url : "https://2gis.ru/novosibirsk/firm/70000001065421759";
+            track.innerHTML =
+              '<div class="review"><div class="stars">' +
+              stars(Math.round(r)) +
+              '</div><p>' +
+              (n ? n + " отзывов в 2ГИС · рейтинг " + r : "Актуальные отзывы") +
+              ' — <a href="' +
+              firm +
+              '" target="_blank" rel="noopener noreferrer">открыть карточку 2ГИС</a>.</p><small>2ГИС</small></div>';
+          })
+          .catch(function () {
+            track.innerHTML =
+              '<div class="review"><div class="stars">★★★★★</div><p><a href="https://2gis.ru/novosibirsk/firm/70000001065421759" target="_blank" rel="noopener noreferrer">Читать отзывы в 2ГИС</a></p><small>2ГИС</small></div>';
+          });
         return;
       }
       slides = list;
