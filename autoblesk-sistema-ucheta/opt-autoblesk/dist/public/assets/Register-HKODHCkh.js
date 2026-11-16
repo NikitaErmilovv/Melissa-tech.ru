@@ -171,7 +171,6 @@ function RegisterPage() {
               {
                 children: [
                   e.jsxDEV(R, { children: "Регистрация студии" }, void 0, !1, {}, void 0),
-                  e.jsxDEV("p", { className: "text-sm text-muted-foreground", children: "Самостоятельная регистрация. Суперадмин получит уведомление." }, void 0, !1, {}, void 0),
                 ],
               },
               void 0,
