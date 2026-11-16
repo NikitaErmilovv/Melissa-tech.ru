@@ -1,1 +1,213 @@
-import{q as d,d as h,r,t as x,j as e,L as v}from"./index-BqucrLDD.js";import{P as g}from"./const-CL7-dg2c.js";async function b(){await d.cancelQueries(),d.clear();try{await h("REACT_QUERY_OFFLINE_CACHE")}catch{}}function _(){const[i,a]=r.useState(!1),[m,o]=r.useState(null),[u,N]=r.useState(""),[p,f]=r.useState(""),n=x.auth.login.useMutation({onSuccess:async s=>{s.token&&sessionStorage.setItem(g,s.token),await b(),window.location.assign(s.user.role==="superadmin"?"/platform":"/")},onError:s=>{o(s.message),a(!1)}});async function l(s="owner"){a(!0),o(null);try{const t=await fetch("/api/dev/preview-login",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({role:s})});if(!t.ok)throw new Error(`Ошибка входа (${t.status})`);const c=await t.json();c.token&&sessionStorage.setItem(g,c.token),await b(),window.location.assign(c.role==="superadmin"?"/platform":"/")}catch(t){o(t instanceof Error?t.message:"Не удалось войти"),a(!1)}}return e.jsxDEV("div",{className:"flex min-h-screen items-center justify-center bg-[#FAF7F1] px-4 py-10",children:e.jsxDEV("div",{className:"card-soft w-full max-w-sm px-6 py-8",children:[e.jsxDEV("div",{className:"text-center",children:[e.jsxDEV("h1",{className:"font-display text-2xl",children:"Авто Блеск"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:54,columnNumber:11},this),e.jsxDEV("p",{className:"mt-1 text-sm font-medium text-muted-foreground",children:"Учёт детейлинг-студии"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:55,columnNumber:11},this)]},void 0,!0,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:53,columnNumber:9},this),e.jsxDEV("div",{className:"mt-6 space-y-3",children:[e.jsxDEV("label",{className:"block text-xs font-bold uppercase tracking-wide text-muted-foreground",children:["Логин",e.jsxDEV("input",{className:"input-warm mt-1 font-normal normal-case",value:u,onChange:s=>N(s.target.value),autoComplete:"username"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:61,columnNumber:13},this)]},void 0,!0,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:59,columnNumber:11},this),e.jsxDEV("label",{className:"block text-xs font-bold uppercase tracking-wide text-muted-foreground",children:["Пароль",e.jsxDEV("input",{type:"password",className:"input-warm mt-1 font-normal normal-case",value:p,onChange:s=>f(s.target.value),autoComplete:"current-password"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:70,columnNumber:13},this)]},void 0,!0,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:68,columnNumber:11},this),e.jsxDEV("button",{type:"button",className:"btn-primary h-12 w-full",disabled:i||n.isPending,onClick:()=>{a(!0),n.mutate({login:u,password:p})},children:n.isPending?"Вход…":"Войти"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:78,columnNumber:11},this),e.jsxDEV("p",{className:"text-center text-sm",children:e.jsxDEV(v,{to:"/register",className:"font-bold text-[var(--red)]",children:"Регистрация организации"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:90,columnNumber:13},this)},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:89,columnNumber:11},this)]},void 0,!0,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:58,columnNumber:9},this),e.jsxDEV("div",{className:"mt-6 space-y-2 border-t border-[var(--line)] pt-5",children:[e.jsxDEV("p",{className:"text-center text-xs font-bold uppercase tracking-wide text-muted-foreground",children:"Демо (локально)"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:97,columnNumber:11},this),e.jsxDEV("button",{type:"button",className:"btn-primary h-12 w-full",disabled:i,onClick:()=>{l("owner")},children:"Владелец (полный доступ)"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:100,columnNumber:11},this),e.jsxDEV("button",{type:"button",className:"btn-ghost h-12 w-full",disabled:i,onClick:()=>{l("employee")},children:"Сотрудник (ограниченный)"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:103,columnNumber:11},this),e.jsxDEV("button",{type:"button",className:"mx-auto block text-xs font-bold text-muted-foreground underline decoration-dotted",disabled:i,onClick:()=>{l("superadmin")},children:"Суперадмин платформы"},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:111,columnNumber:11},this)]},void 0,!0,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:96,columnNumber:9},this),m?e.jsxDEV("p",{className:"mt-4 text-center text-sm font-medium text-[var(--red)]",children:m},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:121,columnNumber:18},this):null]},void 0,!0,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:52,columnNumber:7},this)},void 0,!1,{fileName:"/workspace/archive-lab/projects/Kimi_Agent_АвтоБлеск/src/pages/Login.tsx",lineNumber:51,columnNumber:5},this)}export{_ as default};
+import { q as queryClient, d as clearOffline, r as react, t as trpc, j as e, L as Link } from "./index-BqucrLDD.js";
+import { P as SESSION_KEY } from "./const-CL7-dg2c.js";
+
+async function resetClientCache() {
+  await queryClient.cancelQueries();
+  queryClient.clear();
+  try {
+    await clearOffline("REACT_QUERY_OFFLINE_CACHE");
+  } catch {}
+}
+
+function LoginPage() {
+  const [busy, setBusy] = react.useState(false);
+  const [error, setError] = react.useState(null);
+  const [login, setLogin] = react.useState("");
+  const [password, setPassword] = react.useState("");
+  const [demoCabinet, setDemoCabinet] = react.useState(false);
+
+  react.useEffect(() => {
+    fetch("/api/build-info")
+      .then((r) => r.json())
+      .then((info) => setDemoCabinet(Boolean(info.demoCabinet)))
+      .catch(() => setDemoCabinet(false));
+  });
+
+  const loginMutation = trpc.auth.login.useMutation({
+    onSuccess: async (data) => {
+      if (data.token) sessionStorage.setItem(SESSION_KEY, data.token);
+      await resetClientCache();
+      window.location.assign(data.user.role === "superadmin" ? "/platform" : "/");
+    },
+    onError: (err) => {
+      setError(err.message);
+      setBusy(false);
+    },
+  });
+
+  async function previewLogin(role = "owner") {
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/dev/preview-login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `Ошибка входа (${res.status})`);
+      }
+      const data = await res.json();
+      if (data.token) sessionStorage.setItem(SESSION_KEY, data.token);
+      await resetClientCache();
+      window.location.assign("/");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Не удалось войти");
+      setBusy(false);
+    }
+  }
+
+  return e.jsxDEV(
+    "div",
+    {
+      className: "flex min-h-screen items-center justify-center bg-[#FAF7F1] px-4 py-10",
+      children: e.jsxDEV(
+        "div",
+        {
+          className: "card-soft w-full max-w-sm px-6 py-8",
+          children: [
+            e.jsxDEV(
+              "div",
+              {
+                className: "text-center",
+                children: [
+                  e.jsxDEV("h1", { className: "font-display text-2xl", children: "Авто Блеск" }, void 0, !1, {}, void 0),
+                  e.jsxDEV("p", { className: "mt-1 text-sm font-medium text-muted-foreground", children: "Учёт детейлинг-студии" }, void 0, !1, {}, void 0),
+                ],
+              },
+              void 0,
+              !0,
+              {},
+              void 0,
+            ),
+            e.jsxDEV(
+              "div",
+              {
+                className: "mt-6 space-y-3",
+                children: [
+                  e.jsxDEV(
+                    "label",
+                    {
+                      className: "block text-xs font-bold uppercase tracking-wide text-muted-foreground",
+                      children: [
+                        "Логин",
+                        e.jsxDEV("input", {
+                          className: "input-warm mt-1 font-normal normal-case",
+                          value: login,
+                          onChange: (ev) => setLogin(ev.target.value),
+                          autoComplete: "username",
+                        }, void 0, !1, {}, void 0),
+                      ],
+                    },
+                    void 0,
+                    !0,
+                    {},
+                    void 0,
+                  ),
+                  e.jsxDEV(
+                    "label",
+                    {
+                      className: "block text-xs font-bold uppercase tracking-wide text-muted-foreground",
+                      children: [
+                        "Пароль",
+                        e.jsxDEV("input", {
+                          type: "password",
+                          className: "input-warm mt-1 font-normal normal-case",
+                          value: password,
+                          onChange: (ev) => setPassword(ev.target.value),
+                          autoComplete: "current-password",
+                        }, void 0, !1, {}, void 0),
+                      ],
+                    },
+                    void 0,
+                    !0,
+                    {},
+                    void 0,
+                  ),
+                  e.jsxDEV(
+                    "button",
+                    {
+                      type: "button",
+                      className: "btn-primary h-12 w-full",
+                      disabled: busy || loginMutation.isPending,
+                      onClick: () => {
+                        setBusy(true);
+                        loginMutation.mutate({ login, password });
+                      },
+                      children: loginMutation.isPending ? "Вход…" : "Войти",
+                    },
+                    void 0,
+                    !1,
+                    {},
+                    void 0,
+                  ),
+                  e.jsxDEV(
+                    "p",
+                    {
+                      className: "text-center text-sm",
+                      children: e.jsxDEV(Link, { to: "/register", className: "font-bold text-[var(--red)]", children: "Регистрация организации" }, void 0, !1, {}, void 0),
+                    },
+                    void 0,
+                    !1,
+                    {},
+                    void 0,
+                  ),
+                ],
+              },
+              void 0,
+              !0,
+              {},
+              void 0,
+            ),
+            demoCabinet
+              ? e.jsxDEV(
+                  "div",
+                  {
+                    className: "mt-6 space-y-2 border-t border-[var(--line)] pt-5",
+                    children: [
+                      e.jsxDEV("p", { className: "text-center text-xs font-bold uppercase tracking-wide text-muted-foreground", children: "Тестовый кабинет" }, void 0, !1, {}, void 0),
+                      e.jsxDEV("p", { className: "text-center text-xs text-muted-foreground", children: "Демо-данные, не привязаны к реальным студиям" }, void 0, !1, {}, void 0),
+                      e.jsxDEV(
+                        "button",
+                        { type: "button", className: "btn-primary h-12 w-full", disabled: busy, onClick: () => previewLogin("owner"), children: "Владелец (тест)" },
+                        void 0,
+                        !1,
+                        {},
+                        void 0,
+                      ),
+                      e.jsxDEV(
+                        "button",
+                        { type: "button", className: "btn-ghost h-12 w-full", disabled: busy, onClick: () => previewLogin("employee"), children: "Сотрудник (тест)" },
+                        void 0,
+                        !1,
+                        {},
+                        void 0,
+                      ),
+                      e.jsxDEV("p", { className: "pt-2 text-center text-xs text-muted-foreground", children: "Суперадмин — только поля логина и пароля выше" }, void 0, !1, {}, void 0),
+                    ],
+                  },
+                  void 0,
+                  !0,
+                  {},
+                  void 0,
+                )
+              : null,
+            error ? e.jsxDEV("p", { className: "mt-4 text-center text-sm font-medium text-[var(--red)]", children: error }, void 0, !1, {}, void 0) : null,
+          ],
+        },
+        void 0,
+        !0,
+        {},
+        void 0,
+      ),
+    },
+    void 0,
+    !1,
+    {},
+    void 0,
+  );
+}
+
+export { LoginPage as default };

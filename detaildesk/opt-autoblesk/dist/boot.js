@@ -688,6 +688,7 @@ var init_env = __esm({
       kimiOpenUrl: required2("KIMI_OPEN_URL"),
       ownerUnionId: process.env.OWNER_UNION_ID ?? "",
       localPreview: process.env.LOCAL_PREVIEW === "1",
+      demoCabinet: process.env.DEMO_CABINET === "1",
       publicAppUrl: process.env.PUBLIC_APP_URL ?? "",
       resendApiKey: process.env.RESEND_API_KEY ?? "",
       mailFrom: (process.env.MAIL_FROM ?? "").trim() || "\u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A <onboarding@resend.dev>",
@@ -60302,7 +60303,7 @@ async function markTestCabinetCompany(companyId) {
 }
 function createPreviewLoginHandler() {
   return async (c) => {
-    if (!env.localPreview) {
+    if (!env.localPreview && !env.demoCabinet) {
       return c.json({ error: "Not available" }, 404);
     }
     let asEmployee = c.req.query("role") === "employee";
@@ -60402,6 +60403,7 @@ app.get("/api/build-info", (c) =>
   c.json({
     build: "detaildesk-2026-11-15",
     localPreview: env.localPreview,
+    demoCabinet: env.demoCabinet || env.localPreview,
     testCabinet: TEST_CABINET_NAME,
     mail: {
       resendConfigured: Boolean(env.resendApiKey),
