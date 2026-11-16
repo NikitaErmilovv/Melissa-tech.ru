@@ -688,6 +688,7 @@ var init_env = __esm({
       kimiOpenUrl: required2("KIMI_OPEN_URL"),
       ownerUnionId: process.env.OWNER_UNION_ID ?? "",
       localPreview: process.env.LOCAL_PREVIEW === "1",
+      demoCabinet: process.env.DEMO_CABINET === "1",
       publicAppUrl: process.env.PUBLIC_APP_URL ?? "",
       resendApiKey: process.env.RESEND_API_KEY ?? "",
       mailFrom: (process.env.MAIL_FROM ?? "").trim() || "\u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A <onboarding@resend.dev>",
@@ -31017,8 +31018,11 @@ function serveStaticFiles(app2) {
   const distPath = path.resolve(import.meta.dirname, "../dist/public");
   app2.use("*", serveStatic({ root: "./dist/public" }));
   app2.notFound((c) => {
-    const accept = c.req.header("accept") ?? "";
-    if (!accept.includes("text/html")) {
+    const p = c.req.path;
+    if (p.startsWith("/api/")) {
+      return c.json({ error: "Not Found" }, 404);
+    }
+    if (c.req.method !== "GET" && c.req.method !== "HEAD") {
       return c.json({ error: "Not Found" }, 404);
     }
     const indexPath = path.resolve(distPath, "index.html");
@@ -58316,6 +58320,21 @@ async function rejectRegistrationRequest(requestId, reviewerId, note) {
 var REG_META_PREFIX = "regv2:";
 var REG_PENDING_STUDIO = "__pending_org__";
 var DEMO_SAMPLE_TAG = "demoSample:1";
+var DEMO_SAMPLE_HIDDEN_TAG = "demoSample:hidden";
+var DEMO_RECORD_TAG = "demoSample:record";
+async function isDemoSampleHidden(companyId) {
+  const company = await getCompanyById(companyId);
+  const notes = String(company?.profileNotes || "");
+  return notes.includes(DEMO_SAMPLE_TAG) && notes.includes(DEMO_SAMPLE_HIDDEN_TAG);
+}
+function visibleDemoOrderFilter(hidden) {
+  if (!hidden) return null;
+  return or(isNull(orders.notes), notLike(orders.notes, "%demoSample:record%"));
+}
+function visibleDemoExpenseFilter(hidden) {
+  if (!hidden) return null;
+  return or(isNull(expenses.notes), notLike(expenses.notes, "%demoSample:record%"));
+}
 function encodeRegMeta(meta) {
   return REG_META_PREFIX + JSON.stringify(meta);
 }
@@ -58435,16 +58454,38 @@ async function completeRegistrationV2(input2, ctx) {
   const user = await findUserByUnionId(created.unionId);
   return { token, demoSampleEnabled: true, companyId: created.companyId, user: user ? { id: user.id, email: user.email, name: user.name, role: user.role, companyId: user.companyId } : null };
 }
-async function disableDemoSampleData(companyId) {
+async function markLegacyDemoRecords(companyId) {
+  const db = getDb();
+  await db.update(clients).set({ notes: DEMO_RECORD_TAG }).where(
+    and(eq(clients.companyId, companyId), or(isNull(clients.notes), eq(clients.notes, "")), like(clients.phone, "+790011100%"))
+  );
+  await db.update(clients).set({ notes: DEMO_RECORD_TAG }).where(and(eq(clients.companyId, companyId), eq(clients.notes, DEMO_RECORD_TAG)));
+  const demoClients = await db.select({ id: clients.id }).from(clients).where(and(eq(clients.companyId, companyId), eq(clients.notes, DEMO_RECORD_TAG)));
+  const demoClientIds = demoClients.map((c) => c.id);
+  if (demoClientIds.length) {
+    await db.update(orders).set({ notes: DEMO_RECORD_TAG }).where(and(eq(orders.companyId, companyId), inArray(orders.clientId, demoClientIds)));
+  }
+  await db.update(expenses).set({ notes: DEMO_RECORD_TAG }).where(and(eq(expenses.companyId, companyId), or(isNull(expenses.notes), eq(expenses.notes, ""))));
+}
+async function setDemoSampleVisibility(companyId, visible) {
   const db = getDb();
   const company = await getCompanyById(companyId);
-  if (!company?.profileNotes?.includes(DEMO_SAMPLE_TAG)) return { ok: true, removed: false };
-  await db.delete(orders).where(eq(orders.companyId, companyId));
-  await db.delete(expenses).where(eq(expenses.companyId, companyId));
-  await db.delete(clients).where(eq(clients.companyId, companyId));
-  const notes = String(company.profileNotes || "").replace(DEMO_SAMPLE_TAG, "").trim() || null;
-  await db.update(companies).set({ profileNotes: notes }).where(eq(companies.id, companyId));
-  return { ok: true, removed: true };
+  if (!company?.profileNotes?.includes(DEMO_SAMPLE_TAG)) return { ok: true, visible: false, hidden: false, changed: false };
+  let notes = String(company.profileNotes || "").trim();
+  const wasHidden = notes.includes(DEMO_SAMPLE_HIDDEN_TAG);
+  if (visible) {
+    if (!wasHidden) return { ok: true, visible: true, hidden: false, changed: false };
+    notes = notes.replace(DEMO_SAMPLE_HIDDEN_TAG, "").replace(/\s+/g, " ").trim();
+  } else {
+    if (wasHidden) return { ok: true, visible: false, hidden: true, changed: false };
+    await markLegacyDemoRecords(companyId);
+    notes = `${notes} ${DEMO_SAMPLE_HIDDEN_TAG}`.trim();
+  }
+  await db.update(companies).set({ profileNotes: notes || null }).where(eq(companies.id, companyId));
+  return { ok: true, visible, hidden: !visible, changed: true };
+}
+async function disableDemoSampleData(companyId) {
+  return setDemoSampleVisibility(companyId, false);
 }
 
 // api/queries/tenant.ts
@@ -58824,7 +58865,7 @@ async function ensureStudioDashboardSampleData(companyId, userId) {
     { name: "\u0410\u043B\u0435\u043A\u0441\u0435\u0439 \u041A\u043E\u0437\u043B\u043E\u0432", phone: "+79001110003", car: "Kia Rio" }
   ];
   for (let i = clientRows.length; i < seedClients.length; i++) {
-    await createClient({ ...seedClients[i], companyId, createdById: userId });
+    await createClient({ ...seedClients[i], companyId, createdById: userId, notes: DEMO_RECORD_TAG });
   }
   clientRows = await db.select({ id: clients.id, car: clients.car }).from(clients).where(eq(clients.companyId, companyId)).limit(8);
   if (clientRows.length === 0) return;
@@ -58856,7 +58897,8 @@ async function ensureStudioDashboardSampleData(companyId, userId) {
       paymentMethod: i % 2 === 0 ? "card" : "cash",
       status: "done",
       performedById: userId,
-      createdById: userId
+      createdById: userId,
+      notes: DEMO_RECORD_TAG
     });
     await db.update(orders).set({ postedAt: when, createdAt: when }).where(eq(orders.id, orderId));
   }
@@ -58870,10 +58912,50 @@ async function ensureStudioDashboardSampleData(companyId, userId) {
     for (const spec of expenseSamples) {
       const when = /* @__PURE__ */ new Date();
       when.setDate(when.getDate() - spec.daysAgo);
-      const id = await createExpense({ companyId, category: spec.category, title: spec.title, amount: spec.amount, createdById: userId });
+      const id = await createExpense({ companyId, category: spec.category, title: spec.title, amount: spec.amount, createdById: userId, notes: DEMO_RECORD_TAG });
       await db.update(expenses).set({ createdAt: when }).where(eq(expenses.id, id));
     }
   }
+}
+async function isTestCabinetCompany(companyId) {
+  const company = await getCompanyById(companyId);
+  if (String(company?.email || "").toLowerCase() === "test-cabinet@demo.local") return true;
+  const db = getDb();
+  const rows = await db.select({ unionId: users.unionId }).from(users).where(eq(users.companyId, companyId));
+  return rows.some((u) => u.unionId === "local-preview-owner" || u.unionId === "local-preview-employee");
+}
+async function realignTestCabinetDemoDates(companyId) {
+  const db = getDb();
+  const dayPattern = [0, 0, 1, 2, 3, 4, 5, 6];
+  const orderRows = await db.select({ id: orders.id }).from(orders).where(and(eq(orders.companyId, companyId), isNotNull(orders.postedAt))).orderBy(asc(orders.id));
+  for (let i = 0; i < orderRows.length; i++) {
+    const daysAgo = dayPattern[i % dayPattern.length];
+    const when = /* @__PURE__ */ new Date();
+    when.setDate(when.getDate() - daysAgo);
+    when.setHours(10 + i % 6, 30, 0, 0);
+    await db.update(orders).set({ postedAt: when, createdAt: when }).where(eq(orders.id, orderRows[i].id));
+  }
+  const expenseRows = await db.select({ id: expenses.id }).from(expenses).where(eq(expenses.companyId, companyId)).orderBy(asc(expenses.id));
+  const expensePattern = [2, 1, 0];
+  for (let i = 0; i < expenseRows.length; i++) {
+    const daysAgo = expensePattern[i % expensePattern.length];
+    const when = /* @__PURE__ */ new Date();
+    when.setDate(when.getDate() - daysAgo);
+    when.setHours(12, 0, 0, 0);
+    await db.update(expenses).set({ createdAt: when }).where(eq(expenses.id, expenseRows[i].id));
+  }
+}
+async function ensureTestCabinetDashboardSampleData(companyId, userId) {
+  await ensureStudioServiceCatalogFromDemo(companyId);
+  const todayRow = await dayIncome(0, companyId);
+  const hasToday = Number(todayRow?.total ?? 0) > 0;
+  const db = getDb();
+  const [{ n: orderCount }] = await db.select({ n: sql`COUNT(*)` }).from(orders).where(and(eq(orders.companyId, companyId), isNotNull(orders.postedAt)));
+  if (Number(orderCount) >= 5 && !hasToday) {
+    await realignTestCabinetDemoDates(companyId);
+    return;
+  }
+  await ensureStudioDashboardSampleData(companyId, userId);
 }
 
 // api/queries/business.ts
@@ -58898,13 +58980,14 @@ async function listOrders(limit = 60, opts) {
   if (opts?.companyId) filters.push(eq(orders.companyId, opts.companyId));
   if (opts?.accounted) filters.push(isNotNull(orders.postedAt));
   if (opts?.performedById) filters.push(eq(orders.performedById, opts.performedById));
-  if (filters.length === 1) {
-    return query.where(filters[0]).orderBy(desc(orders.createdAt)).limit(limit);
+  if (opts?.companyId != null) {
+    const demoFilter = visibleDemoOrderFilter(await isDemoSampleHidden(opts.companyId));
+    if (demoFilter) filters.push(demoFilter);
   }
-  if (filters.length === 2) {
-    return query.where(and(filters[0], filters[1])).orderBy(desc(orders.createdAt)).limit(limit);
+  if (filters.length === 0) {
+    return query.orderBy(desc(orders.createdAt)).limit(limit);
   }
-  return query.orderBy(desc(orders.createdAt)).limit(limit);
+  return query.where(filters.length === 1 ? filters[0] : and(...filters)).orderBy(desc(orders.createdAt)).limit(limit);
 }
 async function createOrder(data) {
   const db = getDb();
@@ -58992,7 +59075,10 @@ async function listExpenses(limit = 60, companyId) {
   const db = getDb();
   const query = db.select({ expense: expenses, authorName: users.name }).from(expenses).leftJoin(users, eq(expenses.createdById, users.id));
   if (companyId != null) {
-    return query.where(eq(expenses.companyId, companyId)).orderBy(desc(expenses.createdAt)).limit(limit);
+    const filters = [eq(expenses.companyId, companyId)];
+    const demoFilter = visibleDemoExpenseFilter(await isDemoSampleHidden(companyId));
+    if (demoFilter) filters.push(demoFilter);
+    return query.where(filters.length === 1 ? filters[0] : and(...filters)).orderBy(desc(expenses.createdAt)).limit(limit);
   }
   return query.orderBy(desc(expenses.createdAt)).limit(limit);
 }
@@ -59013,76 +59099,82 @@ async function removeExpense(id) {
 }
 async function dayIncome(dayOffset, companyId) {
   const db = getDb();
+  const filters = [
+    eq(orders.companyId, companyId),
+    sql`DATE(${orders.postedAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
+  ];
+  const demoFilter = visibleDemoOrderFilter(await isDemoSampleHidden(companyId));
+  if (demoFilter) filters.push(demoFilter);
   const rows = await db.select({
     total: sql`COALESCE(SUM(${orders.amount}), 0)`,
     count: sql`COUNT(*)`
-  }).from(orders).where(
-    and(
-      eq(orders.companyId, companyId),
-      sql`DATE(${orders.postedAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
-    )
-  );
+  }).from(orders).where(and(...filters));
   return rows[0];
 }
 async function dayExpense(dayOffset, companyId) {
   const db = getDb();
-  const rows = await db.select({ total: sql`COALESCE(SUM(${expenses.amount}), 0)` }).from(expenses).where(
-    and(
-      eq(expenses.companyId, companyId),
-      sql`DATE(${expenses.createdAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
-    )
-  );
+  const filters = [
+    eq(expenses.companyId, companyId),
+    sql`DATE(${expenses.createdAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
+  ];
+  const demoFilter = visibleDemoExpenseFilter(await isDemoSampleHidden(companyId));
+  if (demoFilter) filters.push(demoFilter);
+  const rows = await db.select({ total: sql`COALESCE(SUM(${expenses.amount}), 0)` }).from(expenses).where(and(...filters));
   return rows[0];
 }
 async function incomeByCategory(companyId, dayOffset = 0) {
   const db = getDb();
+  const filters = [
+    eq(orders.companyId, companyId),
+    isNotNull(orders.postedAt),
+    sql`DATE(${orders.postedAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
+  ];
+  const demoFilter = visibleDemoOrderFilter(await isDemoSampleHidden(companyId));
+  if (demoFilter) filters.push(demoFilter);
   return db.select({
     category: orders.category,
     total: sql`COALESCE(SUM(${orders.amount}), 0)`
-  }).from(orders).where(
-    and(
-      eq(orders.companyId, companyId),
-      isNotNull(orders.postedAt),
-      sql`DATE(${orders.postedAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
-    )
-  ).groupBy(orders.category);
+  }).from(orders).where(and(...filters)).groupBy(orders.category);
 }
 async function expenseByCategory(companyId, dayOffset = 0) {
   const db = getDb();
+  const filters = [
+    eq(expenses.companyId, companyId),
+    sql`DATE(${expenses.createdAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
+  ];
+  const demoFilter = visibleDemoExpenseFilter(await isDemoSampleHidden(companyId));
+  if (demoFilter) filters.push(demoFilter);
   return db.select({
     category: expenses.category,
     total: sql`COALESCE(SUM(${expenses.amount}), 0)`
-  }).from(expenses).where(
-    and(
-      eq(expenses.companyId, companyId),
-      sql`DATE(${expenses.createdAt}) = DATE_SUB(CURDATE(), INTERVAL ${dayOffset} DAY)`
-    )
-  ).groupBy(expenses.category);
+  }).from(expenses).where(and(...filters)).groupBy(expenses.category);
 }
 async function weekIncomeByDay(companyId, endDayOffset = 0) {
   const db = getDb();
+  const filters = [
+    eq(orders.companyId, companyId),
+    isNotNull(orders.postedAt),
+    sql`DATE(${orders.postedAt}) BETWEEN DATE_SUB(CURDATE(), INTERVAL ${endDayOffset + 6} DAY) AND DATE_SUB(CURDATE(), INTERVAL ${endDayOffset} DAY)`
+  ];
+  const demoFilter = visibleDemoOrderFilter(await isDemoSampleHidden(companyId));
+  if (demoFilter) filters.push(demoFilter);
   return db.select({
     day: sql`DATE(${orders.postedAt})`,
     total: sql`COALESCE(SUM(${orders.amount}), 0)`
-  }).from(orders).where(
-    and(
-      eq(orders.companyId, companyId),
-      isNotNull(orders.postedAt),
-      sql`DATE(${orders.postedAt}) BETWEEN DATE_SUB(CURDATE(), INTERVAL ${endDayOffset + 6} DAY) AND DATE_SUB(CURDATE(), INTERVAL ${endDayOffset} DAY)`
-    )
-  ).groupBy(sql`DATE(${orders.postedAt})`);
+  }).from(orders).where(and(...filters)).groupBy(sql`DATE(${orders.postedAt})`);
 }
 async function weekExpenseByDay(companyId, endDayOffset = 0) {
   const db = getDb();
+  const filters = [
+    eq(expenses.companyId, companyId),
+    sql`DATE(${expenses.createdAt}) BETWEEN DATE_SUB(CURDATE(), INTERVAL ${endDayOffset + 6} DAY) AND DATE_SUB(CURDATE(), INTERVAL ${endDayOffset} DAY)`
+  ];
+  const demoFilter = visibleDemoExpenseFilter(await isDemoSampleHidden(companyId));
+  if (demoFilter) filters.push(demoFilter);
   return db.select({
     day: sql`DATE(${expenses.createdAt})`,
     total: sql`COALESCE(SUM(${expenses.amount}), 0)`
-  }).from(expenses).where(
-    and(
-      eq(expenses.companyId, companyId),
-      sql`DATE(${expenses.createdAt}) BETWEEN DATE_SUB(CURDATE(), INTERVAL ${endDayOffset + 6} DAY) AND DATE_SUB(CURDATE(), INTERVAL ${endDayOffset} DAY)`
-    )
-  ).groupBy(sql`DATE(${expenses.createdAt})`);
+  }).from(expenses).where(and(...filters)).groupBy(sql`DATE(${expenses.createdAt})`);
 }
 async function listStaff(companyId) {
   const db = getDb();
@@ -59474,10 +59566,26 @@ var expensesRouter = createRouter({
 async function ordersForChartDay(companyId, offset, category, kind) {
   const db = getDb();
   const dayExpr = sql`DATE(DATE_SUB(CURDATE(), INTERVAL ${offset} DAY))`;
+  const hidden = await isDemoSampleHidden(companyId);
   if (kind === "income") {
-    return db.select({ id: orders.id, title: orders.services, amount: orders.amount, category: orders.category, postedAt: orders.postedAt }).from(orders).where(and(eq(orders.companyId, companyId), eq(orders.category, category), isNotNull(orders.postedAt), sql`DATE(${orders.postedAt}) = ${dayExpr}`)).orderBy(desc(orders.amount)).limit(40);
+    const filters = [
+      eq(orders.companyId, companyId),
+      eq(orders.category, category),
+      isNotNull(orders.postedAt),
+      sql`DATE(${orders.postedAt}) = ${dayExpr}`
+    ];
+    const demoFilter = visibleDemoOrderFilter(hidden);
+    if (demoFilter) filters.push(demoFilter);
+    return db.select({ id: orders.id, title: orders.services, amount: orders.amount, category: orders.category, postedAt: orders.postedAt }).from(orders).where(and(...filters)).orderBy(desc(orders.amount)).limit(40);
   }
-  return db.select({ id: expenses.id, title: expenses.title, amount: expenses.amount, category: expenses.category, createdAt: expenses.createdAt }).from(expenses).where(and(eq(expenses.companyId, companyId), eq(expenses.category, category), sql`DATE(${expenses.createdAt}) = ${dayExpr}`)).orderBy(desc(expenses.amount)).limit(40);
+  const filters = [
+    eq(expenses.companyId, companyId),
+    eq(expenses.category, category),
+    sql`DATE(${expenses.createdAt}) = ${dayExpr}`
+  ];
+  const demoFilter = visibleDemoExpenseFilter(hidden);
+  if (demoFilter) filters.push(demoFilter);
+  return db.select({ id: expenses.id, title: expenses.title, amount: expenses.amount, category: expenses.category, createdAt: expenses.createdAt }).from(expenses).where(and(...filters)).orderBy(desc(expenses.amount)).limit(40);
 }
 var statsRouter = createRouter({
   chartDayDetail: authedQuery.input(external_exports.object({ chartDayOffset: external_exports.number().int().min(0).max(365), category: external_exports.string(), kind: external_exports.enum(["income", "expense"]) })).query(async ({ ctx, input: input2 }) => ordersForChartDay(tenantCompanyId(ctx.user), input2.chartDayOffset, input2.category, input2.kind)),
@@ -59490,7 +59598,9 @@ var statsRouter = createRouter({
     const companyId = tenantCompanyId(ctx.user);
     const chartDayOffset = input2?.chartDayOffset ?? 0;
     const weekEndOffset = input2?.weekEndOffset ?? chartDayOffset;
-    if (env.localPreview) {
+    if (env.demoCabinet && await isTestCabinetCompany(companyId)) {
+      await ensureTestCabinetDashboardSampleData(companyId, ctx.user.id);
+    } else if (env.localPreview) {
       await ensureStudioDashboardSampleData(companyId, ctx.user.id);
     }
     const [
@@ -59899,6 +60009,9 @@ var deskRouter = createRouter({
   disableDemoSample: adminQuery.mutation(async ({ ctx }) => {
     return disableDemoSampleData(tenantCompanyId(ctx.user));
   }),
+  setDemoSampleVisible: adminQuery.input(external_exports.object({ visible: external_exports.boolean() })).mutation(async ({ ctx, input: input2 }) => {
+    return setDemoSampleVisibility(tenantCompanyId(ctx.user), input2.visible);
+  }),
   mine: authedQuery.query(async ({ ctx }) => {
     const companyId = tenantCompanyId(ctx.user);
     const rows = await getDb().select().from(orders).where(
@@ -60302,7 +60415,7 @@ async function markTestCabinetCompany(companyId) {
 }
 function createPreviewLoginHandler() {
   return async (c) => {
-    if (!env.localPreview) {
+    if (!env.localPreview && !env.demoCabinet) {
       return c.json({ error: "Not available" }, 404);
     }
     let asEmployee = c.req.query("role") === "employee";
@@ -60328,8 +60441,7 @@ function createPreviewLoginHandler() {
     if (previewUser?.companyId) {
       await markTestCabinetCompany(previewUser.companyId);
       if (!asEmployee) {
-        await ensureStudioServiceCatalogFromDemo(previewUser.companyId);
-        await ensureStudioDashboardSampleData(previewUser.companyId, previewUser.id);
+        await ensureTestCabinetDashboardSampleData(previewUser.companyId, previewUser.id);
       }
     }
     const token = await signSessionToken({
@@ -60402,6 +60514,7 @@ app.get("/api/build-info", (c) =>
   c.json({
     build: "detaildesk-2026-11-15",
     localPreview: env.localPreview,
+    demoCabinet: env.demoCabinet || env.localPreview,
     testCabinet: TEST_CABINET_NAME,
     mail: {
       resendConfigured: Boolean(env.resendApiKey),

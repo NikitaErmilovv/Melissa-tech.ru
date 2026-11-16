@@ -1,5 +1,5 @@
 /* Авто Блеск — service worker: офлайн-оболочка PWA */
-const CACHE = "avto-blesk-v2";
+const CACHE = "avto-blesk-v4";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.add("/")));
@@ -35,7 +35,23 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Статика: cache-first с докэшированием
+  // Хешированные чанки Vite — сначала сеть, чтобы не залипать на старом бандле после деплоя
+  if (url.origin === self.location.origin && url.pathname.startsWith("/assets/")) {
+    event.respondWith(
+      fetch(event.request)
+        .then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(event.request, copy));
+          }
+          return res;
+        })
+        .catch(() => caches.match(event.request)),
+    );
+    return;
+  }
+
+  // Остальная статика: cache-first
   if (url.origin === self.location.origin) {
     event.respondWith(
       caches.match(event.request).then(
