@@ -97,5 +97,5 @@
       "lead": "Комплексный уход за автомобилем."
     }
   ],
-  "theme_css": ":root{--accent:#e11d2f;--accent-soft:rgba(225,29,47,.38);--accent-hover:#f43f51;--accent-deep:#b91c2c;--accent-ink:#fff;--accent-rgb:225,29,47}.hero--grad54 .heroimg{background-image:url('img/hero-frame.jpg')}.hero--grad54.hero--sdc .hero-heading h1.hero-title-text{font-size:clamp(32px,4.6vw,58px)}.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}.hero--grad54{background:radial-gradient(circle at 70% 42%,#2a0a0e 0,#120608 38%,#0a0a0a 62%)}"
+  "theme_css": ":root{--accent:#e11d2f;--accent-soft:rgba(225,29,47,.38);--accent-hover:#f43f51;--accent-deep:#b91c2c;--accent-ink:#fff;--accent-rgb:225,29,47}.hero--grad54 .heroimg{background-image:url('img/hero-frame.jpg')}.hero--grad54.hero--sdc .hero-heading h1.hero-title-text--brand{font-size:clamp(38px,5.8vw,72px)}.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}.hero--grad54{background:radial-gradient(circle at 70% 42%,#2a0a0e 0,#120608 38%,#0a0a0a 62%)}"
 }
