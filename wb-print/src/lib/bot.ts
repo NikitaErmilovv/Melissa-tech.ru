@@ -125,6 +125,7 @@ function freshOrder(db: Database, input: IngestInput, text: string): Order {
     diskNote: "",
     lastPhotoAt: null,
     lastReminderAt: null,
+    idleNudgeAt: null,
     completedNoticeAt: null,
     archivedAt: null,
     source: input.source,
