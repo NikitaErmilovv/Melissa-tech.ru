@@ -92,6 +92,11 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
     const onServer = view?.files?.length ?? view?.got ?? 0;
     const got = view ? Math.max(view.got, onServer) : 0;
     const total = got + picked.length;
+    const maxSend = view?.maxPerSend ?? need;
+    if (view?.batchMode && picked.length > maxSend) {
+      setError(`За одну отправку — не больше ${maxSend} фото. Уберите лишние из выбранных.`);
+      return;
+    }
     if (need > 0 && total > need) {
       setHint("");
       setError(
@@ -130,6 +135,13 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
           "Сервер отклонил загрузку (слишком большой пакет за раз). Отправьте меньше фото одним нажатием — остальные догрузите следующими отправками.",
         );
       }
+      if (status === 502 || status === 504) {
+        throw new Error(
+          view?.batchMode
+            ? `Сервер перегружен. Отправьте не больше ${view.maxPerSend} фото за раз и попробуйте снова через минуту.`
+            : "Сервер временно не ответил. Попробуйте меньше фото за раз или повторите позже.",
+        );
+      }
       if (status < 200 || status >= 300) throw new Error(data.error || "не удалось загрузить");
       const nextView = data.view ?? null;
       if (nextView) setView(nextView);
@@ -165,9 +177,11 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
   const gotCount = view ? Math.max(view.got, uploaded.length) : 0;
   const pendingAdd = picked.length;
   const displayGot = gotCount + pendingAdd;
+  const maxPerSend = view?.maxPerSend ?? 0;
   const overNeed = Boolean(view && view.need > 0 && displayGot > view.need);
+  const overBatch = Boolean(view && view.batchMode && maxPerSend > 0 && pendingAdd > maxPerSend);
   const underNeed = Boolean(view && view.need > 0 && displayGot < view.need && pendingAdd > 0);
-  const sendReady = Boolean(view && pendingAdd > 0 && !overNeed);
+  const sendReady = Boolean(view && pendingAdd > 0 && !overNeed && !overBatch);
   const canUpload = Boolean(view && !view.cancelled && view.need > 0 && !view.complete);
 
   async function removeUploaded(fileId: string) {
@@ -236,6 +250,15 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
             ) : gotCount > 0 && pendingAdd === 0 ? (
               <p className="mt-1 text-xs text-muted-foreground">фото принято</p>
             ) : null}
+            {view.batchMode && !view.complete && view.remaining > 0 ? (
+              <p className="mt-3 rounded-xl border border-border bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
+                Партия <span className="font-medium text-foreground">{view.batchIndex}</span> из{" "}
+                <span className="font-medium text-foreground">{view.batchCount}</span> (по {view.batchSize} фото).
+                Сейчас на сервере <span className="font-medium text-foreground">{view.got}</span> — можно принять ещё{" "}
+                <span className="font-medium text-foreground">{view.remaining}</span>. За один раз отправляйте не больше{" "}
+                <span className="font-medium text-foreground">{view.maxPerSend}</span>.
+              </p>
+            ) : null}
           </div>
 
           {uploaded.length > 0 && (
@@ -260,6 +283,11 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
             </div>
           ) : null}
 
+          {overBatch ? (
+            <p className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              За одну отправку — не больше {maxPerSend} фото. Сейчас выбрано {pendingAdd}, уберите {pendingAdd - maxPerSend}.
+            </p>
+          ) : null}
           {overNeed ? (
             <p className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
               Фотографий больше, чем в заказе ({view.need}). Уберите {displayGot - view.need} лишних перед отправкой.
@@ -283,7 +311,11 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
                 onClick={() => fileInputRef.current?.click()}
               >
                 <span className="font-medium">Нажмите, чтобы выбрать фото</span>
-                <span className="text-xs text-muted-foreground">любой формат, без ограничения размера</span>
+                <span className="text-xs text-muted-foreground">
+                  {view.batchMode
+                    ? `до ${view.maxPerSend} фото за раз · всего в заказе ${view.need}`
+                    : "любой формат, без ограничения размера"}
+                </span>
               </button>
               <input
                 ref={fileInputRef}
@@ -299,7 +331,17 @@ export function IntakeUpload({ slug, intakeKey }: { slug: string; intakeKey: str
                     setError("Файл пустой — выберите другое фото из галереи.");
                     return;
                   }
-                  setPicked((prev) => [...prev, ...next]);
+                  const cap = view?.maxPerSend ?? view?.remaining ?? next.length;
+                  const room = Math.max(0, cap - picked.length);
+                  const add = next.slice(0, room);
+                  if (add.length < next.length) {
+                    setError(
+                      view?.batchMode
+                        ? `За раз — не больше ${view.maxPerSend} фото. Лишние не добавили.`
+                        : `Можно добавить ещё ${room} фото в этой отправке.`,
+                    );
+                  } else setError("");
+                  setPicked((prev) => [...prev, ...add]);
                   setError("");
                   e.target.value = "";
                 }}

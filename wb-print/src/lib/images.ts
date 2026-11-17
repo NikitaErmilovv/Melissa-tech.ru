@@ -119,6 +119,39 @@ export async function savePreparedFile(
   return { saved, cropped, failed };
 }
 
+/** Сохранить байты как есть (без sharp) — приём крупных заказов на сайте. */
+export function saveOrderFileRaw(
+  order: Order,
+  bytes: Buffer,
+  source: FileSource,
+): OrderFile | { error: string } {
+  if (bytes.length < 12) return { error: "пустой файл" };
+  const kind = sniffImage(bytes);
+  const ext = kind?.ext ?? "jpg";
+  const mime = kind?.mime ?? "application/octet-stream";
+  const dir = safeAbs(order.folderRel);
+  if (!dir) return { error: "папка заказа недоступна" };
+  ensureDir(dir);
+  const name = `${String(order.files.length + 1).padStart(3, "0")}.${ext}`;
+  const relPath = path.posix.join(order.folderRel.replaceAll("\\", "/"), name);
+  const abs = safeAbs(relPath);
+  if (!abs) return { error: "имя файла отклонено" };
+  fs.writeFileSync(abs, bytes);
+  const file: OrderFile = {
+    id: uid("file"),
+    name,
+    relPath,
+    bytes: bytes.length,
+    contentType: mime,
+    source,
+    addedAt: new Date().toISOString(),
+  };
+  order.files.push(file);
+  order.lastPhotoAt = file.addedAt;
+  order.updatedAt = file.addedAt;
+  return file;
+}
+
 export function saveOrderFile(
   order: Order,
   bytes: Buffer,
