@@ -76,6 +76,11 @@ export const TEMPLATE_META: { key: TemplateKey; title: string; hint: string }[] 
     hint: "Пока макетов или фото не все: после паузы и затем каждые несколько минут. {{order}} {{got}} {{need}} {{leftText}}",
   },
   {
+    key: "idleNudge",
+    title: "Час без фото",
+    hint: "Один раз через час после заказа, если ничего не загрузили. {{order}} {{uploadLink}}",
+  },
+  {
     key: "complete",
     title: "Фотографии приняты",
     hint: "Когда набор полный. Пишем, что приняты, и что замена — слово «замена» в течение 30 минут. {{order}} {{acceptedLine}}",
@@ -128,6 +133,8 @@ export const DEFAULT_TEMPLATES: Templates = {
   reminder: `Заказ №{{order}}: уже {{got}} из {{need}}. Не хватает {{leftText}}.
 
 Ссылка для загрузки:
+{{uploadLink}}`,
+  idleNudge: `Добрый день! По заказу №{{order}} ждём фото — когда будет удобно, загрузите сюда:
 {{uploadLink}}`,
   complete: `Заказ №{{order}}. Всё принято ({{got}} из {{need}}). {{acceptedLine}}`,
   replaceAsk: `Заказ №{{order}}. Прежние фотографии убрал. Загрузите заново {{needText}} на сайте: {{uploadLink}}{{squareLine}}`,

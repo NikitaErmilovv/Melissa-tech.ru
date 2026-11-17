@@ -1,6 +1,7 @@
 import fs from "fs";
 import { folderRelFor, pushLog, withDb } from "./db";
-import { savePreparedFile } from "./images";
+import { INTAKE_BATCH_MIN_NEED } from "./intake-batch";
+import { saveOrderFileRaw, savePreparedFile } from "./images";
 import { safeAbs, uid } from "./paths";
 import { countPhrase, DEFAULT_TEMPLATES } from "./text";
 import type { FileSource, PrintStatus, ProductKind, TemplateKey, Templates } from "./types";
@@ -86,7 +87,15 @@ export async function addUploads(orderId: string, files: Buffer[], source: FileS
         skipped += 1;
         return;
       }
-      const result = await savePreparedFile(order, bytes, source);
+      const deferSharp =
+        source === "site" && order.kind === "photo" && order.expectedPhotos >= INTAKE_BATCH_MIN_NEED;
+      const result = deferSharp
+        ? (() => {
+            const saved = saveOrderFileRaw(order, bytes, source);
+            if ("error" in saved) return { saved, cropped: false, failed: true };
+            return { saved, cropped: false, failed: false };
+          })()
+        : await savePreparedFile(order, bytes, source);
       if ("error" in result.saved) skipped += 1;
       else {
         saved += 1;
