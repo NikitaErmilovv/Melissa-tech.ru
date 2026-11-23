@@ -1,9 +1,10 @@
-# Timeweb Apps: статика монорепо (volgograd-kottedzh/, tau-altay-cheremshanka/, …).
+# Timeweb App Platform: тип «Dockerfile», порт 8080 (документация Timeweb).
 FROM nginx:1.27-alpine
 
+RUN rm /etc/nginx/conf.d/default.conf
 COPY deploy/timeweb/nginx-melissa.conf /etc/nginx/conf.d/default.conf
-# Меняется при каждом выкладочном push — сбивает кэш Docker COPY ниже.
 COPY deploy/timeweb/BUILD_STAMP /tmp/BUILD_STAMP
 COPY . /usr/share/nginx/html
 
 EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
