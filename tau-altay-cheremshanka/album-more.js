@@ -14,7 +14,7 @@
       title: 'Комнаты',
       kicker: 'Внутри дома',
       lead: 'Спальни и гостиная в дереве',
-      preview: '../photoHouse/Комнаты - Внутри дома/06ad80b5-f3cd-4bd1-b7ba-5a92a5be3ed6.jpg',
+      preview: '../photoHouse/Комнаты - Внутри дома/02.jpg',
     },
     {
       id: 'territoriya',
@@ -23,14 +23,6 @@
       kicker: 'Во дворе',
       lead: 'Мангал, костёр и вечер на воздухе',
       preview: '../photoHouse/Территория у дома/01.jpg',
-    },
-    {
-      id: 'banya',
-      href: 'banya.html',
-      title: 'Баня',
-      kicker: 'Баня, парная',
-      lead: 'Парная, душ и зона отдыха',
-      preview: '../photoHouse/Баня/04-parnaya.jpg',
     },
     {
       id: 'chan',
