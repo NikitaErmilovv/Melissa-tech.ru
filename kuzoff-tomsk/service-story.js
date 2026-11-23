@@ -1,52 +1,4 @@
 (function () {
-  function enableDragScroll(scroller, maxLeft) {
-    let down = false;
-    let startX = 0;
-    let startLeft = 0;
-    let moved = false;
-
-    scroller.addEventListener("pointerdown", (event) => {
-      if (!scroller.classList.contains("is-open")) return;
-      down = true;
-      moved = false;
-      startX = event.clientX;
-      startLeft = scroller.scrollLeft;
-      scroller.classList.add("is-dragging");
-      scroller.setPointerCapture(event.pointerId);
-    });
-    scroller.addEventListener("pointermove", (event) => {
-      if (!down) return;
-      const dx = event.clientX - startX;
-      if (Math.abs(dx) > 4) moved = true;
-      scroller.scrollLeft = Math.max(0, Math.min(maxLeft(), startLeft - dx));
-    });
-    const snapToNearest = () => {
-      const items = [...scroller.querySelectorAll(".story-card.is-lit, .story-card--cover")];
-      if (!items.length) return;
-      const left = scroller.scrollLeft;
-      let best = items[0];
-      let bestDist = Infinity;
-      items.forEach((card) => {
-        const dist = Math.abs(card.offsetLeft - left);
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = card;
-        }
-      });
-      scroller.scrollTo({ left: best.offsetLeft, behavior: "smooth" });
-    };
-    const stop = () => {
-      if (down && moved) snapToNearest();
-      down = false;
-      scroller.classList.remove("is-dragging");
-    };
-    scroller.addEventListener("pointerup", stop);
-    scroller.addEventListener("pointercancel", stop);
-    scroller.addEventListener("click", (event) => {
-      if (moved) event.preventDefault();
-    }, true);
-  }
-
   document.querySelectorAll("[data-service-story]").forEach((root) => {
     const board = root.querySelector(".story-board");
     const cover = root.querySelector(".story-card--cover");
@@ -55,6 +7,11 @@
 
     let unlocked = 0;
     cards[0].classList.add("is-lit");
+
+    let down = false;
+    let startX = 0;
+    let startLeft = 0;
+    let moved = false;
 
     const maxLeft = () => cards[unlocked].offsetLeft;
 
@@ -67,18 +24,76 @@
       board.scrollTo({ left: cards[unlocked].offsetLeft, behavior: "smooth" });
     };
 
-    cards.forEach((card, index) => {
-      card.addEventListener("click", () => {
-        if (index === unlocked || index === unlocked + 1) {
-          unlockNext();
-          return;
-        }
-        if (index < unlocked) {
-          board.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+    const tapCard = (card) => {
+      if (!card) return;
+      const index = cards.indexOf(card);
+      if (index < 0) return;
+      if (index === unlocked || index === unlocked + 1) {
+        unlockNext();
+        return;
+      }
+      if (index < unlocked) {
+        board.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+      }
+    };
+
+    const snapToNearest = () => {
+      const items = cards.filter((card, index) => index <= unlocked);
+      if (!items.length) return;
+      const left = board.scrollLeft;
+      let best = items[0];
+      let bestDist = Infinity;
+      items.forEach((card) => {
+        const dist = Math.abs(card.offsetLeft - left);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = card;
         }
       });
+      board.scrollTo({ left: best.offsetLeft, behavior: "smooth" });
+    };
+
+    board.addEventListener("pointerdown", (event) => {
+      down = true;
+      moved = false;
+      startX = event.clientX;
+      startLeft = board.scrollLeft;
     });
 
-    enableDragScroll(board, maxLeft);
+    board.addEventListener("pointermove", (event) => {
+      if (!down) return;
+      const dx = event.clientX - startX;
+      if (Math.abs(dx) <= 4) return;
+      if (!moved) {
+        moved = true;
+        board.classList.add("is-dragging");
+        board.setPointerCapture(event.pointerId);
+      }
+      if (!board.classList.contains("is-open")) return;
+      board.scrollLeft = Math.max(0, Math.min(maxLeft(), startLeft - dx));
+    });
+
+    const stop = (event) => {
+      if (!down) return;
+      down = false;
+      board.classList.remove("is-dragging");
+      if (moved) {
+        snapToNearest();
+        return;
+      }
+      const fromPoint = document.elementFromPoint(event.clientX, event.clientY);
+      const card = event.target.closest(".story-card") || (fromPoint && fromPoint.closest(".story-card"));
+      tapCard(card);
+    };
+
+    board.addEventListener("pointerup", stop);
+    board.addEventListener("pointercancel", () => {
+      down = false;
+      moved = false;
+      board.classList.remove("is-dragging");
+    });
+    board.addEventListener("click", (event) => {
+      event.preventDefault();
+    }, true);
   });
 })();
