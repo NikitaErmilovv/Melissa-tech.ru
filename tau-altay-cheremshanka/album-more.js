@@ -24,14 +24,6 @@
       lead: 'Мангал, костёр и вечер на воздухе',
       preview: '../photoHouse/Территория у дома/01.jpg',
     },
-    {
-      id: 'chan',
-      href: 'chan.html',
-      title: 'Чан',
-      kicker: 'На огне',
-      lead: 'Дровяной чан у дома',
-      preview: '../photoHouse/Чан/bbe3a123-5ab9-41f6-9ad4-054a705e1b93.jpg',
-    },
   ];
 
   function escapeHtml(s) {
