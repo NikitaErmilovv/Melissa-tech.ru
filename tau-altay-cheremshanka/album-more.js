@@ -6,7 +6,7 @@
       title: 'Дом',
       kicker: 'Загородный',
       lead: 'Терраса, панорамные окна и подсветка',
-      preview: '../photoHouse/Дом/d842b6d1-e82e-4f88-923c-97c530d3d7ce.jpg',
+      preview: '../photoHouse/Дом/01.jpg',
     },
     {
       id: 'komnaty',
