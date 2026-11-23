@@ -1795,3 +1795,21 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   line-height:1;white-space:nowrap;
 }
 .brand-stack--org-name .brand-stack__script{font-size:1em}
+
+/* Альбом «Территория у дома»: заголовок героя */
+.subpage-hero--album-territoriya h1{text-transform:none;font-family:inherit;letter-spacing:0}
+.subpage-hero--album-territoriya .brand-stack--album-territory-title{
+  display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:.16em .3em;
+}
+.subpage-hero--album-territoriya .brand-stack--album-territory-title .brand-stack__base,
+.subpage-hero--album-territoriya .brand-stack--album-territory-title .brand-stack__script{
+  font-size:clamp(38px,5vw,70px);line-height:.95;
+}
+.subpage-hero--album-territoriya .brand-stack--album-territory-title .brand-stack__base{
+  font-family:'Kino 1909',Georgia,'Times New Roman',serif;
+  font-weight:400;color:#fff;text-transform:uppercase;letter-spacing:.05em;
+}
+.subpage-hero--album-territoriya .brand-stack--album-territory-title .brand-stack__script{
+  font-family:'Great Vibes',cursive;font-weight:400;color:var(--accent);
+  text-transform:none;letter-spacing:0;
+}
