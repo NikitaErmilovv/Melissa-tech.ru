@@ -1,0 +1,492 @@
+{
+  "users": [
+    {
+      "id": "e0369d9f64a0e7d932942411",
+      "name": "Владелец Aliento",
+      "email": "owner@aliento.test",
+      "phone": "+7 900 000-00-01",
+      "passwordHash": "329cd78b83967b86b5c2cba308c95db3:6c0f02181712243ecd455e10709458ac0ca638e0827daa538fe68316f99721ba9572b3293553b94e2d26810c25b993a21f4d9c3b2c0c68fcaa33a3f571df16f1",
+      "role": "OWNER",
+      "blocked": false,
+      "isDemo": false,
+      "emailVerified": true,
+      "createdAt": "2026-11-09T10:58:43.701Z"
+    },
+    {
+      "id": "dd58d5373025392625c8eb93",
+      "name": "Администратор",
+      "email": "admin@aliento.test",
+      "phone": "+7 900 000-00-02",
+      "passwordHash": "329cd78b83967b86b5c2cba308c95db3:6c0f02181712243ecd455e10709458ac0ca638e0827daa538fe68316f99721ba9572b3293553b94e2d26810c25b993a21f4d9c3b2c0c68fcaa33a3f571df16f1",
+      "role": "ADMIN",
+      "blocked": false,
+      "isDemo": false,
+      "emailVerified": true,
+      "createdAt": "2026-11-09T10:58:43.701Z"
+    },
+    {
+      "id": "9e8dc51d8df73c1ff62ed475",
+      "name": "Анастасия Ромова",
+      "email": "anastasia@aliento.test",
+      "phone": "+7 900 000-00-03",
+      "passwordHash": "329cd78b83967b86b5c2cba308c95db3:6c0f02181712243ecd455e10709458ac0ca638e0827daa538fe68316f99721ba9572b3293553b94e2d26810c25b993a21f4d9c3b2c0c68fcaa33a3f571df16f1",
+      "role": "TEACHER",
+      "blocked": false,
+      "isDemo": false,
+      "emailVerified": true,
+      "createdAt": "2026-11-09T10:58:43.701Z"
+    },
+    {
+      "id": "deef358e1cca4ae6b3f1c446",
+      "name": "Александр Дин",
+      "email": "alexander@aliento.test",
+      "phone": "+7 900 000-00-04",
+      "passwordHash": "329cd78b83967b86b5c2cba308c95db3:6c0f02181712243ecd455e10709458ac0ca638e0827daa538fe68316f99721ba9572b3293553b94e2d26810c25b993a21f4d9c3b2c0c68fcaa33a3f571df16f1",
+      "role": "TEACHER",
+      "blocked": false,
+      "isDemo": false,
+      "emailVerified": true,
+      "createdAt": "2026-11-09T10:58:43.701Z"
+    },
+    {
+      "id": "b8e0503c465f6a2a5c99ba2b",
+      "name": "Тестовый ученик",
+      "email": "student@aliento.test",
+      "phone": "+7 900 111-22-33",
+      "passwordHash": "329cd78b83967b86b5c2cba308c95db3:6c0f02181712243ecd455e10709458ac0ca638e0827daa538fe68316f99721ba9572b3293553b94e2d26810c25b993a21f4d9c3b2c0c68fcaa33a3f571df16f1",
+      "role": "STUDENT",
+      "blocked": false,
+      "isDemo": false,
+      "emailVerified": true,
+      "createdAt": "2026-11-09T10:58:43.701Z",
+      "dateOfBirth": "1998-03-15"
+    },
+    {
+      "id": "2664390cf16b3e6f824f59be",
+      "blocked": false,
+      "isDemo": false,
+      "createdAt": "2026-11-09T11:46:27.000Z",
+      "name": "Данилов Роман",
+      "email": "uch-4302c71b@aliento.test",
+      "phone": "+7 (999) 654-34-33",
+      "dateOfBirth": "2000-03-25",
+      "passwordHash": "a356815f0b40c18e3eaff3e7668ec92d:158d36da223330e51e55e7243306d556867f2b6c3a1d72d26fad5df680eff60e8fc5c159a0b3345c8247357e70a763f6541afb2d498eb21fcf73dd7acfdc0f6a",
+      "role": "STUDENT",
+      "emailVerified": true
+    },
+    {
+      "id": "f0824dd249ed0ae4e38d2b1d",
+      "blocked": false,
+      "isDemo": false,
+      "createdAt": "2026-11-09T11:48:47.814Z",
+      "name": "Никита Ермилов",
+      "email": "uch-99967269@aliento.test",
+      "phone": "+7 (995) 453-35-34",
+      "dateOfBirth": "2000-03-23",
+      "passwordHash": "7bd4729e469f92f0d04e7f122773807a:b07a479288f9138cb18b0cdbb78da6c69c22598cf098a110dba67c12b8c1be950a5dc4dc25677ba6ca9e488a65a1283eabb307dc00852afdfa1936cf5db3b077",
+      "role": "STUDENT",
+      "emailVerified": true
+    },
+    {
+      "id": "938b953379dc88f154db4f97",
+      "blocked": false,
+      "isDemo": false,
+      "createdAt": "2026-11-09T11:50:19.260Z",
+      "name": "Виктория Ревягина",
+      "email": "uch-6ddd9a50@aliento.test",
+      "phone": "+7 (993) 453-45-94",
+      "dateOfBirth": "2000-03-23",
+      "passwordHash": "3331a0fc34537ba9af1efd0d6075956b:0f6f42ff4d685d82367bef143c30c44d044c47d546d8e8e0e7a8f4d751064cfaa0d1972dcdc78704871c36db796101ba69aaa3df1a6858c064489b75d754f19e",
+      "role": "STUDENT",
+      "emailVerified": true
+    },
+    {
+      "id": "6d9150bd1a881dc2998d6d56",
+      "blocked": false,
+      "isDemo": false,
+      "createdAt": "2026-11-09T11:53:40.292Z",
+      "name": "Екатерина Викторова",
+      "email": "uch-5e0827b7@aliento.test",
+      "phone": "+7 (888) 934-53-45",
+      "passwordHash": "80f5304e1ac8f67da32a175b215dd34c:8dc0a7dc3fc7f00659ad222f1cc1dd7298b4a221b99eabf1855b9f9c912a6a4241d54321b5c2d6a08945a889a2f4b847afc86bcf95dbdb0c1df065a05613c050",
+      "role": "STUDENT",
+      "emailVerified": true
+    }
+  ],
+  "teachers": [
+    {
+      "id": "d383820d09ac775fe5a91121",
+      "userId": "9e8dc51d8df73c1ff62ed475",
+      "title": "Bachata Sensual · Ladies styling",
+      "description": "Преподаватель sensual bachata и ladies styling."
+    },
+    {
+      "id": "43e0289ea12857823357f658",
+      "userId": "deef358e1cca4ae6b3f1c446",
+      "title": "Bachata Partnerwork · Практика",
+      "description": "Ведение, рамка и практики школы."
+    }
+  ],
+  "venues": [
+    {
+      "id": "venue-dekadance",
+      "name": "проспект Карла Маркса, 53а",
+      "halls": [
+        "Зал 1",
+        "Зал 2",
+        "Зал 3"
+      ]
+    }
+  ],
+  "hallRentals": [
+    {
+      "venueId": "venue-dekadance",
+      "hall": "Зал 1",
+      "clientName": "пп",
+      "peopleCount": 6,
+      "notes": "рр",
+      "startsAt": "2026-11-10T10:00:00.000Z",
+      "endsAt": "2026-11-10T11:30:00.000Z",
+      "isDemo": false,
+      "id": "bab4a76121bf36f27b840278",
+      "title": "пп"
+    }
+  ],
+  "classes": [
+    {
+      "teacherId": "43e0289ea12857823357f658",
+      "title": "бачата",
+      "level": "Средний уровень",
+      "description": "бачата — средний уровень.",
+      "startsAt": "2026-11-12T19:00:00.000Z",
+      "endsAt": "2026-11-12T20:30:00.000Z",
+      "room": "Зал 1",
+      "capacity": 20,
+      "id": "8e98f228cc056bf1c5b2956b",
+      "isDemo": false,
+      "venueId": "venue-dekadance"
+    },
+    {
+      "teacherId": "d383820d09ac775fe5a91121",
+      "title": "Bachata Sensual",
+      "level": "Начальный уровень",
+      "description": "Тестовое занятие",
+      "startsAt": "2026-11-10T19:00:00.000Z",
+      "endsAt": "2026-11-10T20:30:00.000Z",
+      "room": "Зал 1",
+      "capacity": 20,
+      "venueId": "venue-dekadance",
+      "isDemo": false,
+      "id": "889c2558e8e4af85a7d2e506"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "acd5ff31e42b0c539c457a16",
+      "createdAt": "2026-11-09T12:11:19.518Z",
+      "isDemo": false,
+      "userId": "b8e0503c465f6a2a5c99ba2b",
+      "classId": "889c2558e8e4af85a7d2e506",
+      "status": "BOOKED"
+    }
+  ],
+  "plans": [
+    {
+      "id": "e8914072c0f52821b69e10d0",
+      "name": "6 часов",
+      "classCount": 6,
+      "durationDays": 30,
+      "priceRub": 2800,
+      "popular": false,
+      "description": "Абонемент на 6 часов занятий по расписанию.",
+      "isDemo": false
+    },
+    {
+      "id": "cc52246172d97a0839c4f79b",
+      "name": "8 часов",
+      "classCount": 8,
+      "durationDays": 45,
+      "priceRub": 3600,
+      "popular": false,
+      "description": "Абонемент на 8 часов — удобный средний объём.",
+      "isDemo": false
+    },
+    {
+      "id": "c72fa6ee4aa83ea33d852cb7",
+      "name": "12 часов",
+      "classCount": 12,
+      "durationDays": 60,
+      "priceRub": 4100,
+      "popular": true,
+      "description": "Максимум часов по выгодной цене.",
+      "isDemo": false
+    },
+    {
+      "name": "Тест 4 часа",
+      "classCount": 4,
+      "durationDays": 30,
+      "priceRub": 5000,
+      "popular": false,
+      "description": "Для проверки цепочки.",
+      "isDemo": false,
+      "id": "3060a663d99b34f12ace3aa8"
+    }
+  ],
+  "subscriptions": [
+    {
+      "userId": "b8e0503c465f6a2a5c99ba2b",
+      "planId": "3060a663d99b34f12ace3aa8",
+      "totalClasses": 4,
+      "remainingClasses": 2.5,
+      "expiresAt": "2026-12-09T12:11:19.516Z",
+      "status": "ACTIVE",
+      "id": "d24ba549be0f125ebd13dbad",
+      "isDemo": false,
+      "createdAt": "2026-11-09T12:11:19.517Z"
+    },
+    {
+      "userId": "2664390cf16b3e6f824f59be",
+      "planId": "cc52246172d97a0839c4f79b",
+      "totalClasses": 8,
+      "remainingClasses": 8,
+      "expiresAt": "2026-12-24T12:32:19.901Z",
+      "status": "ACTIVE",
+      "id": "954463d111d9190602c14793",
+      "isDemo": false,
+      "createdAt": "2026-11-09T12:32:19.901Z"
+    }
+  ],
+  "attendances": [
+    {
+      "bookingId": "acd5ff31e42b0c539c457a16",
+      "userId": "b8e0503c465f6a2a5c99ba2b",
+      "classId": "889c2558e8e4af85a7d2e506",
+      "status": "PRESENT",
+      "id": "1d89a5768e47556a8e8bbb47",
+      "isDemo": false,
+      "createdAt": "2026-11-09T12:11:19.518Z"
+    }
+  ],
+  "payments": [],
+  "events": [
+    {
+      "id": "party-1",
+      "number": 1,
+      "title": "Alien Night Party",
+      "description": "Космическая ночь: неон, инопланетные образы и бачата под звёздным небом.",
+      "startsAt": "2025-11-15T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-1/1.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-2",
+      "number": 2,
+      "title": "Arabian Night Party",
+      "description": "Восточная сказка — золото зала, ароматы специй и sensual bachata до утра.",
+      "startsAt": "2025-12-20T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-2/1.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-3",
+      "number": 3,
+      "title": "Hogwarts Party",
+      "description": "Магия Hogwarts: факультеты, костюмы и танцевальный бал волшебников.",
+      "startsAt": "2025-12-27T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-3/1.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-4",
+      "number": 4,
+      "title": "Matrix Party",
+      "description": "Зелёный код, cyber-эстетика и baсhata в параллельной реальности.",
+      "startsAt": "2026-01-31T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-4/6.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-5",
+      "number": 5,
+      "title": "Gangster's Party",
+      "description": "Chicago 20-х: джаз, gangster chic и страстная бачата в полумраке.",
+      "startsAt": "2026-02-21T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-5/1.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-6",
+      "number": 6,
+      "title": "Luau Party",
+      "description": "Гавайский luau: цветы, тропики и лёгкое летнее настроение на танцполе.",
+      "startsAt": "2026-02-28T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-6/1.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-7",
+      "number": 7,
+      "title": "Women's Paradise Party",
+      "description": "Вечер для неё: styling, empowerment и танец в атмосфере поддержки.",
+      "startsAt": "2026-03-07T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-7.jpg",
+      "isDemo": false
+    },
+    {
+      "id": "party-8",
+      "number": 8,
+      "title": "Красный Бархат Party",
+      "description": "Бархат, красные занавесы и sensual bachata в духе old Hollywood.",
+      "startsAt": "2026-03-21T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-8/1.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-9",
+      "number": 9,
+      "title": "Fiesta Mexicana",
+      "description": "Sombreros, яркие краски и fiesta с latino energy до последнего трека.",
+      "startsAt": "2026-04-04T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-9/1.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-10",
+      "number": 10,
+      "title": "Banana Party",
+      "description": "Жёлтый dress-code, юмор и самая солнечная вечеринка сезона.",
+      "startsAt": "2026-04-25T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-10/4.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-11",
+      "number": 11,
+      "title": "Birthday Party",
+      "description": "Празднуем вместе: сюрпризы, любимые хиты и торт на танцполе.",
+      "startsAt": "2026-05-23T21:00:00.000Z",
+      "place": "DekaDance, проспект Карла Маркса, 53а",
+      "imageUrl": "/events/party-11/1.png",
+      "isDemo": false
+    },
+    {
+      "id": "party-12",
+      "number": 12,
+      "title": "Open Air на Михайловской набережной",
+      "description": "Танцы на открытом воздухе у воды — закат, живые DJ-сеты и бачата под небом.",
+      "startsAt": "2026-06-06T19:00:00.000Z",
+      "place": "Михайловская набережная",
+      "imageUrl": "/events/party-12.jpg",
+      "isDemo": false
+    }
+  ],
+  "notifications": [
+    {
+      "userId": "2664390cf16b3e6f824f59be",
+      "title": "Абонемент выдан",
+      "body": "Школа выдала «8 часов»: 8 ч до 24.12.2026.",
+      "id": "96945b71dbc6a434ae57de3f",
+      "read": false,
+      "isDemo": false,
+      "createdAt": "2026-11-09T12:32:19.903Z"
+    }
+  ],
+  "inviteCodes": [],
+  "announcements": [],
+  "settings": {
+    "schoolName": "Aliento",
+    "slogan": "Танец, который чувствуется сердцем",
+    "phone": "+7 913 270-45-06",
+    "email": "info@aliento.dance",
+    "address": "проспект Карла Маркса, 53а",
+    "hours": "Ежедневно 10:00 — 22:00",
+    "cancelHours": 4,
+    "trialPriceRub": 1500,
+    "demoMode": false,
+    "hallActivityTypes": [
+      {
+        "id": "sensual",
+        "name": "Bachata Sensual",
+        "color": "#2d6a4f",
+        "keywords": [
+          "sensual",
+          "сеншуал"
+        ]
+      },
+      {
+        "id": "partnerwork",
+        "name": "Bachata Partnerwork",
+        "color": "#4361ee",
+        "keywords": [
+          "partner",
+          "парн",
+          "partnerwork"
+        ]
+      },
+      {
+        "id": "ladies",
+        "name": "Ladies Styling",
+        "color": "#9b5de5",
+        "keywords": [
+          "ladies",
+          "леди",
+          "styling"
+        ]
+      },
+      {
+        "id": "beginners",
+        "name": "Бачата для новичков",
+        "color": "#f4a261",
+        "keywords": [
+          "нович",
+          "beginner",
+          "началь"
+        ]
+      },
+      {
+        "id": "practice",
+        "name": "Практика",
+        "color": "#4cc9f0",
+        "keywords": [
+          "практик",
+          "practice"
+        ]
+      },
+      {
+        "id": "intensive",
+        "name": "Интенсив",
+        "color": "#e76f51",
+        "keywords": [
+          "интенсив",
+          "intensive"
+        ]
+      },
+      {
+        "id": "party",
+        "name": "Вечеринка / ивент",
+        "color": "#ff006e",
+        "keywords": [
+          "вечерин",
+          "party",
+          "ивент"
+        ]
+      },
+      {
+        "id": "other",
+        "name": "Другое",
+        "color": "#8d99ae",
+        "keywords": []
+      }
+    ]
+  }
+}
