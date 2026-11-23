@@ -15,13 +15,29 @@
 
     const maxLeft = () => cards[unlocked].offsetLeft;
 
+    const fitsOnScreen = (card) => {
+      const cardRect = card.getBoundingClientRect();
+      const boardRect = board.getBoundingClientRect();
+      return cardRect.right <= boardRect.right + 1;
+    };
+
+    const scrollCardIntoView = (card) => {
+      const cardRect = card.getBoundingClientRect();
+      const boardRect = board.getBoundingClientRect();
+      board.scrollTo({
+        left: board.scrollLeft + (cardRect.left - boardRect.left),
+        behavior: "smooth",
+      });
+    };
+
     const unlockNext = () => {
       if (unlocked >= cards.length - 1) return;
       unlocked += 1;
-      board.classList.add("is-open");
       cover.setAttribute("aria-expanded", "true");
       cards[unlocked].classList.add("is-lit");
-      board.scrollTo({ left: cards[unlocked].offsetLeft, behavior: "smooth" });
+      if (fitsOnScreen(cards[unlocked])) return;
+      board.classList.add("is-open");
+      scrollCardIntoView(cards[unlocked]);
     };
 
     const tapCard = (card) => {
@@ -33,7 +49,8 @@
         return;
       }
       if (index < unlocked) {
-        board.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+        board.classList.add("is-open");
+        scrollCardIntoView(card);
       }
     };
 
