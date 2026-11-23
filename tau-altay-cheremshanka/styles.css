@@ -1759,12 +1759,26 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .address-map-pin-label{top:50.67%;transform:translate(-50%,calc(-100% - 38px))}
 }
 
-/* Hero title: swap styles between the two words (opposite of default stack) */
+/* Venue name: full title in Kino (white), both words */
+.brand-stack--venue-name .brand-stack__base,
+.brand-stack--venue-name .brand-stack__script{
+  font-family:'Kino 1909',Georgia,'Times New Roman',serif;
+  font-weight:400;color:#fff;text-transform:none;letter-spacing:.04em;
+  line-height:1;white-space:nowrap;
+}
+.brand-stack--venue-name .brand-stack__script{font-size:1em}
+.brand-stack--compact.brand-stack--venue-name .brand-stack__script{font-size:1em}
+.brand-stack--page-hero.brand-stack--venue-name .brand-stack__base,
+.brand-stack--page-hero.brand-stack--venue-name .brand-stack__script{
+  font-size:clamp(42px,6vw,78px);
+}
+/* Hero frame: БАЗА — Kino white; Отдыха — как eyebrow Черемшанка */
 .brand-stack--hero-title .brand-stack__base{
-  font-family:'Great Vibes',cursive;font-weight:400;color:var(--accent);
-  text-transform:none;letter-spacing:0;
+  font-family:'Kino 1909',Georgia,'Times New Roman',serif;
+  font-weight:400;color:#fff;text-transform:uppercase;letter-spacing:.04em;
 }
 .brand-stack--hero-title .brand-stack__script{
-  font-family:'Kino 1909',Georgia,'Times New Roman',serif;font-weight:400;
-  color:#fff;text-transform:none;letter-spacing:.04em;
+  font-family:'Great Vibes',cursive;font-weight:400;color:var(--accent);
+  text-transform:none;letter-spacing:0;
+  font-size:clamp(24px,3.2vw,38px);line-height:1;padding-left:0;
 }
