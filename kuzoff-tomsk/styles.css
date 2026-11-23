@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @font-face{
   font-family:"KuzOff946";
   src:url("fonts/946-latin-wide-5-right.ttf") format("truetype");
@@ -19,8 +21,12 @@
 
 *{box-sizing:border-box}
 body{margin:0;background:#0a0a0a;color:#f5f5f2;font-family:var(--font-body);letter-spacing:.03em}
-h1,h2,h3,h4,.logo,.wordmark,.button,.kicker,.eyebrow,.tag,.pill,.idx,.cost,.hero-title-text{
+h1,h2,h3,h4,.logo,.wordmark,.button,.kicker,.eyebrow,.tag,.pill,.idx,.cost{
   font-family:var(--font-display);
+}
+.hero .hero-title-text{
+  font-family:Inter,Arial,sans-serif;
+  letter-spacing:-.05em;
 }
 a{color:inherit;text-decoration:none}
 
@@ -1407,7 +1413,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 
 
-:root{--accent:#d42527;--accent-soft:rgba(212,37,39,.38);--accent-hover:#e83032;--accent-deep:#9e1c1e;--accent-rgb:212,37,39}.hero{background:radial-gradient(circle at 72% 42%,#2a0a0e 0,#160608 28%,#0a0a0a 55%)}.button{background:var(--accent);color:#fff}.button.dark{border-color:rgba(255,255,255,.25);color:#fff}.hero-title-text{font-size:clamp(44px,7vw,92px);line-height:.9;letter-spacing:-.01em;margin:0 0 28px;font-weight:400;text-transform:uppercase;font-family:var(--font-display)}.hero-title-text .accent{color:var(--accent)}.hero--kuzoff .heroimg{background-image:url('img/works/incoming/kuzoff/01-client.jpg')}
+:root{--accent:#d42527;--accent-soft:rgba(212,37,39,.38);--accent-hover:#e83032;--accent-deep:#9e1c1e;--accent-rgb:212,37,39}.hero{background:radial-gradient(circle at 72% 42%,#2a0a0e 0,#160608 28%,#0a0a0a 55%)}.button{background:var(--accent);color:#fff}.button.dark{border-color:rgba(255,255,255,.25);color:#fff}.hero-title-text{font-size:clamp(44px,7vw,92px);line-height:.9;letter-spacing:-.05em;margin:0 0 28px;font-weight:400;text-transform:uppercase;font-family:Inter,Arial,sans-serif}.hero-title-text .accent{color:var(--accent)}.hero--kuzoff .heroimg{background-image:url('img/works/incoming/kuzoff/01-client.jpg')}
 .team-block{scroll-margin-top:110px}
 .team-row{
   display:grid;
