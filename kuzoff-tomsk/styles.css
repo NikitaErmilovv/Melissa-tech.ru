@@ -1417,10 +1417,11 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 :root{--accent:#d42527;--accent-soft:rgba(212,37,39,.38);--accent-hover:#e83032;--accent-deep:#9e1c1e;--accent-rgb:212,37,39}.hero{background:radial-gradient(circle at 72% 42%,#2a0a0e 0,#160608 28%,#0a0a0a 55%)}.button{background:var(--accent);color:#fff}.button.dark{border-color:rgba(255,255,255,.25);color:#fff}.hero-title-text{font-size:clamp(36px,5.6vw,76px);line-height:.9;letter-spacing:-.05em;margin:0 0 28px;font-weight:800;text-transform:uppercase;font-family:Inter,Arial,sans-serif}.hero-title-text .accent{color:var(--accent)}.hero--kuzoff .heroimg{background-image:url('img/works/incoming/kuzoff/01-client.jpg')}
 .team-block{scroll-margin-top:110px}
 .team-row{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:28px 48px;
-  align-items:center;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:20px;
+  max-width:min(520px, 50%);
 }
 .team-row-photo{
   width:100%;
@@ -1438,13 +1439,12 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 .team-row-text{
   margin:0;
-  max-width:28em;
-  color:#8f8f89;
-  font-size:16px;
-  line-height:1.7;
+  color:#fff;
+  font-size:clamp(18px, 1.7vw, 22px);
+  line-height:1.65;
 }
 @media(max-width:800px){
-  .team-row{grid-template-columns:1fr;gap:22px}
+  .team-row{max-width:100%;gap:16px}
   .team-row-photo img{aspect-ratio:3/4;max-height:none}
 }
 .story-board{

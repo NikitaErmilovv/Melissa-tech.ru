@@ -2,4 +2,4 @@ site=kuzoff-tomsk
 brand=KuzOff
 prod=https://melissa-tech.ru/kuzoff-tomsk/
 deploy=rsync-vps
-deploy-trigger=kuzoff-bumper-story-20261123
+deploy-trigger=kuzoff-team-text-under-photo-20261123
