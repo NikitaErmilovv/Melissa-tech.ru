@@ -13,15 +13,15 @@
       href: 'komnaty.html',
       title: 'Комнаты',
       kicker: 'Внутри дома',
-      lead: 'Спальни и гостиная в дереве',
-      preview: '../photoHouse/Комнаты - Внутри дома/02.jpg',
+      lead: 'Спальни, гостиная и второй свет',
+      preview: '../photoHouse/Комнаты - Внутри дома/05.jpg?v=barnhaus-inside-20261124',
     },
     {
       id: 'territoriya',
       href: 'territoriya.html',
       title: 'Территория',
       kicker: 'Во дворе',
-      lead: 'Мангал, костёр и вечер на воздухе',
+      lead: 'Пергола, терраса и джакузи',
       preview: '../photoHouse/Территория у дома/01.jpg',
     },
   ];
