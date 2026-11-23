@@ -20,7 +20,23 @@
       if (Math.abs(dx) > 4) moved = true;
       scroller.scrollLeft = startLeft - dx;
     });
+    const snapToNearest = () => {
+      const items = [...scroller.querySelectorAll(".story-card")];
+      if (!items.length) return;
+      const left = scroller.scrollLeft;
+      let best = items[0];
+      let bestDist = Infinity;
+      items.forEach((card) => {
+        const dist = Math.abs(card.offsetLeft - left);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = card;
+        }
+      });
+      scroller.scrollTo({ left: best.offsetLeft, behavior: "smooth" });
+    };
     const stop = () => {
+      if (down && moved) snapToNearest();
       down = false;
       scroller.classList.remove("is-dragging");
     };
@@ -37,24 +53,11 @@
     const cards = [...root.querySelectorAll(".story-card")];
     if (!board || !cover || !cards.length) return;
 
-    let opening = false;
-
     cover.addEventListener("click", () => {
-      if (board.classList.contains("is-open") || opening) return;
-      opening = true;
+      if (board.classList.contains("is-open")) return;
       board.classList.add("is-open");
       cover.setAttribute("aria-expanded", "true");
-
-      cards.forEach((card, index) => {
-        if (index === 0) {
-          card.classList.add("is-lit");
-          return;
-        }
-        window.setTimeout(() => {
-          card.classList.add("is-lit");
-          board.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
-        }, index * 220);
-      });
+      cards.forEach((card) => card.classList.add("is-lit"));
     });
 
     enableDragScroll(board);
