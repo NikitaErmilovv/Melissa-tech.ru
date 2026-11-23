@@ -1756,3 +1756,22 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   background-position:center;
   background-size:contain;
 }
+@media (min-width:801px){
+  /* Фото и наклонная маска прижаты вправо, срез сдвинут от текста */
+  .hero--fantastika.hero--sdc .heroimg{
+    right:0;
+    left:auto;
+    width:82%;
+    max-width:none;
+    clip-path:polygon(38% 0,100% 0,100% 100%,0 100%);
+  }
+  .hero--fantastika .heroimg-photo{
+    object-position:right center;
+  }
+  .hero--fantastika .heroimg{
+    background-position:right center;
+  }
+  .hero--fantastika .heroimg:before{
+    background:linear-gradient(90deg,#0a0a0a 0%,rgba(10,10,10,.35) 32%,transparent 58%);
+  }
+}
