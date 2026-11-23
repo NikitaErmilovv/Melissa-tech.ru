@@ -1397,50 +1397,35 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 
 
 :root{--accent:#d42527;--accent-soft:rgba(212,37,39,.38);--accent-hover:#e83032;--accent-deep:#9e1c1e;--accent-rgb:212,37,39}.hero{background:radial-gradient(circle at 72% 42%,#2a0a0e 0,#160608 28%,#0a0a0a 55%)}.button{background:var(--accent);color:#fff}.button.dark{border-color:rgba(255,255,255,.25);color:#fff}.hero-title-text{font-size:clamp(44px,7vw,92px);line-height:.9;letter-spacing:-.05em;margin:0 0 28px;font-weight:900;text-transform:uppercase}.hero-title-text .accent{color:var(--accent)}.hero--kuzoff .heroimg{background-image:url('img/works/incoming/kuzoff/01-client.jpg')}
-.team-block{scroll-margin-top:110px;padding-top:80px;padding-bottom:80px}
-.team-card{
+.team-block{scroll-margin-top:110px}
+.team-row{
   display:grid;
-  grid-template-columns:minmax(220px,32%) minmax(0,1fr);
+  grid-template-columns:260px minmax(0,1fr);
+  gap:40px 56px;
+  align-items:center;
+}
+.team-row-photo{
+  width:260px;
   border:1px solid rgba(255,255,255,.1);
-  background:#0e0e0e;
   overflow:hidden;
-  max-width:1080px;
+  background:#0e0e0e;
 }
-.team-card-photo{
-  min-height:0;
-  background:#121212;
-}
-.team-card-photo img{
+.team-row-photo img{
   display:block;
   width:100%;
-  height:100%;
+  height:auto;
   aspect-ratio:3/4;
   object-fit:cover;
-  object-position:center 30%;
+  object-position:center 28%;
 }
-.team-card-copy{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:36px 42px;
-  min-width:0;
-}
-.team-card-copy h2{
-  font-size:clamp(28px,3.4vw,44px);
-  line-height:.95;
-  letter-spacing:-.05em;
-  margin:10px 0 18px;
-}
-.team-card-copy p{
+.team-row-text{
   margin:0;
-  max-width:34em;
+  max-width:420px;
   color:#8f8f89;
   font-size:15px;
-  line-height:1.65;
+  line-height:1.7;
 }
 @media(max-width:800px){
-  .team-block{padding-top:56px;padding-bottom:56px}
-  .team-card{grid-template-columns:1fr}
-  .team-card-photo img{aspect-ratio:4/5;max-height:420px;width:100%;object-position:center 22%}
-  .team-card-copy{padding:28px 22px 32px}
+  .team-row{grid-template-columns:1fr;gap:24px}
+  .team-row-photo{width:min(260px,100%)}
 }.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}
