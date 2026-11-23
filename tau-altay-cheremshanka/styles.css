@@ -1021,6 +1021,34 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   box-shadow:0 4px 14px rgba(0,0,0,.35);
 }
 .address-map-pin-label-text span{color:var(--accent)}
+.address-map-pin-label-text .brand-stack--org-name span,
+.address-map-pin-label-text .brand-stack--org-name .brand-stack__base,
+.address-map-pin-label-text .brand-stack--org-name .brand-stack__script{
+  color:#fff!important;
+  font-family:'Kino 1909',Georgia,'Times New Roman',serif;
+  font-size:11px!important;
+  font-weight:400;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.address-map-pin-label-text .brand-stack--org-name .brand-stack__script{font-size:11px!important}
+.address-map-brand .brand-stack--org-name{font-size:22px}
+.address-map-brand .brand-stack--org-name .brand-stack__base,
+.address-map-brand .brand-stack--org-name .brand-stack__script{font-size:1em}
+/* Герой: слоган (не логотип) — БАЗА белым Kino, «Отдыха» как eyebrow Черемшанка */
+.brand-stack--hero-tagline{
+  display:inline-flex;align-items:baseline;flex-direction:row;flex-wrap:wrap;gap:.2em;
+}
+.brand-stack--hero-tagline .brand-stack__base{
+  font-family:'Kino 1909',Georgia,'Times New Roman',serif;
+  font-weight:400;color:#fff;text-transform:uppercase;
+  font-size:clamp(44px,6.8vw,90px);letter-spacing:.04em;line-height:.92;
+}
+.brand-stack--hero-tagline .brand-stack__script{
+  font-family:'Great Vibes',cursive;font-weight:400;color:var(--accent);
+  text-transform:none;letter-spacing:0;line-height:1;padding-left:0;
+  font-size:clamp(24px,3.2vw,38px);
+}
 .address-map-pin-label-text::after{
   content:'';position:absolute;left:50%;bottom:-4px;
   transform:translateX(-50%);

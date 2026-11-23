@@ -110,22 +110,30 @@
       paused = false;
     });
 
+    var embedded = window.TAU_SITE_REVIEWS;
+    if (embedded) {
+      render(Array.isArray(embedded) ? embedded : embedded.reviews || []);
+      return;
+    }
+
     var urls = root.getAttribute("data-reviews-src")
       ? [root.getAttribute("data-reviews-src")]
-      : ["data/reviews-2gis.json", "../data/reviews-2gis.json"];
+      : ["data/reviews.json", "../data/reviews.json"];
 
     (function loadNext(i) {
       if (i >= urls.length) {
         track.innerHTML =
-          '<div class="review"><p>Не удалось загрузить отзывы.</p><small><a href="https://2gis.ru/gornoaltaysk/firm/70000001082858356" target="_blank" rel="noopener">Открыть отзывы</a></small></div>';
+          '<div class="review"><p>Не удалось загрузить отзывы.</p><small><a href="https://2gis.ru/gornoaltaysk/firm/70000001082858356" target="_blank" rel="noopener">Открыть отзывы в 2ГИС</a></small></div>';
         return;
       }
-      fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=r2")
+      fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=r3")
         .then(function (r) {
           if (!r.ok) throw new Error("fail");
           return r.json();
         })
-        .then(render)
+        .then(function (data) {
+          render(Array.isArray(data) ? data : data.reviews || []);
+        })
         .catch(function () {
           loadNext(i + 1);
         });
