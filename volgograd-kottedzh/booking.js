@@ -9,7 +9,7 @@
   var telegram = messengers.tg || '+79023885802';
   var whatsapp = String(messengers.wa || '79023885802').replace(/\D/g, '');
   var phoneInput = form.querySelector('input[name="phone"]');
-  var cabinAny = form.querySelector('#booking-cabin-any');
+  var maxGuests = parseInt(form.getAttribute('data-max-guests') || '6', 10);
 
   function nationalDigits(raw) {
     var digits = String(raw || '').replace(/\D/g, '');
@@ -45,39 +45,6 @@
       if (seen === count) return i + 1;
     }
     return formatted.length;
-  }
-
-  function selectedCabins() {
-    return Array.prototype.filter.call(
-      form.querySelectorAll('input[name="cabin"]:checked'),
-      function (node) { return node.value !== 'any'; }
-    ).map(function (node) { return node.value; });
-  }
-
-  function cabinLabel(value) {
-    if (value === 'any') return 'Любой свободный';
-    return 'Домик ' + value;
-  }
-
-  function cabinSummary() {
-    if (cabinAny && cabinAny.checked) return 'Любой свободный домик';
-    var picked = selectedCabins();
-    if (!picked.length) return '';
-    return picked.map(cabinLabel).join(', ');
-  }
-
-  if (cabinAny) {
-    form.querySelectorAll('input[name="cabin"]').forEach(function (box) {
-      box.addEventListener('change', function () {
-        if (box.value === 'any' && box.checked) {
-          form.querySelectorAll('input[name="cabin"]').forEach(function (other) {
-            if (other.value !== 'any') other.checked = false;
-          });
-        } else if (box.value !== 'any' && box.checked && cabinAny) {
-          cabinAny.checked = false;
-        }
-      });
-    });
   }
 
   if (phoneInput) {
@@ -129,17 +96,11 @@
     var depart = String(data.get('depart') || '');
     var guests = String(data.get('guests') || '').trim();
     var comment = String(data.get('comment') || '').trim();
-    var cabins = cabinSummary();
 
     var phoneNational = nationalDigits(phone);
     phone = phoneNational.length ? formatPhone(phoneNational) : '';
     if (!name || !phone || !arrive || !depart || !guests) {
       error.textContent = 'Заполните имя, телефон, даты и число гостей.';
-      if (send) send.hidden = true;
-      return;
-    }
-    if (!cabins) {
-      error.textContent = 'Выберите домик (1–3) или «Любой свободный».';
       if (send) send.hidden = true;
       return;
     }
@@ -154,8 +115,8 @@
       ? Math.round((departMs - arriveMs) / 86400000)
       : 0;
     var guestCount = parseInt(guests, 10);
-    if (!Number.isFinite(guestCount) || guestCount < 1 || guestCount > 4) {
-      error.textContent = 'В одном домике — до 4 гостей.';
+    if (!Number.isFinite(guestCount) || guestCount < 1 || guestCount > maxGuests) {
+      error.textContent = 'В доме — до ' + maxGuests + ' гостей.';
       if (send) send.hidden = true;
       return;
     }
@@ -167,11 +128,11 @@
     error.textContent = '';
 
     var lines = [
-      messengers.defaultMessage || 'Здравствуйте! Хочу забронировать домик Барнхаус, пос. Царицын.',
+      messengers.defaultMessage || 'Здравствуйте! Хочу забронировать коттедж «Барнхаус», пос. Царицын.',
       '',
       'Имя: ' + name,
       'Телефон: ' + phone,
-      'Домик: ' + cabins,
+      'Объект: Барнхаус, ул. Радужная, 1',
       'Заезд: ' + formatDate(arrive),
       'Выезд: ' + formatDate(depart),
       'Суток: ' + nights,

@@ -71,7 +71,7 @@
       <div class="album-copy">
         <div class="kicker">Загородный</div>
         <h3 class="album-title"><span class="title-kino-line">Дом</span><span class="album-script">для семейного отдыха</span></h3>
-        <p>Коттедж: терраса, панорамные окна, по вечерам гирлянда по контуру крыши. В каждом — до 4 гостей.</p>
+        <p>Коттедж: терраса, панорамные окна, по вечерам подсветка. Два этажа, до 6 гостей.</p>
         <div class="actions"><a class="button" href="services/dom.html">СМОТРЕТЬ АЛЬБОМ</a></div>
       </div>
     </article>
@@ -118,16 +118,16 @@
     <div class="booking-copy">
       <div class="kicker">03 /  Бронь</div>
       <h2><span class="title-kino-line">Выбрать</span><span class="brand-stack brand-stack--section"><span class="brand-stack__base">Даты</span><span class="brand-stack__script">и гостей</span></span></h2>
-      <p>Домики на участке, в каждом до 4 гостей. Укажите даты, гостей и какой домик нужен — заявку отправите в WhatsApp или Telegram на номер базы.</p>
+      <p>Коттедж «Барнхаус» на ул. Радужной, 1. Укажите даты и гостей — заявку отправите в WhatsApp или Telegram на номер из 2ГИС.</p>
       <div class="booking-rates">
         <div class="booking-rate">
           <span>Сутки</span>
           <b>от 1 суток</b>
-          <small>домик до 4 гостей · уточняйте стоимость по телефону</small>
+          <small>до 6 гостей · стоимость уточняйте по телефону</small>
         </div>
       </div>
     </div>
-    <form class="booking-form" id="booking-form">
+    <form class="booking-form" id="booking-form" data-max-guests="6">
       <label class="span-2"><span>Имя</span>
         <input name="name" type="text" autocomplete="name" required placeholder="Как к вам обращаться">
       </label>
@@ -140,17 +140,8 @@
       <label><span>Выезд</span>
         <input name="depart" type="date" required>
       </label>
-      <fieldset class="span-2 booking-cabins">
-        <legend>Домик</legend>
-        <div class="booking-cabin-options">
-          <label class="booking-cabin-option"><input type="checkbox" name="cabin" value="1"> Домик 1</label>
-          <label class="booking-cabin-option"><input type="checkbox" name="cabin" value="2"> Домик 2</label>
-          <label class="booking-cabin-option"><input type="checkbox" name="cabin" value="3"> Домик 3</label>
-          <label class="booking-cabin-option"><input type="checkbox" name="cabin" value="any" id="booking-cabin-any"> Любой свободный</label>
-        </div>
-      </fieldset>
-      <label class="span-2"><span>Гостей в домике</span>
-        <input name="guests" type="number" min="1" max="4" value="2" required>
+      <label class="span-2"><span>Гостей в доме</span>
+        <input name="guests" type="number" min="1" max="6" value="2" required>
       </label>
       <label class="span-2"><span>Комментарий</span>
         <textarea name="comment" placeholder="Поздний заезд, дети — что важно учесть"></textarea>
@@ -238,6 +229,6 @@
 <script src="reviews-carousel.js?v=4"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="depth-carousel.js?v=3"></script>
-<script src="booking.js?v=5"></script>
+<script src="booking.js?v=barnhaus-booking-20261124"></script>
 </body>
 </html>
