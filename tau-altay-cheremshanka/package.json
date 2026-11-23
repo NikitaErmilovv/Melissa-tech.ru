@@ -1,0 +1,7 @@
+{
+  "name": "tau-altay-cheremshanka",
+  "private": true,
+  "dependencies": {
+    "gsap": "^3.15.0"
+  }
+}

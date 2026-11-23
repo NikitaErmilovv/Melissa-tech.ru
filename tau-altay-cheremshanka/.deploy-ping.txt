@@ -1,0 +1,2 @@
+tau-altay-v1
+hero=Cheremshanka+TAU/Altay
