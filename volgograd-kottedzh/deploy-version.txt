@@ -2,4 +2,4 @@ site=volgograd-kottedzh
 brand=Барнхаус
 prod=https://melissa-tech.ru/volgograd-kottedzh/
 2gis=https://2gis.ru/volgograd/firm/70000001114200104
-deploy-trigger=barnhaus-inside-audit-20261124
+deploy-trigger=barnhaus-terr-dom-album-20261124

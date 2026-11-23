@@ -1796,6 +1796,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(min-width:801px){
   .address-map-pin-label{top:50.67%;transform:translate(-50%,calc(-100% - 38px))}
 }
+.address-map-pin-label{display:none!important}
 
 /* Название базы: БАРНХАУС — оба слова Kino, белые, капс */
 .brand-stack--org-name .brand-stack__base,
