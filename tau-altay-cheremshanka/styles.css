@@ -1745,3 +1745,14 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(min-width:801px){
   .address-map-pin-label{top:50.67%;transform:translate(-50%,calc(-100% - 38px))}
 }
+
+/* Tau Altay hero: full frame inside clip mask, no cover crop */
+.hero--fantastika .heroimg-photo{
+  object-fit:contain;
+  object-position:center;
+}
+.hero--fantastika .heroimg{
+  background:#0a0a0a;
+  background-position:center;
+  background-size:contain;
+}
