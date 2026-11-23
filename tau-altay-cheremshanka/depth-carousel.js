@@ -12,8 +12,8 @@
     visibleCards: 3,
     falloff: 0.2,
     blur: 6,
-    duration: 700,
-    ease: 'power3.out',
+    duration: 980,
+    ease: 'power2.inOut',
     autoplay: false,
     autoplayDelay: 3200,
     loop: true,
@@ -235,10 +235,17 @@
         filter: pose.blur < 0.15 ? 'none' : 'blur(' + pose.blur.toFixed(2) + 'px)',
         duration: duration,
         ease: self.opts.ease,
-        overwrite: 'auto'
+        overwrite: 'auto',
+        force3D: true
       });
       var shade = card.querySelector('.depth-card__tint');
-      gsap.to(shade, { opacity: pose.tint, duration: duration, ease: self.opts.ease, overwrite: 'auto' });
+      gsap.to(shade, {
+        opacity: pose.tint,
+        duration: duration,
+        ease: self.opts.ease,
+        overwrite: 'auto',
+        force3D: true
+      });
     });
     if (this.dots) {
       this.dots.forEach(function (dot, i) {
