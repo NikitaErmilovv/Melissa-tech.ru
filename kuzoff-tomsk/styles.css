@@ -1485,7 +1485,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   scroll-snap-align:start;
 }
 .story-card--cover,
-.story-board.is-open .story-card.is-lit{
+.story-card.is-lit{
   filter:brightness(1);
 }
 .story-card img{

@@ -1,5 +1,5 @@
 (function () {
-  function enableDragScroll(scroller) {
+  function enableDragScroll(scroller, maxLeft) {
     let down = false;
     let startX = 0;
     let startLeft = 0;
@@ -18,10 +18,10 @@
       if (!down) return;
       const dx = event.clientX - startX;
       if (Math.abs(dx) > 4) moved = true;
-      scroller.scrollLeft = startLeft - dx;
+      scroller.scrollLeft = Math.max(0, Math.min(maxLeft(), startLeft - dx));
     });
     const snapToNearest = () => {
-      const items = [...scroller.querySelectorAll(".story-card")];
+      const items = [...scroller.querySelectorAll(".story-card.is-lit, .story-card--cover")];
       if (!items.length) return;
       const left = scroller.scrollLeft;
       let best = items[0];
@@ -53,13 +53,32 @@
     const cards = [...root.querySelectorAll(".story-card")];
     if (!board || !cover || !cards.length) return;
 
-    cover.addEventListener("click", () => {
-      if (board.classList.contains("is-open")) return;
+    let unlocked = 0;
+    cards[0].classList.add("is-lit");
+
+    const maxLeft = () => cards[unlocked].offsetLeft;
+
+    const unlockNext = () => {
+      if (unlocked >= cards.length - 1) return;
+      unlocked += 1;
       board.classList.add("is-open");
       cover.setAttribute("aria-expanded", "true");
-      cards.forEach((card) => card.classList.add("is-lit"));
+      cards[unlocked].classList.add("is-lit");
+      board.scrollTo({ left: cards[unlocked].offsetLeft, behavior: "smooth" });
+    };
+
+    cards.forEach((card, index) => {
+      card.addEventListener("click", () => {
+        if (index === unlocked || index === unlocked + 1) {
+          unlockNext();
+          return;
+        }
+        if (index < unlocked) {
+          board.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+        }
+      });
     });
 
-    enableDragScroll(board);
+    enableDragScroll(board, maxLeft);
   });
 })();
