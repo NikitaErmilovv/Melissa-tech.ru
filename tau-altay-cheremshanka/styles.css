@@ -1746,13 +1746,13 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   .address-map-pin-label{top:50.67%;transform:translate(-50%,calc(-100% - 38px))}
 }
 
-/* Tau Altay hero: full frame inside clip mask, no cover crop */
-.hero--fantastika .heroimg-photo{
-  object-fit:contain;
-  object-position:center;
+/* Venue name: swap Kino vs Great Vibes (first line script, second line display) */
+.brand-stack--venue .brand-stack__base{
+  font-family:'Great Vibes',cursive;font-weight:400;color:var(--accent);
+  text-transform:none;letter-spacing:0;
 }
-.hero--fantastika .heroimg{
-  background:#0a0a0a;
-  background-position:center;
-  background-size:contain;
+.brand-stack--venue .brand-stack__script{
+  font-family:'Kino 1909',Georgia,'Times New Roman',serif;font-weight:400;
+  color:#fff;text-transform:uppercase;letter-spacing:.04em;
 }
+.brand-stack--hero-main.brand-stack--venue .brand-stack__script{text-transform:none}
