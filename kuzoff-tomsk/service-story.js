@@ -7,6 +7,13 @@
 
     let unlocked = 0;
     cards[0].classList.add("is-lit");
+    cards.forEach((card, index) => {
+      if (index === 0 || card.querySelector(".story-step-label")) return;
+      const label = document.createElement("span");
+      label.className = "story-main-label story-step-label";
+      label.textContent = "Шаг " + index;
+      card.appendChild(label);
+    });
 
     let down = false;
     let startX = 0;

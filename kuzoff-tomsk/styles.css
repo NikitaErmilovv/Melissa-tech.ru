@@ -1509,6 +1509,13 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   background:linear-gradient(180deg,transparent,rgba(10,10,10,.88));
   pointer-events:none;
 }
+.story-step-label{
+  opacity:0;
+  transition:opacity .35s ease;
+}
+.story-card.is-lit .story-step-label{
+  opacity:1;
+}
 @media(max-width:800px){
   .story-card{
     flex-basis:min(280px, 78vw);
