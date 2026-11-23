@@ -285,20 +285,16 @@ body.page-sub .subpage-hero{padding-top:calc(82px + 98px)}
   .photo-strip--services .photo--tesla{aspect-ratio:16/7}
 }
 
-.team-block{padding-top:20px;padding-bottom:10px}
+.team-block{padding-bottom:10px}
+.team-intro{max-width:340px}
 .team-panel{
-  max-width:920px;margin:0 auto;
+  max-width:920px;margin:8px auto 0;
   border:1px solid rgba(255,255,255,.08);
   background:#0e0e0e;
   overflow:hidden;
 }
 .team-visual{line-height:0;background:#111}
 .team-visual img{display:block;width:100%;height:auto;object-fit:cover;max-height:min(72vh,720px);object-position:center 42%}
-.team-caption{
-  margin:18px auto 0;max-width:920px;
-  color:#8f8f89;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-  text-align:center;
-}
 @media(max-width:768px){
   .team-visual img{max-height:none}
 }
