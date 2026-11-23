@@ -1711,6 +1711,26 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .album-title .title-kino-line,
 .album-title .brand-stack--section .brand-stack__base{font-size:clamp(32px,4vw,54px)}
 .album-title .brand-stack__script{font-size:clamp(28px,3.2vw,44px)}
+.album-title--subpage .brand-stack--section .brand-stack__base{
+  font-size:clamp(38px,5vw,70px);line-height:.92;
+}
+.album-title--subpage .brand-stack__script{
+  font-size:clamp(32px,4.4vw,58px);line-height:1;
+}
+.album-title--subpage .brand-stack--section{display:block;margin-top:0}
+.subpage-hero--territory-album{
+  justify-content:flex-start;align-items:stretch;min-height:auto;
+  padding:calc(82px + 28px) 6vw 56px;
+}
+.subpage-hero--territory-album .kicker{margin:0 0 10px}
+.subpage-hero--territory-album h1.album-title{
+  margin:0;font-size:1rem;font-weight:400;letter-spacing:0;
+  line-height:.95;text-transform:none;font-family:inherit;color:#f5f5f2;
+}
+.subpage-hero--territory-album p{margin-top:20px}
+@media(max-width:800px){
+  .subpage-hero--territory-album{padding:calc(82px + 20px) 5vw 48px}
+}
 .album-copy .actions{margin-top:26px}
 
 .depth-carousel{position:relative;min-width:0;padding:0 54px 36px}
