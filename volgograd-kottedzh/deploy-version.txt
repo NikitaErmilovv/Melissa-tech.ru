@@ -3,4 +3,4 @@ brand=Барнхаус
 prod=https://melissa-tech.ru/volgograd-kottedzh/
 2gis=https://2gis.ru/volgograd/firm/70000001114200104
 deploy=git-push-timeweb-hook
-deploy-trigger=timeweb-docker-fix-20261124T0638Z
+deploy-trigger=timeweb-nginx-cmd-20261124T0643Z
