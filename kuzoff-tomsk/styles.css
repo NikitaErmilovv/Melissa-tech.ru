@@ -1400,7 +1400,6 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .team-block{scroll-margin-top:110px}
 .team-shot{margin:0;border:1px solid rgba(255,255,255,.1);overflow:hidden;background:#0e0e0e}
 .team-shot img{display:block;width:100%;max-height:min(88vh,960px);object-fit:cover;object-position:center 38%}
-.team-shot figcaption{padding:16px 20px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9a9a94;border-top:1px solid rgba(255,255,255,.08)}
 @media(max-width:800px){
   .team-shot img{max-height:72vh;object-position:center 32%}
 }.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}
