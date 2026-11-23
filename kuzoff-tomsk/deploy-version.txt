@@ -1,0 +1,5 @@
+site=kuzoff-tomsk
+brand=KuzOff
+prod=https://melissa-tech.ru/kuzoff-tomsk/
+deploy=rsync-vps
+deploy-trigger=kuzoff-wordmark-unified-20261116
