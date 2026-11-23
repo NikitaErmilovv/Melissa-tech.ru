@@ -2,4 +2,5 @@ site=tau-altay-cheremshanka
 brand=Тау Алтай
 prod=https://melissa-tech.ru/tau-altay-cheremshanka/
 2gis=https://2gis.ru/gornoaltaysk/firm/70000001082858356
-deploy-trigger=master-pr32-20261124-0630
+deploy=git-push-timeweb-hook
+deploy-trigger=tau-altay-master-20261124T0634Z

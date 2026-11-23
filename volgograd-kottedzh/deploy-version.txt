@@ -2,4 +2,5 @@ site=volgograd-kottedzh
 brand=Барнхаус
 prod=https://melissa-tech.ru/volgograd-kottedzh/
 2gis=https://2gis.ru/volgograd/firm/70000001114200104
-deploy-trigger=master-pr32-20261124-0630
+deploy=git-push-timeweb-hook
+deploy-trigger=volgograd-barnhaus-master-20261124T0634Z
