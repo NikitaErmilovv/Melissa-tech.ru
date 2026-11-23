@@ -1021,6 +1021,10 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   box-shadow:0 4px 14px rgba(0,0,0,.35);
 }
 .address-map-pin-label-text span{color:var(--accent)}
+.address-map-pin-label-text .brand-stack--org-name .brand-stack__base{
+  font-size:11px!important;line-height:1;color:#fff!important;
+}
+.address-map-brand .brand-stack--org-name{font-size:22px}
 /* Герой: слоган — БАЗА белым Kino, «Отдыха» акцентным скриптом */
 .brand-stack--hero-tagline{
   display:inline-flex;align-items:baseline;flex-direction:row;flex-wrap:wrap;gap:.2em;
