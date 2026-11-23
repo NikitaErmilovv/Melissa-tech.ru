@@ -1758,3 +1758,12 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(min-width:801px){
   .address-map-pin-label{top:50.67%;transform:translate(-50%,calc(-100% - 38px))}
 }
+
+/* Название базы: ТАУ АЛТАЙ — оба слова Kino, белые, капс */
+.brand-stack--org-name .brand-stack__base,
+.brand-stack--org-name .brand-stack__script{
+  font-family:'Kino 1909',Georgia,'Times New Roman',serif;
+  font-weight:400;color:#fff;text-transform:uppercase;letter-spacing:.04em;
+  line-height:1;white-space:nowrap;
+}
+.brand-stack--org-name .brand-stack__script{font-size:1em}
