@@ -1021,34 +1021,19 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   box-shadow:0 4px 14px rgba(0,0,0,.35);
 }
 .address-map-pin-label-text span{color:var(--accent)}
-.address-map-pin-label-text .brand-stack--compact .brand-stack__base,
-.address-map-pin-label-text .brand-stack--compact .brand-stack__script{
-  font-size:11px!important;line-height:1;
+/* Герой: слоган — БАЗА белым Kino, «Отдыха» акцентным скриптом */
+.brand-stack--hero-tagline{
+  display:inline-flex;align-items:baseline;flex-direction:row;flex-wrap:wrap;gap:.2em;
 }
-.address-map-pin-label-text .brand-stack--compact .brand-stack__base{
-  color:#fff!important;font-family:'Kino 1909',Georgia,'Times New Roman',serif;
-  font-weight:400;letter-spacing:.04em;text-transform:uppercase;
+.brand-stack--hero-tagline .brand-stack__base{
+  font-family:'Kino 1909',Georgia,'Times New Roman',serif;
+  font-weight:400;color:#fff;text-transform:uppercase;
+  font-size:clamp(44px,6.8vw,90px);letter-spacing:.04em;line-height:.92;
 }
-.address-map-pin-label-text .brand-stack--compact .brand-stack__script{
-  color:var(--accent)!important;font-family:'Great Vibes',cursive;
-  font-weight:400;text-transform:none;
-}
-.address-map-brand .brand-stack--org-name{font-size:22px}
-.address-map-brand .brand-stack--org-name .brand-stack__base,
-.address-map-brand .brand-stack--org-name .brand-stack__script{font-size:1em}
-/* Герой: тот же приём, что «Где мы / Находимся» */
-.hero--fantastika.hero--sdc .hero-heading--title h1.hero-intro-title,
-.hero--fantastika.hero--sdc .hero-heading--title h1.address-map-title{
-  font-size:1rem;line-height:.95;letter-spacing:0;margin:0 0 28px;font-weight:400;
-}
-.hero--fantastika.hero--sdc .hero-intro-title .title-kino-line{
-  display:block;font-size:clamp(38px,5vw,70px);margin-bottom:.06em;
-}
-.hero--fantastika.hero--sdc .hero-intro-title .brand-stack--section{
-  display:block;margin-top:0;
-}
-.hero--fantastika.hero--sdc .hero-intro-title .brand-stack--section .brand-stack__base{
-  font-size:clamp(38px,5vw,70px);text-transform:uppercase;
+.brand-stack--hero-tagline .brand-stack__script{
+  font-family:'Great Vibes',cursive;font-weight:400;color:var(--accent);
+  text-transform:none;letter-spacing:0;line-height:1;padding-left:0;
+  font-size:clamp(24px,3.2vw,38px);
 }
 .address-map-pin-label-text::after{
   content:'';position:absolute;left:50%;bottom:-4px;
