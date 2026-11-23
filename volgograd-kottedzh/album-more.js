@@ -6,7 +6,7 @@
       title: 'Дом',
       kicker: 'Загородный',
       lead: 'Терраса, панорамные окна и подсветка',
-      preview: '../photoHouse/Дом/01.jpg',
+      preview: '../photoHouse/Дом/03.jpg?v=barnhaus-dom-20261124',
     },
     {
       id: 'komnaty',
@@ -22,7 +22,7 @@
       title: 'Территория',
       kicker: 'Во дворе',
       lead: 'Пергола, терраса и джакузи',
-      preview: '../photoHouse/Территория у дома/01.jpg',
+      preview: '../photoHouse/Территория у дома/02.jpg?v=barnhaus-terr-20261124',
     },
   ];
 
