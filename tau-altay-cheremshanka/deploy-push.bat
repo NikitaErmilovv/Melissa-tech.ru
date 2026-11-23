@@ -1,9 +1,5 @@
 @echo off
-setlocal
-cd /d "%~dp0\.."
-git add deploy-version.txt fantastika-home174-lazurny
-git status --short
-git commit -m "Fantastika: выкладка на melissa-tech.ru (Timeweb pull master)"
-git push origin master
-git log -1 --oneline
-pause
+git add deploy-version.txt tau-altay-cheremshanka
+git diff --cached --quiet && echo Nothing to commit. && exit /b 0
+git commit -m "Tau Altay: deploy bump (Timeweb pull master)"
+git push

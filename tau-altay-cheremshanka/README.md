@@ -1,8 +1,7 @@
-# Тау Алтай
+# Тау Алтай — пос. Черемшанка
 
-Копия `fantastika-home174-lazurny` под базу в пос. Черемшанка.
-
-Телефон: +7 (983) 582-96-04
-2ГИС: https://2gis.ru/gornoaltaysk/firm/70000001082858356
+Статический лендинг базы отдыха (A-frame домики). Деплой: `melissa-tech.ru/tau-altay-cheremshanka/`.
 
 Локально: `python3 server.py` → http://127.0.0.1:8141/
+
+Контакты и карта — из [2ГИС](https://2gis.ru/gornoaltaysk/firm/70000001082858356).

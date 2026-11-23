@@ -1643,6 +1643,19 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
   cursor:pointer;filter:invert(.86) sepia(.35) saturate(2.2) hue-rotate(5deg);opacity:.9;
 }
 .booking-form textarea{min-height:120px;resize:vertical}
+.booking-cabins{
+  margin:0;padding:0;border:none;display:flex;flex-direction:column;gap:10px;min-width:0;
+}
+.booking-cabins legend{
+  font-family:'Kino 1909',Georgia,serif;font-size:12px;letter-spacing:.12em;
+  text-transform:uppercase;color:#8a8a84;margin-bottom:2px;padding:0;
+}
+.booking-cabin-options{display:flex;flex-wrap:wrap;gap:10px 16px}
+.booking-cabin-option{
+  display:inline-flex;align-items:center;gap:8px;margin:0;
+  font-size:14px;color:#d8d8d2;cursor:pointer;user-select:none;
+}
+.booking-cabin-option input{accent-color:var(--accent);width:16px;height:16px;margin:0}
 .booking-form button.button,.booking-form .booking-actions .button,.booking-form .booking-send-links .button{
   font-family:inherit;letter-spacing:.08em;text-indent:.08em;min-width:210px;
   display:inline-flex;align-items:center;justify-content:center;text-align:center;

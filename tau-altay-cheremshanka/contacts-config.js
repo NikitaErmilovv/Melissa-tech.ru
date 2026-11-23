@@ -1,8 +1,7 @@
 window.STUDIO_MESSENGERS = {
   wa: "79835829604",
   tg: "+79835829604",
-  max: "",
-  defaultMessage: "Здравствуйте! Хочу забронировать домик Тау Алтай, пос. Черемшанка.",
+  defaultMessage: "Здравствуйте! Хочу забронировать домик на базе «Тау Алтай», пос. Черемшанка.",
 };
 
 window.STUDIO_CONTACTS = {
@@ -11,6 +10,7 @@ window.STUDIO_CONTACTS = {
   mapLat: 51.871951,
   mapLon: 85.777391,
   gisFirm: "https://2gis.ru/gornoaltaysk/firm/70000001082858356",
+  email: "tau_altay@mail.ru",
   phones: [
     {
       label: "Бронирование",
