@@ -1400,12 +1400,12 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .team-block{scroll-margin-top:110px}
 .team-row{
   display:grid;
-  grid-template-columns:260px minmax(0,1fr);
-  gap:40px 56px;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:28px 48px;
   align-items:center;
 }
 .team-row-photo{
-  width:260px;
+  width:100%;
   border:1px solid rgba(255,255,255,.1);
   overflow:hidden;
   background:#0e0e0e;
@@ -1420,12 +1420,12 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 .team-row-text{
   margin:0;
-  max-width:420px;
+  max-width:28em;
   color:#8f8f89;
-  font-size:15px;
+  font-size:16px;
   line-height:1.7;
 }
 @media(max-width:800px){
-  .team-row{grid-template-columns:1fr;gap:24px}
-  .team-row-photo{width:min(260px,100%)}
+  .team-row{grid-template-columns:1fr;gap:22px}
+  .team-row-photo img{aspect-ratio:3/4;max-height:none}
 }.site-nav .logo .logo-mark{color:#fff}.site-nav .logo .logo-word{color:var(--accent)}
