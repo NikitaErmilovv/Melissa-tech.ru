@@ -6,7 +6,7 @@
       title: 'Дом',
       kicker: 'Загородный',
       lead: 'Терраса, панорамные окна и подсветка',
-      preview: '../photoHouse/Дом/03.jpg?v=zori-home-photos-20261125',
+      preview: '../photoHouse/Дом/02.jpg?v=zori-home-dom-20261125b',
     },
     {
       id: 'komnaty',
@@ -22,7 +22,7 @@
       title: 'Территория',
       kicker: 'Во дворе',
       lead: 'Костёр, мангал и беседка',
-      preview: '../photoHouse/Территория у дома/01.jpg?v=zori-home-terr-20261125',
+      preview: '../photoHouse/Территория у дома/05.jpg?v=zori-home-terr-20261125b',
     },
   ];
 
