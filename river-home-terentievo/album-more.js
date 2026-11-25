@@ -13,8 +13,8 @@
       href: 'komnaty.html',
       title: 'Комнаты',
       kicker: 'Внутри дома',
-      lead: 'Спальни, гостиная и второй свет',
-      preview: '../photoHouse/Комнаты - Внутри дома/05.jpg?v=river-home-inside-20261124',
+      lead: 'Кухня, гостиная и спальня',
+      preview: '../photoHouse/Комнаты - Внутри дома/03.jpg?v=river-home-inside-20261125',
     },
     {
       id: 'territoriya',
