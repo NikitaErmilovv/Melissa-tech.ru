@@ -1389,11 +1389,11 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 }
 
 
-.hero-title-text{font-size:clamp(40px,6.5vw,84px);line-height:.9;letter-spacing:-.05em;margin:0 0 28px;font-weight:900;text-transform:uppercase}.hero-title-text .accent{color:var(--accent)}/* Hero Stinger: смещение кадра вверх внутри маски (clip-path без изменений) */
-.hero--general.hero--sdc .heroimg{background-position:50% 16%!important}
+.hero-title-text{font-size:clamp(40px,6.5vw,84px);line-height:.9;letter-spacing:-.05em;margin:0 0 28px;font-weight:900;text-transform:uppercase}.hero-title-text .accent{color:var(--accent)}/* Hero Stinger: смещение кадра вниз внутри маски (clip-path без изменений) */
+.hero--general.hero--sdc .heroimg{background-position:50% 58%!important}
 @media(min-width:801px){
-  .hero--general.hero--sdc .heroimg{background-position:52% 14%!important}
+  .hero--general.hero--sdc .heroimg{background-position:52% 62%!important}
 }
 @media(max-width:800px){
-  .hero--general.hero--sdc .heroimg{background-position:50% 12%!important}
+  .hero--general.hero--sdc .heroimg{background-position:50% 55%!important}
 }
