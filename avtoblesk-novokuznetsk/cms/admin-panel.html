@@ -30,15 +30,16 @@
 .cms-login-box .err[hidden]{display:none!important}
 </style>
 <link rel="stylesheet" href="../styles.css?v=albums1">
-<link rel="stylesheet" href="cms.css?v=artui11">
+<link rel="stylesheet" href="cms.css?v=roles1">
 </head>
 <body class="cms-admin-body">
 <div id="cms-login" class="cms-login-wrap">
   <div class="cms-login-box">
-    <h1>CMS АвтоБлеск</h1>
-    <p>Панель управления сайтом: статьи «Наши работы» и правки на страницах.</p>
+    <h1>Учёт АвтоБлеск</h1>
+    <p>Вход сотрудника школы: почта и пароль его роли.</p>
     <form id="cms-login-form">
-      <input type="password" id="cms-login-password" placeholder="Пароль CMS" autocomplete="current-password" required>
+      <input type="email" id="cms-login-email" placeholder="Почта" autocomplete="username" inputmode="email">
+      <input type="password" id="cms-login-password" placeholder="Пароль" autocomplete="current-password" required>
       <button type="submit" id="cms-login-submit">Войти</button>
       <div class="err" id="cms-login-err" hidden></div>
     </form>
@@ -139,10 +140,10 @@
 document.querySelectorAll('[data-cms-nav="services"],[data-cms-panel="services"]').forEach(function (el) { el.remove(); });
 </script>
 <script src="../cert-qr.js?v=qr2"></script>
-<script src="cms-api.js?v=hide3"></script>
+<script src="cms-api.js?v=roles1"></script>
 <script src="cms-articles.js?v=artui7"></script>
 <script src="cms-articles-admin.js?v=artui9"></script>
-<script src="school-crm.js?v=qr1"></script>
-<script src="admin-panel.js?v=artui11"></script>
+<script src="school-crm.js?v=roles1"></script>
+<script src="admin-panel.js?v=roles1"></script>
 </body>
 </html>

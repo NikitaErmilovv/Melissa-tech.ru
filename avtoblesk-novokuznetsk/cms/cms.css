@@ -66,6 +66,16 @@ body.cms-editing [data-cms-bg].cms-bg-active:active{cursor:grabbing}
 .cms-login-box .err{color:#ff6b6b;font-size:13px;margin-top:10px}
 .cms-login-hint{margin-top:14px;font-size:12px;color:#888;line-height:1.5}
 .cms-login-hint code{font-size:11px;color:#c2c2bc}
+body.cms-readonly .crm-btn.is-accent,
+body.cms-readonly .crm-link[data-edit-course],
+body.cms-readonly .crm-link[data-edit-user],
+body.cms-readonly #m-del,
+body.cms-readonly #sch-edit,
+body.cms-readonly #sch-del,
+body.cms-readonly #sch-save-set,
+body.cms-readonly #sch-add-student,
+body.cms-readonly #sch-add-course,
+body.cms-readonly #sch-add-user{display:none!important}
 body:not(.cms-editing) .cms-block-off{display:none!important}
 body.cms-editing .cms-block-off{outline:2px dashed rgba(225,6,0,.7);outline-offset:-4px;opacity:.55}
 .cms-hide-btn{

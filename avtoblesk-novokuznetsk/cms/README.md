@@ -1,14 +1,20 @@
 # CMS АвтоБлеск
 
-## Вход
+## Вход по ролям
 
+**Продакшен:** https://autoblesk42.ru/cms/admin-panel.html  
 **Локально:** http://127.0.0.1:8092/cms/admin-panel.html
 
-Пароль по умолчанию — в `config.example.json`. На Timeweb создайте `config.local.json` со своим паролем (в git не попадает):
+Почта и пароль — из `cms/staff.json` (если файла нет, берётся `cms/staff.example.json`). Пароли в git-примере:
 
-```json
-{ "password": "ваш-секретный-пароль" }
-```
+| Роль | Что видит | Почта | Пароль |
+|------|-----------|-------|--------|
+| Администратор | Сайт и вся школа | `vlad@avtoblesk.ru` | `AvtoAdmin` |
+| Преподаватель | Ученики, зачёты, курсы | `kovalev@avtoblesk.ru`, `guskov@avtoblesk.ru` | `AvtoTeacher` |
+| Менеджер | Заявки (ученики), курсы, статистика | `lapteva@avtoblesk.ru` | `AvtoManager` |
+| Стажёр | Только просмотр школы | `demin@avtoblesk.ru` | `AvtoIntern` |
+
+Свои пароли — копия `staff.example.json` → `staff.json` на сервере (в git не входит, деплой его не затирает). Пустая почта и пароль из `config.local.json` по-прежнему открывают полный доступ администратора сайта.
 
 ## Панель CMS
 

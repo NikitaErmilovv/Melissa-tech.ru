@@ -6,4 +6,5 @@ __pycache__/
 Thumbs.db
 *.log
 cms/config.local.json
+cms/staff.json
 cms/_sessions.json
