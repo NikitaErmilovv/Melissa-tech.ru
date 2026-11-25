@@ -1,0 +1,6 @@
+site=dom-za-zoryami
+brand=Дом за зорями
+prod=https://melissa-tech.ru/dom-za-zoryami/
+yandex=https://yandex.ru/maps/org/dom_za_zoryami/30209143045/
+deploy=git-push-timeweb-hook
+deploy-trigger=zoryami-template-20261125
