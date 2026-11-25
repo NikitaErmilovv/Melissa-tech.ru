@@ -1,14 +1,6 @@
 (function () {
   var ALBUMS = [
     {
-      id: 'dom',
-      href: 'dom.html',
-      title: 'Дом',
-      kicker: 'Загородный',
-      lead: 'Терраса, панорамные окна и подсветка',
-      preview: '../photoHouse/Дом/03.jpg?v=river-home-dom-20261124',
-    },
-    {
       id: 'komnaty',
       href: 'komnaty.html',
       title: 'Комнаты',
@@ -17,11 +9,19 @@
       preview: '../photoHouse/Комнаты - Внутри дома/03.jpg?v=river-home-inside-20261125',
     },
     {
+      id: 'kupel-sauna',
+      href: 'kupel-sauna.html',
+      title: 'Купель и сауна',
+      kicker: 'Отдых',
+      lead: 'Купель-чан и сауна у реки',
+      preview: '../photoHouse/Купель и сауна/01.jpg?v=river-home-kupel-20261125',
+    },
+    {
       id: 'territoriya',
       href: 'territoriya.html',
       title: 'Территория',
       kicker: 'Во дворе',
-      lead: 'Пергола, терраса и джакузи',
+      lead: 'Мангал, костёр и берег',
       preview: '../photoHouse/Территория у дома/02.jpg?v=river-home-terr-20261124',
     },
   ];
