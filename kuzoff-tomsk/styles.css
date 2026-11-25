@@ -638,6 +638,86 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .service-catalog-head{margin-bottom:8px}
 .service-catalog-head h2{font-size:clamp(32px,5vw,52px);letter-spacing:.04em;margin:12px 0 0}
 .service-row .cost{text-align:right;font-size:18px;color:var(--accent)}
+.service-row--card{align-items:center}
+.service-row-actions{display:flex;flex-direction:column;gap:10px;align-items:stretch;min-width:148px}
+.service-row-actions .cost{margin:0 0 4px;text-align:right;font-size:16px}
+.service-row-actions .button{text-align:center;padding:12px 14px;font-size:11px;white-space:nowrap}
+.service-row-actions .button.dark{padding:11px 14px}
+html.svc-intake-open,body.svc-intake-open{overflow:hidden}
+.svc-intake[hidden]{display:none!important}
+.svc-intake{
+  position:fixed;inset:0;z-index:200;
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(12px,3vw,28px);box-sizing:border-box;
+}
+.svc-intake-backdrop{
+  position:absolute;inset:0;background:rgba(0,0,0,.82);
+  backdrop-filter:blur(6px);
+}
+.svc-intake-dialog{
+  position:relative;z-index:1;
+  width:min(1120px,100%);max-height:min(92vh,880px);
+  display:flex;flex-direction:column;
+  background:#0c0c0c;border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 24px 80px rgba(0,0,0,.55);
+}
+.svc-intake-close{
+  position:absolute;top:14px;right:14px;z-index:3;
+  width:44px;height:44px;border:1px solid rgba(255,255,255,.15);
+  background:rgba(10,10,10,.85);color:#f5f5f2;font-size:26px;line-height:1;
+  cursor:pointer;border-radius:2px;
+}
+.svc-intake-close:hover{border-color:var(--accent-soft);color:var(--accent)}
+.svc-intake-grid{
+  display:grid;grid-template-columns:1.05fr .95fr;
+  min-height:min(78vh,720px);max-height:min(92vh,880px);
+}
+.svc-intake-visual{
+  position:relative;min-height:280px;overflow:hidden;
+  border-right:1px solid rgba(255,255,255,.08);
+  background:#111;
+}
+.svc-intake-visual img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
+.svc-intake-visual-copy{
+  position:relative;z-index:1;margin-top:auto;
+  padding:28px 28px 32px;
+  background:linear-gradient(180deg,transparent 0%,rgba(10,10,10,.92) 38%,#0a0a0a 100%);
+  min-height:100%;display:flex;flex-direction:column;justify-content:flex-end;
+  box-sizing:border-box;
+}
+.svc-intake-visual-copy .kicker{margin-bottom:12px}
+.svc-intake-visual-copy h2{
+  margin:0 0 12px;font-size:clamp(26px,3.2vw,38px);line-height:1.02;font-weight:800;
+}
+.svc-intake-lead{margin:0;color:#b5b5af;font-size:15px;line-height:1.6;max-width:420px}
+.svc-intake-price{margin:14px 0 0;color:var(--accent);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.svc-intake-form{
+  padding:clamp(22px,4vw,40px);overflow:auto;display:flex;flex-direction:column;
+}
+.svc-intake-form h3{margin:0 0 8px;font-size:22px;letter-spacing:.04em}
+.svc-intake-form-note{margin:0 0 22px;color:#8a8a84;font-size:13px;line-height:1.55;max-width:360px}
+.svc-intake-form label{display:block;margin:0 0 6px;font-size:11px;letter-spacing:.1em;color:#7a7a74;text-transform:uppercase}
+.svc-intake-form input,.svc-intake-form textarea{
+  width:100%;margin-bottom:14px;
+  background:#141414;border:1px solid rgba(255,255,255,.1);
+  color:#eee;padding:14px 16px;font:inherit;font-size:14px;
+}
+.svc-intake-form textarea{min-height:88px;resize:vertical}
+.svc-intake-form input:focus,.svc-intake-form textarea:focus{
+  outline:none;border-color:var(--accent-soft);
+}
+.svc-intake-actions{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.svc-intake-actions .button{width:100%;text-align:center;box-sizing:border-box}
+@media(max-width:900px){
+  .svc-intake-grid{grid-template-columns:1fr;max-height:none}
+  .svc-intake-visual{min-height:220px;border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .svc-intake-visual-copy{padding:20px 20px 24px;min-height:220px}
+  .service-row{grid-template-columns:40px 1fr;align-items:start}
+  .service-row-actions{grid-column:2;flex-direction:row;flex-wrap:wrap;min-width:0;margin-top:12px}
+  .service-row .cost{grid-column:2;text-align:left}
+}
 
 .service-page-meta{display:flex;flex-wrap:wrap;gap:28px 48px;align-items:flex-end;margin-top:8px;padding-top:28px;border-top:1px solid rgba(255,255,255,.08)}
 .service-page-cost span{display:block;font-size:11px;letter-spacing:2px;color:#777;margin-bottom:8px}

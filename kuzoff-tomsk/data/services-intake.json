@@ -1,0 +1,38 @@
+[
+  {
+    "id": "anticor",
+    "title": "Кузовной ремонт",
+    "lead": "Восстановление геометрии и элементов кузова. Оценка и сроки — после осмотра.",
+    "image": "img/works/incoming/kuzoff/02-client.jpg"
+  },
+  {
+    "id": "ceramic",
+    "title": "Покраска автомобилей",
+    "lead": "Локальная и полная покраска, подбор цвета.",
+    "image": "img/works/incoming/kuzoff/03-client.jpg"
+  },
+  {
+    "id": "polish",
+    "title": "Полировка",
+    "lead": "Полировка ЛКП и оптики, подготовка кузова.",
+    "image": "img/works/incoming/kuzoff/04-client.jpg"
+  },
+  {
+    "id": "ppf",
+    "title": "Ремонт вмятин",
+    "lead": "Кузовные работы, удаление вмятин без перекраски, где это возможно.",
+    "image": "img/works/incoming/kuzoff/06-client.jpg"
+  },
+  {
+    "id": "engine-bay",
+    "title": "Сварочные работы",
+    "lead": "Сварка и ремонт кузовных элементов.",
+    "image": "img/works/incoming/kuzoff/07-client.jpg"
+  },
+  {
+    "id": "wash",
+    "title": "Детейлинг",
+    "lead": "Мойка, уход за салоном и финишная подготовка.",
+    "image": "img/works/incoming/kuzoff/08-client.jpg"
+  }
+]
