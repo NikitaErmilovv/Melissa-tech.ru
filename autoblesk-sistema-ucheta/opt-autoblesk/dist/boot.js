@@ -688,6 +688,7 @@ var init_env = __esm({
       kimiOpenUrl: required2("KIMI_OPEN_URL"),
       ownerUnionId: process.env.OWNER_UNION_ID ?? "",
       localPreview: process.env.LOCAL_PREVIEW === "1",
+      demoCabinet: process.env.DEMO_CABINET === "1",
       publicAppUrl: process.env.PUBLIC_APP_URL ?? "",
       resendApiKey: process.env.RESEND_API_KEY ?? "",
       mailFrom: (process.env.MAIL_FROM ?? "").trim() || "\u0410\u0432\u0442\u043E \u0411\u043B\u0435\u0441\u043A <onboarding@resend.dev>",
@@ -58875,6 +58876,46 @@ async function ensureStudioDashboardSampleData(companyId, userId) {
     }
   }
 }
+async function isTestCabinetCompany(companyId) {
+  const company = await getCompanyById(companyId);
+  if (String(company?.email || "").toLowerCase() === "test-cabinet@demo.local") return true;
+  const db = getDb();
+  const rows = await db.select({ unionId: users.unionId }).from(users).where(eq(users.companyId, companyId));
+  return rows.some((u) => u.unionId === "local-preview-owner" || u.unionId === "local-preview-employee");
+}
+async function realignTestCabinetDemoDates(companyId) {
+  const db = getDb();
+  const dayPattern = [0, 0, 1, 2, 3, 4, 5, 6];
+  const orderRows = await db.select({ id: orders.id }).from(orders).where(and(eq(orders.companyId, companyId), isNotNull(orders.postedAt))).orderBy(asc(orders.id));
+  for (let i = 0; i < orderRows.length; i++) {
+    const daysAgo = dayPattern[i % dayPattern.length];
+    const when = /* @__PURE__ */ new Date();
+    when.setDate(when.getDate() - daysAgo);
+    when.setHours(10 + i % 6, 30, 0, 0);
+    await db.update(orders).set({ postedAt: when, createdAt: when }).where(eq(orders.id, orderRows[i].id));
+  }
+  const expenseRows = await db.select({ id: expenses.id }).from(expenses).where(eq(expenses.companyId, companyId)).orderBy(asc(expenses.id));
+  const expensePattern = [2, 1, 0];
+  for (let i = 0; i < expenseRows.length; i++) {
+    const daysAgo = expensePattern[i % expensePattern.length];
+    const when = /* @__PURE__ */ new Date();
+    when.setDate(when.getDate() - daysAgo);
+    when.setHours(12, 0, 0, 0);
+    await db.update(expenses).set({ createdAt: when }).where(eq(expenses.id, expenseRows[i].id));
+  }
+}
+async function ensureTestCabinetDashboardSampleData(companyId, userId) {
+  await ensureStudioServiceCatalogFromDemo(companyId);
+  const todayRow = await dayIncome(0, companyId);
+  const hasToday = Number(todayRow?.total ?? 0) > 0;
+  const db = getDb();
+  const [{ n: orderCount }] = await db.select({ n: sql`COUNT(*)` }).from(orders).where(and(eq(orders.companyId, companyId), isNotNull(orders.postedAt)));
+  if (Number(orderCount) >= 5 && !hasToday) {
+    await realignTestCabinetDemoDates(companyId);
+    return;
+  }
+  await ensureStudioDashboardSampleData(companyId, userId);
+}
 
 // api/queries/business.ts
 init_drizzle_orm();
@@ -59490,7 +59531,9 @@ var statsRouter = createRouter({
     const companyId = tenantCompanyId(ctx.user);
     const chartDayOffset = input2?.chartDayOffset ?? 0;
     const weekEndOffset = input2?.weekEndOffset ?? chartDayOffset;
-    if (env.localPreview) {
+    if (env.demoCabinet && await isTestCabinetCompany(companyId)) {
+      await ensureTestCabinetDashboardSampleData(companyId, ctx.user.id);
+    } else if (env.localPreview) {
       await ensureStudioDashboardSampleData(companyId, ctx.user.id);
     }
     const [
@@ -60302,7 +60345,7 @@ async function markTestCabinetCompany(companyId) {
 }
 function createPreviewLoginHandler() {
   return async (c) => {
-    if (!env.localPreview) {
+    if (!env.localPreview && !env.demoCabinet) {
       return c.json({ error: "Not available" }, 404);
     }
     let asEmployee = c.req.query("role") === "employee";
@@ -60328,8 +60371,7 @@ function createPreviewLoginHandler() {
     if (previewUser?.companyId) {
       await markTestCabinetCompany(previewUser.companyId);
       if (!asEmployee) {
-        await ensureStudioServiceCatalogFromDemo(previewUser.companyId);
-        await ensureStudioDashboardSampleData(previewUser.companyId, previewUser.id);
+        await ensureTestCabinetDashboardSampleData(previewUser.companyId, previewUser.id);
       }
     }
     const token = await signSessionToken({
@@ -60402,6 +60444,7 @@ app.get("/api/build-info", (c) =>
   c.json({
     build: "detaildesk-2026-11-15",
     localPreview: env.localPreview,
+    demoCabinet: env.demoCabinet || env.localPreview,
     testCabinet: TEST_CABINET_NAME,
     mail: {
       resendConfigured: Boolean(env.resendApiKey),
