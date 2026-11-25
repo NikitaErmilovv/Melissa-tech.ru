@@ -2,23 +2,16 @@
   var grid = document.getElementById('gallery-grid');
   if (!grid) return;
   var FALLBACK_FILES = [
-  "img/works/incoming/general-omsk/01-2gis.jpg",
-  "img/works/incoming/general-omsk/02-2gis.jpg",
-  "img/works/incoming/general-omsk/03-2gis.jpg",
-  "img/works/incoming/general-omsk/04-2gis.jpg",
-  "img/works/incoming/general-omsk/05-2gis.jpg",
-  "img/works/incoming/general-omsk/06-2gis.jpg",
-  "img/works/incoming/general-omsk/07-2gis.jpg",
-  "img/works/incoming/general-omsk/08-2gis.jpg",
-  "img/works/incoming/general-omsk/09-2gis.jpg",
-  "img/works/incoming/general-omsk/10-2gis.jpg",
-  "img/works/incoming/general-omsk/11-2gis.jpg",
-  "img/works/incoming/general-omsk/12-2gis.jpg",
-  "img/works/incoming/general-omsk/13-2gis.jpg",
-  "img/works/incoming/general-omsk/14-2gis.jpg",
-  "img/works/incoming/general-omsk/15-2gis.jpg",
-  "img/works/incoming/general-omsk/16-2gis.jpg"
-];
+    "img/works/incoming/general-omsk/01.jpg",
+    "img/works/incoming/general-omsk/02.jpg",
+    "img/works/incoming/general-omsk/03.jpg",
+    "img/works/incoming/general-omsk/04.jpg",
+    "img/works/incoming/general-omsk/05.jpg",
+    "img/works/incoming/general-omsk/06.jpg",
+    "img/works/incoming/general-omsk/07.jpg",
+    "img/works/incoming/general-omsk/08.jpg",
+    "img/works/incoming/general-omsk/09.jpg"
+  ];
   var manifestUrl = 'data/gallery-manifest.json';
 
   function render(files) {
