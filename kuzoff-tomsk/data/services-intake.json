@@ -9,7 +9,7 @@
   {
     "id": "ceramic",
     "title": "Покраска автомобилей",
-    "bookingPhrase": "покраску",
+    "bookingPhrase": "покраску автомобиля",
     "lead": "Локальная и полная покраска, подбор цвета.",
     "image": "img/works/incoming/kuzoff/02-client.jpg"
   },
@@ -30,7 +30,7 @@
   {
     "id": "engine-bay",
     "title": "Сварочные работы",
-    "bookingPhrase": "сварочные работы",
+    "bookingPhrase": "сварочные работы по кузову",
     "lead": "Сварка и ремонт кузовных элементов.",
     "image": "img/works/incoming/kuzoff/02-client.jpg"
   },

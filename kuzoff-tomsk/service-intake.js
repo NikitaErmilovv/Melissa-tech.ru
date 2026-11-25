@@ -63,7 +63,10 @@
     else if (!car && year) auto = year + " г.";
 
     var lines = ["Здравствуйте! Хотел бы записаться на " + phrase + "."];
-    if (auto) lines.push("Автомобиль — " + auto + ".");
+    if (auto) {
+      lines.push("Автомобиль —");
+      lines.push(auto);
+    }
     lines.push("");
 
     var name = trim(els.name && els.name.value);
