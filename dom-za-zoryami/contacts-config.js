@@ -11,6 +11,7 @@ window.STUDIO_CONTACTS = {
   mapLat: 55.993067,
   mapLon: 38.124554,
   gisFirm: "https://yandex.ru/maps/org/dom_za_zoryami/30209143045/",
+  mapGisFirm: "https://2gis.ru/moscow/firm/70000001093986793",
   email: "",
   phones: [
     {
