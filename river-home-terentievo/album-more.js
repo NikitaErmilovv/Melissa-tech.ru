@@ -14,7 +14,7 @@
       title: 'Сауна и купель фурако',
       kicker: 'Отдых',
       lead: 'Купель-чан и сауна у реки',
-      preview: '../photoHouse/Купель и сауна/01.jpg?v=river-home-kupel-20261125',
+      preview: '../photoHouse/Купель и сауна/01.jpg?v=river-home-kupel-01-hq-20261125',
     },
     {
       id: 'territoriya',
