@@ -1,0 +1,116 @@
+{
+  "slug": "general-detailing-omsk",
+  "name": "General detailing",
+  "port": 8166,
+  "gis_firm_url": "https://2gis.ru/omsk/firm/70000001100082384",
+  "phone_tel": "+79333018866",
+  "phone_display": "+7 (933) 301-88-66",
+  "phone_wa": "79333018866",
+  "phone_tg": "+79333018866",
+  "default_message": "Здравствуйте! Хочу записаться в General detailing, Омск.",
+  "hero_class": "general",
+  "hero_text_only": true,
+  "hero_title_html": "GENERAL<br><span class=\"accent\">DETAILING</span>",
+  "replace": {
+    "РП — детейлинг-студия Тольятти": "General detailing — центр детейлинга, Омск",
+    "Услуги — РП": "Услуги — General detailing",
+    "Контакты — РП": "Контакты — General detailing",
+    "О нас — РП": "О нас — General detailing",
+    "Работы — РП": "Работы — General detailing",
+    "Детейлинг-центр в Тольятти: мойка, полировка, защитные покрытия, антикор и тонировка по записи.": "Центр детейлинга в Омске: мойка, полировка, керамика, химчистка, плёнка и тонировка.",
+    "ДЕТЕЙЛИНГ<br><span class=\"accent\">И ЗАЩИТА КУЗОВА</span>": "ДЕТЕЙЛИНГ<br><span class=\"accent\">И ЗАЩИТА</span>",
+    "ДЕТЕЙЛИНГ-СТУДИЯ<br><span class=\"accent\">ТОЛЬЯТТИ</span>": "ДЕТЕЙЛИНГ<br><span class=\"accent\">ОМСК</span>",
+    "ДЕТЕЙЛИНГ-СТУДИЯ<br><span class=\"accent\">РП</span>": "GENERAL<br><span class=\"accent\">DETAILING</span>",
+    "детейлинг-студия на Московском проспекте в Автозаводском районе Тольятти. Уход за кузовом и салоном, полировка, плёнка и тонировка. Работаем по записи — звоните или пишите.": "General detailing в Центральном округе Омска. Уход за кузовом и салоном, полировка, защитные покрытия и тонировка — согласуем объём до начала работ.",
+    "Тольятти · работаем по записи": "Омск · 4-я Северная, 41 · по записи",
+    "ТОЛЬЯТТИ": "ОМСК",
+    "Тольятти": "Омск",
+    "г. Тольятти, 253-й квартал, стр. 19": "г. Омск, 4-я Северная улица, 41",
+    "253-й квартал, стр. 19": "4-я Северная улица, 41",
+    "Карта 2ГИС — г. Тольятти, 253-й квартал, стр. 19": "Карта 2ГИС — г. Омск, 4-я Северная улица, 41",
+    "https://2gis.ru/togliatti/firm/70000001067251376": "https://2gis.ru/omsk/firm/70000001100082384",
+    "53.534132,49.25991": "55.006852,73.358725",
+    "+79626123368": "+79333018866",
+    "+7 (962) 612-33-68": "+7 (933) 301-88-66",
+    "79626123368": "79333018866",
+    "+79649696765": "+79333018866",
+    "+7 (964) 969-67-65": "+7 (933) 301-88-66",
+    "<span class=\"logo-mark\">РП</span><span class=\"logo-word\"></span>": "<span class=\"wordmark\"><span class=\"logo-mark\">GENERAL</span><span class=\"logo-word\">DETAILING</span></span>",
+    "<span class=\"address-map-pin-label-text\"><span class=\"wordmark\"><span class=\"logo-mark\">РП</span><span class=\"logo-word\"></span></span></span>": "<span class=\"address-map-pin-label-text\"><span class=\"wordmark\"><span class=\"logo-mark\">GENERAL</span><span class=\"logo-word\">DETAILING</span></span></span>",
+    "© 2026 РП": "© 2026 General detailing",
+    "Здравствуйте! Хочу записаться в РП.": "Здравствуйте! Хочу записаться в General detailing, Омск.",
+    "id=\"stat-reviews\">51": "id=\"stat-reviews\">82",
+    "id=\"stat-rating\">4.9": "id=\"stat-rating\">5.0",
+    " — РП": " — General detailing",
+    "alt=\"РП Detailing\"": "alt=\"General detailing\"",
+    "img/works/incoming/rp/": "img/works/incoming/general-omsk/",
+    "По предварительной записи · 10:00–20:00": "Ежедневно · 09:00–22:30",
+    "Московском проспекте в Автозаводском районе": "4-й Северной улице в Центральном округе"
+  },
+  "home_services": [
+    {
+      "slug": "wash",
+      "tag": "ДЕТЕЙЛИНГ-МОЙКА",
+      "image": "img/works/incoming/general-omsk/01.jpg"
+    },
+    {
+      "slug": "polish",
+      "tag": "ПОЛИРОВКА",
+      "image": "img/works/incoming/general-omsk/02.jpg"
+    },
+    {
+      "slug": "ceramic",
+      "tag": "КЕРАМИКА",
+      "image": "img/works/incoming/general-omsk/03.jpg"
+    },
+    {
+      "slug": "interior",
+      "tag": "ХИМЧИСТКА",
+      "image": "img/works/incoming/general-omsk/04.jpg"
+    },
+    {
+      "slug": "ppf",
+      "tag": "ЗАЩИТНАЯ ПЛЁНКА",
+      "image": "img/works/incoming/general-omsk/05.jpg"
+    }
+  ],
+  "services": [
+    {
+      "slug": "wash",
+      "title": "Детейлинг-мойка",
+      "lead": "Бережная мойка кузова и салона."
+    },
+    {
+      "slug": "polish",
+      "title": "Полировка автомобилей",
+      "lead": "Восстановление блеска лакокрасочного покрытия."
+    },
+    {
+      "slug": "ceramic",
+      "title": "Керамическое покрытие",
+      "lead": "Нанесение керамики для защиты и блеска ЛКП."
+    },
+    {
+      "slug": "interior",
+      "title": "Химчистка",
+      "lead": "Глубокая очистка салона и текстиля."
+    },
+    {
+      "slug": "ppf",
+      "title": "Защитная плёнка",
+      "lead": "Прозрачная антигравийная плёнка на зоны риска и кузов."
+    },
+    {
+      "slug": "wrap",
+      "title": "Оклейка автомобилей",
+      "lead": "Защитная и декоративная плёнка на кузов."
+    },
+    {
+      "slug": "tint",
+      "title": "Тонировка",
+      "lead": "Тонировка стёкол и атермальные плёнки."
+    }
+  ],
+  "reviews": [],
+  "theme_css": ".hero-title-text{font-size:clamp(40px,6.5vw,84px);line-height:.9;letter-spacing:-.05em;margin:0 0 28px;font-weight:900;text-transform:uppercase}.hero-title-text .accent{color:var(--accent)}.hero--general.hero--sdc .heroimg{background-position:50% 45%}"
+}
