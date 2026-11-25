@@ -1,5 +1,4 @@
-/* Exo 2 — кириллица в паре к клиентскому 946 Latin Wide (латиница в KuzOff946). */
-@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&display=swap&subset=cyrillic,cyrillic-ext,latin");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 
 @font-face{
   font-family:"KuzOff946";
@@ -7,6 +6,9 @@
   font-weight:400;
   font-style:normal;
   font-display:swap;
+  unicode-range:
+    U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,
+    U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
 :root{
@@ -16,16 +18,15 @@
   --accent-deep:#9e1c1e;
   --accent-ink:#0a0a0a;
   --accent-rgb:212,37,39;
-  --font-latin-display:"KuzOff946", "Arial Narrow", Arial, sans-serif;
-  /* Порядок важен: латиница из 946, кириллица из Exo 2. */
-  --font-display:"KuzOff946", "Exo 2", Arial, sans-serif;
-  --font-text:"Exo 2", Arial, sans-serif;
+  /* KuzOff946 (латиница/цифры/знаки) + Inter (кириллица) в одном стеке */
+  --font-display:"KuzOff946", Inter, Arial, sans-serif;
+  --font-text:"KuzOff946", Inter, Arial, sans-serif;
 }
 
 *{box-sizing:border-box}
 body{margin:0;background:#0a0a0a;color:#f5f5f2;font-family:var(--font-text);letter-spacing:.02em}
 .wordmark,.wordmark .logo-mark,.wordmark .logo-word,.logo-mark,.logo-word{
-  font-family:var(--font-latin-display);
+  font-family:var(--font-display);
   letter-spacing:.04em;
 }
 :is(h1,h2,h3,h4,h5,h6),
@@ -39,7 +40,7 @@ body{margin:0;background:#0a0a0a;color:#f5f5f2;font-family:var(--font-text);lett
   font-family:var(--font-display);
   letter-spacing:.04em;
 }
-.hero-title-text{letter-spacing:.06em;font-weight:800}
+.hero-title-text{letter-spacing:.02em;font-weight:800}
 p,.intro,.card p,.step p,.price p,.tesla-lead,.tesla-copy p,
 .founder-lead,.founder-story p,.review p,.contact-note,
 .service-step-bullets,.service-stages-lead,.contact-info,
