@@ -2,36 +2,42 @@
   {
     "id": "anticor",
     "title": "Кузовной ремонт",
+    "bookingPhrase": "кузовной ремонт",
     "lead": "Восстановление геометрии и элементов кузова. Оценка и сроки — после осмотра.",
     "image": "img/works/incoming/kuzoff/02-client.jpg"
   },
   {
     "id": "ceramic",
     "title": "Покраска автомобилей",
+    "bookingPhrase": "покраску",
     "lead": "Локальная и полная покраска, подбор цвета.",
     "image": "img/works/incoming/kuzoff/02-client.jpg"
   },
   {
     "id": "polish",
     "title": "Полировка",
+    "bookingPhrase": "полировку кузова",
     "lead": "Полировка ЛКП и оптики, подготовка кузова.",
     "image": "img/works/incoming/kuzoff/02-client.jpg"
   },
   {
     "id": "ppf",
     "title": "Ремонт вмятин",
+    "bookingPhrase": "ремонт вмятин",
     "lead": "Кузовные работы, удаление вмятин без перекраски, где это возможно.",
     "image": "img/works/incoming/kuzoff/02-client.jpg"
   },
   {
     "id": "engine-bay",
     "title": "Сварочные работы",
+    "bookingPhrase": "сварочные работы",
     "lead": "Сварка и ремонт кузовных элементов.",
     "image": "img/works/incoming/kuzoff/02-client.jpg"
   },
   {
     "id": "wash",
     "title": "Детейлинг",
+    "bookingPhrase": "детейлинг",
     "lead": "Мойка, уход за салоном и финишная подготовка.",
     "image": "img/works/incoming/kuzoff/02-client.jpg"
   }

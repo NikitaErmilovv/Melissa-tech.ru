@@ -28,9 +28,8 @@
     document.body.classList.toggle("svc-intake-open", on);
   }
 
-  function field(value) {
-    var v = (value || "").trim();
-    return v || "не указано";
+  function trim(value) {
+    return (value || "").trim();
   }
 
   function open(id) {
@@ -56,17 +55,22 @@
 
   function buildMessage() {
     if (!active) return "";
-    var car = field(els.car && els.car.value);
-    var year = field(els.year && els.year.value);
-    var auto = year !== "не указано" ? car + ", " + year : car;
-    return [
-      "Здравствуйте. Запись в KuzOff.",
-      "",
-      "Услуга: " + active.title,
-      "Имя: " + field(els.name && els.name.value),
-      "Телефон: " + field(els.phone && els.phone.value),
-      "Авто: " + auto,
-    ].join("\n");
+    var phrase = active.bookingPhrase || active.title.toLowerCase();
+    var car = trim(els.car && els.car.value);
+    var year = trim(els.year && els.year.value);
+    var auto = car;
+    if (car && year) auto = car + ", " + year;
+    else if (!car && year) auto = year + " г.";
+
+    var lines = ["Здравствуйте! Хотел бы записаться на " + phrase + "."];
+    if (auto) lines.push("Автомобиль — " + auto + ".");
+    lines.push("");
+
+    var name = trim(els.name && els.name.value);
+    var phone = trim(els.phone && els.phone.value);
+    if (name) lines.push(name);
+    if (phone) lines.push(phone);
+    return lines.join("\n");
   }
 
   function openMessenger(kind) {
