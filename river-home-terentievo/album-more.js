@@ -22,7 +22,7 @@
       title: 'Территория',
       kicker: 'Во дворе',
       lead: 'Мангал, костёр и берег',
-      preview: '../photoHouse/Территория у дома/02.jpg?v=river-home-terr-20261124',
+      preview: '../photoHouse/Территория у дома/01.jpg?v=river-home-terr-20261125',
     },
   ];
 
