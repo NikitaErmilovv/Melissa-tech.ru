@@ -1,3 +1,6 @@
+/* Exo 2 — кириллица в паре к клиентскому 946 Latin Wide (латиница в KuzOff946). */
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&display=swap&subset=cyrillic,cyrillic-ext,latin");
+
 @font-face{
   font-family:"KuzOff946";
   src:url("fonts/946-latin-wide-5-right.ttf") format("truetype");
@@ -13,24 +16,30 @@
   --accent-deep:#9e1c1e;
   --accent-ink:#0a0a0a;
   --accent-rgb:212,37,39;
-  --font-display:"KuzOff946", "Arial Narrow", Arial, sans-serif;
-  --font-text:"KuzOff946", Arial, sans-serif;
+  --font-latin-display:"KuzOff946", "Arial Narrow", Arial, sans-serif;
+  /* Порядок важен: латиница из 946, кириллица из Exo 2. */
+  --font-display:"KuzOff946", "Exo 2", Arial, sans-serif;
+  --font-text:"Exo 2", Arial, sans-serif;
 }
 
 *{box-sizing:border-box}
-body{margin:0;background:#0a0a0a;color:#f5f5f2;font-family:var(--font-text);letter-spacing:.035em}
+body{margin:0;background:#0a0a0a;color:#f5f5f2;font-family:var(--font-text);letter-spacing:.02em}
+.wordmark,.wordmark .logo-mark,.wordmark .logo-word,.logo-mark,.logo-word{
+  font-family:var(--font-latin-display);
+  letter-spacing:.04em;
+}
 :is(h1,h2,h3,h4,h5,h6),
 .hero h1,.section h2,.process h2,.quote,
 .tesla-copy h2,.award-panel-copy h2,.founder-copy h2,
 .contact-box h2,.contact-panel-card h2,.work-block .section-head h2,
 .card h3,.step h3,.price h3,.contact-form h3,.faq summary,
-.logo,.wordmark,.wordmark .logo-mark,.wordmark .logo-word,
 .eyebrow,.kicker,.hero-brand-word,.button,.phone,
 .photo .tag,.ba-item figcaption,.stat b,.num,
 .review .stars,.book-pick-label,.book-pick a{
   font-family:var(--font-display);
-  letter-spacing:.06em;
+  letter-spacing:.04em;
 }
+.hero-title-text{letter-spacing:.06em;font-weight:800}
 p,.intro,.card p,.step p,.price p,.tesla-lead,.tesla-copy p,
 .founder-lead,.founder-story p,.review p,.contact-note,
 .service-step-bullets,.service-stages-lead,.contact-info,
