@@ -1796,10 +1796,7 @@ a.service-row:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 @media(min-width:801px){
   .address-map-pin-label{top:50.67%;transform:translate(-50%,calc(-100% - 38px))}
 }
-.address-map-frame--yandex{position:relative;overflow:hidden;display:block}
-.address-map-yandex{width:100%;height:100%;min-height:min(72vw,420px);border:0;display:block;background:#1a1a18}
-@media(min-width:801px){.address-map-yandex{min-height:450px}}
-.address-map-frame--yandex .address-map-pin-label{display:block!important;left:50%;top:42%;transform:translate(-50%,calc(-100% - 18px));pointer-events:none}
+.address-map-frame .address-map-pin-label{display:block!important;pointer-events:none}
 
 /* Название базы: ДОМ ЗА ЗОРЯМИ — оба слова Kino, белые, капс */
 .brand-stack--org-name .brand-stack__base,
