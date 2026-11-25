@@ -123,7 +123,7 @@
     (function loadNext(i) {
       if (i >= urls.length) {
         track.innerHTML =
-          '<div class="review"><p>Не удалось загрузить отзывы.</p><small><a href="https://yandex.ru/maps/org/dom_za_zoryami/30209143045/" target="_blank" rel="noopener">Открыть отзывы в 2ГИС</a></small></div>';
+          '<div class="review"><p>Не удалось загрузить отзывы.</p><small><a href="https://yandex.ru/maps/org/dom_za_zoryami/30209143045/" target="_blank" rel="noopener">Открыть отзывы в Яндекс Картах</a></small></div>';
         return;
       }
       fetch(urls[i] + (urls[i].indexOf("?") >= 0 ? "&" : "?") + "v=r3")

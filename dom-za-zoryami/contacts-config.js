@@ -6,7 +6,7 @@ window.STUDIO_MESSENGERS = {
 };
 
 window.STUDIO_CONTACTS = {
-  addressLine: "Московская обл., г.о. Щёлково, Новое Трубино, 5-я Лесная ул., 33",
+  addressLine: "Московская обл., г.о. Щёлково, тер. Новое Трубино, 5-я Лесная ул., 33",
   hoursLine: "С 10:00 · по записи",
   mapLat: 55.993067,
   mapLon: 38.124554,

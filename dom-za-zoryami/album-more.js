@@ -22,7 +22,7 @@
       title: 'Территория',
       kicker: 'Во дворе',
       lead: 'Костёр, мангал и беседка',
-      preview: '../photoHouse/Территория у дома/05.jpg?v=zori-home-terr-20261125b',
+      preview: '../photoHouse/Территория у дома/05.jpg?v=zori-home-terr-20261125c',
     },
   ];
 
