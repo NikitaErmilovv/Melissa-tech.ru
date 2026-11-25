@@ -11,7 +11,7 @@ import urllib.request
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-PORT = 8142
+PORT = 8149
 FIRM_URL = "https://2gis.ru/novosibirsk/firm/70000001099867206"
 CACHE_TTL = 3600
 ROOT = Path(__file__).resolve().parent
