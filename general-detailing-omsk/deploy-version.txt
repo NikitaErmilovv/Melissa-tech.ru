@@ -2,4 +2,4 @@ site=general-detailing-omsk
 brand=General detailing
 prod=https://melissa-tech.ru/general-detailing-omsk/
 deploy=git-push-timeweb-hook
-deploy-trigger=general-omsk-prod-20261125T0655Z
+deploy-trigger=general-omsk-prod-20261125T0702Z
