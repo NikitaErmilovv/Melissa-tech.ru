@@ -1,7 +1,7 @@
+import { validateIntakeBatchUpload } from "@/lib/intake-batch";
 import { intakeUploadFiles } from "@/lib/intake-actions";
 import { orderByIntakeRoute, publicIntakeView } from "@/lib/intake-token";
 import { fail } from "@/lib/http";
-import { MAX_UPLOAD_BYTES, MAX_UPLOAD_MB } from "@/lib/upload-limits";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -27,20 +27,21 @@ export async function POST(request: Request, context: { params: Promise<{ slug: 
       throw new Error("отправьте фотографии файлами");
     }
     const form = await request.formData();
-    const buffers: Buffer[] = [];
+    const planned: File[] = [];
     const seen = new Set<string>();
     for (const [, entry] of form.entries()) {
       if (!(entry instanceof File) || entry.size < 1) continue;
-      const key = `${entry.name}:${entry.size}:${entry.lastModified}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      const buf = Buffer.from(await entry.arrayBuffer());
-      if (buf.length > MAX_UPLOAD_BYTES) {
-        throw new Error(`одно фото больше ${MAX_UPLOAD_MB} МБ`);
-      }
-      buffers.push(buf);
+      const dedupe = `${entry.name}:${entry.size}:${entry.lastModified}`;
+      if (seen.has(dedupe)) continue;
+      seen.add(dedupe);
+      planned.push(entry);
     }
-    if (buffers.length === 0) throw new Error("выберите хотя бы одно фото");
+    const batchErr = validateIntakeBatchUpload(order, planned.length);
+    if (batchErr) throw new Error(batchErr);
+    const buffers: Buffer[] = [];
+    for (const file of planned) {
+      buffers.push(Buffer.from(await file.arrayBuffer()));
+    }
     const result = await intakeUploadFiles(order.id, buffers);
     return Response.json(result);
   } catch (error) {

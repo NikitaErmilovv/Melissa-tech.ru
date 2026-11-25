@@ -2,6 +2,7 @@ import fs from "fs";
 import { deliver } from "./bot";
 import { pushLog, readDb, withDb } from "./db";
 import { publicIntakeView } from "./intake-token";
+import { validateIntakeBatchUpload } from "./intake-batch";
 import { addUploads } from "./panel";
 import { safeAbs } from "./paths";
 import { fill, orderVars } from "./text";
@@ -27,6 +28,8 @@ export async function notifyIntakeProgress(orderId: string, gotBefore: number) {
       row.replaceHintAt = null;
       row.lastReminderAt = null;
     });
+  } else if (got > gotBefore && got < need) {
+    text = fill(snap.templates.progress, orderVars(order));
   }
   if (text) await deliver(orderId, text);
 }
@@ -37,6 +40,8 @@ export async function intakeUploadFiles(orderId: string, files: Buffer[]) {
   if (order.printStatus === "cancelled" || order.printStatus === "defect") {
     throw new Error("заказ отменён, файлы больше не принимаем");
   }
+  const err = validateIntakeBatchUpload(order, files.length);
+  if (err) throw new Error(err);
   const before = order.files.length;
   await withDb((db) => {
     const row = db.orders.find((item) => item.id === order.id);
@@ -46,7 +51,14 @@ export async function intakeUploadFiles(orderId: string, files: Buffer[]) {
       row.lastReminderAt = null;
     }
   });
-  const result = await addUploads(order.id, files, "site");
+  let saved = 0;
+  let skipped = 0;
+  for (const bytes of files) {
+    const part = await addUploads(order.id, [bytes], "site");
+    saved += part.saved;
+    skipped += part.skipped;
+  }
+  const result = { saved, skipped };
   await notifyIntakeProgress(order.id, before);
   const live = readDb().orders.find((item) => item.id === order.id);
   return { ...result, view: live ? publicIntakeView(live) : publicIntakeView(order) };

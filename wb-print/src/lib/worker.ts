@@ -63,6 +63,22 @@ function eventKey(event: WbEvent): string {
   return `fallback:${event.chatID ?? ""}:${event.addTimestamp ?? ""}:${event.message?.text?.slice(0, 40) ?? ""}`;
 }
 
+const IDLE_UPLOAD_MS = 60 * 60 * 1000;
+
+function dueIdleUploadNudges(orders: Order[], now: number) {
+  return orders.filter((order) => {
+    if (order.source !== "wb") return false;
+    if (order.printStatus === "cancelled" || order.printStatus === "defect") return false;
+    if (order.expectedPhotos <= 0 || order.files.length > 0) return false;
+    if (order.intakeMode === "link" && order.diskUrl.trim()) return false;
+    if (order.intakeMode === "choice") return false;
+    if (order.idleNudgeAt) return false;
+    const anchor = order.greetedAt || order.createdAt;
+    if (!anchor) return false;
+    return now - new Date(anchor).getTime() >= IDLE_UPLOAD_MS;
+  });
+}
+
 function dueOrders(orders: Order[], silenceMin: number, remindMin: number, now: number) {
   const waitAfterActivity = silenceMin * 60_000;
   const gapBetweenReminders = remindMin * 60_000;
@@ -70,6 +86,7 @@ function dueOrders(orders: Order[], silenceMin: number, remindMin: number, now: 
     if (order.printStatus === "cancelled" || order.printStatus === "defect") return false;
     if (order.completedNoticeAt && order.files.length >= order.expectedPhotos) return false;
     if (order.expectedPhotos <= 0 || order.files.length >= order.expectedPhotos) return false;
+    if (order.files.length === 0) return false;
   /* Ссылку уже дали — не дожимаем; ответы только из скачивания и «всё принято». */
     if (order.intakeMode === "link" && order.diskUrl.trim()) return false;
     if (order.intakeMode === "choice" && order.files.length === 0) return false;
@@ -82,7 +99,41 @@ function dueOrders(orders: Order[], silenceMin: number, remindMin: number, now: 
 }
 
 async function runReminders() {
-  /* Автонапоминания в чат WB отключены: приветствие со ссылкой и прогресс с сайта. */
+  const db = readDb();
+  if (!db.settings.token.trim() || !db.settings.liveReplies) return;
+  const now = Date.now();
+  for (const order of dueIdleUploadNudges(db.orders, now)) {
+    const snap = readDb();
+    const live = snap.orders.find((item) => item.id === order.id);
+    if (!live) continue;
+    const text = fill(snap.templates.idleNudge, orderVars(live));
+    const sentAt = new Date().toISOString();
+    await withDb((draft) => {
+      const row = draft.orders.find((item) => item.id === order.id);
+      if (!row || row.idleNudgeAt) return;
+      if (row.printStatus === "cancelled" || row.printStatus === "defect") return;
+      row.idleNudgeAt = sentAt;
+    });
+    const again = readDb().orders.find((item) => item.id === order.id);
+    if (!again?.idleNudgeAt || again.idleNudgeAt !== sentAt) continue;
+    if (again.printStatus === "cancelled" || again.printStatus === "defect") continue;
+    await deliver(order.id, text);
+  }
+  const due = dueOrders(db.orders, db.settings.silenceMin, db.settings.remindMin, now);
+  for (const order of due) {
+    const snap = readDb();
+    const live = snap.orders.find((item) => item.id === order.id);
+    if (!live) continue;
+    const text =
+      live.intakeMode === "link" && !live.diskUrl.trim()
+        ? fill(snap.templates.askLink, orderVars(live))
+        : fill(snap.templates.reminder, orderVars(live));
+    await withDb((draft) => {
+      const row = draft.orders.find((item) => item.id === order.id);
+      if (row) row.lastReminderAt = new Date().toISOString();
+    });
+    await deliver(order.id, text);
+  }
 }
 
 async function armWatch() {
