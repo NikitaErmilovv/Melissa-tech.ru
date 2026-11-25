@@ -3,4 +3,4 @@ brand=Гостевой дом
 prod=https://melissa-tech.ru/novosibirsk-gostevoy-dom/
 2gis=https://2gis.ru/novosibirsk/firm/70000001099867206
 deploy=git-push-timeweb-hook
-deploy-trigger=ngd-template-20261125
+deploy-trigger=ngd-photos-20261125

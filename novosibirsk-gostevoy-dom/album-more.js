@@ -1,28 +1,37 @@
 (function () {
+  var PHOTO_V = 'ngd-photos-20261125';
   var ALBUMS = [
     {
       id: 'dom',
       href: 'dom.html',
       title: 'Дом',
       kicker: 'Загородный',
-      lead: 'Терраса, панорамные окна и подсветка',
-      preview: '../photoHouse/Дом/03.jpg?v=ngd-dom-20261124',
+      lead: 'Гостевой дом и двор',
+      preview: '../photoHouse/Дом/01.jpg?v=' + PHOTO_V,
     },
     {
-      id: 'komnaty',
-      href: 'komnaty.html',
-      title: 'Комнаты',
-      kicker: 'Внутри дома',
-      lead: 'Спальни, гостиная и второй свет',
-      preview: '../photoHouse/Комнаты - Внутри дома/05.jpg?v=ngd-inside-20261124',
+      id: 'bassein',
+      href: 'bassein.html',
+      title: 'Бассейн',
+      kicker: 'Отдых',
+      lead: 'Тёплая вода под куполом',
+      preview: '../photoHouse/Бассейн/01.jpg?v=' + PHOTO_V,
     },
     {
       id: 'territoriya',
       href: 'territoriya.html',
       title: 'Территория',
       kicker: 'Во дворе',
-      lead: 'Пергола, терраса и бассейн',
-      preview: '../photoHouse/Территория у дома/02.jpg?v=ngd-terr-20261124',
+      lead: 'Газон и зелёный двор',
+      preview: '../photoHouse/Территория у дома/01.jpg?v=' + PHOTO_V,
+    },
+    {
+      id: 'banya',
+      href: 'banya.html',
+      title: 'Баня',
+      kicker: 'Пар и отдых',
+      lead: 'Деревянная парная',
+      preview: '../photoHouse/Баня/01.jpg?v=' + PHOTO_V,
     },
   ];
 

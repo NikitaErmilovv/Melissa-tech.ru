@@ -1,1 +1,8 @@
-{"files": []}
+{
+  "albums": [
+    { "id": "dom", "dir": "Дом", "count": 1 },
+    { "id": "bassein", "dir": "Бассейн", "count": 1 },
+    { "id": "banya", "dir": "Баня", "count": 1 },
+    { "id": "territoriya", "dir": "Территория у дома", "count": 2 }
+  ]
+}
