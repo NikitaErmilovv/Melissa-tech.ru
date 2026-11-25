@@ -51,27 +51,27 @@
     {
       "slug": "wash",
       "tag": "ДЕТЕЙЛИНГ-МОЙКА",
-      "image": "img/services-home/05-wash.jpg"
+      "image": "img/works/incoming/general-omsk/01.jpg"
     },
     {
       "slug": "polish",
       "tag": "ПОЛИРОВКА",
-      "image": "img/services-home/01-polish.jpg"
+      "image": "img/works/incoming/general-omsk/02.jpg"
     },
     {
       "slug": "ceramic",
       "tag": "КЕРАМИКА",
-      "image": "img/services-home/02-ppf.jpg"
+      "image": "img/works/incoming/general-omsk/03.jpg"
     },
     {
       "slug": "interior",
       "tag": "ХИМЧИСТКА",
-      "image": "img/services-home/04-engine-bay.jpg"
+      "image": "img/works/incoming/general-omsk/04.jpg"
     },
     {
       "slug": "ppf",
       "tag": "ЗАЩИТНАЯ ПЛЁНКА",
-      "image": "img/services-home/03-wrap.jpg"
+      "image": "img/works/incoming/general-omsk/05.jpg"
     }
   ],
   "services": [
