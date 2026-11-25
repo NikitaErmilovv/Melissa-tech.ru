@@ -11,7 +11,7 @@
     {
       id: 'kupel-sauna',
       href: 'kupel-sauna.html',
-      title: 'Купель и сауна',
+      title: 'Сауна и купель фурако',
       kicker: 'Отдых',
       lead: 'Купель-чан и сауна у реки',
       preview: '../photoHouse/Купель и сауна/01.jpg?v=river-home-kupel-20261125',
