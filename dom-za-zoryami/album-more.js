@@ -14,7 +14,7 @@
       title: 'Комнаты',
       kicker: 'Внутри дома',
       lead: 'Спальни, гостиная и второй свет',
-      preview: '../photoHouse/Комнаты - Внутри дома/01.jpg?v=zori-home-photos-20261125',
+      preview: '../photoHouse/Комнаты - Внутри дома/04.jpg?v=zori-home-int-20261125',
     },
     {
       id: 'territoriya',
