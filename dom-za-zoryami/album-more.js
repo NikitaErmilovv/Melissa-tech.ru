@@ -21,8 +21,8 @@
       href: 'territoriya.html',
       title: 'Территория',
       kicker: 'Во дворе',
-      lead: 'Пергола, терраса и джакузи',
-      preview: '../photoHouse/Территория у дома/01.jpg?v=zori-home-photos-20261125',
+      lead: 'Костёр, мангал и беседка',
+      preview: '../photoHouse/Территория у дома/01.jpg?v=zori-home-terr-20261125',
     },
   ];
 
