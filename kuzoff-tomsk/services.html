@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Услуги — KuzOff</title>
-<link rel="stylesheet" href="styles.css?v=20261125mix">
+<link rel="stylesheet" href="styles.css?v=20261125exo">
 </head>
 <body class="page-sub">
 <nav class="site-nav">
@@ -114,11 +114,13 @@
       <div class="svc-intake-form">
         <h3>Заявка</h3>
         <label for="intake-name">Имя</label>
-        <input id="intake-name" name="client_name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+        <input id="intake-name" name="client_name" type="text" autocomplete="name" placeholder="Иван">
         <label for="intake-phone">Телефон</label>
-        <input id="intake-phone" name="client_phone" type="tel" autocomplete="tel" placeholder="+7" required>
-        <label for="intake-note">Комментарий</label>
-        <textarea id="intake-note" name="client_note" placeholder="Марка авто, что нужно сделать"></textarea>
+        <input id="intake-phone" name="client_phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required>
+        <label for="intake-car">Марка и модель</label>
+        <input id="intake-car" name="client_car" type="text" autocomplete="off" placeholder="Toyota Camry">
+        <label for="intake-year">Год</label>
+        <input id="intake-year" name="client_year" type="text" inputmode="numeric" autocomplete="off" placeholder="2018" maxlength="4">
         <div class="svc-intake-actions">
           <button type="button" class="button" data-intake-messenger="wa">WhatsApp</button>
           <button type="button" class="button dark" data-intake-messenger="tg">Telegram</button>

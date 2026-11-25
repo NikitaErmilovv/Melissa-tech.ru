@@ -14,7 +14,8 @@
     img: root.querySelector("[data-intake-img]"),
     name: root.querySelector('[name="client_name"]'),
     phone: root.querySelector('[name="client_phone"]'),
-    note: root.querySelector('[name="client_note"]'),
+    car: root.querySelector('[name="client_car"]'),
+    year: root.querySelector('[name="client_year"]'),
   };
 
   function byId(id) {
@@ -27,6 +28,11 @@
     document.body.classList.toggle("svc-intake-open", on);
   }
 
+  function field(value) {
+    var v = (value || "").trim();
+    return v || "не указано";
+  }
+
   function open(id) {
     var svc = byId(id);
     if (!svc) return;
@@ -35,7 +41,7 @@
     els.lead.textContent = svc.lead;
     els.img.src = svc.image;
     els.img.alt = svc.title;
-  root.hidden = false;
+    root.hidden = false;
     root.setAttribute("aria-hidden", "false");
     lockScroll(true);
     if (els.phone) els.phone.focus();
@@ -50,19 +56,17 @@
 
   function buildMessage() {
     if (!active) return "";
-    var name = (els.name && els.name.value.trim()) || "—";
-    var phone = (els.phone && els.phone.value.trim()) || "—";
-    var note = (els.note && els.note.value.trim()) || "—";
-    return (
-      "Здравствуйте. Запись KuzOff: " +
-      active.title +
-      ".\nИмя: " +
-      name +
-      "\nТелефон: " +
-      phone +
-      "\nКомментарий: " +
-      note
-    );
+    var car = field(els.car && els.car.value);
+    var year = field(els.year && els.year.value);
+    var auto = year !== "не указано" ? car + ", " + year : car;
+    return [
+      "Здравствуйте. Запись в KuzOff.",
+      "",
+      "Услуга: " + active.title,
+      "Имя: " + field(els.name && els.name.value),
+      "Телефон: " + field(els.phone && els.phone.value),
+      "Авто: " + auto,
+    ].join("\n");
   }
 
   function openMessenger(kind) {
@@ -74,20 +78,15 @@
     }
     if (els.phone) els.phone.setCustomValidity("");
 
-    var text = encodeURIComponent(buildMessage());
-    var url;
+    var plain = buildMessage();
+    var text = encodeURIComponent(plain);
     if (kind === "wa") {
-      url = "https://wa.me/" + waPhone + "?text=" + text;
-      window.open(url, "_blank", "noopener,noreferrer");
+      window.open("https://wa.me/" + waPhone + "?text=" + text, "_blank", "noopener,noreferrer");
       return;
     }
-    var plain = buildMessage();
     var tg = tgPhone.replace(/\s/g, "");
     if (!tg.startsWith("+")) tg = "+" + tg;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(plain).catch(function () {});
-    }
-    window.open("https://t.me/" + tg, "_blank", "noopener,noreferrer");
+    window.open("https://t.me/" + tg + "?text=" + text, "_blank", "noopener,noreferrer");
   }
 
   root.querySelectorAll("[data-intake-close]").forEach(function (node) {
@@ -97,7 +96,7 @@
   var backdrop = root.querySelector(".svc-intake-backdrop");
   if (backdrop) backdrop.addEventListener("click", close);
 
-  root.querySelectorAll('[data-intake-messenger]').forEach(function (btn) {
+  root.querySelectorAll("[data-intake-messenger]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       openMessenger(btn.getAttribute("data-intake-messenger"));
     });
