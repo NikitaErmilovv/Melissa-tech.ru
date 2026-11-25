@@ -1,5 +1,5 @@
 site=dom-za-zoryami
-brand=Дом за зорями
+brand=Zori Home
 prod=https://melissa-tech.ru/dom-za-zoryami/
 yandex=https://yandex.ru/maps/org/dom_za_zoryami/30209143045/
 deploy=git-push-timeweb-hook

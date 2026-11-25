@@ -128,11 +128,11 @@
     error.textContent = '';
 
     var lines = [
-      messengers.defaultMessage || 'Здравствуйте! Хочу забронировать коттедж «Дом за зорями», тер. Новое Трубино, Щёлково.',
+      messengers.defaultMessage || 'Здравствуйте! Хочу забронировать коттедж «Zori Home», тер. Новое Трубино, Щёлково.',
       '',
       'Имя: ' + name,
       'Телефон: ' + phone,
-      'Объект: Дом за зорями, 5-я Лесная ул., 33',
+      'Объект: Zori Home, 5-я Лесная ул., 33',
       'Заезд: ' + formatDate(arrive),
       'Выезд: ' + formatDate(depart),
       'Суток: ' + nights,
