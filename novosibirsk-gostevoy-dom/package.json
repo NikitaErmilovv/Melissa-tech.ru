@@ -1,0 +1,7 @@
+{
+  "name": "novosibirsk-gostevoy-dom",
+  "private": true,
+  "dependencies": {
+    "gsap": "^3.15.0"
+  }
+}
