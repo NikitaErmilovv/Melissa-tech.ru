@@ -50,6 +50,8 @@
 }
 
 :root {
+  --font-inter: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-unbounded: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --background: #000000;
   --foreground: #ffffff;
   --card: #141416;

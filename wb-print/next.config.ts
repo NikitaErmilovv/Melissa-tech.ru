@@ -4,9 +4,9 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["**.cursorvm.com", "*.cursorvm.com"],
   serverExternalPackages: ["sharp"],
   experimental: {
-    middlewareClientMaxBodySize: "128mb",
+    middlewareClientMaxBodySize: "2048mb",
     serverActions: {
-      bodySizeLimit: "128mb",
+      bodySizeLimit: "2048mb",
     },
   },
 };

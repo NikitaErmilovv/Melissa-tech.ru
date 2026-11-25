@@ -15,6 +15,7 @@ export type TemplateKey =
   | "stickerNoLink"
   | "progress"
   | "reminder"
+  | "idleNudge"
   | "complete"
   | "replaceAsk"
   | "replaceLocked"
@@ -82,6 +83,8 @@ export interface Order {
   diskNote: string;
   lastPhotoAt: string | null;
   lastReminderAt: string | null;
+  /** Одно напоминание «час без фото» — больше не повторяем. */
+  idleNudgeAt: string | null;
   completedNoticeAt: string | null;
   /** Когда заказ убран со стола (обычно после «Готово»). */
   archivedAt: string | null;
