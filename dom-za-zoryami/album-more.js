@@ -6,7 +6,7 @@
       title: 'Дом',
       kicker: 'Загородный',
       lead: 'Терраса, панорамные окна и подсветка',
-      preview: '../photoHouse/Дом/01.jpg?v=zoryami-yandex-20261125',
+      preview: '../photoHouse/Дом/03.jpg?v=zori-home-photos-20261125',
     },
     {
       id: 'komnaty',
@@ -14,7 +14,7 @@
       title: 'Комнаты',
       kicker: 'Внутри дома',
       lead: 'Спальни, гостиная и второй свет',
-      preview: '../photoHouse/Комнаты - Внутри дома/01.jpg?v=zoryami-yandex-20261125',
+      preview: '../photoHouse/Комнаты - Внутри дома/01.jpg?v=zori-home-photos-20261125',
     },
     {
       id: 'territoriya',
@@ -22,7 +22,7 @@
       title: 'Территория',
       kicker: 'Во дворе',
       lead: 'Пергола, терраса и джакузи',
-      preview: '../photoHouse/Территория у дома/01.jpg?v=zoryami-yandex-20261125',
+      preview: '../photoHouse/Территория у дома/01.jpg?v=zori-home-photos-20261125',
     },
   ];
 
