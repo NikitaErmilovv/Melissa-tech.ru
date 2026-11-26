@@ -1,0 +1,6 @@
+site=belaya-bereza-tyumen
+brand=Белая береза
+prod=https://melissa-tech.ru/belaya-bereza-tyumen/
+2gis=https://2gis.ru/tyumen/firm/70000001117255594
+deploy=git-push-timeweb-hook
+deploy-trigger=belaya-bereza-photos-20261126T0920Z

@@ -1,0 +1,24 @@
+{
+  "hero": "photoHouse/hero-cover.jpg",
+  "dom": [
+    "photoHouse/Дом/01.jpg",
+    "photoHouse/Дом/02.jpg",
+    "photoHouse/Дом/03.jpg"
+  ],
+  "banya": [
+    "photoHouse/Баня и чан/01.jpg",
+    "photoHouse/Баня и чан/02.jpg",
+    "photoHouse/Баня и чан/03.jpg"
+  ],
+  "yard": [
+    "photoHouse/Территория у дома/01.jpg",
+    "photoHouse/Территория у дома/02.jpg",
+    "photoHouse/Территория у дома/03.jpg"
+  ],
+  "lake": [
+    "photoHouse/Территория у озера/01.jpg",
+    "photoHouse/Территория у озера/02.jpg",
+    "photoHouse/Территория у озера/03.jpg",
+    "photoHouse/Территория у озера/04.jpg"
+  ]
+}

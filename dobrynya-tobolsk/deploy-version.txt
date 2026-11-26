@@ -1,0 +1,6 @@
+site=dobrynya-tobolsk
+brand=Добрыня
+prod=https://melissa-tech.ru/dobrynya-tobolsk/
+2gis=https://2gis.ru/tobolsk/firm/70000001051174149
+deploy=git-push-timeweb-hook
+deploy-trigger=dobrynya-photos-20261126T0920Z

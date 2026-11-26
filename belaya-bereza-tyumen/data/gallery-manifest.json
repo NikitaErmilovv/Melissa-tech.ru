@@ -1,0 +1,16 @@
+{
+  "hero": "photoHouse/hero-cover.jpg",
+  "dom": [
+    "photoHouse/Дом/01.jpg",
+    "photoHouse/Дом/02.jpg",
+    "photoHouse/Дом/03.jpg"
+  ],
+  "inside": [
+    "photoHouse/Комнаты - Внутри дома/01.jpg",
+    "photoHouse/Комнаты - Внутри дома/02.jpg",
+    "photoHouse/Комнаты - Внутри дома/03.jpg",
+    "photoHouse/Комнаты - Внутри дома/04.jpg",
+    "photoHouse/Комнаты - Внутри дома/05.jpg",
+    "photoHouse/Комнаты - Внутри дома/06.jpg"
+  ]
+}

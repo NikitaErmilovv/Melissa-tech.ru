@@ -1,0 +1,6 @@
+site=ozero-kaldy-sary
+brand=На берегу озера Калды
+prod=https://melissa-tech.ru/ozero-kaldy-sary/
+2gis=https://2gis.ru/chelyabinsk/firm/70000001101369405
+deploy=git-push-timeweb-hook
+deploy-trigger=ozero-kaldy-photos-20261126T0920Z

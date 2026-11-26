@@ -1,0 +1,20 @@
+{
+  "hero": "photoHouse/hero-cover.jpg",
+  "banya": [
+    "photoHouse/Баня и бассейн/01.jpg",
+    "photoHouse/Баня и бассейн/02.jpg",
+    "photoHouse/Баня и бассейн/03.jpg"
+  ],
+  "inside": [
+    "photoHouse/Комнаты - Внутри дома/01.jpg",
+    "photoHouse/Комнаты - Внутри дома/02.jpg",
+    "photoHouse/Комнаты - Внутри дома/03.jpg"
+  ],
+  "territory": [
+    "photoHouse/Территория базы отдыха/01.jpg",
+    "photoHouse/Территория базы отдыха/02.jpg",
+    "photoHouse/Территория базы отдыха/03.jpg",
+    "photoHouse/Территория базы отдыха/04.jpg",
+    "photoHouse/Территория базы отдыха/05.jpg"
+  ]
+}

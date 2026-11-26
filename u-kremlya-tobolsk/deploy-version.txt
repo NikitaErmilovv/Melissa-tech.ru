@@ -1,0 +1,6 @@
+site=u-kremlya-tobolsk
+brand=У Кремля
+prod=https://melissa-tech.ru/u-kremlya-tobolsk/
+2gis=https://2gis.ru/tobolsk/firm/70000001047635862
+deploy=git-push-timeweb-hook
+deploy-trigger=u-kremlya-photos-20261126T0920Z
