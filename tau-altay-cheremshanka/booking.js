@@ -6,8 +6,7 @@
   var tgLink = document.getElementById('booking-send-tg');
   var waLink = document.getElementById('booking-send-wa');
   var messengers = window.STUDIO_MESSENGERS || {};
-  var telegram = messengers.tg || '+79835829604';
-  var whatsapp = String(messengers.wa || '79835829604').replace(/\D/g, '');
+  var contacts = window.STUDIO_CONTACTS || {};
   var phoneInput = form.querySelector('input[name="phone"]');
   var cabinAny = form.querySelector('#booking-cabin-any');
 
@@ -166,11 +165,22 @@
     }
     error.textContent = '';
 
+    var telegram = messengers.tg || '';
+    var whatsapp = String(messengers.wa || '').replace(/\D/g, '');
+    if (!telegram || !whatsapp) {
+      error.textContent = 'Не настроены WhatsApp/Telegram — позвоните по телефону в шапке сайта.';
+      if (send) send.hidden = true;
+      return;
+    }
+
     var lines = [
       messengers.defaultMessage || 'Здравствуйте! Хочу забронировать домик Тау Алтай, пос. Черемшанка.',
       '',
       'Имя: ' + name,
       'Телефон: ' + phone,
+    ];
+    if (contacts.addressLine) lines.push('Объект: ' + contacts.addressLine);
+    lines.push(
       'Домик: ' + cabins,
       'Заезд: ' + formatDate(arrive),
       'Выезд: ' + formatDate(depart),

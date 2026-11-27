@@ -6,8 +6,7 @@
   var tgLink = document.getElementById('booking-send-tg');
   var waLink = document.getElementById('booking-send-wa');
   var messengers = window.STUDIO_MESSENGERS || {};
-  var telegram = messengers.tg || '+79829187031';
-  var whatsapp = String(messengers.wa || '79829187031').replace(/\D/g, '');
+  var contacts = window.STUDIO_CONTACTS || {};
   var phoneInput = form.querySelector('input[name="phone"]');
   var maxGuests = parseInt(form.getAttribute('data-max-guests') || '6', 10);
 
@@ -127,17 +126,28 @@
     }
     error.textContent = '';
 
+    var telegram = messengers.tg || '';
+    var whatsapp = String(messengers.wa || '').replace(/\D/g, '');
+    if (!telegram || !whatsapp) {
+      error.textContent = 'Не настроены WhatsApp/Telegram — позвоните по телефону в шапке сайта.';
+      if (send) send.hidden = true;
+      return;
+    }
+
+    var greet = messengers.defaultMessage || 'Здравствуйте! Хочу забронировать.';
     var lines = [
-      messengers.defaultMessage || 'Здравствуйте! Хочу забронировать коттедж «Белая береза», Тюмень, ул. Степана Третьякова, 58а.',
+      greet,
       '',
       'Имя: ' + name,
       'Телефон: ' + phone,
-      'Объект: Белая береза, 58а',
+    ];
+    if (contacts.addressLine) lines.push('Объект: ' + contacts.addressLine);
+    lines.push(
       'Заезд: ' + formatDate(arrive),
       'Выезд: ' + formatDate(depart),
       'Суток: ' + nights,
-      'Гостей: ' + guests
-    ];
+      'Гостей: ' + guests,
+    );
     if (comment) lines.push('Комментарий: ' + comment);
     var text = encodeURIComponent(lines.join('\n'));
     var phonePath = telegram.charAt(0) === '+' ? telegram : '+' + telegram;
