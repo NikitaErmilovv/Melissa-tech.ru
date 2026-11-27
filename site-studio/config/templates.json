@@ -1,0 +1,19 @@
+{
+  "prodBaseUrl": "https://melissa-tech.ru",
+  "templates": [
+    {
+      "id": "river-home",
+      "name": "River Home",
+      "description": "Коттедж / гостевой дом (барнхаус, карусели, бронь)",
+      "engine": "river-home",
+      "starterDir": "river-home-terentievo"
+    },
+    {
+      "id": "fantastika-home",
+      "name": "Fantastika Home",
+      "description": "Тот же движок, другой эталон верстки",
+      "engine": "river-home",
+      "starterDir": "fantastika-home174-lazurny"
+    }
+  ]
+}

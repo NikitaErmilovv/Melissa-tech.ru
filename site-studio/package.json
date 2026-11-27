@@ -1,0 +1,17 @@
+{
+  "name": "melissa-site-studio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Локальная панель редактирования шаблонных сайтов Melissa-tech.ru",
+  "scripts": {
+    "start": "node server.mjs",
+    "import": "node scripts/import-one.mjs"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "open": "^10.1.0",
+    "simple-git": "^3.27.0"
+  }
+}

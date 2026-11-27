@@ -1,0 +1,37 @@
+{
+  "hero": "photoHouse/hero-cover.jpg?v=villa-dosug-20261127",
+  "villa": [
+    "photoHouse/Вилла/01.png",
+    "photoHouse/Вилла/02.png"
+  ],
+  "Территория у дома": [
+    "photoHouse/Территория у дома/01.jpg",
+    "photoHouse/Территория у дома/02.jpg"
+  ],
+  "Комнаты - Внутри дома": [
+    "photoHouse/Комнаты - Внутри дома/01.jpg",
+    "photoHouse/Комнаты - Внутри дома/02.jpg",
+    "photoHouse/Комнаты - Внутри дома/03.jpg",
+    "photoHouse/Комнаты - Внутри дома/04.jpg",
+    "photoHouse/Комнаты - Внутри дома/05.jpg",
+    "photoHouse/Комнаты - Внутри дома/06.png",
+    "photoHouse/Комнаты - Внутри дома/07.png",
+    "photoHouse/Комнаты - Внутри дома/08.png",
+    "photoHouse/Комнаты - Внутри дома/09.png",
+    "photoHouse/Комнаты - Внутри дома/10.jpg"
+  ],
+  "Санузел": [
+    "photoHouse/Санузел/01.png",
+    "photoHouse/Санузел/02.jpg",
+    "photoHouse/Санузел/03.png",
+    "photoHouse/Санузел/04.png",
+    "photoHouse/Санузел/05.png",
+    "photoHouse/Санузел/06.png"
+  ],
+  "Досуг": [
+    "photoHouse/Досуг/01-basseyn.jpg",
+    "photoHouse/Досуг/02-bilyard.png",
+    "photoHouse/Досуг/03-bilyard.png",
+    "photoHouse/Досуг/04-detskaya.jpg"
+  ]
+}

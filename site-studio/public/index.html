@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Melissa Site Studio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="top__brand">
+      <h1>Melissa Site Studio</h1>
+      <p id="repo-hint" class="muted">Черновики локально · на GitHub только после «Опубликовать»</p>
+    </div>
+    <div id="edit-header" class="top__actions" hidden>
+      <span class="chip" id="current-draft-label"></span>
+      <button type="button" id="btn-back" class="btn ghost">← К списку</button>
+    </div>
+  </header>
+
+  <aside class="toolbar" id="toolbar" hidden>
+    <button type="button" id="btn-save" class="btn">Сохранить</button>
+    <button type="button" id="btn-apply" class="btn primary">Применить</button>
+    <button type="button" id="btn-preview" class="btn">Открыть локально</button>
+    <button type="button" id="btn-publish" class="btn accent">Опубликовать на GitHub</button>
+    <div id="status" class="status" role="status"></div>
+    <div id="prod-link-wrap" class="prod-link muted" hidden></div>
+  </aside>
+
+  <main class="layout">
+    <section id="welcome" class="welcome">
+      <h2>С чего начать</h2>
+      <p class="muted">Готовые сайты в репозитории <strong>не трогаем</strong>. Выберите шаблон → создайте черновик → редактируйте → опубликуйте.</p>
+
+      <div class="welcome__create card">
+        <h3>1. Шаблон и имя папки</h3>
+        <div id="template-pick" class="template-pick"></div>
+        <label class="slug-field">
+          Имя на проде (slug), латиницей
+          <input id="new-slug" placeholder="ozero-kaldy-sary" autocomplete="off">
+        </label>
+        <p class="hint muted">На проде будет: <code id="prod-url-preview">https://melissa-tech.ru/…/</code></p>
+        <button type="button" id="btn-create-draft" class="btn primary">Создать черновик</button>
+      </div>
+
+      <div class="welcome__drafts card">
+        <h3>2. Мои черновики</h3>
+        <p id="drafts-empty" class="muted">Пока нет — создайте первый выше.</p>
+        <div id="drafts-list" class="drafts-list"></div>
+      </div>
+    </section>
+
+    <form id="editor" class="editor" hidden autocomplete="off">
+      <section class="card">
+        <h2>Бренд <small class="muted">— один раз, подставляется везде</small></h2>
+        <div class="grid-2">
+          <label>Название (KINO, капс в шапке)
+            <input data-bind="brand.kino">
+          </label>
+          <label>Название в навигации
+            <input data-bind="brand.navStack">
+          </label>
+          <label>Полное название (сообщения, бронь)
+            <input data-bind="brand.displayPlain">
+          </label>
+          <label>Город / локация (eyebrow)
+            <input data-bind="brand.eyebrowCity">
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>SEO и контакты</h2>
+        <label>Заголовок вкладки (&lt;title&gt;)
+          <input data-bind="seo.title">
+        </label>
+        <div class="grid-2">
+          <label>Адрес
+            <input data-bind="contacts.addressLine">
+          </label>
+          <label>Часы
+            <input data-bind="contacts.hoursLine">
+          </label>
+          <label>Телефон (tel)
+            <input data-bind="nav.phoneTel">
+          </label>
+          <label>Телефон (на экране)
+            <input data-bind="nav.phoneDisplay">
+          </label>
+          <label>2ГИС
+            <input data-bind="contacts.gisFirm">
+          </label>
+          <label>Email
+            <input data-bind="contacts.email">
+          </label>
+          <label>Широта
+            <input data-bind="contacts.mapLat" type="number" step="any">
+          </label>
+          <label>Долгота
+            <input data-bind="contacts.mapLon" type="number" step="any">
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Мессенджеры</h2>
+        <div class="grid-2">
+          <label>WhatsApp (цифры)
+            <input data-bind="messengers.wa">
+          </label>
+          <label>Telegram
+            <input data-bind="messengers.tg">
+          </label>
+        </div>
+        <label>Текст по умолчанию
+          <textarea data-bind="messengers.defaultMessage" rows="2"></textarea>
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>Главная</h2>
+        <label>Текст hero
+          <textarea data-bind="hero.paragraph" rows="4"></textarea>
+        </label>
+        <label>Alt обложки
+          <input data-bind="hero.imageAlt">
+        </label>
+        <label>Путь к обложке
+          <input data-bind="gallery.hero">
+        </label>
+        <div id="hero-preview" class="thumb-row"></div>
+      </section>
+
+      <section class="card">
+        <h2>Статистика в шапке</h2>
+        <div class="grid-3">
+          <label>Режим
+            <input data-bind="stats.mode">
+          </label>
+          <label>Отзывов
+            <input data-bind="stats.reviewsCount">
+          </label>
+          <label>Оценка
+            <input data-bind="stats.rating">
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>Фотоальбомы</h2>
+          <button type="button" id="btn-add-album" class="btn ghost small">+ Альбом</button>
+        </div>
+        <p class="hint muted">Каждый альбом — отдельный блок. Раскройте, загрузите или удалите фото.</p>
+        <div id="albums-root" class="albums-stack"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>Отзывы</h2>
+          <button type="button" id="btn-add-review" class="btn ghost small">+ Отзыв</button>
+        </div>
+        <div class="grid-2 meta-reviews">
+          <label>ID фирмы 2ГИС
+            <input data-bind="reviews.meta.firmId">
+          </label>
+          <label>Дата снимка
+            <input data-bind="reviews.meta.snapshotAt">
+          </label>
+        </div>
+        <div id="reviews-root"></div>
+      </section>
+    </form>
+  </main>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
