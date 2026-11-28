@@ -1,0 +1,21 @@
+{
+  "hero": "photoHouse/hero-cover.jpg?v=molly-house-20261128",
+  "Дом": [
+    "photoHouse/Дом/01.jpg"
+  ],
+  "Комнаты - Внутри дома": [
+    "photoHouse/Комнаты - Внутри дома/01.jpg",
+    "photoHouse/Комнаты - Внутри дома/02.jpg",
+    "photoHouse/Комнаты - Внутри дома/03.jpg",
+    "photoHouse/Комнаты - Внутри дома/04.png"
+  ],
+  "Территория у дома": [
+    "photoHouse/Территория у дома/01.jpg",
+    "photoHouse/Территория у дома/02.jpg",
+    "photoHouse/Территория у дома/03.jpg",
+    "photoHouse/Территория у дома/04.jpg"
+  ],
+  "Купель и сауна": [
+    "photoHouse/Купель и сауна/01.jpg"
+  ]
+}

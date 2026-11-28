@@ -1,0 +1,16 @@
+{
+  "hero": "photoHouse/hero-cover.jpg?v=abazhur-20261128",
+  "Дом": [
+    "photoHouse/Дом/01.jpg",
+    "photoHouse/Дом/02.jpg",
+    "photoHouse/Дом/03.jpg"
+  ],
+  "Купель и сауна": [
+    "photoHouse/Купель и сауна/01.jpg"
+  ],
+  "Сауна": [
+    "photoHouse/Сауна/01.png",
+    "photoHouse/Сауна/02.jpg",
+    "photoHouse/Сауна/03.jpg"
+  ]
+}

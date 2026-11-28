@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-28",
+  "sites": [
+    {
+      "slug": "nashe-mesto-tyumen",
+      "firmId": "70000001088086404",
+      "fetched": 12,
+      "ratingsCount": 39,
+      "rating": 5
+    },
+    {
+      "slug": "molly-house-tyumen",
+      "firmId": "70000001098073484",
+      "fetched": 12,
+      "ratingsCount": 39,
+      "rating": 5
+    },
+    {
+      "slug": "tishiny-hochu-tyumen",
+      "firmId": "70000001105078811",
+      "fetched": 12,
+      "ratingsCount": 22,
+      "rating": 5
+    },
+    {
+      "slug": "abazhur-tyumen",
+      "firmId": "70000001097247474",
+      "fetched": 12,
+      "ratingsCount": 22,
+      "rating": 5
+    },
+    {
+      "slug": "dom-uyuta-365-tyumen",
+      "firmId": "70000001095569219",
+      "fetched": 12,
+      "ratingsCount": 40,
+      "rating": 4.9
+    },
+    {
+      "slug": "dom-vyhodnogo-dnya",
+      "firmId": "70000001101724624",
+      "fetched": 12,
+      "ratingsCount": 39,
+      "rating": 4.6
+    },
+    {
+      "slug": "sun-village-tyumen",
+      "firmId": "70000001095630775",
+      "fetched": 12,
+      "ratingsCount": 22,
+      "rating": 4.1
+    }
+  ]
+}

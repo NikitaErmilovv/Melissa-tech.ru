@@ -1,0 +1,18 @@
+{
+  "hero": "photoHouse/hero-cover.jpg?v=nashe-mesto-20261128",
+  "Барнхаус": [
+    "photoHouse/Барнхаус/01.jpg",
+    "photoHouse/Барнхаус/02.jpg",
+    "photoHouse/Барнхаус/03.jpg",
+    "photoHouse/Барнхаус/04.jpg",
+    "photoHouse/Барнхаус/05.jpg",
+    "photoHouse/Барнхаус/06.jpg"
+  ],
+  "А-фрейм": [
+    "photoHouse/А-фрейм/01.jpg",
+    "photoHouse/А-фрейм/02.jpg",
+    "photoHouse/А-фрейм/03.jpg",
+    "photoHouse/А-фрейм/04.jpg",
+    "photoHouse/А-фрейм/05.jpg"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "at": "2026-11-27T20:58:11.217Z",
+  "sites": [
+    {
+      "slug": "nashe-mesto-tyumen",
+      "port": 8110,
+      "url": "http://127.0.0.1:8110/"
+    },
+    {
+      "slug": "molly-house-tyumen",
+      "port": 8111,
+      "url": "http://127.0.0.1:8111/"
+    },
+    {
+      "slug": "tishiny-hochu-tyumen",
+      "port": 8112,
+      "url": "http://127.0.0.1:8112/"
+    },
+    {
+      "slug": "abazhur-tyumen",
+      "port": 8113,
+      "url": "http://127.0.0.1:8113/"
+    },
+    {
+      "slug": "dom-uyuta-365-tyumen",
+      "port": 8114,
+      "url": "http://127.0.0.1:8114/"
+    },
+    {
+      "slug": "dom-vyhodnogo-dnya",
+      "port": 8115,
+      "url": "http://127.0.0.1:8115/"
+    },
+    {
+      "slug": "sun-village-tyumen",
+      "port": 8116,
+      "url": "http://127.0.0.1:8116/"
+    }
+  ]
+}
