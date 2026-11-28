@@ -1,38 +1,18 @@
 {
-  "hero": "photoHouse/hero-cover.jpg?v=dom-vyhodnogo-dnya-studio",
-  "dom": [
+  "hero": "photoHouse/hero-cover.jpg?v=dom-vyhodnogo-20261129",
+  "Дом": [
     "photoHouse/Дом/01.jpg",
-    "photoHouse/Дом/02.jpg"
+    "photoHouse/Дом/02.jpg",
+    "photoHouse/Дом/03.jpg",
+    "photoHouse/Дом/04.jpg"
   ],
   "Комнаты - Внутри дома": [
     "photoHouse/Комнаты - Внутри дома/01.jpg",
-    "photoHouse/Комнаты - Внутри дома/02.jpg",
-    "photoHouse/Комнаты - Внутри дома/03.jpg",
-    "photoHouse/Комнаты - Внутри дома/04.jpg",
-    "photoHouse/Комнаты - Внутри дома/05.jpg",
-    "photoHouse/Комнаты - Внутри дома/06.jpg",
-    "photoHouse/Комнаты - Внутри дома/07.jpg"
+    "photoHouse/Комнаты - Внутри дома/02.jpg"
   ],
-  "Санузел": [
-    "photoHouse/Санузел/01.jpg",
-    "photoHouse/Санузел/02.jpg"
-  ],
-  "Прихожая": [
-    "photoHouse/Прихожая/01.jpg",
-    "photoHouse/Прихожая/02.jpg",
-    "photoHouse/Прихожая/03.jpg",
-    "photoHouse/Прихожая/04.jpg"
-  ],
-  "Купель и сауна": [
-    "photoHouse/Купель и сауна/01.jpg",
-    "photoHouse/Купель и сауна/02.jpg",
-    "photoHouse/Купель и сауна/03.jpg",
-    "photoHouse/Купель и сауна/04.jpg",
-    "photoHouse/Купель и сауна/05.jpg"
-  ],
-  "Территория у дома": [
-    "photoHouse/Территория у дома/01.jpg",
-    "photoHouse/Территория у дома/02.jpg",
-    "photoHouse/Территория у дома/03.jpg"
+  "Бассейн": [
+    "photoHouse/Бассейн/01.jpg",
+    "photoHouse/Бассейн/02.jpg",
+    "photoHouse/Бассейн/03.jpg"
   ]
 }

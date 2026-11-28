@@ -3,4 +3,4 @@ brand=River home
 prod=https://melissa-tech.ru/river-home-terentievo/
 2gis=https://2gis.ru/krasnoyarsk/firm/70000001100637525
 deploy=git-push-timeweb-hook
-deploy-trigger=dom-vyhodnogo-dnya-studio-20261128T062444Z
+deploy-trigger=dom-vyhodnogo-dnya-studio-20261128T184446Z

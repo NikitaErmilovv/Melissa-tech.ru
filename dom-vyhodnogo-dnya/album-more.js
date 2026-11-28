@@ -1,36 +1,28 @@
 (function () {
-  var ALBUMS = [
+    var ALBUMS = [
     {
       id: 'dom',
       href: 'dom.html',
       title: 'Дом',
       kicker: 'Снаружи',
-      lead: 'Фасад и участок',
-      preview: '../photoHouse/Дом/01.jpg?v=dom-otdyha-20261127',
+      lead: 'Фасад, терраса и двор',
+      preview: '../photoHouse/Дом/01.jpg?v=dom-vyhodnogo-20261129',
     },
     {
       id: 'komnaty',
       href: 'komnaty.html',
-      title: 'Комнаты',
-      kicker: 'Внутри',
-      lead: 'Спальни, гостиная и кухня',
-      preview: '../photoHouse/Комнаты - Внутри дома/01.jpg?v=dom-otdyha-20261127',
+      title: 'Внутри',
+      kicker: 'Интерьер',
+      lead: 'Спальня и кухня',
+      preview: '../photoHouse/Комнаты - Внутри дома/01.jpg?v=dom-vyhodnogo-20261129',
     },
     {
-      id: 'kupel-sauna',
-      href: 'kupel-sauna.html',
-      title: 'Санузел',
-      kicker: 'Ванная',
-      lead: 'Душ и отделка',
-      preview: '../photoHouse/Санузел/01.jpg?v=dom-otdyha-20261127',
-    },
-    {
-      id: 'territoriya',
-      href: 'territoriya.html',
-      title: 'Прихожая',
-      kicker: 'Вход',
-      lead: 'Лестница и зона входа',
-      preview: '../photoHouse/Прихожая/01.jpg?v=dom-otdyha-20261127',
+      id: 'basseyn',
+      href: 'basseyn.html',
+      title: 'Бассейн',
+      kicker: 'В доме',
+      lead: 'Крытый бассейн',
+      preview: '../photoHouse/Бассейн/01.jpg?v=dom-vyhodnogo-20261129',
     },
   ];
 

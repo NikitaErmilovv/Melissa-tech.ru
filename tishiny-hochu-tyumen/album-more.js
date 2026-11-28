@@ -1,36 +1,36 @@
 (function () {
-  var ALBUMS = [
+    var ALBUMS = [
     {
       id: 'dom',
       href: 'dom.html',
       title: 'Дом',
       kicker: 'Снаружи',
-      lead: 'Фасад и участок',
-      preview: '../photoHouse/Дом/01.jpg?v=dom-otdyha-20261127',
-    },
-    {
-      id: 'komnaty',
-      href: 'komnaty.html',
-      title: 'Комнаты',
-      kicker: 'Внутри',
-      lead: 'Спальни, гостиная и кухня',
-      preview: '../photoHouse/Комнаты - Внутри дома/01.jpg?v=dom-otdyha-20261127',
-    },
-    {
-      id: 'kupel-sauna',
-      href: 'kupel-sauna.html',
-      title: 'Санузел',
-      kicker: 'Ванная',
-      lead: 'Душ и отделка',
-      preview: '../photoHouse/Санузел/01.jpg?v=dom-otdyha-20261127',
+      lead: 'Фасад зимой',
+      preview: '../photoHouse/Дом/01.jpg?v=tishiny-hochu-20261129',
     },
     {
       id: 'territoriya',
       href: 'territoriya.html',
-      title: 'Прихожая',
-      kicker: 'Вход',
-      lead: 'Лестница и зона входа',
-      preview: '../photoHouse/Прихожая/01.jpg?v=dom-otdyha-20261127',
+      title: 'Территория',
+      kicker: 'У дома',
+      lead: 'Озеро и сосны',
+      preview: '../photoHouse/Территория у дома/01.jpg?v=tishiny-hochu-20261129',
+    },
+    {
+      id: 'komnaty',
+      href: 'komnaty.html',
+      title: 'Внутри',
+      kicker: 'Интерьер',
+      lead: 'Кухня и отдых',
+      preview: '../photoHouse/Комнаты - Внутри дома/01.jpg?v=tishiny-hochu-20261129',
+    },
+    {
+      id: 'banya-chan',
+      href: 'banya-chan.html',
+      title: 'Баня и чан',
+      kicker: 'Для гостей',
+      lead: 'Чан и парная',
+      preview: '../photoHouse/Баня и чан/01.jpg?v=tishiny-hochu-20261129',
     },
   ];
 
